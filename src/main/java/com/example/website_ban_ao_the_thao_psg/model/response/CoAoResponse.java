@@ -1,6 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.model.response;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiSanPham;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -24,5 +24,5 @@ public class CoAoResponse {
     private LocalDate ngayTao;
     private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
-    private TrangThaiSanPham trangThai;
+    private ApplicationConstant.TrangThaiSanPham trangThai;
 }

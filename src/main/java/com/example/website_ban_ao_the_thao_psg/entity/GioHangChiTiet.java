@@ -1,6 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.entity;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiGioHangChiTiet;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -53,5 +53,5 @@ public class GioHangChiTiet {
 
     @Column(name = "trang_thai")
     @Enumerated(EnumType.STRING)
-    private TrangThaiGioHangChiTiet trangThai;
+    private ApplicationConstant.TrangThaiGioHangChiTiet trangThai;
 }

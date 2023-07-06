@@ -1,6 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.model.response;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiTaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.VaiTro;
 import jakarta.persistence.EnumType;
@@ -36,5 +36,5 @@ public class TaiKhoanResponse {
     private LocalDate ngayTao;
     private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
-    private TrangThaiTaiKhoan trangThai;
+    private ApplicationConstant.TrangThaiTaiKhoan trangThai;
 }
