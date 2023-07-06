@@ -14,7 +14,11 @@ public class HomeController {
     }
     @GetMapping("/hoa-don")
     public String hoaDon(){
-        return "admin/hoa-don";
+        return "admin/hoa_don";
+    }
+    @GetMapping("/mau-sac")
+    public String mauSac(){
+        return "admin/mau_sac";
     }
 
 }
