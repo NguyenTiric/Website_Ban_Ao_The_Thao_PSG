@@ -1,7 +1,10 @@
 package com.example.website_ban_ao_the_thao_psg.model.response;
 
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.ChiTietSanPham;
 import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,5 +26,6 @@ public class GioHangChiTietResponse {
     private Integer soLuong;
     private LocalDate ngayTao;
     private LocalDate ngayCapNhat;
-    private String trangThai;
+    @Enumerated(EnumType.STRING)
+    private ApplicationConstant.TrangThaiGioHangChiTiet trangThai;
 }

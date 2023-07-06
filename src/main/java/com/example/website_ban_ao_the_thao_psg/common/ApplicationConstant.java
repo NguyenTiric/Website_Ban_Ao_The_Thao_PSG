@@ -30,6 +30,32 @@ public class ApplicationConstant {
             return mauSac;
         }
     }
+    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
+    public enum TrangThaiQuyDinh {
+        ACTIVE("ACTIVE", "Hoạt động", "primary"), INACTIVE("INACTIVE", "Không hoạt động", "error");
+
+        private final String ten;
+        private final String moTa;
+        private final String mauSac;
+
+        private TrangThaiQuyDinh(String ten, String moTa, String mauSac) {
+            this.ten = ten;
+            this.moTa = moTa;
+            this.mauSac = mauSac;
+        }
+
+        public String getTen() {
+            return ten;
+        }
+
+        public String getMoTa() {
+            return moTa;
+        }
+
+        public String getMauSac() {
+            return mauSac;
+        }
+    }
 
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     public enum TrangThaiVaiTro {
@@ -354,7 +380,6 @@ public class ApplicationConstant {
 
     }
 
-
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     public enum TrangThaiHoaDonChiTiet {
         APPROVED("APPROVED", "Đã xác nhận", "primary"), REVERSE("REVERSE", "Đã hoàn trả", "error");
@@ -364,6 +389,34 @@ public class ApplicationConstant {
         private final String mauSac;
 
         private TrangThaiHoaDonChiTiet(String ten, String moTa, String mauSac) {
+            this.ten = ten;
+            this.moTa = moTa;
+            this.mauSac = mauSac;
+        }
+
+        public String getTen() {
+            return ten;
+        }
+
+        public String getMoTa() {
+            return moTa;
+        }
+
+        public String getMauSac() {
+            return mauSac;
+        }
+    }
+
+
+    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
+    public enum TrangThaiGioHangChiTiet {
+        PENDING("PENDING", "Đang chờ", "primary"), CANCELLED("CANCELLED", "Đã hủy", "error"), APPROVED("APPROVED", "Đã hoàn thành", "success");
+
+        private final String ten;
+        private final String moTa;
+        private final String mauSac;
+
+        private TrangThaiGioHangChiTiet(String ten, String moTa, String mauSac) {
             this.ten = ten;
             this.moTa = moTa;
             this.mauSac = mauSac;

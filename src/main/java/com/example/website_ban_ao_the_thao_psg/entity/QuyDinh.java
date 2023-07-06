@@ -1,7 +1,10 @@
 package com.example.website_ban_ao_the_thao_psg.entity;
 
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +33,8 @@ public class QuyDinh {
     private Integer id;
 
     @Column(name = "trang_thai")
-    private String trangThai;
+    @Enumerated(EnumType.STRING)
+    private ApplicationConstant.TrangThaiQuyDinh trangThai;
 
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;
