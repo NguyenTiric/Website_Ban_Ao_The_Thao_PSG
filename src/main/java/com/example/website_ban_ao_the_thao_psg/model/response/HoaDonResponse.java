@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.model.response;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiHoaDon;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.HinhThucBanHang;
 import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -42,7 +43,7 @@ public class HoaDonResponse {
     private String maGiaoDich;
     private LocalDateTime ngayCapNhat;
     @Enumerated(EnumType.STRING)
-    private ApplicationConstant.HinhThucBanHang hinhThucBanHang;
+    private HinhThucBanHang hinhThucBanHang;
     @Enumerated(EnumType.STRING)
-    private ApplicationConstant.TrangThaiHoaDon trangThai;
+    private TrangThaiHoaDon trangThai;
 }
