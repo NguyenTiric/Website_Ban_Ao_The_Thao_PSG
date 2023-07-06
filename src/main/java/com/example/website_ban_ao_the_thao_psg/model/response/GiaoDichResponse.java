@@ -1,6 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.model.response;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.LoaiGiaoDich;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiGiaoDich;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.HinhThucThanhToan;
 import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
@@ -33,5 +33,5 @@ public class GiaoDichResponse {
     private LocalDate ngayTao;
     private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
-    private ApplicationConstant.LoaiGiaoDich loaiGiaoDich;
+    private LoaiGiaoDich loaiGiaoDich;
 }
