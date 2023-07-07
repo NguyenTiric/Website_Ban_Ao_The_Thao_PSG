@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/fragments_layout_admin}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <div class="container" layout:fragment="content">
+         <button class="btn btn-rounded btn-primary"><a href="#" data-bs-toggle="modal"  data-bs-target="#login-modal" style="color: white">Thêm sản phẩm</a></button>
+     <div class="table-responsive">
+         <table class="table table-hover">
+             <thead>
+             <tr>
+                 <th scope="col">STT</th>
+                 <th scope="col">Mã</th>
+                 <th scope="col">Tên</th>
+                 <th scope="col">Số lượng đơn hàng tối thiểu</th>
+                 <th scope="col">Số tiền khách chi tối thiểu</th>
+                 <th scope="col">Trạng thái</th>
+                 <th scope="col">Chức năng</th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr>
+                 <th scope="row">1</th>
+                 <td><a href="#">Mark</a></td>
+                 <td><a href="#">Otto</a></td>
+                 <td>@mdo</td>
+                 <td>@mdo</td>
+                 <td>@mdo</td>
+                 <td>
+                     <button class="btn btn-rounded btn-primary"><a data-bs-toggle="modal"  data-bs-target="#login-modal1" style="color: white">Chỉnh sửa</a></button>
+                     <button class="btn btn-rounded btn-primary"><a href="#" style="color: white">Tắt hoạt động</a></button>
+                 </td>
+
+             </tr>
+             </tbody>
+
+             <!--             -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+             <div id="login-modal1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                 <div class="modal-dialog">
+                     <div class="modal-content">
+                         <div class="modal-body">
+                             <div class="text-center mt-2 mb-4">
+                                 <a href="index.html" class="text-success">
+                                                        <span><img class="me-2" th:src="@{/assets/images/image1.png}"
+                                                                   alt="" width="180"></span>
+                                 </a>
+                             </div>
+
+                             <form action="#" class="ps-3 pe-3">
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Mã1</label>
+                                     <input class="form-control" type="text"
+                                            required="" placeholder="Nhập mã">
+                                 </div>
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Tên1</label>
+                                     <input class="form-control" type="text" required=""
+                                            placeholder="Nhập tên">
+                                 </div>
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Số lượng đơn hàng tối thiểu</label>
+                                     <input class="form-control" type="number" required
+                                            placeholder="Nhập số lượng đơn hàng tối thiểu">
+                                 </div>
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Số tiền tối thiểu</label>
+                                     <input class="form-control" type="number" required
+                                            placeholder="Nhập số tiền khách chi tối thiểu">
+                                 </div>
+
+                                 <div class="form-group mb-3">
+                                     <select class="form-select" aria-label="Default select example">
+                                         <option selected>Open this select menu</option>
+                                         <option value="1">One</option>
+                                         <option value="2">Two</option>
+                                         <option value="3">Three</option>
+                                     </select>
+                                 </div>
+
+                                 <div class="form-group mb-3 text-center">
+                                     <button class="btn btn-rounded btn-primary" type="submit">Thêm
+                                     </button>
+                                 </div>
+
+                             </form>
+
+                         </div>
+                     </div><!-- /.modal-content -->
+                 </div><!-- /.modal-dialog -->
+             </div>
+
+<!--             &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+             <div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                 <div class="modal-dialog">
+                     <div class="modal-content">
+                         <div class="modal-body">
+                             <div class="text-center mt-2 mb-4">
+                                 <a href="index.html" class="text-success">
+                                                        <span><img class="me-2" th:src="@{/assets/images/image1.png}"
+                                                                   alt="" width="180"></span>
+                                 </a>
+                             </div>
+
+                             <form action="#" class="ps-3 pe-3">
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Mã</label>
+                                     <input class="form-control" type="text"
+                                            required="" placeholder="Nhập mã">
+                                 </div>
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Tên</label>
+                                     <input class="form-control" type="text" required=""
+                                             placeholder="Nhập tên">
+                                 </div>
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Số lượng đơn hàng tối thiểu</label>
+                                     <input class="form-control" type="number" required
+                                            placeholder="Nhập số lượng đơn hàng tối thiểu">
+                                 </div>
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Số tiền tối thiểu</label>
+                                     <input class="form-control" type="number" required
+                                            placeholder="Nhập số tiền khách chi tối thiểu">
+                                 </div>
+
+                                 <div class="form-group mb-3">
+                                     <select class="form-select" aria-label="Default select example">
+                                         <option selected>Open this select menu</option>
+                                         <option value="1">One</option>
+                                         <option value="2">Two</option>
+                                         <option value="3">Three</option>
+                                     </select>
+                                 </div>
+
+                                 <div class="form-group mb-3 text-center">
+                                     <button class="btn btn-rounded btn-primary" type="submit">Thêm
+                                     </button>
+                                 </div>
+
+                             </form>
+
+                         </div>
+                     </div><!-- /.modal-content -->
+                 </div><!-- /.modal-dialog -->
+             </div>
+         </table>
+         <div class="pagination">
+             <a href="#" class="btn btn-rounded btn-primary">1</a>
+             <a href="#" class="btn btn-rounded">2</a>
+             <a href="#" class="btn btn-rounded">3</a>
+         </div>
+     </div>
+ </div>
+</body>
+</html>
