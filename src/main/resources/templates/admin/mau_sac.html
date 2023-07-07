@@ -12,17 +12,13 @@
     <div class="row">
         <div class="col-3">
             <form action="" >
-                <div class="mb-3">
-                    <label  class="form-label">Mã màu</label>
-                    <div class="input-group">
-                        <input type="color" class="form-control" aria-describedby="basic-addon3 basic-addon4">
-                    </div>
+                <div class="form-group mb-3">
+                    <label class="form-label">Mã Màu</label>
+                    <input class="form-control" type="color">
                 </div>
-                <div class="mb-3">
+                <div class="form-group mb-3">
                     <label class="form-label">Tên</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" aria-describedby="basic-addon3 basic-addon4">
-                    </div>
+                    <input class="form-control" type="text">
                 </div>
                 <button class="btn btn-rounded btn-primary" type="submit">Add
                 </button>
@@ -112,40 +108,34 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="text-center mt-2 mb-4">
-                                <a href="index.html" class="text-success">
-                                                        <span><img class="me-2" th:src="@{/assets/images/image1.png}"
-                                                                   alt="" width="180"></span>
+                                <a href="#" class="text-success">
+                                    <span><img class="me-2" th:src="@{/assets/images/image1.png}" alt="" width="180"></span>
                                 </a>
                             </div>
 
                             <form action="#" class="ps-3 pe-3">
-
                                 <div class="form-group mb-3">
-                                    <label class="form-label" for="emailaddress1">Email address</label>
-                                    <input class="form-control" type="email" id="emailaddress1"
-                                           required="" placeholder="john@deo.com">
+                                    <label class="form-label">Mã Màu</label>
+                                    <input class="form-control" type="color">
                                 </div>
-
                                 <div class="form-group mb-3">
-                                    <label class="form-label" for="password1">Password</label>
-                                    <input class="form-control" type="password" required=""
-                                           id="password1" placeholder="Enter your password">
+                                    <label class="form-label">Tên</label>
+                                    <input class="form-control" type="text">
                                 </div>
 
                                 <div class="form-group mb-3 text-center">
-                                    <button class="btn btn-rounded btn-primary" type="submit">Update
-                                    </button>
+                                    <button class="btn btn-rounded btn-primary" type="submit">Update</button>
                                 </div>
-
                             </form>
-
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div>
 
+
         </div>
     </div>
 </div>
+
 </body>
 </html>
