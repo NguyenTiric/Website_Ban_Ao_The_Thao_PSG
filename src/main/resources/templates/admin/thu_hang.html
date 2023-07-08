@@ -8,8 +8,45 @@
     <title>Title</title>
 </head>
 <body>
- <div class="container" layout:fragment="content">
-         <button class="btn btn-rounded btn-primary"><a href="#" data-bs-toggle="modal"  data-bs-target="#login-modal" style="color: white">Thêm sản phẩm</a></button>
+ <div class="container" style="background-color: #fcfcfc" layout:fragment="content"><br>
+
+     <div class="row border border-0 rounded-3">
+         <div class="col-3">
+             <label class="form-label">Quyền :</label>
+             <select class="form-select" aria-label="Default select example">
+                 <option value="1">Tất cả</option>
+                 <option value="2">0 có j</option>
+                 <option value="3">có cc</option>
+             </select>
+
+         </div>
+         <div class="col-3">
+             <label class="form-label">Quyền :</label>
+             <select class="form-select" aria-label="Default select example">
+                 <option value="1">Tất cả</option>
+                 <option value="2">0 có j</option>
+                 <option value="3">có cc</option>
+             </select>
+         </div>
+         <div class="col-3">
+             <label class="form-label">Quyền :</label>
+             <select class="form-select" aria-label="Default select example">
+                 <option value="1">Tất cả</option>
+                 <option value="2">0 có j</option>
+                 <option value="3">có cc</option>
+             </select>
+         </div>
+
+         <div class="col-3">
+             <nav class="navbar">
+                 <form class="d-flex" role="search">
+                     <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                            type="search" placeholder="Search" aria-label="Search">&nbsp;
+                     <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+                 </form>
+             </nav>
+         </div>
+     </div><br>
      <div class="table-responsive">
          <table class="table table-hover">
              <thead>
@@ -158,11 +195,13 @@
              </div>
          </table>
          <div class="pagination">
-             <a href="#" class="btn btn-rounded btn-primary">1</a>
-             <a href="#" class="btn btn-rounded">2</a>
-             <a href="#" class="btn btn-rounded">3</a>
+             <a href="#" class="btn btn-rounded border border-primary-subtle">Previous</a>&nbsp;
+             <a href="#" class="btn btn-rounded btn-primary border border-primary-subtle">1</a>&nbsp;
+             <a href="#" class="btn btn-rounded border border-primary-subtle">2</a>&nbsp;
+             <a href="#" class="btn btn-rounded border border-primary-subtle">3</a>&nbsp;
+             <a href="#" class="btn btn-rounded border border-primary-subtle">Next</a>
          </div>
-     </div>
+     </div><br>
  </div>
 </body>
 </html>
