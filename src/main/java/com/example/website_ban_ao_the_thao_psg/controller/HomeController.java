@@ -16,8 +16,16 @@ public class HomeController {
     public String hoaDon(){
         return "admin/hoa_don";
     }
+
     @GetMapping("/thu-hang")
-    public String thuHang(){
+    public String thuHang() {
         return "admin/thu_hang";
     }
+    @GetMapping("/voucher")
+    public String voucher(){
+        return "admin/voucher";
+    }
+
+
+
 }
