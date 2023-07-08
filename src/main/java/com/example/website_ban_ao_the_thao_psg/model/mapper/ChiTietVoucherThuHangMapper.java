@@ -1,0 +1,23 @@
+package com.example.website_ban_ao_the_thao_psg.model.mapper;
+
+import com.example.website_ban_ao_the_thao_psg.entity.ChiTietVoucherThuHang;
+import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateChiTietVoucherThuHangRequest;
+import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateChiTietVoucherThuHangRequest;
+import com.example.website_ban_ao_the_thao_psg.model.response.ChiTietVoucherThuHangResponse;
+import org.mapstruct.Mapper;
+
+import java.util.List;
+
+@Mapper(componentModel = "spring")
+public interface ChiTietVoucherThuHangMapper {
+
+    ChiTietVoucherThuHang chiTietVoucherThuHangResponseToChiTietVoucherThuHangEntity(ChiTietVoucherThuHangResponse chiTietVoucherThuHangResponse);
+
+    ChiTietVoucherThuHangResponse chiTietVoucherThuHangEntityToChiTietVoucherThuHangResponse(ChiTietVoucherThuHang chiTietVoucherThuHang);
+
+    ChiTietVoucherThuHang createChiTietVoucherThuHangRequestToChiTietVouCherThuHangEntity(CreateChiTietVoucherThuHangRequest createChiTietVoucherThuHangRequest);
+
+    ChiTietVoucherThuHang updateChiTietVoucherThuHangRequestToChiTietVouCherThuHangEntity(UpdateChiTietVoucherThuHangRequest updateChiTietVoucherThuHangRequest);
+
+    List<ChiTietVoucherThuHangResponse> listChiTietVoucherThuHangEntityToChiTietVoucherThuHangResponse(List<ChiTietVoucherThuHang> chiTietVoucherThuHangList);
+}
