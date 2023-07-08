@@ -18,7 +18,7 @@ public class HomeController {
     }
     @GetMapping("/mau-sac")
     public String mauSac(){
-        return "admin/mau_sac";
+        return "trang_chu_mau_sac";
     }
 
     @GetMapping("/thu-hang")
