@@ -6,6 +6,7 @@ public class ApplicationConstant {
 
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     public enum TrangThaiSanPham {
+
         ACTIVE("ACTIVE", "Hoạt động", "primary"), INACTIVE("INACTIVE", "Không hoạt động", "error");
 
         private final String ten;
@@ -21,11 +22,9 @@ public class ApplicationConstant {
         public String getTen() {
             return ten;
         }
-
         public String getMoTa() {
             return moTa;
         }
-
         public String getMauSac() {
             return mauSac;
         }
