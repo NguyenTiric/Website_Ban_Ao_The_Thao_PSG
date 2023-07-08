@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/admin/psg/mau-sac")
@@ -27,17 +30,27 @@ public class MauSacController {
     @GetMapping("/hien-thi")
     public String hienThi(Model model) {
         model.addAttribute("mauSac", new MauSac());
-        return pageMauSac(0, model);
+        return pageMauSacActive(0, model);
     }
 
-    @GetMapping("/page/{pageNo}")
-    public String pageMauSac(@PathVariable("pageNo") Integer pageNo, Model model) {
+    @GetMapping("/pageActive/{pageNo}")
+    public String pageMauSacActive(@PathVariable("pageNo") Integer pageNo, Model model) {
         model.addAttribute("mauSac", new MauSac());
-        Page<MauSacResponse> mauSacResponsePage = mauSacService.pageMauSacResponse(pageNo, 3);
-        model.addAttribute("size", mauSacResponsePage.getSize());
-        model.addAttribute("totalPages", mauSacResponsePage.getTotalPages());
+        Page<MauSacResponse> mauSacResponsePageActive = mauSacService.pageMauSacActive(pageNo, 3);
+        model.addAttribute("size", mauSacResponsePageActive.getSize());
+        model.addAttribute("totalPages", mauSacResponsePageActive.getTotalPages());
         model.addAttribute("currentPage", pageNo);
-        model.addAttribute("listMauSac", mauSacResponsePage);
+        model.addAttribute("listMauSacActive", mauSacResponsePageActive);
+        return "admin/trang_chu_mau_sac";
+    }
+    @GetMapping("/pageInActive/{pageNo}")
+    public String pageMauSacInActive(@PathVariable("pageNo") Integer pageNo, Model model) {
+        model.addAttribute("mauSac", new MauSac());
+        Page<MauSacResponse> mauSacResponsePageInActive = mauSacService.pageMauSacInActive(pageNo, 3);
+        model.addAttribute("size", mauSacResponsePageInActive.getSize());
+        model.addAttribute("totalPages", mauSacResponsePageInActive.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listMauSacInActive", mauSacResponsePageInActive);
         return "admin/trang_chu_mau_sac";
     }
 
@@ -46,6 +59,17 @@ public class MauSacController {
         MauSacResponse mauSacResponse = mauSacService.getOne(id);
         model.addAttribute("mauSacUpdate", mauSacResponse);
         return "admin/trang_chu_mau_sac";
+    }
+    @PostMapping("/delete/{id}")
+    public String deleteMauSac(@PathVariable("id") Integer id) {
+        mauSacService.deleteMauSac(id, LocalDate.now());
+        return "redirect:/admin/psg/mau-sac/hien-thi";
+    }
+
+    @PostMapping("/revert/{id}")
+    public String revertMauSac(@PathVariable("id") Integer id) {
+        mauSacService.revertMauSac(id, LocalDate.now());
+        return "redirect:/admin/psg/mau-sac/hien-thi";
     }
 
     @PostMapping("/add")
@@ -62,5 +86,15 @@ public class MauSacController {
         return "redirect:/admin/psg/mau-sac/hien-thi";
     }
 
+    @GetMapping("/search/{pageNo}")
+    public String search(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchNameOrMa") String searchNameOrMa){
+        model.addAttribute("mauSac", new MauSac());
+        Page<MauSacResponse> mauSacResponsePage = mauSacService.searchNameOrMa(searchNameOrMa, pageNo, 3);
+        model.addAttribute("size", mauSacResponsePage.getSize());
+        model.addAttribute("totalPages", mauSacResponsePage.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listMauSac", mauSacResponsePage);
+        return "admin/trang_chu_mau_sac";
+    }
 
 }

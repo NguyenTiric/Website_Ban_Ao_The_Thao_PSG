@@ -27,11 +27,21 @@ public class MauSacServiceImpl implements MauSacService {
     @Autowired
     MauSacMapper mauSacMapper;
 
+
     @Override
-    public Page<MauSacResponse> pageMauSacResponse(Integer pageNo, Integer size) {
+    public Page<MauSacResponse> pageMauSacActive(Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<MauSac> mauSacPage = mauSacRepository.findAll(pageable);
+        Page<MauSac> mauSacPage = mauSacRepository.pageACTIVE(pageable);
         return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
+
+    }
+
+    @Override
+    public Page<MauSacResponse> pageMauSacInActive(Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<MauSac> mauSacPage = mauSacRepository.pageINACTIVE(pageable);
+        return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
+
     }
 
     @Override
@@ -50,7 +60,7 @@ public class MauSacServiceImpl implements MauSacService {
 
     @Override
     public MauSacResponse getOne(Integer id) {
-        Optional<MauSac>mauSacOptional =mauSacRepository.findById(id);
+        Optional<MauSac> mauSacOptional = mauSacRepository.findById(id);
         return mauSacMapper.mauSacEntityToMauSacResponse(mauSacOptional.get());
     }
 
@@ -58,4 +68,25 @@ public class MauSacServiceImpl implements MauSacService {
     public MauSacResponse delete(UpdateMauSacRequest updateMauSacRequest, Integer id) {
         return null;
     }
+
+
+    @Override
+    public Page<MauSacResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<MauSac> mauSacPage = mauSacRepository.pageSearch(searchName, pageable);
+        return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
+
+    }
+
+    @Override
+    public void deleteMauSac(Integer id,LocalDate now) {
+        mauSacRepository.delete(id,LocalDate.now());
+    }
+
+    @Override
+    public void revertMauSac(Integer id,LocalDate now) {
+        mauSacRepository.revert(id,LocalDate.now());
+    }
+
+
 }
