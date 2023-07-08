@@ -20,5 +20,11 @@ public class HomeController {
     public String mauSac(){
         return "admin/mau_sac";
     }
+    @GetMapping("/voucher")
+    public String voucher(){
+        return "admin/voucher";
+    }
+
+
 
 }
