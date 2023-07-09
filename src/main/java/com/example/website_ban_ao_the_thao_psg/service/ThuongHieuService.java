@@ -19,8 +19,8 @@ public interface ThuongHieuService {
     ThuongHieuResponse update(UpdateThuongHieuRequest updateThuongHieuRequest);
 
     ThuongHieuResponse getOne(Integer id);
-
-    Page<ThuongHieuResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size);
+    Page<ThuongHieuResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size);
+    Page<ThuongHieuResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size);
 
     void deleteThuongHieu(Integer id, LocalDate now);
 

@@ -55,6 +55,7 @@ public class MauSacServiceImpl implements MauSacService {
     public MauSacResponse update(UpdateMauSacRequest updateMauSacRequest) {
         MauSac mauSac = mauSacMapper.updateMauSacRequestToMauSacEntity(updateMauSacRequest);
         mauSac.setNgayCapNhat(LocalDate.now());
+        mauSac.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return mauSacMapper.mauSacEntityToMauSacResponse(mauSacRepository.save(mauSac));
     }
 
@@ -64,13 +65,18 @@ public class MauSacServiceImpl implements MauSacService {
         return mauSacMapper.mauSacEntityToMauSacResponse(mauSacOptional.get());
     }
 
+    @Override
+    public Page<MauSacResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<MauSac> mauSacPage = mauSacRepository.pageSearchActive(searchName, pageable);
+        return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
+    }
 
     @Override
-    public Page<MauSacResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<MauSacResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<MauSac> mauSacPage = mauSacRepository.pageSearch(searchName, pageable);
+        Page<MauSac> mauSacPage = mauSacRepository.pageSearchIvActive(searchName, pageable);
         return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
-
     }
 
     @Override

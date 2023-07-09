@@ -27,11 +27,11 @@ public class UpdateCongNgheRequest {
     private String ma;
 
     @NotBlank(message = "Tên không để trống")
-    @Size(min = 1, max = 45, message = "Tên không vượt quá 45 ký tự")
+    @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")
     private String ten;
 
     @NotBlank(message = "Mô tả không để trống")
-    @Size(min = 1, max = 255, message = "Mô tả không vượt quá 255 ký tự")
+    @Size(min = 0, max = 255, message = "Mô tả không vượt quá 255 ký tự")
     private String moTa;
 
     private LocalDate ngayTao;

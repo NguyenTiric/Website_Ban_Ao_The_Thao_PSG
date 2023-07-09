@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.ChatLieu;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.ChatLieuMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateChatLieuRequest;
@@ -44,6 +45,7 @@ public class ChatLieuServiceImpl implements ChatLieuService {
     @Override
     public ChatLieuResponse add(CreateChatLieuRequest createChatLieuRequest) {
         ChatLieu chatLieu = chatLieuMapper.createChatLieuRequestToChatLieuEntity(createChatLieuRequest);
+        chatLieu.setMa(GenCode.generateChatLieuCode());
         chatLieu.setNgayTao(LocalDate.now());
         chatLieu.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return chatLieuMapper.chatLieuEntityToChatLieuResponse(chatLieuRepository.save(chatLieu));
@@ -53,6 +55,7 @@ public class ChatLieuServiceImpl implements ChatLieuService {
     public ChatLieuResponse update(UpdateChatLieuRequest updateChatLieuRequest) {
         ChatLieu chatLieu = chatLieuMapper.updateChatLieuRequestToChatLieuEntity(updateChatLieuRequest);
         chatLieu.setNgayCapNhat(LocalDate.now());
+        chatLieu.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return chatLieuMapper.chatLieuEntityToChatLieuResponse(chatLieuRepository.save(chatLieu));
     }
 
@@ -63,12 +66,19 @@ public class ChatLieuServiceImpl implements ChatLieuService {
     }
 
     @Override
-    public Page<ChatLieuResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<ChatLieuResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<ChatLieu> chatLieuPage = chatLieuRepository.pageSearch(searchName, pageable);
+        Page<ChatLieu> chatLieuPage = chatLieuRepository.pageSearchActive(searchName, pageable);
         return chatLieuPage.map(chatLieuMapper::chatLieuEntityToChatLieuResponse);
-
     }
+
+    @Override
+    public Page<ChatLieuResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<ChatLieu> chatLieuPage = chatLieuRepository.pageSearchIvActive(searchName, pageable);
+        return chatLieuPage.map(chatLieuMapper::chatLieuEntityToChatLieuResponse);
+    }
+
 
     @Override
     public void deleteChatLieu(Integer id, LocalDate now) {

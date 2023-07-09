@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.NhaSanXuat;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.NhaSanXuatMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNhaSanXuatRequest;
@@ -46,6 +47,7 @@ public class NhaSanXuatServiceImpl implements NhaSanXuatService {
     @Override
     public NhaSanXuatResponse add(CreateNhaSanXuatRequest createNhaSanXuatRequest) {
         NhaSanXuat nhaSanXuat = nhaSanXuatMapper.createNhaSanXuatRequestToNhaSanXuatEntity(createNhaSanXuatRequest);
+        nhaSanXuat.setMa(GenCode.generateNhaSanXuatCode());
         nhaSanXuat.setNgayTao(LocalDate.now());
         nhaSanXuat.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return nhaSanXuatMapper.nhaSanXuatEntityToNhaSanXuatResponse(nhaSanXuatRepository.save(nhaSanXuat));
@@ -55,6 +57,7 @@ public class NhaSanXuatServiceImpl implements NhaSanXuatService {
     public NhaSanXuatResponse update(UpdateNhaSanXuatRequest updateNhaSanXuatRequest) {
         NhaSanXuat nhaSanXuat = nhaSanXuatMapper.updateNhaSanXuatRequestToNhaSanXuatEntity(updateNhaSanXuatRequest);
         nhaSanXuat.setNgayCapNhat(LocalDate.now());
+        nhaSanXuat.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return nhaSanXuatMapper.nhaSanXuatEntityToNhaSanXuatResponse(nhaSanXuatRepository.save(nhaSanXuat));
     }
 
@@ -65,12 +68,19 @@ public class NhaSanXuatServiceImpl implements NhaSanXuatService {
     }
 
     @Override
-    public Page<NhaSanXuatResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<NhaSanXuatResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<NhaSanXuat> nhaSanXuatPage = nhaSanXuatRepository.pageSearch(searchName, pageable);
+        Page<NhaSanXuat> nhaSanXuatPage = nhaSanXuatRepository.pageSearchActive(searchName, pageable);
         return nhaSanXuatPage.map(nhaSanXuatMapper::nhaSanXuatEntityToNhaSanXuatResponse);
-
     }
+
+    @Override
+    public Page<NhaSanXuatResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<NhaSanXuat> nhaSanXuatPage = nhaSanXuatRepository.pageSearchIvActive(searchName, pageable);
+        return nhaSanXuatPage.map(nhaSanXuatMapper::nhaSanXuatEntityToNhaSanXuatResponse);
+    }
+
 
     @Override
     public void deleteNhaSanXuat(Integer id,LocalDate now) {

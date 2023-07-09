@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.CoAo;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.CoAoMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateCoAoRequest;
@@ -44,6 +45,7 @@ public class CoAoServiceImpl implements CoAoService {
     @Override
     public CoAoResponse add(CreateCoAoRequest createCoAoRequest) {
         CoAo coAo = coAoMapper.createCoAoRequestToCoAoEntity(createCoAoRequest);
+        coAo.setMa(GenCode.generateCoAoCode());
         coAo.setNgayTao(LocalDate.now());
         coAo.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return coAoMapper.coAoEntityToCoAoResponse(coAoRepository.save(coAo));
@@ -53,6 +55,7 @@ public class CoAoServiceImpl implements CoAoService {
     public CoAoResponse update(UpdateCoAoRequest updateCoAoRequest) {
         CoAo coAo = coAoMapper.updateCoAoRequestToCoAoEntity(updateCoAoRequest);
         coAo.setNgayCapNhat(LocalDate.now());
+        coAo.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return coAoMapper.coAoEntityToCoAoResponse(coAoRepository.save(coAo));
     }
 
@@ -63,12 +66,19 @@ public class CoAoServiceImpl implements CoAoService {
     }
 
     @Override
-    public Page<CoAoResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<CoAoResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<CoAo> coAoPage = coAoRepository.pageSearch(searchName, pageable);
+        Page<CoAo> coAoPage = coAoRepository.pageSearchActive(searchName, pageable);
         return coAoPage.map(coAoMapper::coAoEntityToCoAoResponse);
-
     }
+
+    @Override
+    public Page<CoAoResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<CoAo> coAoPage = coAoRepository.pageSearchIvActive(searchName, pageable);
+        return coAoPage.map(coAoMapper::coAoEntityToCoAoResponse);
+    }
+
 
     @Override
     public void deleteCoAo(Integer id, LocalDate now) {

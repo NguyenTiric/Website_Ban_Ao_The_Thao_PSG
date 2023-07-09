@@ -16,7 +16,9 @@ import java.time.LocalDate;
 @Repository
 public interface CoAoRepository extends JpaRepository<CoAo,Integer> {
     @Query(value = "SELECT * FROM co_ao WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
-    Page<CoAo> pageSearch(String searchString, Pageable pageable);
+    Page<CoAo> pageSearchActive(String searchString, Pageable pageable);
+    @Query(value = "SELECT * FROM co_ao WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
+    Page<CoAo> pageSearchIvActive(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM co_ao WHERE trang_thai='INACTIVE' ", nativeQuery = true)
     Page<CoAo> pageINACTIVE(Pageable pageable);

@@ -15,7 +15,9 @@ import java.time.LocalDate;
 @Repository
 public interface NhaSanXuatRepository extends JpaRepository<NhaSanXuat,Integer> {
     @Query(value = "SELECT * FROM nha_san_xuat WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
-    Page<NhaSanXuat> pageSearch(String searchString, Pageable pageable);
+    Page<NhaSanXuat> pageSearchActive(String searchString, Pageable pageable);
+    @Query(value = "SELECT * FROM nha_san_xuat WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
+    Page<NhaSanXuat> pageSearchIvActive(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM nha_san_xuat WHERE trang_thai='INACTIVE' ", nativeQuery = true)
     Page<NhaSanXuat> pageINACTIVE(Pageable pageable);

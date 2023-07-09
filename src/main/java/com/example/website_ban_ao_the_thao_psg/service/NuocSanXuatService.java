@@ -20,7 +20,8 @@ public interface NuocSanXuatService {
 
     NuocSanXuatResponse getOne(Integer id);
 
-    Page<NuocSanXuatResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size);
+    Page<NuocSanXuatResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size);
+    Page<NuocSanXuatResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size);
 
     void deleteNuocSanXuat(Integer id, LocalDate now);
 

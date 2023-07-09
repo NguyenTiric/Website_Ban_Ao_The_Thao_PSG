@@ -27,7 +27,7 @@ public class UpdateNuocSanXuatRequest {
     private String ma;
 
     @NotBlank(message = "Tên không để trống")
-    @Size(min = 1, max = 45, message = "Tên không vượt quá 45 ký tự")
+    @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")
     private String ten;
 
     private LocalDate ngayTao;

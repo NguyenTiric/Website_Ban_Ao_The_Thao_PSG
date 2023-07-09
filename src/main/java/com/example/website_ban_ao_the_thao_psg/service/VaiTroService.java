@@ -20,8 +20,8 @@ public interface VaiTroService {
 
     VaiTroResponse getOne(Integer id);
 
-    Page<VaiTroResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size);
-
+    Page<VaiTroResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size);
+    Page<VaiTroResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size);
     void deleteVaiTro(Integer id, LocalDate now);
 
     void revertVaiTro(Integer id,LocalDate now);

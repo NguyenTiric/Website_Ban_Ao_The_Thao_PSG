@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.VaiTro;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.VaiTroMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateVaiTroRequest;
@@ -44,6 +45,7 @@ public class VaiTroServiceImpl implements VaiTroService {
     @Override
     public VaiTroResponse add(CreateVaiTroRequest createVaiTroRequest) {
         VaiTro vaiTro = vaiTroMapper.createVaiTroRequestToVaiTroEntity(createVaiTroRequest);
+        vaiTro.setMa(GenCode.generateVaiTroCode());
         vaiTro.setNgayTao(LocalDate.now());
         vaiTro.setTrangThai(ApplicationConstant.TrangThaiVaiTro.ACTIVE);
         return vaiTroMapper.vaiTroEntityToVaiTroResponse(vaiTroRepository.save(vaiTro));
@@ -53,6 +55,7 @@ public class VaiTroServiceImpl implements VaiTroService {
     public VaiTroResponse update(UpdateVaiTroRequest updateVaiTroRequest) {
         VaiTro vaiTro = vaiTroMapper.updateVaiTroRequestToVaiTroEntity(updateVaiTroRequest);
         vaiTro.setNgayCapNhap(LocalDate.now());
+        vaiTro.setTrangThai(ApplicationConstant.TrangThaiVaiTro.INACTIVE);
         return vaiTroMapper.vaiTroEntityToVaiTroResponse(vaiTroRepository.save(vaiTro));
     }
 
@@ -63,12 +66,19 @@ public class VaiTroServiceImpl implements VaiTroService {
     }
 
     @Override
-    public Page<VaiTroResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<VaiTroResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<VaiTro> vaiTroPage = vaiTroRepository.pageSearch(searchName, pageable);
+        Page<VaiTro> vaiTroPage = vaiTroRepository.pageSearchActive(searchName, pageable);
         return vaiTroPage.map(vaiTroMapper::vaiTroEntityToVaiTroResponse);
-
     }
+
+    @Override
+    public Page<VaiTroResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<VaiTro> vaiTroPage = vaiTroRepository.pageSearchIvActive(searchName, pageable);
+        return vaiTroPage.map(vaiTroMapper::vaiTroEntityToVaiTroResponse);
+    }
+
 
     @Override
     public void deleteVaiTro(Integer id, LocalDate now) {

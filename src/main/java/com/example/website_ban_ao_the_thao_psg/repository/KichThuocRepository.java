@@ -15,7 +15,9 @@ import java.time.LocalDate;
 @Repository
 public interface KichThuocRepository extends JpaRepository<KichThuoc,Integer> {
     @Query(value = "SELECT * FROM loai_san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
-    Page<KichThuoc> pageSearch(String searchString, Pageable pageable);
+    Page<KichThuoc> pageSearchActive(String searchString, Pageable pageable);
+    @Query(value = "SELECT * FROM loai_san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
+    Page<KichThuoc> pageSearchIvActive(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM loai_san_pham WHERE trang_thai='INACTIVE' ", nativeQuery = true)
     Page<KichThuoc> pageINACTIVE(Pageable pageable);

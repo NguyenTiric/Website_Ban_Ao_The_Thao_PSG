@@ -20,8 +20,8 @@ public interface LoaiSanPhamService {
 
     LoaiSanPhamResponse getOne(Integer id);
 
-    Page<LoaiSanPhamResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size);
-
+    Page<LoaiSanPhamResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size);
+    Page<LoaiSanPhamResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size);
     void deleteLoaiSanPham(Integer id, LocalDate now);
 
     void revertLoaiSanPham(Integer id,LocalDate now);

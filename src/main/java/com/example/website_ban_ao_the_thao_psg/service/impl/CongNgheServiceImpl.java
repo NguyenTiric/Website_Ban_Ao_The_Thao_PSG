@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.CongNghe;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.CongNgheMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateCongNgheRequest;
@@ -44,6 +45,7 @@ public class CongNgheServiceImpl implements CongNgheService {
     @Override
     public CongNgheResponse add(CreateCongNgheRequest createCongNgheRequest) {
         CongNghe congNghe = congNgheMapper.createCongNgheRequestToCongNgheEntity(createCongNgheRequest);
+        congNghe.setMa(GenCode.generateCongNgheCode());
         congNghe.setNgayTao(LocalDate.now());
         congNghe.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return congNgheMapper.congNgheEntityToCongNgheResponse(congNgheRepository.save(congNghe));
@@ -53,6 +55,7 @@ public class CongNgheServiceImpl implements CongNgheService {
     public CongNgheResponse update(UpdateCongNgheRequest updateCongNgheRequest) {
         CongNghe congNghe = congNgheMapper.updateCongNgheRequestToCongNgheEntity(updateCongNgheRequest);
         congNghe.setNgayCapNhat(LocalDate.now());
+        congNghe.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return congNgheMapper.congNgheEntityToCongNgheResponse(congNgheRepository.save(congNghe));
     }
 
@@ -63,12 +66,19 @@ public class CongNgheServiceImpl implements CongNgheService {
     }
 
     @Override
-    public Page<CongNgheResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<CongNgheResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<CongNghe> congNghePage = congNgheRepository.pageSearch(searchName, pageable);
+        Page<CongNghe> congNghePage = congNgheRepository.pageSearchActive(searchName, pageable);
         return congNghePage.map(congNgheMapper::congNgheEntityToCongNgheResponse);
-
     }
+
+    @Override
+    public Page<CongNgheResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<CongNghe> congNghePage = congNgheRepository.pageSearchIvActive(searchName, pageable);
+        return congNghePage.map(congNgheMapper::congNgheEntityToCongNgheResponse);
+    }
+
 
     @Override
     public void deleteCongNghe(Integer id, LocalDate now) {

@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.DongSanPham;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.DongSanPhamMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateDongSanPhamRequest;
@@ -44,6 +45,7 @@ public class DongSanPhamServiceImpl implements DongSanPhamService {
     @Override
     public DongSanPhamResponse add(CreateDongSanPhamRequest createDongSanPhamRequest) {
         DongSanPham dongSanPham = dongSanPhamMapper.createDongSanPhamRequestToDongSanPhamEntity(createDongSanPhamRequest);
+        dongSanPham.setMa(GenCode.generateDongSanPhamCode());
         dongSanPham.setNgayTao(LocalDate.now());
         dongSanPham.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return dongSanPhamMapper.dongSanPhamEntityToDongSanPhamResponse(dongSanPhamRepository.save(dongSanPham));
@@ -53,6 +55,7 @@ public class DongSanPhamServiceImpl implements DongSanPhamService {
     public DongSanPhamResponse update(UpdateDongSanPhamRequest updateDongSanPhamRequest) {
         DongSanPham dongSanPham = dongSanPhamMapper.updateDongSanPhamRequestToDongSanPhamEntity(updateDongSanPhamRequest);
         dongSanPham.setNgayCapNhat(LocalDate.now());
+        dongSanPham.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return dongSanPhamMapper.dongSanPhamEntityToDongSanPhamResponse(dongSanPhamRepository.save(dongSanPham));
     }
 
@@ -63,12 +66,19 @@ public class DongSanPhamServiceImpl implements DongSanPhamService {
     }
 
     @Override
-    public Page<DongSanPhamResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<DongSanPhamResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<DongSanPham> dongSanPhamPage = dongSanPhamRepository.pageSearch(searchName, pageable);
+        Page<DongSanPham> dongSanPhamPage = dongSanPhamRepository.pageSearchActive(searchName, pageable);
         return dongSanPhamPage.map(dongSanPhamMapper::dongSanPhamEntityToDongSanPhamResponse);
-
     }
+
+    @Override
+    public Page<DongSanPhamResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<DongSanPham> dongSanPhamPage = dongSanPhamRepository.pageSearchIvActive(searchName, pageable);
+        return dongSanPhamPage.map(dongSanPhamMapper::dongSanPhamEntityToDongSanPhamResponse);
+    }
+
 
     @Override
     public void deleteDongSanPham(Integer id,LocalDate now) {

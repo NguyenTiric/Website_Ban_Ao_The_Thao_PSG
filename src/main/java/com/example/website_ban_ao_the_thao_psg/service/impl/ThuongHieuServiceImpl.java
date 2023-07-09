@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuongHieu;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.ThuongHieuMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateThuongHieuRequest;
@@ -44,6 +45,7 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
     @Override
     public ThuongHieuResponse add(CreateThuongHieuRequest createThuongHieuRequest) {
         ThuongHieu thuongHieu = thuongHieuMapper.createThuongHieuRequestToThuongHieuEntity(createThuongHieuRequest);
+        thuongHieu.setMa(GenCode.generateThuongHieuCode());
         thuongHieu.setNgayTao(LocalDate.now());
         thuongHieu.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return thuongHieuMapper.thuongHieuEntityToThuongHieuResponse(thuongHieuRepository.save(thuongHieu));
@@ -53,6 +55,7 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
     public ThuongHieuResponse update(UpdateThuongHieuRequest updateThuongHieuRequest) {
         ThuongHieu thuongHieu = thuongHieuMapper.updateThuongHieuRequestToThuongHieuEntity(updateThuongHieuRequest);
         thuongHieu.setNgayCapNhat(LocalDate.now());
+        thuongHieu.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return thuongHieuMapper.thuongHieuEntityToThuongHieuResponse(thuongHieuRepository.save(thuongHieu));
     }
 
@@ -63,11 +66,17 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
     }
 
     @Override
-    public Page<ThuongHieuResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<ThuongHieuResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<ThuongHieu> thuongHieuPage = thuongHieuRepository.pageSearch(searchName, pageable);
+        Page<ThuongHieu> thuongHieuPage = thuongHieuRepository.pageSearchActive(searchName, pageable);
         return thuongHieuPage.map(thuongHieuMapper::thuongHieuEntityToThuongHieuResponse);
+    }
 
+    @Override
+    public Page<ThuongHieuResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<ThuongHieu> thuongHieuPage = thuongHieuRepository.pageSearchIvActive(searchName, pageable);
+        return thuongHieuPage.map(thuongHieuMapper::thuongHieuEntityToThuongHieuResponse);
     }
 
     @Override

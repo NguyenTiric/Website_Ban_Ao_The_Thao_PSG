@@ -15,7 +15,9 @@ import java.time.LocalDate;
 @Repository
 public interface DongSanPhamRepository extends JpaRepository<DongSanPham,Integer> {
     @Query(value = "SELECT * FROM dong_san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
-    Page<DongSanPham> pageSearch(String searchString, Pageable pageable);
+    Page<DongSanPham> pageSearchActive(String searchString, Pageable pageable);
+    @Query(value = "SELECT * FROM dong_san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
+    Page<DongSanPham> pageSearchIvActive(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM dong_san_pham WHERE trang_thai='INACTIVE' ", nativeQuery = true)
     Page<DongSanPham> pageINACTIVE(Pageable pageable);

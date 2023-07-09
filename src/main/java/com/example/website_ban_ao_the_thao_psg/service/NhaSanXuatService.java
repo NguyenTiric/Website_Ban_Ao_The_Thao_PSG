@@ -20,7 +20,8 @@ public interface NhaSanXuatService {
 
     NhaSanXuatResponse getOne(Integer id);
 
-    Page<NhaSanXuatResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size);
+    Page<NhaSanXuatResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size);
+    Page<NhaSanXuatResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size);
 
     void deleteNhaSanXuat(Integer id, LocalDate now);
 

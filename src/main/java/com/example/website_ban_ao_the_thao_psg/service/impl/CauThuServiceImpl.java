@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.CauThu;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.CauThuMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateCauThuRequest;
@@ -48,6 +49,7 @@ public class CauThuServiceImpl implements CauThuService {
     @Override
     public CauThuResponse add(CreateCauThuRequest createCauThuRequest) {
         CauThu cauThu = cauThuMapper.createCauThuRequestToCauThuEntity(createCauThuRequest);
+        cauThu.setMa(GenCode.generateCauThuCode());
         cauThu.setNgayTao(LocalDate.now());
         cauThu.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return cauThuMapper.cauThuEntityToCauThuResponse(cauThuRepository.save(cauThu));
@@ -57,6 +59,7 @@ public class CauThuServiceImpl implements CauThuService {
     public CauThuResponse update(UpdateCauThuRequest updateCauThuRequest) {
         CauThu cauThu = cauThuMapper.updateCauThuRequestToCauThuEntity(updateCauThuRequest);
         cauThu.setNgayCapNhat(LocalDate.now());
+        cauThu.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return cauThuMapper.cauThuEntityToCauThuResponse(cauThuRepository.save(cauThu));
     }
 
@@ -67,12 +70,19 @@ public class CauThuServiceImpl implements CauThuService {
     }
 
     @Override
-    public Page<CauThuResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<CauThuResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<CauThu> cauThuPage = cauThuRepository.pageSearch(searchName, pageable);
+        Page<CauThu> cauThuPage = cauThuRepository.pageSearchActive(searchName, pageable);
         return cauThuPage.map(cauThuMapper::cauThuEntityToCauThuResponse);
-
     }
+
+    @Override
+    public Page<CauThuResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<CauThu> cauThuPage = cauThuRepository.pageSearchIvActive(searchName, pageable);
+        return cauThuPage.map(cauThuMapper::cauThuEntityToCauThuResponse);
+    }
+
 
     @Override
     public void deleteCauThu(Integer id, LocalDate now) {

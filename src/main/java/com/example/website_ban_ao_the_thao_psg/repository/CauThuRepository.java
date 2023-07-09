@@ -15,7 +15,9 @@ import java.time.LocalDate;
 @Repository
 public interface CauThuRepository extends JpaRepository<CauThu, Integer> {
     @Query(value = "SELECT * FROM cau_thu WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
-    Page<CauThu> pageSearch(String searchString, Pageable pageable);
+    Page<CauThu> pageSearchActive(String searchString, Pageable pageable);
+    @Query(value = "SELECT * FROM cau_thu WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
+    Page<CauThu> pageSearchIvActive(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM cau_thu WHERE trang_thai='INACTIVE' ", nativeQuery = true)
     Page<CauThu> pageINACTIVE(Pageable pageable);

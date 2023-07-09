@@ -15,7 +15,9 @@ import java.time.LocalDate;
 @Repository
 public interface CongNgheRepository extends JpaRepository<CongNghe,Integer> {
     @Query(value = "SELECT * FROM cong_nghe WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
-    Page<CongNghe> pageSearch(String searchString, Pageable pageable);
+    Page<CongNghe> pageSearchActive(String searchString, Pageable pageable);
+    @Query(value = "SELECT * FROM cong_nghe WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
+    Page<CongNghe> pageSearchIvActive(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM cong_nghe WHERE trang_thai='INACTIVE' ", nativeQuery = true)
     Page<CongNghe> pageINACTIVE(Pageable pageable);

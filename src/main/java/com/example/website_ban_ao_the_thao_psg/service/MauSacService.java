@@ -21,7 +21,8 @@ public interface MauSacService {
 
     MauSacResponse getOne(Integer id);
 
-    Page<MauSacResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size);
+    Page<MauSacResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size);
+    Page<MauSacResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size);
 
     void deleteMauSac(Integer id, LocalDate now);
 

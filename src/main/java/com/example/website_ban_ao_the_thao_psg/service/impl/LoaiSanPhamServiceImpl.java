@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.LoaiSanPham;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.LoaiSanPhamMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateLoaiSanPhamRequest;
@@ -45,6 +46,7 @@ public class LoaiSanPhamServiceImpl implements LoaiSanPhamService {
     @Override
     public LoaiSanPhamResponse add(CreateLoaiSanPhamRequest createLoaiSanPhamRequest) {
         LoaiSanPham loaiSanPham = loaiSanPhamMapper.createLoaiSanPhamRequestToLoaiSanPhamEntity(createLoaiSanPhamRequest);
+        loaiSanPham.setMa(GenCode.generateLoaiSanPhamCode());
         loaiSanPham.setNgayTao(LocalDate.now());
         loaiSanPham.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return loaiSanPhamMapper.loaiSanPhamEntityToLoaiSanPhamResponse(loaiSanPhamRepository.save(loaiSanPham));
@@ -54,6 +56,7 @@ public class LoaiSanPhamServiceImpl implements LoaiSanPhamService {
     public LoaiSanPhamResponse update(UpdateLoaiSanPhamRequest updateLoaiSanPhamRequest) {
         LoaiSanPham loaiSanPham = loaiSanPhamMapper.updateLoaiSanPhamRequestToLoaiSanPhamEntity(updateLoaiSanPhamRequest);
         loaiSanPham.setNgayCapNhat(LocalDate.now());
+        loaiSanPham.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return loaiSanPhamMapper.loaiSanPhamEntityToLoaiSanPhamResponse(loaiSanPhamRepository.save(loaiSanPham));
     }
 
@@ -63,14 +66,20 @@ public class LoaiSanPhamServiceImpl implements LoaiSanPhamService {
         return loaiSanPhamMapper.loaiSanPhamEntityToLoaiSanPhamResponse(loaiSanPhamOptional.get());
     }
 
+    @Override
+    public Page<LoaiSanPhamResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<LoaiSanPham> loaiSanPhamPage = loaiSanPhamRepository.pageSearchActive(searchName, pageable);
+        return loaiSanPhamPage.map(loaiSanPhamMapper::loaiSanPhamEntityToLoaiSanPhamResponse);
+    }
 
     @Override
-    public Page<LoaiSanPhamResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<LoaiSanPhamResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<LoaiSanPham> loaiSanPhamPage = loaiSanPhamRepository.pageSearch(searchName, pageable);
+        Page<LoaiSanPham> loaiSanPhamPage = loaiSanPhamRepository.pageSearchIvActive(searchName, pageable);
         return loaiSanPhamPage.map(loaiSanPhamMapper::loaiSanPhamEntityToLoaiSanPhamResponse);
-
     }
+
 
     @Override
     public void deleteLoaiSanPham(Integer id, LocalDate now) {

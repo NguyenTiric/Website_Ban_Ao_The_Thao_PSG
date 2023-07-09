@@ -15,7 +15,9 @@ import java.time.LocalDate;
 @Repository
 public interface ChatLieuRepository extends JpaRepository<ChatLieu,Integer> {
     @Query(value = "SELECT * FROM chat_lieu WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
-    Page<ChatLieu> pageSearch(String searchString, Pageable pageable);
+    Page<ChatLieu> pageSearchActive(String searchString, Pageable pageable);
+    @Query(value = "SELECT * FROM chat_lieu WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
+    Page<ChatLieu> pageSearchIvActive(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM chat_lieu WHERE trang_thai='INACTIVE' ", nativeQuery = true)
     Page<ChatLieu> pageINACTIVE(Pageable pageable);

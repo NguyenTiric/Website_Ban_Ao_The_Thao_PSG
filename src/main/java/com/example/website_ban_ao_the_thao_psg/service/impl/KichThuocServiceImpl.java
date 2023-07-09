@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.KichThuoc;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.KichThuocMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateKichThuocRequest;
@@ -45,6 +46,7 @@ public class KichThuocServiceImpl implements KichThuocService {
     @Override
     public KichThuocResponse add(CreateKichThuocRequest createKichThuocRequest) {
         KichThuoc kichThuoc = kichThuocMapper.createKichThuocRequestToKichThuocEntity(createKichThuocRequest);
+        kichThuoc.setMa(GenCode.generateKichThuocCode());
         kichThuoc.setNgayTao(LocalDate.now());
         kichThuoc.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return kichThuocMapper.kichThuocEntityToKichThuocResponse(kichThuocRepository.save(kichThuoc));
@@ -54,6 +56,7 @@ public class KichThuocServiceImpl implements KichThuocService {
     public KichThuocResponse update(UpdateKichThuocRequest updateKichThuocRequest) {
         KichThuoc kichThuoc = kichThuocMapper.updateKichThuocRequestToKichThuocEntity(updateKichThuocRequest);
         kichThuoc.setNgayCapNhat(LocalDate.now());
+        kichThuoc.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return kichThuocMapper.kichThuocEntityToKichThuocResponse(kichThuocRepository.save(kichThuoc));
     }
 
@@ -63,14 +66,20 @@ public class KichThuocServiceImpl implements KichThuocService {
         return kichThuocMapper.kichThuocEntityToKichThuocResponse(kichThuocOptional.get());
     }
 
+    @Override
+    public Page<KichThuocResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<KichThuoc> kichThuocPage = kichThuocRepository.pageSearchActive(searchName, pageable);
+        return kichThuocPage.map(kichThuocMapper::kichThuocEntityToKichThuocResponse);
+    }
 
     @Override
-    public Page<KichThuocResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<KichThuocResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<KichThuoc> kichThuocPage = kichThuocRepository.pageSearch(searchName, pageable);
+        Page<KichThuoc> kichThuocPage = kichThuocRepository.pageSearchIvActive(searchName, pageable);
         return kichThuocPage.map(kichThuocMapper::kichThuocEntityToKichThuocResponse);
-
     }
+
 
     @Override
     public void deleteKichThuoc(Integer id,LocalDate now) {
