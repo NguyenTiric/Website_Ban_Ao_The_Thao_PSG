@@ -6,9 +6,13 @@ import com.example.website_ban_ao_the_thao_psg.model.response.ThuongHieuResponse
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public interface ThuongHieuService {
-    Page<ThuongHieuResponse> pageThuongHieuResponse(Integer pageNo, Integer size);
+    Page<ThuongHieuResponse> pageThuongHieuActive(Integer pageNo, Integer size);
+
+    Page<ThuongHieuResponse> pageThuongHieuInActive(Integer pageNo, Integer size);
 
     ThuongHieuResponse add(CreateThuongHieuRequest createThuongHieuRequest);
 
@@ -16,5 +20,9 @@ public interface ThuongHieuService {
 
     ThuongHieuResponse getOne(Integer id);
 
-    ThuongHieuResponse delete(UpdateThuongHieuRequest updateThuongHieuRequest, Integer id);
+    Page<ThuongHieuResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size);
+
+    void deleteThuongHieu(Integer id, LocalDate now);
+
+    void revertThuongHieu(Integer id,LocalDate now);
 }

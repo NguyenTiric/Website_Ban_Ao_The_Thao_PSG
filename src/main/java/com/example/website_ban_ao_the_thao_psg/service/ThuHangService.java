@@ -8,13 +8,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ThuHangService {
-    Page<ThuHangResponse> pageThuHangResponse(Integer pageNo, Integer size);
 
-    ThuHangResponse add(CreateThuHangRequest createThuHangRequest);
-
-    ThuHangResponse update(UpdateThuHangRequest updateThuHangRequest);
-
-    ThuHangResponse getOne(Integer id);
-
-    ThuHangResponse delete(UpdateThuHangRequest updateThuHangRequest, Integer id);
 }

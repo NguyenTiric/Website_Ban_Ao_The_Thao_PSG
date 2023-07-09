@@ -17,32 +17,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ChiTietSanPhamService {
 
-    Page<ChiTietSanPhamResponse> pageChiTietSanPhamResponse(Integer pageNo, Integer size);
-
-    ChiTietSanPhamResponse addCtsp(CreateChiTietSanPhamRequest createChiTietSanPhamRequest);
-
-    ChiTietSanPhamResponse updateCtsp(UpdateChiTietSanPhamRequest updateChiTietSanPhamRequest);
-
-    ChiTietSanPhamResponse getOneCtsp(Integer id);
-
-    ChiTietSanPhamResponse deleteCtsp(UpdateChiTietSanPhamRequest updateChiTietSanPhamRequest, Integer id);
-
-    Page<SanPhamResponse> pageSanPhamResponse(Integer pageNo, Integer size);
-
-    SanPhamResponse addSp(CreateSanPhamRequest createSanPhamRequest);
-
-    SanPhamResponse updateSp(UpdateSanPhamRequest updateSanPhamRequest);
-
-    SanPhamResponse getOneSP(Integer id);
-
-    SanPhamResponse deleteSp(UpdateSanPhamRequest updateSanPhamRequest, Integer id);
-
-    AnhSanPhamResponse addAsp(CreateAnhSanPhamRequest createAnhSanPhamRequest);
-
-    AnhSanPhamResponse updateAsp(UpdateAnhSanPhamRequest updateAnhSanPhamRequest);
-
-    AnhSanPhamResponse getOneAsp(Integer id);
-
-    AnhSanPhamResponse deleteSp(UpdateAnhSanPhamRequest updateAnhSanPhamRequest, Integer id);
 
 }

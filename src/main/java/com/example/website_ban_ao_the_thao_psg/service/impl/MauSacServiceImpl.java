@@ -1,7 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
-import com.example.website_ban_ao_the_thao_psg.controller.MauSacController;
 import com.example.website_ban_ao_the_thao_psg.entity.MauSac;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.MauSacMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateMauSacRequest;
@@ -55,6 +54,7 @@ public class MauSacServiceImpl implements MauSacService {
     @Override
     public MauSacResponse update(UpdateMauSacRequest updateMauSacRequest) {
         MauSac mauSac = mauSacMapper.updateMauSacRequestToMauSacEntity(updateMauSacRequest);
+        mauSac.setNgayCapNhat(LocalDate.now());
         return mauSacMapper.mauSacEntityToMauSacResponse(mauSacRepository.save(mauSac));
     }
 
@@ -62,11 +62,6 @@ public class MauSacServiceImpl implements MauSacService {
     public MauSacResponse getOne(Integer id) {
         Optional<MauSac> mauSacOptional = mauSacRepository.findById(id);
         return mauSacMapper.mauSacEntityToMauSacResponse(mauSacOptional.get());
-    }
-
-    @Override
-    public MauSacResponse delete(UpdateMauSacRequest updateMauSacRequest, Integer id) {
-        return null;
     }
 
 

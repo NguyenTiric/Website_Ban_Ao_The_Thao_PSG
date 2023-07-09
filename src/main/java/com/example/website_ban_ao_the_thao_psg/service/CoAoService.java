@@ -6,9 +6,13 @@ import com.example.website_ban_ao_the_thao_psg.model.response.CoAoResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public interface CoAoService {
-    Page<CoAoResponse> pageCoAoResponse(Integer pageNo, Integer size);
+    Page<CoAoResponse> pageCoAoActive(Integer pageNo, Integer size);
+
+    Page<CoAoResponse> pageCoAoInActive(Integer pageNo, Integer size);
 
     CoAoResponse add(CreateCoAoRequest createCoAoRequest);
 
@@ -16,5 +20,9 @@ public interface CoAoService {
 
     CoAoResponse getOne(Integer id);
 
-    CoAoResponse delete(UpdateCoAoRequest updateCoAoRequest, Integer id);
+    Page<CoAoResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size);
+
+    void deleteCoAo(Integer id, LocalDate now);
+
+    void revertCoAo(Integer id,LocalDate now);
 }

@@ -6,9 +6,13 @@ import com.example.website_ban_ao_the_thao_psg.model.response.NuocSanXuatRespons
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public interface NuocSanXuatService {
-    Page<NuocSanXuatResponse> pageNuocSanXuatResponse(Integer pageNo, Integer size);
+    Page<NuocSanXuatResponse> pageNuocSanXuatActive(Integer pageNo, Integer size);
+
+    Page<NuocSanXuatResponse> pageNuocSanXuatInActive(Integer pageNo, Integer size);
 
     NuocSanXuatResponse add(CreateNuocSanXuatRequest createNuocSanXuatRequest);
 
@@ -16,5 +20,9 @@ public interface NuocSanXuatService {
 
     NuocSanXuatResponse getOne(Integer id);
 
-    NuocSanXuatResponse delete(UpdateNuocSanXuatRequest updateNuocSanXuatRequest, Integer id);
+    Page<NuocSanXuatResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size);
+
+    void deleteNuocSanXuat(Integer id, LocalDate now);
+
+    void revertNuocSanXuat(Integer id,LocalDate now);
 }
