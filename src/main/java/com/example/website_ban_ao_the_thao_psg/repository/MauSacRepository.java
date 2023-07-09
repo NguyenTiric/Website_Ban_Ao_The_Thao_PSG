@@ -13,15 +13,16 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 
 @Repository
-public interface MauSacRepository extends JpaRepository<MauSac,Integer> {
+public interface MauSacRepository extends JpaRepository<MauSac, Integer> {
     @Query(value = "SELECT * FROM mau_sac WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<MauSac> pageSearch(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM mau_sac WHERE trang_thai='INACTIVE' ", nativeQuery = true)
-    Page<MauSac> pageINACTIVE( Pageable pageable);
+    Page<MauSac> pageINACTIVE(Pageable pageable);
 
     @Query(value = "SELECT * FROM mau_sac WHERE trang_thai='ACTIVE' ", nativeQuery = true)
-    Page<MauSac> pageACTIVE( Pageable pageable);
+    Page<MauSac> pageACTIVE(Pageable pageable);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE MauSac m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.id = :id")
