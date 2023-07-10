@@ -31,40 +31,40 @@ public class UpdateDiaChiRequest {
     private TaiKhoan taiKhoan;
 
     @NotBlank(message = "Họ tên không để trống")
-    @Size(min = 1, max = 45, message = "Họ tên không vượt quá 45 ký tự")
+    @Size(min = 0, max = 45, message = "Họ tên không vượt quá 45 ký tự")
     private String hoTen;
 
     @NotBlank(message = "Email không để trống")
-    @Size(min = 1, max = 10, message = "Số điện thoại không vượt quá 10 ký tự")
+    @Size(min = 0, max = 10, message = "Số điện thoại không vượt quá 10 ký tự")
     @Pattern(regexp = "\\d{10}", message = "Số điện thoại không hợp lệ")
     private String sdt;
 
     @NotBlank(message = "Địa chỉ không để trống")
-    @Size(min = 1, max = 255, message = "Địa chỉ không vượt quá 255 ký tự")
+    @Size(min = 0, max = 255, message = "Địa chỉ không vượt quá 255 ký tự")
     private String diaChiChiTiet;
 
     @NotBlank(message = "Mã tỉnh không để trống")
-    @Size(min = 1, max = 10, message = "Mã tỉnh không vượt quá 10 ký tự")
+    @Size(min = 0, max = 10, message = "Mã tỉnh không vượt quá 10 ký tự")
     private String maTinh;
 
     @NotBlank(message = "Tên tỉnh không để trống")
-    @Size(min = 1, max = 255, message = "Tên tỉnh không vượt quá 255 ký tự")
+    @Size(min = 0, max = 255, message = "Tên tỉnh không vượt quá 255 ký tự")
     private String tenTinh;
 
     @NotBlank(message = "Mã quận huyện không để trống")
-    @Size(min = 1, max = 10, message = "Mã quận huyện không vượt quá 10 ký tự")
+    @Size(min = 0, max = 10, message = "Mã quận huyện không vượt quá 10 ký tự")
     private String maQuanHuyen;
 
     @NotBlank(message = "Tên quận huyện không để trống")
-    @Size(min = 1, max = 255, message = "Tên quận huyện không vượt quá 255 ký tự")
+    @Size(min = 0, max = 255, message = "Tên quận huyện không vượt quá 255 ký tự")
     private String tenQuanHuyen;
 
     @NotBlank(message = "Mã Phường/Xã không để trống")
-    @Size(min = 1, max = 255, message = "Mã Phường/Xã không vượt quá 255 ký tự")
+    @Size(min = 0, max = 255, message = "Mã Phường/Xã không vượt quá 255 ký tự")
     private String maPhuongXa;
 
     @NotBlank(message = "Tên Phường/Xã không để trống")
-    @Size(min = 1, max = 255, message = "Tên Phường/Xã không vượt quá 255 ký tự")
+    @Size(min = 0, max = 255, message = "Tên Phường/Xã không vượt quá 255 ký tự")
     private String tenPhuongXa;
 
     private LocalDate ngayTao;

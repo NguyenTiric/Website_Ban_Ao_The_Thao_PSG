@@ -21,6 +21,7 @@
     .modal-content {
         border-radius: 10px;
     }
+
 </style>
 <body>
 <div class="preloader">
@@ -160,7 +161,7 @@
                                                 aria-expanded="false"><i data-feather="file-text"
                                                                          class="feather-icon"></i><span
                             class="hide-menu">Hóa Đơn</span></a></li>
-                    <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="#"
+                    <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="/admin/psg/voucher"
                                                 aria-expanded="false"><i data-feather="percent"
                                                                          class="feather-icon"></i><span
                             class="hide-menu">Voucher</span></a></li>
@@ -179,6 +180,10 @@
                             </li>
                             <li class="sidebar-item"><a href="/admin/psg/khach-hang" class="sidebar-link"><span
                                     class="hide-menu"> Khách Hàng
+                                        </span></a>
+                            </li>
+                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                                    class="hide-menu"> Vai trò
                                         </span></a>
                             </li>
                         </ul>
@@ -278,6 +283,16 @@
         </footer>
     </div>
 </div>
+<script th:if="${successMessage}" th:inline="javascript">
+    /*<![CDATA[*/
+    window.addEventListener('DOMContentLoaded', function() {
+        var successMessage = /*[[${successMessage}]]*/ '';
+        if (successMessage) {
+            alert(successMessage);
+        }
+    });
+    /*]]>*/
+</script>
 <script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
 <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/dist/js/feather.min.js}"></script>
