@@ -5,6 +5,7 @@ import com.example.website_ban_ao_the_thao_psg.model.request.create_request.Crea
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateMauSacRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.MauSacResponse;
 import com.example.website_ban_ao_the_thao_psg.service.MauSacService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,12 @@ public class MauSacController {
     MauSacService mauSacService;
 
     @GetMapping("/hien-thi")
-    public String hienThi(Model model) {
+    public String hienThi(Model model, HttpSession session) {
+        if (session.getAttribute("successMessage") != null) {
+            String successMessage = (String) session.getAttribute("successMessage");
+            model.addAttribute("successMessage", successMessage);
+            session.removeAttribute("successMessage");
+        }
         model.addAttribute("mauSac", new MauSac());
         return pageMauSacActive(0, model);
     }
@@ -66,36 +72,38 @@ public class MauSacController {
         return "admin/mau_sac/view_add_mau_sac";
     }
     @PostMapping("/delete/{id}")
-    public String deleteMauSac(@PathVariable("id") Integer id) {
+    public String deleteMauSac(@PathVariable("id") Integer id,HttpSession session) {
         mauSacService.deleteMauSac(id, LocalDate.now());
+        session.setAttribute("successMessage", "Xóa thành công!");
         return "redirect:/admin/psg/mau-sac/hien-thi";
     }
 
     @PostMapping("/revert/{id}")
-    public String revertMauSac(@PathVariable("id") Integer id) {
+    public String revertMauSac(@PathVariable("id") Integer id,HttpSession session) {
         mauSacService.revertMauSac(id, LocalDate.now());
+        session.setAttribute("successMessage", "Khôi phục thành công!");
         return "redirect:/admin/psg/mau-sac/hien-thi";
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("mauSac") CreateMauSacRequest createMauSacRequest, BindingResult result, Model model) {
+    public String add(@Valid @ModelAttribute("mauSac") CreateMauSacRequest createMauSacRequest, BindingResult result, Model model,HttpSession session) {
         if(result.hasErrors()){
             model.addAttribute("mauSac", createMauSacRequest);
             return "admin/mau_sac/view_add_mau_sac";
         }
-        model.addAttribute("mauSac", createMauSacRequest);
         mauSacService.add(createMauSacRequest);
+        session.setAttribute("successMessage", "Thêm thành công!");
         return "redirect:/admin/psg/mau-sac/hien-thi";
     }
 
     @PostMapping("/update")
-    public String update(@Valid @ModelAttribute("mauSac") UpdateMauSacRequest updateMauSacRequest, BindingResult result, Model model) {
+    public String update(@Valid @ModelAttribute("mauSac") UpdateMauSacRequest updateMauSacRequest, BindingResult result, Model model,HttpSession session) {
         if(result.hasErrors()){
             model.addAttribute("mauSac", updateMauSacRequest);
             return "admin/mau_sac/view_update_mau_sac";
         }
-        model.addAttribute("mauSac", updateMauSacRequest);
         mauSacService.update(updateMauSacRequest);
+        session.setAttribute("successMessage", "Cập nhập thành công!");
         return "redirect:/admin/psg/mau-sac/hien-thi";
     }
 

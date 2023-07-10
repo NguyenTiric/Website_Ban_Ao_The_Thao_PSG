@@ -14,6 +14,8 @@ import java.time.LocalDate;
 
 @Repository
 public interface MauSacRepository extends JpaRepository<MauSac, Integer> {
+
+
     @Query(value = "SELECT * FROM mau_sac WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<MauSac> pageSearchActive(String searchString, Pageable pageable);
     @Query(value = "SELECT * FROM mau_sac WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)

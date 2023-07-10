@@ -65,6 +65,7 @@ public class MauSacServiceImpl implements MauSacService {
         return mauSacMapper.mauSacEntityToMauSacResponse(mauSacOptional.get());
     }
 
+
     @Override
     public Page<MauSacResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
@@ -80,13 +81,13 @@ public class MauSacServiceImpl implements MauSacService {
     }
 
     @Override
-    public void deleteMauSac(Integer id,LocalDate now) {
-        mauSacRepository.delete(id,LocalDate.now());
+    public void deleteMauSac(Integer id, LocalDate now) {
+        mauSacRepository.delete(id, LocalDate.now());
     }
 
     @Override
-    public void revertMauSac(Integer id,LocalDate now) {
-        mauSacRepository.revert(id,LocalDate.now());
+    public void revertMauSac(Integer id, LocalDate now) {
+        mauSacRepository.revert(id, LocalDate.now());
     }
 
 

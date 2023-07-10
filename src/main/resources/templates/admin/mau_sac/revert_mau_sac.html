@@ -53,7 +53,8 @@
                             <td>
                                 <form th:action="@{/admin/psg/mau-sac/revert/{id}(id=${ms.id})}" method="post">
                                         <button type="submit"
-                                                class="btn waves-effect waves-light btn-rounded btn-danger">
+                                                class="btn waves-effect waves-light btn-rounded btn-danger"
+                                                onclick="return confirm('Bạn có muốn khôi phục không')">
                                             Revert
                                         </button>
                                 </form>
