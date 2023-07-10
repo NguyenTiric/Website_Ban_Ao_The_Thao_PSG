@@ -5,6 +5,7 @@ import com.example.website_ban_ao_the_thao_psg.entity.VaiTro;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateMauSacRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateVaiTroRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateMauSacRequest;
+import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateVaiTroRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.MauSacResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.VaiTroResponse;
 import com.example.website_ban_ao_the_thao_psg.service.MauSacService;
@@ -75,58 +76,58 @@ public class VaiTroController {
     }
     @PostMapping("/delete/{id}")
     public String deleteMauSac(@PathVariable("id") Integer id,HttpSession session) {
-        mauSacService.deleteMauSac(id, LocalDate.now());
+        vaiTroService.deleteVaiTro(id, LocalDate.now());
         session.setAttribute("successMessage", "Xóa thành công!");
-        return "redirect:/admin/psg/mau-sac/hien-thi";
+        return "redirect:/admin/psg/vai_tro/hien-thi";
     }
 
     @PostMapping("/revert/{id}")
     public String revertMauSac(@PathVariable("id") Integer id,HttpSession session) {
-        mauSacService.revertMauSac(id, LocalDate.now());
+        vaiTroService.revertVaiTro(id, LocalDate.now());
         session.setAttribute("successMessage", "Khôi phục thành công!");
-        return "redirect:/admin/psg/mau-sac/hien-thi";
+        return "redirect:/admin/psg/vai-tro/hien-thi";
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("mauSac") CreateMauSacRequest createMauSacRequest, BindingResult result, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("vaiTro") CreateVaiTroRequest createVaiTroRequest, BindingResult result, Model model, HttpSession session) {
         if(result.hasErrors()){
-            model.addAttribute("mauSac", createMauSacRequest);
-            return "admin/mau_sac/view_add_mau_sac";
+            model.addAttribute("vaiTro", createVaiTroRequest);
+            return "admin/vai_tro/view_add_vai_tro";
         }
-        mauSacService.add(createMauSacRequest);
+        vaiTroService.add(createVaiTroRequest);
         session.setAttribute("successMessage", "Thêm thành công!");
-        return "redirect:/admin/psg/mau-sac/hien-thi";
+        return "redirect:/admin/psg/vai_tro/hien-thi";
     }
 
     @PostMapping("/update")
-    public String update(@Valid @ModelAttribute("mauSac") UpdateMauSacRequest updateMauSacRequest, BindingResult result, Model model, HttpSession session) {
+    public String update(@Valid @ModelAttribute("vaiTro") UpdateVaiTroRequest updateVaiTroRequest, BindingResult result, Model model, HttpSession session) {
         if(result.hasErrors()){
-            model.addAttribute("mauSac", updateMauSacRequest);
-            return "admin/mau_sac/view_update_mau_sac";
+            model.addAttribute("vaiTro", updateVaiTroRequest);
+            return "admin/vai_tro/view_update_vai_tro";
         }
-        mauSacService.update(updateMauSacRequest);
+        vaiTroService.update(updateVaiTroRequest);
         session.setAttribute("successMessage", "Cập nhập thành công!");
-        return "redirect:/admin/psg/mau-sac/hien-thi";
+        return "redirect:/admin/psg/vai_tro/hien-thi";
     }
 
     @GetMapping("/searchActive/{pageNo}")
     public String searchActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchNameOrMa") String searchNameOrMa){
-        model.addAttribute("mauSac", new MauSac());
-        Page<MauSacResponse> mauSacResponsePage = mauSacService.searchNameOrMaActive(searchNameOrMa, pageNo, 3);
-        model.addAttribute("size", mauSacResponsePage.getSize());
-        model.addAttribute("totalPages", mauSacResponsePage.getTotalPages());
+        model.addAttribute("vaiTro", new VaiTro());
+        Page<VaiTroResponse> vaiTroResponsePage = vaiTroService.searchNameOrMaActive(searchNameOrMa, pageNo, 3);
+        model.addAttribute("size", vaiTroResponsePage.getSize());
+        model.addAttribute("totalPages", vaiTroResponsePage.getTotalPages());
         model.addAttribute("currentPage", pageNo);
-        model.addAttribute("listMauSacActive", mauSacResponsePage);
-        return "admin/mau_sac/trang_chu_mau_sac";
+        model.addAttribute("listMauSacActive", vaiTroResponsePage);
+        return "admin/vai_tro/trang_chu_vai_tro";
     }
     @GetMapping("/searchInActive/{pageNo}")
     public String searchInActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchNameOrMa") String searchNameOrMa){
-        model.addAttribute("mauSac", new MauSac());
-        Page<MauSacResponse> mauSacResponsePage = mauSacService.searchNameOrMaInActive(searchNameOrMa, pageNo, 3);
-        model.addAttribute("size", mauSacResponsePage.getSize());
-        model.addAttribute("totalPages", mauSacResponsePage.getTotalPages());
+        model.addAttribute("vaiTro", new VaiTro());
+        Page<VaiTroResponse> vaiTroResponsePage = vaiTroService.searchNameOrMaInActive(searchNameOrMa, pageNo, 3);
+        model.addAttribute("size", vaiTroResponsePage.getSize());
+        model.addAttribute("totalPages", vaiTroResponsePage.getTotalPages());
         model.addAttribute("currentPage", pageNo);
-        model.addAttribute("listMauSacInActive", mauSacResponsePage);
-        return "admin/mau_sac/revert_mau_sac";
+        model.addAttribute("listMauSacInActive", vaiTroResponsePage);
+        return "admin/vai_tro/revert_vai_tro";
     }
 }
