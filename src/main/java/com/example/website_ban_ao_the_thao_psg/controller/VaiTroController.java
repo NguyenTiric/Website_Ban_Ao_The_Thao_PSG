@@ -59,7 +59,7 @@ public class VaiTroController {
         model.addAttribute("size", vaiTroResponsePageInActive.getSize());
         model.addAttribute("totalPages", vaiTroResponsePageInActive.getTotalPages());
         model.addAttribute("currentPage", pageNo);
-        model.addAttribute("listMauSacInActive", vaiTroResponsePageInActive);
+        model.addAttribute("listVaiTroInActive", vaiTroResponsePageInActive);
         return "admin/vai_tro/revert_vai_tro";
     }
 
@@ -71,14 +71,14 @@ public class VaiTroController {
     }
     @GetMapping("/view-add")
     public String viewAdd(Model model) {
-        model.addAttribute("mauSac", new CreateVaiTroRequest());
-        return "admin/vai_tro/view_add_mau_sac";
+        model.addAttribute("vaiTro", new CreateVaiTroRequest());
+        return "admin/vai_tro/view_add_vai_tro";
     }
     @PostMapping("/delete/{id}")
     public String deleteMauSac(@PathVariable("id") Integer id,HttpSession session) {
         vaiTroService.deleteVaiTro(id, LocalDate.now());
         session.setAttribute("successMessage", "Xóa thành công!");
-        return "redirect:/admin/psg/vai_tro/hien-thi";
+        return "redirect:/admin/psg/vai-tro/hien-thi";
     }
 
     @PostMapping("/revert/{id}")
@@ -92,11 +92,11 @@ public class VaiTroController {
     public String add(@Valid @ModelAttribute("vaiTro") CreateVaiTroRequest createVaiTroRequest, BindingResult result, Model model, HttpSession session) {
         if(result.hasErrors()){
             model.addAttribute("vaiTro", createVaiTroRequest);
-            return "admin/vai_tro/view_add_vai_tro";
+            return "admin/vai_tro/view_add";
         }
         vaiTroService.add(createVaiTroRequest);
         session.setAttribute("successMessage", "Thêm thành công!");
-        return "redirect:/admin/psg/vai_tro/hien-thi";
+        return "redirect:/admin/psg/vai-tro/hien-thi";
     }
 
     @PostMapping("/update")
@@ -107,7 +107,7 @@ public class VaiTroController {
         }
         vaiTroService.update(updateVaiTroRequest);
         session.setAttribute("successMessage", "Cập nhập thành công!");
-        return "redirect:/admin/psg/vai_tro/hien-thi";
+        return "redirect:/admin/psg/vai-tro/hien-thi";
     }
 
     @GetMapping("/searchActive/{pageNo}")

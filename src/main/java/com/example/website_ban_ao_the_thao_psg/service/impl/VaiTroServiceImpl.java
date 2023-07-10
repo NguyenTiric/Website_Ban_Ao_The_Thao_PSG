@@ -55,7 +55,6 @@ public class VaiTroServiceImpl implements VaiTroService {
     public VaiTroResponse update(UpdateVaiTroRequest updateVaiTroRequest) {
         VaiTro vaiTro = vaiTroMapper.updateVaiTroRequestToVaiTroEntity(updateVaiTroRequest);
         vaiTro.setNgayCapNhap(LocalDate.now());
-        vaiTro.setTrangThai(ApplicationConstant.TrangThaiVaiTro.INACTIVE);
         return vaiTroMapper.vaiTroEntityToVaiTroResponse(vaiTroRepository.save(vaiTro));
     }
 
