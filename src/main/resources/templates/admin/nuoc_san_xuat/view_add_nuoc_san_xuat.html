@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-3"> </div>
         <div class="col-6">
-            <form action="/admin/psg/nuoc-san-xuat/add" th:object="${nuocSanXuat}" method="post" onsubmit="return  confirm('Bạn có thêm nhập không?')">
+            <form action="/admin/psg/nuoc-san-xuat/add" th:object="${nuocSanXuat}" method="post" onsubmit="return  confirm('Bạn có thêm không?')">
                 <div class="form-group mb-3">
                     <input  class="form-control custom-shadow custom-radius border-0 bg-white"
                            type="text" placeholder="Nhập tên nước sản xuất" th:field="*{ten}" style="height: 50px">
