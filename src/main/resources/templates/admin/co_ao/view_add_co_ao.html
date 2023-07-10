@@ -12,18 +12,14 @@
     <div class="row">
         <div class="col-3"> </div>
         <div class="col-6">
-            <form action="/admin/psg/mau-sac/add" th:object="${mauSac}" method="post" onsubmit="return  confirm('Bạn có thêm không?')">
-                <div class="form-group mb-3">
-                    <label class="form-label">Mã Màu</label>
-                    <input class="form-control custom-shadow custom-radius border-0 bg-white" type="color" style="height: 50px" th:field="*{ma}">
-                </div>
+            <form action="/admin/psg/co-ao/add" th:object="${coAo}" method="post" onsubmit="return  confirm('Bạn có thêm không?')">
                 <div class="form-group mb-3">
                     <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                            type="text" placeholder="Nhập tên màu sắc" th:field="*{ten}" style="height: 50px">
+                           type="text" placeholder="Nhập tên cổ áo" th:field="*{ten}" style="height: 50px">
                     <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px" th:errors="*{ten}"></span>
                 </div>
                 <div class="form-group mb-3 text-center">
-                    <a href="/admin/psg/mau-sac/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Back</a>
+                    <a href="/admin/psg/co-ao/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Back</a>
                     <button class="btn btn-rounded btn-primary" type="submit">Add</button>
                 </div>
             </form>
