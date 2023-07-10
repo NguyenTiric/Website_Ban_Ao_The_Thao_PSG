@@ -7,16 +7,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-
 <body>
 <div class="container" layout:fragment="content">
     <div class="row">
-        <div class="col-8">
-            <li class="nav-item d-none d-md-block">
+        <div class="col-11"> <li class="nav-item d-none d-md-block">
         <a class="nav-link" href="javascript:void(0)">
             <nav class="navbar bg-body">
                 <div class="container-fluid">
-                    <form class="d-flex" role="search" action="/admin/psg/mau-sac/searchActive/0" method="get">
+                    <form class="d-flex" role="search" action="/admin/psg/cong-nghe/searchInActive/0" method="get">
                         <input name="searchNameOrMa" class="form-control custom-shadow custom-radius border-0 bg-white"
                                type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-rounded btn-primary" type="submit">Search</button>
@@ -26,53 +24,42 @@
         </a>
     </li>
         </div>
-        <div class="col-2">
-            <a href="/admin/psg/mau-sac/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">View Add</a>
-        </div>
-        <div class="col-2">
-            <a href="/admin/psg/mau-sac/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">View Revert</a>
-        </div>
-
-    </div>
-
+        <div class="col-1">
+            <a href="/admin/psg/cong-nghe/pageActive/0" class="btn waves-effect waves-light btn-rounded btn-primary"
+            >Back</a>
+        </div></div>
     <div class="card">
         <div class="card-body">
             <h4 class="card-title mb-3">Danh Sách</h4>
-            <div class="tab-content">
-                <div class="tab-pane show active" id="home">
                     <table class="table">
                         <thead>
                         <tr>
                             <th scope="col">STT</th>
-                            <th scope="col">Mã Màu</th>
-                            <th scope="col">Tên Màu</th>
+                            <th scope="col">Mã</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Mô Tả</th>
                             <th scope="col">Ngày Tạo</th>
                             <th scope="col">Ngày Cập Nhật</th>
                             <th scope="col">Trạng Thái</th>
-                            <th scope="col">Hành Động</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="ms,index:${listMauSacActive}">
+                        <tr th:each="cn,index:${listCongNgheInActive}">
                             <td th:text="${index.count}"></td>
-                            <td th:text="${ms.ma}"></td>
-                            <td th:text="${ms.ten}"></td>
-                            <td th:text="${ms.ngayTao}"></td>
-                            <td th:text="${ms.ngayCapNhat}"></td>
-                            <td th:text="${ms.trangThai.moTa}"></td>
+                            <td th:text="${cn.ma}"></td>
+                            <td th:text="${cn.ten}"></td>
+                            <td th:text="${cn.moTa}"></td>
+                            <td th:text="${cn.ngayTao}"></td>
+                            <td th:text="${cn.ngayCapNhat}"></td>
+                            <td th:text="${cn.trangThai.moTa}"></td>
                             <td>
-                      <span>
-                                      <a th:href="@{/admin/psg/mau-sac/view-update/{id}(id=${ms.id})}"
-                                         class="btn waves-effect waves-light btn-rounded btn-warning"
-                                        >Update</a>
-                                    <form th:action="@{/admin/psg/mau-sac/delete/{id}(id=${ms.id})}" method="post"  style="display: inline;">
-                                    <a th:href="@{/admin/psg/mau-sac/delete/{id}(id=${ms.id})}">
+                                <form th:action="@{/admin/psg/cong-nghe/revert/{id}(id=${cn.id})}" method="post">
                                         <button type="submit"
-                                                class="btn waves-effect waves-light btn-rounded btn-danger" onclick="return confirm('Bạn có muốn xóa không')">Delete
+                                                class="btn waves-effect waves-light btn-rounded btn-danger"
+                                                onclick="return confirm('Bạn có muốn khôi phục không')">
+                                            Revert
                                         </button>
-                                    </a>
                                 </form>
-                      </span>
                             </td>
                         </tr>
                         </tbody>
@@ -80,23 +67,23 @@
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item" th:if="${currentPage !=0}">
-                                <a class="page-link" th:href="@{'/admin/psg/mau-sac/pageActive/'+${ currentPage - 1}}">Previous</a>
+                                <a class="page-link"
+                                   th:href="@{'/admin/psg/cong-nghe/pageInActive/'+${ currentPage - 1}}">Previous</a>
                             </li>
                             <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
                                 th:classappend="${currentPage == i - 1 ? 'active' : ''}">
-                                <a class="page-link" th:href="@{'/admin/psg/mau-sac/pageActive/'+${i - 1}}">
+                                <a class="page-link" th:href="@{'/admin/psg/cong-nghe/pageInActive/'+${i - 1}}">
                                     <span th:text="${i}"></span>
                                 </a>
                             </li>
                             <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                                <a class="page-link" th:href="@{'/admin/psg/mau-sac/pageActive/'+${currentPage + 1}}">Next</a>
+                                <a class="page-link" th:href="@{'/admin/psg/cong-nghe/pageInActive/'+${currentPage + 1}}">Next</a>
                             </li>
                         </ul>
                     </nav>
-                </div>
-            </div>
-        </div> <!-- end card-body-->
+        </div>
     </div>
 </div>
+
 </body>
 </html>

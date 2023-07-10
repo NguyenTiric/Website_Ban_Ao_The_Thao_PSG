@@ -43,8 +43,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="ms:${listMauSacInActive}">
-                            <td th:text="${ms.id}"></td>
+                        <tr th:each="ms,index:${listMauSacInActive}">
+                            <td th:text="${index.count}"></td>
                             <td th:text="${ms.ma}"></td>
                             <td th:text="${ms.ten}"></td>
                             <td th:text="${ms.ngayTao}"></td>

@@ -32,7 +32,6 @@ public class MauSacServiceImpl implements MauSacService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<MauSac> mauSacPage = mauSacRepository.pageACTIVE(pageable);
         return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
-
     }
 
     @Override
@@ -40,7 +39,6 @@ public class MauSacServiceImpl implements MauSacService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<MauSac> mauSacPage = mauSacRepository.pageINACTIVE(pageable);
         return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
-
     }
 
     @Override
