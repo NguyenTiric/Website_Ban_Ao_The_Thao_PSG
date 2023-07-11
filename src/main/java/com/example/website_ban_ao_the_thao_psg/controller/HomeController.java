@@ -21,8 +21,8 @@ public class HomeController {
         return "admin/mau_sac";
     }
 
-    @GetMapping("/thu-hang")
-    public String thuHang(){
-        return "admin/thu_hang";
-    }
+//    @GetMapping("/thu-hang")
+//    public String thuHang(){
+//        return "admin/thu_hang";
+//    }
 }

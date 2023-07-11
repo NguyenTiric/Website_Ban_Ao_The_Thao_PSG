@@ -1,51 +1,31 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/fragments_layout_admin}"
 >
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Paris Saint-Germain Boutique | PSG Maillots, PSG Boutique | Official PSG Shop</title>
 </head>
 <body>
- <div class="container" style="background-color: #fcfcfc" layout:fragment="content"><br>
-
+ <div class="container" style="background-color: #fcfcfc" layout:fragment="content"><br><br>
      <div class="row border border-0 rounded-3">
-         <div class="col-3">
-             <label class="form-label">Quyền :</label>
-             <select class="form-select" aria-label="Default select example">
-                 <option value="1">Tất cả</option>
-                 <option value="2">0 có j</option>
-                 <option value="3">có cc</option>
-             </select>
-
-         </div>
-         <div class="col-3">
-             <label class="form-label">Quyền :</label>
-             <select class="form-select" aria-label="Default select example">
-                 <option value="1">Tất cả</option>
-                 <option value="2">0 có j</option>
-                 <option value="3">có cc</option>
-             </select>
-         </div>
-         <div class="col-3">
-             <label class="form-label">Quyền :</label>
-             <select class="form-select" aria-label="Default select example">
-                 <option value="1">Tất cả</option>
-                 <option value="2">0 có j</option>
-                 <option value="3">có cc</option>
-             </select>
-         </div>
-
          <div class="col-3">
              <nav class="navbar">
                  <form class="d-flex" role="search">
                      <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                            type="search" placeholder="Search" aria-label="Search">&nbsp;
+                            type="search" placeholder="Nhập mã hoặc tên" aria-label="Search">&nbsp;
                      <button class="btn btn-rounded btn-primary" type="submit">Search</button>
                  </form>
              </nav>
          </div>
+
+         <div class="col-6">
+         </div>
+         <div class="col-3">
+             <button class="btn btn-rounded btn-primary"><a data-bs-toggle="modal"  data-bs-target="#login-modal" style="color: white">Thêm thứ hạng</a></button>
+         </div>
+
      </div><br>
      <div class="table-responsive">
          <table class="table table-hover">
@@ -61,23 +41,22 @@
              </tr>
              </thead>
              <tbody>
-             <tr>
-                 <th scope="row">1</th>
-                 <td><a href="#">Mark</a></td>
-                 <td><a href="#">Otto</a></td>
-                 <td>@mdo</td>
-                 <td>@mdo</td>
-                 <td>@mdo</td>
+             <tr th:each="th, counter:${listTH}">
+                 <th th:text="${counter.count} + ${currentPage * size - size} +1" scope="row">1</th>
+                 <th th:text="${th.ma}" ><a href="#"></a></th>
+                 <td th:text="${th.ten}"><a href="#"></a></td>
+                 <td th:text="${th.soTienKhachChiToiThieu}"></td>
+                 <td th:text="${th.soLuongDonHangToiThieu}"></td>
+                 <td th:text="${th.trangThai}"></td>
                  <td>
                      <button class="btn btn-rounded btn-primary"><a data-bs-toggle="modal"  data-bs-target="#login-modal1" style="color: white">Chỉnh sửa</a></button>
                      <button class="btn btn-rounded btn-primary"><a href="#" style="color: white">Tắt hoạt động</a></button>
                  </td>
-
              </tr>
              </tbody>
 
              <!--             -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-             <div id="login-modal1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+             <div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                  <div class="modal-dialog">
                      <div class="modal-content">
                          <div class="modal-body">
@@ -88,39 +67,30 @@
                                  </a>
                              </div>
 
-                             <form action="#" class="ps-3 pe-3">
+                             <form action="/admin/psg/thu-hang/view-all/add" th:object="${th}" method="post" class="ps-3 pe-3">
 
                                  <div class="form-group mb-3">
-                                     <label class="form-label" >Mã1</label>
-                                     <input class="form-control" type="text"
+                                     <label class="form-label" >Mã</label>
+                                     <input class="form-control" type="text" th:field="*{ma}"
                                             required="" placeholder="Nhập mã">
                                  </div>
 
                                  <div class="form-group mb-3">
-                                     <label class="form-label" >Tên1</label>
-                                     <input class="form-control" type="text" required=""
+                                     <label class="form-label" >Tên</label>
+                                     <input class="form-control" type="text" required="" th:field="*{ten}"
                                             placeholder="Nhập tên">
                                  </div>
 
                                  <div class="form-group mb-3">
                                      <label class="form-label" >Số lượng đơn hàng tối thiểu</label>
-                                     <input class="form-control" type="number" required
+                                     <input class="form-control" type="number" required th:field="*{soTienKhachChiToiThieu}"
                                             placeholder="Nhập số lượng đơn hàng tối thiểu">
                                  </div>
 
                                  <div class="form-group mb-3">
                                      <label class="form-label" >Số tiền tối thiểu</label>
-                                     <input class="form-control" type="number" required
+                                     <input class="form-control" type="number" required th:field="*{soLuongDonHangToiThieu}"
                                             placeholder="Nhập số tiền khách chi tối thiểu">
-                                 </div>
-
-                                 <div class="form-group mb-3">
-                                     <select class="form-select" aria-label="Default select example">
-                                         <option selected>Open this select menu</option>
-                                         <option value="1">One</option>
-                                         <option value="2">Two</option>
-                                         <option value="3">Three</option>
-                                     </select>
                                  </div>
 
                                  <div class="form-group mb-3 text-center">
@@ -136,7 +106,7 @@
              </div>
 
 <!--             &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-             <div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+             <div id="login-modal1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                  <div class="modal-dialog">
                      <div class="modal-content">
                          <div class="modal-body">
@@ -195,12 +165,48 @@
              </div>
          </table>
          <div class="pagination">
-             <a href="#" class="btn btn-rounded border border-primary-subtle">Previous</a>&nbsp;
-             <a href="#" class="btn btn-rounded btn-primary border border-primary-subtle">1</a>&nbsp;
-             <a href="#" class="btn btn-rounded border border-primary-subtle">2</a>&nbsp;
-             <a href="#" class="btn btn-rounded border border-primary-subtle">3</a>&nbsp;
-             <a href="#" class="btn btn-rounded border border-primary-subtle">Next</a>
+             <li class="page-item" th:if="${currentPage !=0}">
+                 <a class="btn btn-rounded border border-primary-subtle" th:href="@{'/admin/psg/thu-hang/view-all/'+${ currentPage - 1}}">Previous</a>&nbsp;
+             </li>
+             <li class="page-item" th:if="${currentPage == 0}">
+                 <a th:href="@{'/admin/psg/thu-hang/view-all/'+${currentPage}}" class="btn btn-rounded border border-primary-subtle active">
+                     <span th:text="${currentPage + 1}"></span>
+                 </a>&nbsp;
+                 <a th:href="@{'/admin/psg/thu-hang/view-all/'+${currentPage + 1}}" class="btn btn-rounded border border-primary-subtle">
+                     <span th:text="${currentPage + 2}"></span>
+                 </a>&nbsp;
+                 <a th:href="@{'/admin/psg/thu-hang/view-all/'+${totalPages - 1}}" class="btn btn-rounded border border-primary-subtle">
+                     <span th:text="${totalPages}"></span>
+                 </a>&nbsp;
+             </li>
+             <li class="page-item" th:if="${currentPage != 0 && currentPage != totalPages - 1}">
+                 <a th:href="@{'/admin/psg/thu-hang/view-all/'+${currentPage - 1}}" class="btn btn-rounded border border-primary-subtle">
+                     <span th:text="${currentPage}"></span>
+                 </a>&nbsp;
+                 <a th:href="@{'/admin/psg/thu-hang/view-all/'+${currentPage}}" class="btn btn-rounded border border-primary-subtle active">
+                     <span th:text="${currentPage + 1}"></span>
+                 </a>&nbsp;
+                 <a th:href="@{'/admin/psg/thu-hang/view-all/'+${currentPage + 1}}" class="btn btn-rounded border border-primary-subtle">
+                     <span th:text="${currentPage + 2}"></span>
+                 </a>&nbsp;
+             </li>
+             <li class="page-item" th:if="${currentPage == totalPages - 1}">
+                 <a th:href="@{'/admin/psg/thu-hang/view-all/'+${currentPage - 1}}" class="btn btn-rounded border border-primary-subtle">
+                     <span th:text="${currentPage}"></span>
+                 </a>&nbsp;
+                 <a th:href="@{'/admin/psg/thu-hang/view-all/'+${currentPage}}" class="btn btn-rounded border border-primary-subtle active">
+                     <span th:text="${currentPage + 1}"></span>
+                 </a>&nbsp;
+                 <a th:href="@{'/admin/psg/thu-hang/view-all/'+${currentPage + 1}}" class="btn btn-rounded border border-primary-subtle">
+                     <span th:text="${totalPages}"></span>
+                 </a>&nbsp;
+             </li>
+             <li class="page-item" th:if="${currentPage + 1 != totalPages}">
+                 <a th:href="@{'/admin/psg/thu-hang/view-all/'+${ currentPage + 1}}" class="btn btn-rounded border border-primary-subtle">Next</a>
+             </li>
          </div>
+
+
      </div><br>
  </div>
 </body>
