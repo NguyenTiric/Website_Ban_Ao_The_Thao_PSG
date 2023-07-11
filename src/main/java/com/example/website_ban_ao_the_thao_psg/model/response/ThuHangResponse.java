@@ -25,8 +25,8 @@ public class ThuHangResponse {
     private ApplicationConstant.TenThuHang ten;
     private BigDecimal soTienKhachChiToiThieu;
     private Integer soLuongDonHangToiThieu;
-    @Enumerated(EnumType.STRING)
-    private ApplicationConstant.TrangThaiThuHang trangThai;
+//    @Enumerated(EnumType.STRING)
+//    private ApplicationConstant.TrangThaiThuHang trangThai;
     private LocalDate ngayTao;
     private LocalDate ngayCapNhat;
 }

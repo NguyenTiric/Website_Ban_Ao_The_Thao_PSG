@@ -6,9 +6,13 @@ import com.example.website_ban_ao_the_thao_psg.model.response.DiaChiResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public interface DiaChiService {
-    Page<DiaChiResponse> pageDiaChiResponse(Integer pageNo, Integer size);
+    Page<DiaChiResponse> pageDiaChiActive(Integer pageNo, Integer size);
+
+    Page<DiaChiResponse> pageDiaChiInActive(Integer pageNo, Integer size);
 
     DiaChiResponse add(CreateDiaChiRequest createDiaChiRequest);
 
@@ -17,4 +21,10 @@ public interface DiaChiService {
     DiaChiResponse getOne(Integer id);
 
     DiaChiResponse delete(UpdateDiaChiRequest updateDiaChiRequest, Integer id);
+
+    Page<DiaChiResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size);
+
+    void deleteDiaChi(Integer id, LocalDate now);
+
+    void revertDiaChi(Integer id,LocalDate now);
 }

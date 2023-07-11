@@ -1,7 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.entity;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TenThuHang;
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiThuHang;
+//import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiThuHang;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -48,9 +48,9 @@ public class ThuHang {
     @Column(name = "so_luong_don_hang_toi_thieu")
     private Integer soLuongDonHangToiThieu;
 
-    @Column(name = "trang_thai")
-    @Enumerated(EnumType.STRING)
-    private TrangThaiThuHang trangThai;
+//    @Column(name = "trang_thai")
+//    @Enumerated(EnumType.STRING)
+//    private TrangThaiThuHang trangThai;
 
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;

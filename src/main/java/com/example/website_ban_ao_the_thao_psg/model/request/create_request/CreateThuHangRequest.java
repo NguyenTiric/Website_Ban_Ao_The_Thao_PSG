@@ -1,7 +1,8 @@
 package com.example.website_ban_ao_the_thao_psg.model.request.create_request;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TenThuHang;
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiThuHang;
+//import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TenThuHang;
+//import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiThuHang;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Min;
@@ -29,7 +30,7 @@ public class CreateThuHangRequest {
     private String ma;
 
     @Enumerated(EnumType.STRING)
-    private TenThuHang ten;
+    private ApplicationConstant.TenThuHang ten;
 
     @NotNull(message = "Số tiền chi tiêu tối thiểu không để trống")
     @Min(value = 0, message = "Số tiền chi tiêu tối thiểu là số nguyên")
@@ -39,8 +40,8 @@ public class CreateThuHangRequest {
     @Min(value = 0, message = "Số lượng đơn hàng tối thiểu là số nguyên")
     private Integer soLuongDonHangToiThieu;
 
-    @Enumerated(EnumType.STRING)
-    private TrangThaiThuHang trangThai;
+//    @Enumerated(EnumType.STRING)
+//    private TrangThaiThuHang trangThai;
 
     private LocalDate ngayTao;
 
