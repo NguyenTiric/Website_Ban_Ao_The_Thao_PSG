@@ -73,7 +73,7 @@ public class UpdateSanPhamRequest {
     private String ma;
 
     @NotBlank(message = "Tên không để trống")
-    @Size(min = 1, max = 45, message = "Tên không vượt quá 45 ký tự")
+    @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")
     private String ten;
 
     @NotNull(message = "Giá không để trống")
@@ -81,11 +81,11 @@ public class UpdateSanPhamRequest {
     private BigDecimal gia;
 
     @NotBlank(message = "Mô tả không để trống")
-    @Size(min = 1, max = 225, message = "Tên không vượt quá 225 ký tự")
+    @Size(min = 0, max = 225, message = "Tên không vượt quá 225 ký tự")
     private String moTa;
 
     @NotBlank(message = "Mã vạch không để trống")
-    @Size(min = 1, max = 45, message = "Mã vạch không vượt quá 45 ký tự")
+    @Size(min = 0, max = 45, message = "Mã vạch không vượt quá 45 ký tự")
     private String maVach;
 
     private LocalDate ngayTao;

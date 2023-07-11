@@ -21,6 +21,7 @@
     .modal-content {
         border-radius: 10px;
     }
+
 </style>
 <body>
 <div class="preloader">
@@ -160,7 +161,7 @@
                                                 aria-expanded="false"><i data-feather="file-text"
                                                                          class="feather-icon"></i><span
                             class="hide-menu">Hóa Đơn</span></a></li>
-                    <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="#"
+                    <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="/admin/psg/voucher"
                                                 aria-expanded="false"><i data-feather="percent"
                                                                          class="feather-icon"></i><span
                             class="hide-menu">Voucher</span></a></li>
@@ -181,6 +182,10 @@
                                     class="hide-menu"> Khách Hàng
                                         </span></a>
                             </li>
+                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                                    class="hide-menu"> Vai trò
+                                        </span></a>
+                            </li>
                         </ul>
                     </li>
                     <li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)"
@@ -192,25 +197,25 @@
                                     class="hide-menu"> Sản Phẩm
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/cong-nghe/hien-thi" class="sidebar-link"><span
                                     class="hide-menu"> Công Nghệ
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/kich-thuoc/hien-thi" class="sidebar-link"><span
                                     class="hide-menu"> Kích Thước
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="/admin/psg/mau-sac" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/mau-sac/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                             Màu Sắc
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/thuong-hieu/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                             Thương Hiệu
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/cau-thu/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                          Cầu thủ
                                         </span></a>
@@ -220,32 +225,32 @@
                                          Ảnh
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/dong-san-pham/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                          Dòng Sản Phẩm
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/loai-san-pham/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                          Loại Sản Phẩm
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/nuoc-san-xuat/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                         Nước sản Xuất
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/chat-lieu/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                          Chất Liệu
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/nha-san-xuat/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                         Nhà Sản Xuất
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/co-ao/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                         Cổ Áo
                                         </span></a>
@@ -278,6 +283,16 @@
         </footer>
     </div>
 </div>
+<script th:if="${successMessage}" th:inline="javascript">
+    /*<![CDATA[*/
+    window.addEventListener('DOMContentLoaded', function() {
+        var successMessage = /*[[${successMessage}]]*/ '';
+        if (successMessage) {
+            alert(successMessage);
+        }
+    });
+    /*]]>*/
+</script>
 <script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
 <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/dist/js/feather.min.js}"></script>
