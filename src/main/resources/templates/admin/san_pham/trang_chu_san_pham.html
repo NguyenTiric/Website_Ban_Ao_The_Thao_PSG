@@ -16,7 +16,7 @@
         <a class="nav-link" href="javascript:void(0)">
             <nav class="navbar bg-body">
                 <div class="container-fluid">
-                    <form class="d-flex" role="search" action="/admin/psg/cau-thu/searchActive/0" method="get">
+                    <form class="d-flex" role="search" action="/admin/psg/san-pham/searchActive/0" method="get">
                         <input name="searchNameOrMa" class="form-control custom-shadow custom-radius border-0 bg-white"
                                type="search" placeholder="Search Tên Or Mã" aria-label="Search">
                         <button class="btn btn-rounded btn-primary" type="submit">Search</button>
@@ -27,10 +27,10 @@
     </li>
         </div>
         <div class="col-2">
-            <a href="/admin/psg/cau-thu/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">View Add</a>
+            <a href="/admin/psg/san-pham/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">View Add</a>
         </div>
         <div class="col-2">
-            <a href="/admin/psg/cau-thu/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">View Revert</a>
+            <a href="/admin/psg/san-pham/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">View Revert</a>
         </div>
 
     </div>
@@ -46,7 +46,6 @@
                             <th scope="col">STT</th>
                             <th scope="col">Mã</th>
                             <th scope="col">Tên</th>
-                            <th scope="col">Số Áo</th>
                             <th scope="col">Ngày Tạo</th>
                             <th scope="col">Ngày Cập Nhật</th>
                             <th scope="col">Trạng Thái</th>
@@ -54,21 +53,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="ct,index:${listCauThuActive}">
+                        <tr th:each="sp,index:${listSanPhamActive}">
                             <td th:text="${index.count}"></td>
-                            <td th:text="${ct.ma}"></td>
-                            <td th:text="${ct.ten}"></td>
-                            <td th:text="${ct.soAo}"></td>
-                            <td th:text="${ct.ngayTao}"></td>
-                            <td th:text="${ct.ngayCapNhat}"></td>
-                            <td th:text="${ct.trangThai.moTa}"></td>
+                            <td th:text="${sp.ma}"></td>
+                            <td th:text="${sp.ten}"></td>
+                            <td th:text="${sp.ngayTao}"></td>
+                            <td th:text="${sp.ngayCapNhat}"></td>
+                            <td th:text="${sp.trangThai.moTa}"></td>
                             <td>
                       <span>
-                                      <a th:href="@{/admin/psg/cau-thu/view-update/{id}(id=${ct.id})}"
+                                      <a th:href="@{/admin/psg/san-pham/view-update/{id}(id=${sp.id})}"
                                          class="btn waves-effect waves-light btn-rounded btn-warning"
                                         >Update</a>
-                                    <form th:action="@{/admin/psg/cau-thu/delete/{id}(id=${ct.id})}" method="post"  style="display: inline;">
-                                    <a th:href="@{/admin/psg/cau-thu/delete/{id}(id=${ct.id})}">
+                                    <form th:action="@{/admin/psg/san-pham/delete/{id}(id=${sp.id})}" method="post"  style="display: inline;">
+                                    <a th:href="@{/admin/psg/san-pham/delete/{id}(id=${sp.id})}">
                                         <button type="submit"
                                                 class="btn waves-effect waves-light btn-rounded btn-danger" onclick="return confirm('Bạn có muốn xóa không')">Delete
                                         </button>
@@ -82,16 +80,16 @@
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item" th:if="${currentPage !=0}">
-                                <a class="page-link" th:href="@{'/admin/psg/cau-thu/pageActive/'+${ currentPage - 1}}">Previous</a>
+                                <a class="page-link" th:href="@{'/admin/psg/san-pham/pageActive/'+${ currentPage - 1}}">Previous</a>
                             </li>
                             <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
                                 th:classappend="${currentPage == i - 1 ? 'active' : ''}">
-                                <a class="page-link" th:href="@{'/admin/psg/cau-thu/pageActive/'+${i - 1}}">
+                                <a class="page-link" th:href="@{'/admin/psg/san-pham/pageActive/'+${i - 1}}">
                                     <span th:text="${i}"></span>
                                 </a>
                             </li>
                             <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                                <a class="page-link" th:href="@{'/admin/psg/cau-thu/pageActive/'+${currentPage + 1}}">Next</a>
+                                <a class="page-link" th:href="@{'/admin/psg/san-pham/pageActive/'+${currentPage + 1}}">Next</a>
                             </li>
                         </ul>
                     </nav>

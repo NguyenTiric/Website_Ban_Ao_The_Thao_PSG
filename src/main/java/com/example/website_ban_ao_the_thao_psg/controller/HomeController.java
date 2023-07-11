@@ -26,6 +26,11 @@ public class HomeController {
         return "admin/voucher";
     }
 
+    @GetMapping("/viewadd")
+    public String viewAdd(){
+        return "admin/san_pham/view_add_san_pham";
+    }
+
 
 
 }
