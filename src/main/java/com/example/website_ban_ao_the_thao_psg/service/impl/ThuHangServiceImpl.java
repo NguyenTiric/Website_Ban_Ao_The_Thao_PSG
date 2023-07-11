@@ -9,28 +9,4 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ThuHangServiceImpl implements ThuHangService {
-    @Override
-    public Page<ThuHangResponse> pageThuHangResponse(Integer pageNo, Integer size) {
-        return null;
-    }
-
-    @Override
-    public ThuHangResponse add(CreateThuHangRequest createThuHangRequest) {
-        return null;
-    }
-
-    @Override
-    public ThuHangResponse update(UpdateThuHangRequest updateThuHangRequest) {
-        return null;
-    }
-
-    @Override
-    public ThuHangResponse getOne(Integer id) {
-        return null;
-    }
-
-    @Override
-    public ThuHangResponse delete(UpdateThuHangRequest updateThuHangRequest, Integer id) {
-        return null;
-    }
 }

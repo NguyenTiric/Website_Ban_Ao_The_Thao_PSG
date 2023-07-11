@@ -1,7 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
-import com.example.website_ban_ao_the_thao_psg.controller.MauSacController;
 import com.example.website_ban_ao_the_thao_psg.entity.MauSac;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.MauSacMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateMauSacRequest;
@@ -33,7 +32,6 @@ public class MauSacServiceImpl implements MauSacService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<MauSac> mauSacPage = mauSacRepository.pageACTIVE(pageable);
         return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
-
     }
 
     @Override
@@ -41,7 +39,6 @@ public class MauSacServiceImpl implements MauSacService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<MauSac> mauSacPage = mauSacRepository.pageINACTIVE(pageable);
         return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
-
     }
 
     @Override
@@ -55,6 +52,8 @@ public class MauSacServiceImpl implements MauSacService {
     @Override
     public MauSacResponse update(UpdateMauSacRequest updateMauSacRequest) {
         MauSac mauSac = mauSacMapper.updateMauSacRequestToMauSacEntity(updateMauSacRequest);
+        mauSac.setNgayCapNhat(LocalDate.now());
+        mauSac.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         return mauSacMapper.mauSacEntityToMauSacResponse(mauSacRepository.save(mauSac));
     }
 
@@ -64,28 +63,29 @@ public class MauSacServiceImpl implements MauSacService {
         return mauSacMapper.mauSacEntityToMauSacResponse(mauSacOptional.get());
     }
 
-    @Override
-    public MauSacResponse delete(UpdateMauSacRequest updateMauSacRequest, Integer id) {
-        return null;
-    }
-
 
     @Override
-    public Page<MauSacResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<MauSacResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<MauSac> mauSacPage = mauSacRepository.pageSearch(searchName, pageable);
+        Page<MauSac> mauSacPage = mauSacRepository.pageSearchActive(searchName, pageable);
         return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
-
     }
 
     @Override
-    public void deleteMauSac(Integer id,LocalDate now) {
-        mauSacRepository.delete(id,LocalDate.now());
+    public Page<MauSacResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<MauSac> mauSacPage = mauSacRepository.pageSearchIvActive(searchName, pageable);
+        return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
     }
 
     @Override
-    public void revertMauSac(Integer id,LocalDate now) {
-        mauSacRepository.revert(id,LocalDate.now());
+    public void deleteMauSac(Integer id, LocalDate now) {
+        mauSacRepository.delete(id, LocalDate.now());
+    }
+
+    @Override
+    public void revertMauSac(Integer id, LocalDate now) {
+        mauSacRepository.revert(id, LocalDate.now());
     }
 
 
