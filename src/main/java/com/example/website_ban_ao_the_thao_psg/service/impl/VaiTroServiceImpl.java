@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -87,5 +88,10 @@ public class VaiTroServiceImpl implements VaiTroService {
     @Override
     public void revertVaiTro(Integer id, LocalDate now) {
         vaiTroRepository.revert(id, LocalDate.now());
+    }
+
+    @Override
+    public List<VaiTro> getAll() {
+        return vaiTroRepository.findAll();
     }
 }

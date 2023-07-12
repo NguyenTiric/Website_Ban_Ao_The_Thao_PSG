@@ -1,10 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/fragments_layout_admin}"
+>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <form action="/admin/psg/nhan-vien/update" th:object="${nhanVien}" method="post"
+                  onsubmit="return  confirm('Bạn có cập nhật không?')">
+                <input type="hidden"
+                       th:field="*{id}"/>
+                <label class="form-label">Vai Trò</label>
+                <div class="input-group">
+                    <select class="form-select" aria-label="Default select example" th:field="*{vaiTro}">
+                        <option th:each="tv:${vaiTro}" th:value="${tv.id}" th:text="${tv.ten}"></option>
+                    </select>
+                </div>
+                <br>
+                <br>
+                TÊN: <input type="text" class="form-control custom-shadow custom-radius border-0 bg-white"
+                            th:field="*{ten}"/>
+                <div th:if="${#fields.hasErrors('ten')}" style="color: red" th:errors="*{ten}">loi</div>
+                <br>
+                <br>
+                Địa Chỉ: <input type="text" class="form-control custom-shadow custom-radius border-0 bg-white"
+                                  th:field="*{diaChi}"/>
+                <div th:if="${#fields.hasErrors('diaChi')}" style="color: red" th:errors="*{diaChi}"></div>
+                <br>
+                <br>
+                Số Điện Thoại: <input type="text" class="form-control custom-shadow custom-radius border-0 bg-white"
+                                         th:field="*{sdt}"/>
+                <div th:if="${#fields.hasErrors('sdt')}" style="color: red" th:errors="*{sdt}"></div>
+                <br>
+                <br>
+                Giới Tính:
+                <br>
+                <input type="radio" id="gioiTinhNam" name="gioiTinh" th:value="0"
+                       th:field="*{gioiTinh}"/>
+                <label for="gioiTinhNam">Nam</label>
+                <input type="radio" id="gioiTinhNu" name="gioiTinh" th:value="1"
+                       th:field="*{gioiTinh}"/>
 
+                <label for="gioiTinhNu">Nữ</label>
+                <br>
+                <br>
+                <label>Ngày sinh</label>
+                <input type="date" class="form-control custom-shadow custom-radius border-0 bg-white"
+                       th:field="*{ngaySinh}"/>
+
+                Email: <input type="text" class="form-control custom-shadow custom-radius border-0 bg-white"
+                              th:field="*{email}"/>
+                <div th:if="${#fields.hasErrors('email')}" style="color: red" th:errors="*{email}"></div>
+                <br>
+                <br>
+                <!--                Mật khẩu: <input type="password" class="form-control custom-shadow custom-radius border-0 bg-white"-->
+                <!--                                 th:field="*{matKhau}"/>-->
+                <!--                <div th:if="${#fields.hasErrors('matKhau')}" style="color: red" th:errors="*{matKhau}"></div>-->
+                <br>
+                <br>
+                <button type="submit" class="btn btn-success">Update</button>
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
 </body>
 </html>

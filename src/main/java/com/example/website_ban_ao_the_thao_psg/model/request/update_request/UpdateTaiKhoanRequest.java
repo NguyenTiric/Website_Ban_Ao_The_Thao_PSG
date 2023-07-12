@@ -29,7 +29,7 @@ public class UpdateTaiKhoanRequest {
 
     private Integer id;
 
-    @NotNull(message = "Thứ hạng không để trống")
+//    @NotNull(message = "Thứ hạng không để trống")
     private ThuHang thuHang;
 
     @NotNull(message = "Vai trò không để trống")
@@ -42,7 +42,7 @@ public class UpdateTaiKhoanRequest {
     @NotNull(message = "Giới tính không để trống")
     private Boolean gioiTinh;
 
-    @NotNull(message = "Giới tính không để trống")
+//    @NotNull(message = "Giới tính không để trống")
     private LocalDate ngaySinh;
 
     @NotBlank(message = "Địa chỉ không để trống")
@@ -58,13 +58,13 @@ public class UpdateTaiKhoanRequest {
     @Size(min = 0, max = 225, message = "Email không vượt quá 225 ký tự")
     private String email;
 
-    @NotNull(message = "Số lượng đơn hàng thành công không để trống")
+//    @NotNull(message = "Số lượng đơn hàng thành công không để trống")
     private Integer soLuongDonHangThanhCong;
 
-    @NotBlank(message = "Mật khẩu không để trống")
+//    @NotBlank(message = "Mật khẩu không để trống")
     private String matKhau;
 
-    @NotNull(message = "Số tiền đã chi tiêu không để trống")
+//    @NotNull(message = "Số tiền đã chi tiêu không để trống")
     private BigDecimal soTienDaChiTieu;
 
     private LocalDate ngayTao;

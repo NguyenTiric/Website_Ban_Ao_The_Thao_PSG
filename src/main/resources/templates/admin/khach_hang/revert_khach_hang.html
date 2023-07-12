@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/fragments_layout_admin}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <div layout:fragment="content" class="container">
+
+
+     <div class="row">
+         <div class="col-4">
+             <nav class="navbar bg-body">
+                 <div class="container-fluid">
+                     <form class="d-flex" role="search">
+                         <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                type="search" placeholder="Tìm Theo Tên Và Rank" aria-label="Search">
+                         <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+                     </form>
+                 </div>
+             </nav>
+
+         </div>
+         <div class="col-4">
+             <nav class="navbar bg-body">
+                 <div class="container-fluid">
+                     <form class="d-flex" role="search">
+                         <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                type="date" placeholder="Search" aria-label="Search">
+                         <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+                     </form>
+                 </div>
+             </nav>
+         </div>
+
+
+
+         <div class="col-4" style="padding-top: 7px">
+             <button class="btn btn-rounded btn-primary"><a href="#" data-bs-toggle="modal"  data-bs-target="#login-modal" style="color: white">Thêm Khách Hàng</a></button>
+
+         </div>
+     </div>
+     <div class="table-responsive">
+         <table class="table table-hover">
+             <thead>
+             <tr>
+                 <th scope="col">STT</th>
+                 <th scope="col">Thứ Hang</th>
+                 <th scope="col">Vai Trò</th>
+                 <th scope="col">Họ Tên</th>
+                 <th scope="col">Giới Tính</th>
+                 <th scope="col">Ngày Sinh</th>
+                 <th scope="col">Địa Chỉ</th>
+                 <th scope="col">Số Điện Thoại</th>
+                 <th scope="col">Email</th>
+                 <th scope="col">Chức năng</th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr>
+                 <th scope="row">1</th>
+                 <td><a href="#">Mark</a></td>
+                 <td><a href="#">Otto</a></td>
+                 <td>@mdo</td>
+                 <td>@mdo</td>
+                 <td>@mdo</td>
+                 <td>@mdo</td>
+                 <td>@mdo</td>
+                 <td>@mdo</td>
+                 <td>
+                     <button class="btn btn-rounded btn-warning"><a data-bs-toggle="modal"  data-bs-target="#login-modal1" style="color: white">Cập Nhập</a></button>
+                     <button class="btn btn-rounded btn-danger"><a href="#" style="color: white">Xóa</a></button>
+                 </td>
+
+             </tr>
+             </tbody>
+
+             <!--             -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+             <div id="login-modal1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                 <div class="modal-dialog">
+                     <div class="modal-content">
+                         <div class="modal-body">
+                             <div class="text-center mt-2 mb-4">
+                                 <a href="index.html" class="text-success">
+                                                        <span><img class="me-2" th:src="@{/assets/images/image1.png}"
+                                                                   alt="" width="180"></span>
+                                 </a>
+                             </div>
+
+                             <form action="#" class="ps-3 pe-3">
+
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="form-label" >Họ Tên</label>
+                                        <input class="form-control" type="number" required
+                                               placeholder="Nhập Ho Tên">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label" >Giới Tính</label>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                            <label class="form-check-label" for="inlineRadio1">Nam</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                            <label class="form-check-label" for="inlineRadio2">Nữ</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Ngày Sinh</label>
+                                     <input class="form-control" type="date" required
+                                            placeholder="Nhập Ho Tên">
+                                 </div>
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Địa Chỉ</label>
+                                     <input class="form-control" type="number" required
+                                            placeholder="Nhập Địa Chỉ">
+                                 </div>
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Email</label>
+                                     <input class="form-control" type="text" required
+                                            placeholder="Nhập Email">
+                                 </div>
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Mật Khẩu</label>
+                                     <input class="form-control" type="number" required
+                                            placeholder="Nhập Mật Khẩu">
+                                 </div>
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Trạng Thái</label>
+                                     <div class="form-check form-switch">
+                                         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                     </div>
+                                 </div>
+
+                                 <div class="form-group mb-3 text-center">
+                                     <button class="btn btn-rounded btn-primary" type="submit">Thêm
+                                     </button>
+                                 </div>
+
+                             </form>
+
+                         </div>
+                     </div><!-- /.modal-content -->
+                 </div><!-- /.modal-dialog -->
+             </div>
+
+             <!--             &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+             <div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                 <div class="modal-dialog">
+                     <div class="modal-content">
+                         <div class="modal-body">
+                             <div class="text-center mt-2 mb-4">
+                                 <a href="index.html" class="text-success">
+                                                        <span><img class="me-2" th:src="@{/assets/images/image1.png}"
+                                                                   alt="" width="180"></span>
+                                 </a>
+                             </div>
+
+                             <form action="#" class="ps-3 pe-3">
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Họ Tên</label>
+                                     <input class="form-control" type="number" required
+                                            placeholder="Nhập Ho Tên">
+                                 </div>
+
+
+                                 <div class=" form-group mb-3">
+                                     <label class="form-label" >Giới Tính</label>
+                                     <br>
+                                     <div class="form-check form-check-inline">
+                                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                         <label class="form-check-label" for="inlineRadio1">Nam</label>
+                                     </div>
+                                     <div class="form-check form-check-inline">
+                                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                         <label class="form-check-label" for="inlineRadio2">Nữ</label>
+                                     </div>
+                                 </div>
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Ngày Sinh</label>
+                                     <input class="form-control" type="date" required
+                                            placeholder="Nhập Ho Tên">
+                                 </div>
+
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Địa Chỉ</label>
+                                     <input class="form-control" type="number" required
+                                            placeholder="Nhập Địa Chỉ">
+                                 </div>
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Email</label>
+                                     <input class="form-control" type="text" required
+                                            placeholder="Nhập Email">
+                                 </div>
+                                 <div class="form-group mb-3">
+                                     <label class="form-label" >Mật Khẩu</label>
+                                     <input class="form-control" type="number" required
+                                            placeholder="Nhập Mật Khẩu">
+                                 </div>
+
+
+
+                                 <div class="form-group mb-3 text-center">
+                                     <button class="btn btn-rounded btn-primary" type="submit">Cập Nhập
+                                     </button>
+                                 </div>
+
+                             </form>
+
+                         </div>
+                     </div><!-- /.modal-content -->
+                 </div><!-- /.modal-dialog -->
+             </div>
+         </table>
+         <div class="pagination">
+             <a href="#" class="btn btn-rounded btn-primary">1</a>
+             <a href="#" class="btn btn-rounded">2</a>
+             <a href="#" class="btn btn-rounded">3</a>
+         </div>
+     </div>
+
+ </div>
+</body>
+</html>
