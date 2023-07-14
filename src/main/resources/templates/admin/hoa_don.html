@@ -8,10 +8,193 @@
     <title>Title</title>
 </head>
 <body>
- <div>
-   <p layout:fragment="content">
-     Hóa Đơn
-   </p>
- </div>
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <div class="col-4">
+            <li class="nav-item d-none d-md-block">
+                <a class="nav-link" href="javascript:void(0)">
+                    <nav class="navbar bg-body">
+                        <div class="container-fluid">
+                            <form class="d-flex" role="search" action="/admin/psg/hoa-don/search" method="get">
+                                <input name="searchNameOrMa"
+                                       class="form-control custom-shadow custom-radius border-0 bg-white"
+                                       type="search" placeholder="Tìm đơn hàng" aria-label="Search">
+                                <button class="btn btn-rounded btn-primary" type="submit" style="margin-left: 7px">
+                                    Search
+                                </button>
+                            </form>
+                        </div>
+                    </nav>
+                </a>
+            </li>
+        </div>
+        <div class="col-8">
+            <a class="nav-link" href="javascript:void(0)">
+                <div class="container-fluid">
+                    <form class="d-flex" role="search" action="/admin/psg/hoa-don/search-by-date" method="get">
+                        <label style="padding-top: 15px">Từ ngày</label>
+                        <input name="beginDate" class="form-control custom-shadow custom-radius border-0 bg-white"
+                               type="date"
+                               style="margin-left: 7px;height: 2rem;margin-top: 8px;width: 11rem;margin-right: 7px;">
+                        <label style="padding-top: 15px">Đến ngày</label>
+                        <input name="endDate" class="form-control custom-shadow custom-radius border-0 bg-white"
+                               type="date" style="margin-left: 7px;height: 2rem;margin-top: 8px;width: 11rem;">
+                        <button class="btn btn-rounded btn-primary" type="submit"
+                                style="margin-top: 6px;margin-left: 8px">Sort
+                        </button>
+                    </form>
+                </div>
+            </a>
+        </div>
+        <div class="col-3">
+            <div class="d-flex justify-content-center">
+                <div class="order-status">
+                    <div class="row" style="margin-top: 5px">
+                        <div class="col-5">
+                            <label style="margin-top: 7px;">Trạng thái</label>
+                        </div>
+                        <div class="col-7">
+                            <select name="trangThai" class="form-select custom-shadow custom-radius border-0 bg-white">
+                                <option value="ALL">Tất cả</option>
+                                <option value="PENDING">Đang chờ xác nhận</option>
+                                <option value="CONFIRMED">Đã xác nhận</option>
+                                <option value="SHIPPING">Đang vận chuyển</option>
+                                <option value="CANCELLED">Đã hủy</option>
+                                <option value="APPROVED">Đã hoàn thành</option>
+                                <option value="REVERSE">Đã trả hàng</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="d-flex justify-content-center">
+                <div class="order-status">
+                    <div class="row" style="margin-top: 5px">
+                        <div class="col-5">
+                            <label style="margin-top: 7px;">Loại đơn</label>
+                        </div>
+                        <div class="col-7">
+                            <select name="trangThai" class="form-select custom-shadow custom-radius border-0 bg-white">
+                                <option value="ALL">Tất cả</option>
+                                <option value="CONFIRMED">Tại quầy</option>
+                                <option value="SHIPPING">Trên web</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="d-flex justify-content-center">
+                <div class="order-status">
+                    <div class="row" style="margin-top: 5px">
+                        <div class="col-5">
+                            <label style="margin-top: 7px;">Xắp xếp</label>
+                        </div>
+                        <div class="col-7">
+                            <select name="trangThai" class="form-select custom-shadow custom-radius border-0 bg-white">
+                                <option value="ALL">Mặc đinh</option>
+                                <option value="CONFIRMED">Giá trị giảm dần</option>
+                                <option value="CONFIRMED">Giá trị tăng dần</option>
+                                <option value="SHIPPING">Mới nhất</option>
+                                <option value="SHIPPING">Cũ nhất</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="d-flex justify-content-center">
+                <div class="order-status">
+                    <div class="row" style="margin-top: 5px">
+                        <div class="col-5">
+                            <label style="margin-top: 7px;">Hiển thị</label>
+                        </div>
+                        <div class="col-7">
+                            <select name="trangThai" class="form-select custom-shadow custom-radius border-0 bg-white">
+                                <option value="ALL">10</option>
+                                <option value="CONFIRMED">15</option>
+                                <option value="CONFIRMED">20</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Danh Sách Hóa Đơn</h4>
+            <div class="tab-content">
+                <div class="tab-pane show active" id="home-b1">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col" class="th-sm">Mã Đơn Hàng</th>
+                            <th scope="col">Tổng Tiền</th>
+                            <th scope="col">Khách Hàng</th>
+                            <th scope="col">Số Điện Thoại</th>
+                            <th scope="col">Ngày Tạo</th>
+                            <th scope="col">Loại Đơn</th>
+                            <th scope="col">Trạng Thái</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>@mdo</td>
+                            <td>@mdo</td>
+                            <td>@mdo</td>
+                            <td><a href="#" class="btn waves-effect waves-light btn-rounded btn-warning"
+                                   data-bs-toggle="modal" data-bs-target="#login-modal">Warning</a>
+                                <a href="#"
+                                   class="btn waves-effect waves-light btn-rounded btn-danger">Danger</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div> <!-- end card-body-->
+    </div> <!-- end card-->
+
+    <!--    <div id="update-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">-->
+    <!--        <div class="modal-dialog">-->
+    <!--            <div class="modal-content">-->
+    <!--                <div class="modal-body">-->
+    <!--                    <div class="text-center mt-2 mb-4">-->
+    <!--                        <a href="#" class="text-success">-->
+    <!--                        <span><img class="me-2" th:src="@{/assets/images/image1.png}" alt=""-->
+    <!--                                   width="180"></span>-->
+    <!--                        </a>-->
+    <!--                    </div>-->
+    <!--                    <form th:action="@{/admin/psg/mau-sac/update}"-->
+    <!--                          th:object="${mauSacUpdate}" method="post">-->
+    <!--                        <div class="form-group mb-3">-->
+    <!--                            <label class="form-label">Mã Màu</label>-->
+    <!--                            <input class="form-control" type="color" th:field="*{ma}">-->
+    <!--                        </div>-->
+    <!--                        <div class="form-group mb-3">-->
+    <!--                            <label class="form-label">Tên</label>-->
+    <!--                            <input class="form-control" type="text" th:field="*{ten}">-->
+    <!--                        </div>-->
+    <!--                        <div class="form-group mb-3 text-center">-->
+    <!--                            <button class="btn btn-rounded btn-primary" type="submit">Update</button>-->
+    <!--                        </div>-->
+    <!--                    </form>-->
+    <!--                </div>-->
+    <!--            </div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+    <!--        </div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+    <!--    </div>-->
+</div>
+
 </body>
 </html>
