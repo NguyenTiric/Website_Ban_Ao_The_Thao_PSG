@@ -52,8 +52,7 @@ public class ThuongHieuMapperImpl implements ThuongHieuMapper {
     @Override
     public List<ThuongHieuResponse> listThuongHieuEntityToThuongHieuResponse(List<ThuongHieu> thuongHieuList) {
         List<ThuongHieuResponse> list = new ArrayList<>(thuongHieuList.size());
-        for (ThuongHieu th : thuongHieuList
-             ) {
+        for (ThuongHieu th : thuongHieuList) {
             list.add(thuongHieuEntityToThuongHieuResponse(th));
         }
         return list;
