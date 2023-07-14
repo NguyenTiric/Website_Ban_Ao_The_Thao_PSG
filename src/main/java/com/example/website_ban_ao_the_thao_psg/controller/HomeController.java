@@ -10,7 +10,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(){
-        return "admin/san_pham";
+        return "fragments/fragments_layout_admin";
     }
     @GetMapping("/hoa-don")
     public String hoaDon(){

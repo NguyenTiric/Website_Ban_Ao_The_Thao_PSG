@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/fragments_layout_admin}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <div class="col-8">
+            <li class="nav-item d-none d-md-block">
+                <a class="nav-link" href="javascript:void(0)">
+                    <nav class="navbar bg-body">
+                        <div class="container-fluid">
+                            <form class="d-flex" role="search" action="/admin/psg/thu-hang/searchActive/0" method="get">
+                                <input name="searchNameOrMa"
+                                       class="form-control custom-shadow custom-radius border-0 bg-white"
+                                       type="search" placeholder="Search" aria-label="Search">&nbsp;
+                                <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </nav>
+                </a>
+            </li>
+        </div>
+        <div class="col-2">
+            <a href="/admin/psg/thu-hang/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">Thêm thứ
+                hạng</a>
+        </div>
+        <div class="col-2">
+            <a href="/admin/psg/thu-hang/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">Xem
+                tắt hoạt động</a>
+        </div>
+
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Danh Sách</h4>
+            <div class="tab-content">
+                <div class="tab-pane show active" id="home">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Mã</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Tiền tối thiểu</th>
+                            <th scope="col">Đơn hàng tối thiểu</th>
+                            <th scope="col">Trạng Thái</th>
+                            <th scope="col">Hành Động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="th, index:${listThuHangActive}">
+                            <td th:text="${index.count} + ${currentPage * size - size} +3"></td>
+                            <td th:text="${th.ma}"></td>
+<!--                            <td th:text="${th.ten}"></td>-->
+                            <td>
+                                <span th:if="${th.ten == 'MEMBER'}">Thành viên</span>
+                                <span th:unless="${th.ten == 'MEMBER'}" th:remove="tag"></span>
+                                <span th:if="${th.ten == 'SILVER'}">Bạc</span>
+                                <span th:unless="${th.ten == 'SILVER'}" th:remove="tag"></span>
+                            </td>
+                            <td th:text="${th.soTienKhachChiToiThieu}"></td>
+                            <td th:text="${th.soLuongDonHangToiThieu}"></td>
+                            <td th:text="${th.trangThai.moTa}"></td>
+                            <td>
+                      <span>
+                                      <a th:href="@{/admin/psg/thu-hang/view-update/{id}(id=${th.id})}"
+                                         class="btn waves-effect waves-light btn-rounded btn-warning"
+                                      >Sửa</a>
+                                    <form th:action="@{/admin/psg/thu-hang/delete/{id}(id=${th.id})}" method="post"
+                                          style="display: inline;">
+                                    <a th:href="@{/admin/psg/thu-hang/delete/{id}(id=${th.id})}">
+                                        <button type="submit"
+                                                class="btn waves-effect waves-light btn-rounded btn-danger"
+                                                onclick="return confirm('Bạn có muốn xóa không')">Xóa
+                                        </button>
+                                    </a>
+                                </form>
+                      </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--                    -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+<!--                    <div class="pagination">-->
+<!--                        <li class="page-item" th:if="${currentPage !=0}">-->
+<!--                            <a class="btn btn-rounded border border-primary-subtle "-->
+<!--                               th:href="@{'/admin/psg/thu-hang/pageActive/'+${ currentPage - 1}}">Previous</a>&nbsp;-->
+<!--                        </li>-->
+<!--                        <li class="page-item" th:if="${currentPage == 0}">-->
+<!--                            <a th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage}}"-->
+<!--                               class="btn btn-rounded border border-primary-subtle active">-->
+<!--                                <span th:text="${currentPage + 1}"></span>-->
+<!--                            </a>&nbsp;-->
+<!--                            <a th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage + 1}}"-->
+<!--                               class="btn btn-rounded border border-primary-subtle">-->
+<!--                                <span th:text="${currentPage + 2}"></span>-->
+<!--                            </a>&nbsp;-->
+<!--                            <a th:href="@{'/admin/psg/thu-hang/pageActive/'+${totalPages - 1}}"-->
+<!--                               class="btn btn-rounded border border-primary-subtle">-->
+<!--                                <span th:text="${totalPages}"></span>-->
+<!--                            </a>&nbsp;-->
+<!--                        </li>-->
+<!--                        <li class="page-item" th:if="${currentPage != 0 && currentPage != totalPages - 1}">-->
+<!--                            <a th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage - 1}}"-->
+<!--                               class="btn btn-rounded border border-primary-subtle">-->
+<!--                                <span th:text="${currentPage}"></span>-->
+<!--                            </a>&nbsp;-->
+<!--                            <a th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage}}"-->
+<!--                               class="btn btn-rounded border border-primary-subtle active">-->
+<!--                                <span th:text="${currentPage + 1}"></span>-->
+<!--                            </a>&nbsp;-->
+<!--                            <a th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage + 1}}"-->
+<!--                               class="btn btn-rounded border border-primary-subtle">-->
+<!--                                <span th:text="${currentPage + 2}"></span>-->
+<!--                            </a>&nbsp;-->
+<!--                        </li>-->
+<!--                        <li class="page-item" th:if="${currentPage == totalPages - 1}">-->
+<!--                            <a th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage - 1}}"-->
+<!--                               class="btn btn-rounded border border-primary-subtle">-->
+<!--                                <span th:text="${currentPage}"></span>-->
+<!--                            </a>&nbsp;-->
+<!--                            <a th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage}}"-->
+<!--                               class="btn btn-rounded border border-primary-subtle active">-->
+<!--                                <span th:text="${currentPage + 1}"></span>-->
+<!--                            </a>&nbsp;-->
+<!--                            <a th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage + 1}}"-->
+<!--                               class="btn btn-rounded border border-primary-subtle">-->
+<!--                                <span th:text="${totalPages}"></span>-->
+<!--                            </a>&nbsp;-->
+<!--                        </li>-->
+<!--                        <li class="page-item" th:if="${currentPage + 1 != totalPages}">-->
+<!--                            <a th:href="@{'/admin/psg/thu-hang/pageActive/'+${ currentPage + 1}}"-->
+<!--                               class="btn btn-rounded border border-primary-subtle">Next</a>-->
+<!--                        </li>-->
+<!--                    </div>-->
+<!--                  --------------------------------------------------------------------------------------                -->
+<!--                    <nav aria-label="Page navigation example">-->
+<!--                        <ul class="pagination">-->
+<!--                            <li class="page-item" th:if="${currentPage != 0}">-->
+<!--                                <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage - 1}}">Previous</a>-->
+<!--                            </li>-->
+<!--                            <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}" th:classappend="${currentPage == i - 1 ? 'active' : ''}">-->
+<!--                                <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${i - 1}}">-->
+<!--                                    <span th:text="${i}" th:if="${i == 1 || i == totalPages || (i >= currentPage - 1 && i <= currentPage + 2)}"></span>-->
+<!--                                    <span th:if="${i == currentPage + 3 && currentPage < totalPages - 4}">...</span>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li class="page-item" th:if="${currentPage + 1 != totalPages}">-->
+<!--                                <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage + 1}}">Next</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </nav>-->
+
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item" th:if="${currentPage != 0}">
+                                <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage - 1}}">Previous</a>
+                            </li>
+                            <li class="page-item" th:if="${currentPage > 1}">
+                                <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/0'}">1</a>
+                            </li>
+                            <li class="page-item" th:if="${currentPage > 2}">
+                                <span class="page-link">...</span>
+                            </li>
+                            <li class="page-item active">
+                                <span class="page-link" th:text="${currentPage + 1}"></span>
+                            </li>
+                            <li class="page-item" th:if="${currentPage + 2 < totalPages}">
+                                <span class="page-link">...</span>
+                            </li>
+                            <li class="page-item" th:if="${currentPage + 1 != totalPages}">
+                                <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${totalPages - 1}}"><b th:text="${totalPages}"></b></a>
+                            </li>
+                            <li class="page-item" th:if="${currentPage + 1 != totalPages}">
+                                <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage + 1}}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+
+                    <!--                    --------------------------------------------------------------------------------------------------- -->
+<!--                                        <nav aria-label="Page navigation example">-->
+<!--                                            <ul class="pagination">-->
+<!--                                                <li class="page-item" th:if="${currentPage !=0}">-->
+<!--                                                    <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage - 1}}">Previous</a>-->
+<!--                                                </li>-->
+<!--                                                <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"-->
+<!--                                                    th:classappend="${currentPage == i - 1 ? 'active' : ''}">-->
+<!--                                                    <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${i - 1}}">-->
+<!--                                                        <span th:text="${i}"></span>-->
+<!--                                                    </a>-->
+<!--                                                </li>-->
+<!--                                                <li class="page-item" th:if="${currentPage + 1 != totalPages}">-->
+<!--                                                    <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage + 1}}">Next</a>-->
+<!--                                                </li>-->
+<!--                                            </ul>-->
+<!--                                        </nav>-->
+<!--                    ----------------------------------------------------------------------------                  -->
+                </div>
+            </div>
+        </div> <!-- end card-body-->
+    </div>
+</div>
+</body>
+</html>
