@@ -13,10 +13,18 @@ import com.example.website_ban_ao_the_thao_psg.service.ChiTietSanPhamService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
+
     @Override
-    public Page<ChiTietSanPhamResponse> pageChiTietSanPhamResponse(Integer pageNo, Integer size) {
+    public Page<ChiTietSanPhamResponse> pageChiTietSanPhamActive(Integer pageNo, Integer size) {
+        return null;
+    }
+
+    @Override
+    public Page<ChiTietSanPhamResponse> pageChiTietSanPhamInActive(Integer pageNo, Integer size) {
         return null;
     }
 
@@ -36,12 +44,32 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
-    public ChiTietSanPhamResponse deleteCtsp(UpdateChiTietSanPhamRequest updateChiTietSanPhamRequest, Integer id) {
+    public Page<ChiTietSanPhamResponse> searchNameOrMaActiveCtsp(String searchName, Integer pageNo, Integer size) {
         return null;
     }
 
     @Override
-    public Page<SanPhamResponse> pageSanPhamResponse(Integer pageNo, Integer size) {
+    public Page<ChiTietSanPhamResponse> searchNameOrMaInActiveCtsp(String searchName, Integer pageNo, Integer size) {
+        return null;
+    }
+
+    @Override
+    public void deleteChiTietSanPham(Integer id, LocalDate now) {
+
+    }
+
+    @Override
+    public void revertChiTietSanPham(Integer id, LocalDate now) {
+
+    }
+
+    @Override
+    public Page<SanPhamResponse> pageSanPhamActive(Integer pageNo, Integer size) {
+        return null;
+    }
+
+    @Override
+    public Page<SanPhamResponse> pageSanPhamInActive(Integer pageNo, Integer size) {
         return null;
     }
 
@@ -56,32 +84,27 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
-    public SanPhamResponse getOneSP(Integer id) {
+    public SanPhamResponse getOneSp(Integer id) {
         return null;
     }
 
     @Override
-    public SanPhamResponse deleteSp(UpdateSanPhamRequest updateSanPhamRequest, Integer id) {
+    public Page<SanPhamResponse> searchNameOrMaActiveSp(String searchName, Integer pageNo, Integer size) {
         return null;
     }
 
     @Override
-    public AnhSanPhamResponse addAsp(CreateAnhSanPhamRequest createAnhSanPhamRequest) {
+    public Page<SanPhamResponse> searchNameOrMaInActiveSp(String searchName, Integer pageNo, Integer size) {
         return null;
     }
 
     @Override
-    public AnhSanPhamResponse updateAsp(UpdateAnhSanPhamRequest updateAnhSanPhamRequest) {
-        return null;
+    public void deleteSanPham(Integer id, LocalDate now) {
+
     }
 
     @Override
-    public AnhSanPhamResponse getOneAsp(Integer id) {
-        return null;
-    }
+    public void revertSanPham(Integer id, LocalDate now) {
 
-    @Override
-    public AnhSanPhamResponse deleteSp(UpdateAnhSanPhamRequest updateAnhSanPhamRequest, Integer id) {
-        return null;
     }
 }

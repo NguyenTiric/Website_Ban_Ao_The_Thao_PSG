@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/fragments_layout_admin}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <div class="col-8">
+            <li class="nav-item d-none d-md-block">
+        <a class="nav-link" href="javascript:void(0)">
+            <nav class="navbar bg-body">
+                <div class="container-fluid">
+                    <form class="d-flex" role="search" action="/admin/psg/nuoc-san-xuat/searchActive/0" method="get">
+                        <input name="searchNameOrMa" class="form-control custom-shadow custom-radius border-0 bg-white"
+                               type="search" placeholder="Search Tên Or Mã" aria-label="Search">
+                        <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+        </a>
+    </li>
+        </div>
+        <div class="col-2">
+            <a href="/admin/psg/nuoc-san-xuat/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">View Add</a>
+        </div>
+        <div class="col-2">
+            <a href="/admin/psg/nuoc-san-xuat/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">View Revert</a>
+        </div>
+    </div>
+
+    <div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-4">
+                        <a href="index.html" class="text-success">
+                                                        <span><img class="me-2" src="../assets/images/logo-icon.png"
+                                                                   alt="" height="18"></span>
+                        </a>
+                    </div>
+
+                    <form action="/admin/psg/nuoc-san-xuat/add" th:object="${nuocSanXuat}" method="post" onsubmit="return  confirm('Bạn có thêm không?')">
+                        <div class="form-group mb-3">
+                            <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                                    id="tenNuocSanXuat"
+                                    type="text" placeholder="Nhập tên nước sản xuất" th:field="*{ten}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px" th:errors="*{ten}"></span>
+                        </div>
+                        <div class="form-group mb-3 text-center">
+                            <a href="/admin/psg/nuoc-san-xuat/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Back</a>
+                            <button class="btn btn-rounded btn-primary" type="submit">Add</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="btn-list">
+        <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                data-bs-target="#login-modal">Add</button>
+    </div>
+
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Danh Sách</h4>
+            <div class="tab-content">
+                <div class="tab-pane show active" id="home">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Mã</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Ngày Tạo</th>
+                            <th scope="col">Ngày Cập Nhật</th>
+                            <th scope="col">Trạng Thái</th>
+                            <th scope="col">Hành Động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="nuoc,index:${listNuocSanXuatActive}">
+                            <td th:text="${index.count}"></td>
+                            <td th:text="${nuoc.ma}"></td>
+                            <td th:text="${nuoc.ten}"></td>
+                            <td th:text="${nuoc.ngayTao}"></td>
+                            <td th:text="${nuoc.ngayCapNhat}"></td>
+                            <td th:text="${nuoc.trangThai.moTa}"></td>
+                            <td>
+                      <span>
+                                      <a th:href="@{/admin/psg/nuoc-san-xuat/view-update/{id}(id=${nuoc.id})}"
+                                         class="btn waves-effect waves-light btn-rounded btn-warning"
+                                        >Update</a>
+                                    <form th:action="@{/admin/psg/nuoc-san-xuat/delete/{id}(id=${nuoc.id})}" method="post"  style="display: inline;">
+                                    <a th:href="@{/admin/psg/nuoc-san-xuat/delete/{id}(id=${nuoc.id})}">
+                                        <button type="submit"
+                                                class="btn waves-effect waves-light btn-rounded btn-danger" onclick="return confirm('Bạn có muốn xóa không')">Delete
+                                        </button>
+                                    </a>
+                                </form>
+                      </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item" th:if="${currentPage !=0}">
+                                <a class="page-link" th:href="@{'/admin/psg/nuoc-san-xuat/pageActive/'+${currentPage - 1}}">Previous</a>
+                            </li>
+                            <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
+                                th:classappend="${currentPage == i - 1 ? 'active' : ''}">
+                                <a class="page-link" th:href="@{'/admin/psg/nuoc-san-xuat/pageActive/'+${i - 1}}">
+                                    <span th:text="${i}"></span>
+                                </a>
+                            </li>
+                            <li class="page-item" th:if="${currentPage + 1 != totalPages}">
+                                <a class="page-link" th:href="@{'/admin/psg/nuoc-san-xuat/pageActive/'+${currentPage + 1}}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div> <!-- end card-body-->
+    </div>
+</div>
+</body>
+</html>

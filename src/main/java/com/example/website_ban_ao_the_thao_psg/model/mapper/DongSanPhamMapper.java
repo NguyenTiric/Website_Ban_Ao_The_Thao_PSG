@@ -19,5 +19,5 @@ public interface DongSanPhamMapper {
 
     DongSanPham updateDongSanPhamRequestToDongSanPhamEntity(UpdateDongSanPhamRequest updateDongSanPhamRequest);
 
-    List<DongSanPham> listDongSanPhamEntityToDongSanPhamResponse(List<DongSanPham> dongSanPhamList);
+    List<DongSanPhamResponse> listDongSanPhamEntityToDongSanPhamResponse(List<DongSanPham> dongSanPhamList);
 }

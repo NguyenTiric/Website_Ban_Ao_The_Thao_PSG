@@ -36,7 +36,7 @@ public class UpdateTaiKhoanRequest {
     private VaiTro vaiTro;
 
     @NotBlank(message = "Tên không để trống")
-    @Size(min = 1, max = 45, message = "Tên không vượt quá 45 ký tự")
+    @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")
     private String ten;
 
     @NotNull(message = "Giới tính không để trống")
@@ -46,16 +46,16 @@ public class UpdateTaiKhoanRequest {
     private LocalDate ngaySinh;
 
     @NotBlank(message = "Địa chỉ không để trống")
-    @Size(min = 1, max = 225, message = "Địa chỉ không vượt quá 225 ký tự")
+    @Size(min = 0, max = 225, message = "Địa chỉ không vượt quá 225 ký tự")
     private String diaChi;
 
     @NotNull(message = "Email không để trống")
-    @Size(min = 1, max = 10, message = "Số điện thoại không vượt quá 10 ký tự")
+    @Size(min = 0, max = 10, message = "Số điện thoại không vượt quá 10 ký tự")
     @Pattern(regexp = "\\d{10}", message = "Số điện thoại không hợp lệ")
     private String sdt;
 
     @NotBlank(message = "Email không để trống")
-    @Size(min = 1, max = 225, message = "Email không vượt quá 225 ký tự")
+    @Size(min = 0, max = 225, message = "Email không vượt quá 225 ký tự")
     private String email;
 
     @NotNull(message = "Số lượng đơn hàng thành công không để trống")

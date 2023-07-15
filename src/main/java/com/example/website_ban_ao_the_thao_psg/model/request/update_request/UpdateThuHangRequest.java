@@ -32,11 +32,11 @@ public class UpdateThuHangRequest {
     private TenThuHang ten;
 
     @NotNull(message = "Số tiền chi tiêu tối thiểu không để trống")
-    @Min(value = 0, message = "Số tiền chi tiêu tối thiểu là số nguyên")
+    @Min(value = 1, message = "Số tiền chi tiêu tối thiểu là số nguyên")
     private BigDecimal soTienKhachChiToiThieu;
 
     @NotNull(message = "Số lượng đơn hàng thành công không để trống")
-    @Min(value = 0, message = "Số lượng đơn hàng tối thiểu là số nguyên")
+    @Min(value = 1, message = "Số lượng đơn hàng tối thiểu là số nguyên")
     private Integer soLuongDonHangToiThieu;
 
     @Enumerated(EnumType.STRING)
