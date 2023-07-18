@@ -28,7 +28,7 @@
     <div class="row">
 
 
-        <form action="/admin/psg/nhan-vien/add" th:object="${nhanVien}" method="post"
+        <form action="/admin/psg/khach-hang/update" th:object="${khachHang}" method="post"
               onsubmit="return confirm('Bạn có thêm không?')">
             <div class="row">
                 <div class="col-4">
@@ -95,15 +95,15 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <label class="form-label">Mật Khẩu</label>
-                        <input type="password" class="form-control custom-shadow custom-radius border-0 bg-white"
-                               th:field="*{matKhau}"/>
-                        <div th:if="${#fields.hasErrors('matKhau')}" style="color: red" th:errors="*{matKhau}"></div>
-                    </div>
+                    <!--                    <div class="row">-->
+                    <!--                        <label class="form-label">Mật Khẩu</label>-->
+                    <!--                        <input type="password" class="form-control custom-shadow custom-radius border-0 bg-white"-->
+                    <!--                               th:field="*{matKhau}"/>-->
+                    <!--                        <div th:if="${#fields.hasErrors('matKhau')}" style="color: red" th:errors="*{matKhau}"></div>-->
+                    <!--                    </div>-->
 
-              <br><br>
-                    <button type="submit" class="btn btn-success" style="text-align: center">ADD</button>
+                    <br><br>
+                    <button type="submit" class="btn btn-success" style="text-align: center">Sửa</button>
                 </div>
 
             </div>

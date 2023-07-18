@@ -5,7 +5,6 @@ import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.VaiTro;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -17,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,14 +27,13 @@ import java.time.LocalDate;
 @Setter
 @Builder
 @ToString
-public class CreateTaiKhoanRequest {
+public class CreateNhanVienRequest {
 
     private Integer id;
 
-    //    @NotNull(message = "Thứ hạng không để trống")
     private ThuHang thuHang;
 
-    @NotNull(message = "Vai trò không để trống")
+//    @NotNull(message = "Vai trò không để trống")
     private VaiTro vaiTro;
 
     @NotBlank(message = "Tên không để trống")
@@ -44,14 +43,15 @@ public class CreateTaiKhoanRequest {
     @NotNull(message = "Giới tính không để trống")
     private Boolean gioiTinh;
 
-    //    @NotNull(message = "Giới tính không để trống")
+//    @NotNull(message = "Giới tính không để trống")
+//@DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate ngaySinh;
 
     @NotBlank(message = "Địa chỉ không để trống")
     @Size(min = 0, max = 225, message = "Địa chỉ không vượt quá 225 ký tự")
     private String diaChi;
 
-    @NotNull(message = "Email không để trống")
+    @NotBlank(message = "Email không để trống")
     @Size(min = 0, max = 10, message = "Số điện thoại không vượt quá 10 ký tự")
     @Pattern(regexp = "\\d{10}", message = "Số điện thoại không hợp lệ")
     private String sdt;
@@ -60,13 +60,13 @@ public class CreateTaiKhoanRequest {
     @Size(min = 0, max = 225, message = "Email không vượt quá 225 ký tự")
     private String email;
 
-    //    @NotNull(message = "Số lượng đơn hàng thành công không để trống")
+    private MultipartFile anh;
+
     private Integer soLuongDonHangThanhCong;
 
     @NotBlank(message = "Mật khẩu không để trống")
     private String matKhau;
 
-    //    @NotNull(message = "Số tiền đã chi tiêu không để trống")
     private BigDecimal soTienDaChiTieu;
 
     private LocalDate ngayTao;

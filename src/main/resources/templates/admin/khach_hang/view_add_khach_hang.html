@@ -28,7 +28,7 @@
     <div class="row">
 
 
-        <form action="/admin/psg/nhan-vien/add" th:object="${nhanVien}" method="post"
+        <form action="/admin/psg/khach-hang/add" th:object="${khachHang}" method="post"
               onsubmit="return confirm('Bạn có thêm không?')">
             <div class="row">
                 <div class="col-4">
@@ -102,7 +102,7 @@
                         <div th:if="${#fields.hasErrors('matKhau')}" style="color: red" th:errors="*{matKhau}"></div>
                     </div>
 
-              <br><br>
+                    <br><br>
                     <button type="submit" class="btn btn-success" style="text-align: center">ADD</button>
                 </div>
 

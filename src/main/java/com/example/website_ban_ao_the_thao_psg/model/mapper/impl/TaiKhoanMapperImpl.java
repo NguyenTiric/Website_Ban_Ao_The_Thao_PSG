@@ -1,12 +1,12 @@
 package com.example.website_ban_ao_the_thao_psg.model.mapper.impl;
 
 import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
-import com.example.website_ban_ao_the_thao_psg.entity.ThuongHieu;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.TaiKhoanMapper;
-import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateTaiKhoanRequest;
-import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateTaiKhoanRequest;
+import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateKhachHangRequest;
+import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNhanVienRequest;
+import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateKhachHangRequest;
+import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateNhanVienRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.TaiKhoanResponse;
-import com.example.website_ban_ao_the_thao_psg.model.response.ThuongHieuResponse;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,16 +36,30 @@ public class TaiKhoanMapperImpl implements TaiKhoanMapper {
     }
 
     @Override
-    public TaiKhoan createTaiKhoanRequestToTaiKhoanEntity(CreateTaiKhoanRequest createTaiKhoanRequest) {
+    public TaiKhoan createTaiKhoanRequestToTaiKhoanEntity(CreateNhanVienRequest createTaiKhoanRequest) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
         TaiKhoan taiKhoan=modelMapper.map(createTaiKhoanRequest,TaiKhoan.class);
         return taiKhoan;
     }
 
     @Override
-    public TaiKhoan updateTaiKhoanRequestToTaiKhoanEntity(UpdateTaiKhoanRequest updateTaiKhoanRequest) {
+    public TaiKhoan updateTaiKhoanRequestToTaiKhoanEntity(UpdateNhanVienRequest updateNhanVienRequest) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        TaiKhoan taiKhoan=modelMapper.map(updateTaiKhoanRequest,TaiKhoan.class);
+        TaiKhoan taiKhoan=modelMapper.map(updateNhanVienRequest,TaiKhoan.class);
+        return taiKhoan;
+    }
+
+    @Override
+    public TaiKhoan createTaiKhoanRequestToTaiKhoanEntity(CreateKhachHangRequest createKhachHangRequest) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        TaiKhoan taiKhoan=modelMapper.map(createKhachHangRequest,TaiKhoan.class);
+        return taiKhoan;
+    }
+
+    @Override
+    public TaiKhoan updateTaiKhoanRequestToTaiKhoanEntity(UpdateKhachHangRequest updateKhachHangRequest) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        TaiKhoan taiKhoan=modelMapper.map(updateKhachHangRequest,TaiKhoan.class);
         return taiKhoan;
     }
 

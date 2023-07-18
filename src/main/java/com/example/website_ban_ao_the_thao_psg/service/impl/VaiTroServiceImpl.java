@@ -92,6 +92,6 @@ public class VaiTroServiceImpl implements VaiTroService {
 
     @Override
     public List<VaiTro> getAll() {
-        return vaiTroRepository.findAll();
+        return vaiTroRepository.getAll();
     }
 }
