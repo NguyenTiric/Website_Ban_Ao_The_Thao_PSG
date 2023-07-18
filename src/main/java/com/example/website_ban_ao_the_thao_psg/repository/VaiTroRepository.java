@@ -37,7 +37,8 @@ public interface VaiTroRepository extends JpaRepository<VaiTro,Integer> {
     @Query(value = "update VaiTro m set m.trangThai = 'ACTIVE', m.ngayCapNhap= :now where m.id = :id")
     void revert(@Param("id") Integer id, @Param("now") LocalDate now);
 
-    @Query(value = "select * from vai_tro where trang_thai='ACTIVE'", nativeQuery = true)
+    @Query(value = "SELECT * FROM vai_tro vt WHERE vt.trang_thai = 'ACTIVE' AND vt.ten <> 'Khách hàng'", nativeQuery = true)
+
     List<VaiTro> getAll();
 
 

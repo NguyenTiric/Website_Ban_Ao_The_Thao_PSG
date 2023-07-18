@@ -28,11 +28,12 @@
     <div class="row">
 
 
-        <form action="/admin/psg/nhan-vien/update" th:object="${nhanVien}" method="post"
+        <form action="/admin/psg/nhan-vien/update" th:object="${nhanVien}" method="post" enctype="multipart/form-data"
               onsubmit="return confirm('Bạn có thêm không?')">
+            <input type="hidden" th:field="*{id}">
             <div class="row">
                 <div class="col-4">
-                    <img src="" alt="" id="image" class="form-control" width="200px" height="200px">
+                    <img th:src="@{'/image/' + ${nhanVien.anh}}" alt="" id="image" class="form-control" width="200px" height="200px">
                     <input type="file" th:field="*{anh}" id="imageFile" onchange="chooseFile(this)">
                 </div>
 

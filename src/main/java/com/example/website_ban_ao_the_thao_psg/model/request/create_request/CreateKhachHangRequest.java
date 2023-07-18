@@ -43,7 +43,7 @@ public class CreateKhachHangRequest {
     @NotNull(message = "Giới tính không để trống")
     private Boolean gioiTinh;
 
-    @NotNull(message = "Giới tính không để trống")
+    @NotNull(message = "Ngày Sinh không để trống")
     private LocalDate ngaySinh;
 
     @NotBlank(message = "Địa chỉ không để trống")
@@ -59,7 +59,7 @@ public class CreateKhachHangRequest {
     @Size(min = 0, max = 225, message = "Email không vượt quá 225 ký tự")
     private String email;
 
-    @Column(name = "anh")
+//    @Column(name = "anh")
     private MultipartFile anh;
 
     @NotNull(message = "Số lượng đơn hàng thành công không để trống")

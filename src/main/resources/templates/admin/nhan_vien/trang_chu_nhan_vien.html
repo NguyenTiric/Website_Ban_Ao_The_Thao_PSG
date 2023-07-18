@@ -58,28 +58,33 @@
                         <thead>
                         <tr>
                             <th scope="col">STT</th>
-                            <th scope="col">Vai Trò</th>
+                            <th scope="col">Ảnh̀</th>
                             <th scope="col">Tên</th>
                             <th scope="col">Giới Tính</th>
                             <th scope="col">Ngày Sinh</th>
-                            <th scope="col">Địa Chỉ</th>
+<!--                            <th scope="col">Địa Chỉ</th>-->
                             <th scope="col">Số Điện Thoạỉ</th>
 <!--                            <th scope="col">Email</th>-->
                             <th scope="col">Trạng Thái</th>
+                            <th scope="col">Vai Trò</th>
                             <th scope="col">Hành Động</th>
+
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="tk,index:${listNhanVienActive}">
                             <td th:text="${index.count}"></td>
-                            <td th:text="${tk.vaiTro.ten}"></td>
+                            <td>
+                                <img th:src="@{'/image/' + ${tk.anh}}" style="width: 100px; height: 50px" />
+                            </td>
                             <td th:text="${tk.ten}"></td>
                             <td th:text="${tk.gioiTinh==true ? 'Nam':'Nữ'}"></td>
                             <td th:text="${tk.ngaySinh}"></td>
-                            <td th:text="${tk.diaChi}"></td>
+<!--                            <td th:text="${tk.diaChi}"></td>-->
                             <td th:text="${tk.sdt}"></td>
 <!--                            <td th:text="${tk.email}"></td>-->
                             <td th:text="${tk.trangThai.moTa}"></td>
+                            <td th:text="${tk.vaiTro.ten}"></td>
                             <td>
                       <span>
                                       <a th:href="@{/admin/psg/nhan-vien/view-update/{id}(id=${tk.id})}"

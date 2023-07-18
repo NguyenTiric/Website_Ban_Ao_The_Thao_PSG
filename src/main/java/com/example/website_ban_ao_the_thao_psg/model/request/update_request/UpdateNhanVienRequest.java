@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -34,6 +35,8 @@ public class UpdateNhanVienRequest {
 
     @NotNull(message = "Vai trò không để trống")
     private VaiTro vaiTro;
+
+    private MultipartFile anh;
 
     @NotBlank(message = "Tên không để trống")
     @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")

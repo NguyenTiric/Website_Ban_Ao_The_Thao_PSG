@@ -28,7 +28,7 @@
     <div class="row">
 
 
-        <form action="/admin/psg/nhan-vien/add" th:object="${nhanVien}" method="post"
+        <form action="/admin/psg/nhan-vien/add" th:object="${nhanVien}" method="post" enctype="multipart/form-data"
               onsubmit="return confirm('Bạn có thêm không?')">
             <div class="row">
                 <div class="col-4">

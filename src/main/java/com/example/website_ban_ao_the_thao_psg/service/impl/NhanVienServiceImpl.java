@@ -73,10 +73,37 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public TaiKhoanResponse update(UpdateNhanVienRequest updateNhanVienRequest) {
-        TaiKhoan taiKhoan=taiKhoanMapper.updateTaiKhoanRequestToTaiKhoanEntity(updateNhanVienRequest);
-        taiKhoan.setNgayCapNhat(LocalDate.now());
-        taiKhoan.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
-        return taiKhoanMapper.taiKhoanEntityToTaiKhoanResponse(nhanVienRepository.save(taiKhoan));
+        try {
+            Path imageDirectory = Paths.get("src/main/resources/static/image");
+            String originalFilename = updateNhanVienRequest.getAnh().getOriginalFilename().toLowerCase();
+            Path imagePath = imageDirectory.resolve(originalFilename);
+
+            // Lưu hình ảnh vào thư mục
+            Files.copy(updateNhanVienRequest.getAnh().getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
+
+            TaiKhoan tk=nhanVienRepository.findById(updateNhanVienRequest.getId()).orElse(null);
+
+            // Xóa hình ảnh cũ nếu tồn tại
+            String oldImageFilename = tk.getAnh();
+            if (oldImageFilename != null) {
+                Path oldImagePath = imageDirectory.resolve(oldImageFilename);
+                Files.deleteIfExists(oldImagePath);
+            }
+
+            // Cập nhật thông tin trong đối tượng taiKhoan
+            tk.setNgayCapNhat(LocalDate.now());
+            tk.setAnh(originalFilename);
+            tk.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
+
+            // Lưu thông tin vào cơ sở dữ liệu
+            TaiKhoan savedTaiKhoan = nhanVienRepository.save(tk);
+
+            // Chuyển đổi và trả về kết quả
+            return taiKhoanMapper.taiKhoanEntityToTaiKhoanResponse(savedTaiKhoan);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

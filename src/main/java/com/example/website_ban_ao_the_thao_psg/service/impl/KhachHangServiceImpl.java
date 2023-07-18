@@ -2,6 +2,7 @@ package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.VaiTro;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.TaiKhoanMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateKhachHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNhanVienRequest;
@@ -58,11 +59,18 @@ public class KhachHangServiceImpl implements KhachHangService {
             Files.copy(createKhachHangRequest.getAnh().getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
 
             System.out.println(originalFilename);
+            VaiTro vt=new VaiTro();
+            for (VaiTro x:vaiTroRepository.getAll()){
+               if(x.getTen().equalsIgnoreCase("Khách Hàng")){
+                   vt=x;
+               }
+            }
             // upload
             TaiKhoan taiKhoan=taiKhoanMapper.createTaiKhoanRequestToTaiKhoanEntity(createKhachHangRequest);
             taiKhoan.setNgayTao(LocalDate.now());
             taiKhoan.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
             taiKhoan.setAnh(originalFilename);
+            taiKhoan.setVaiTro(vt);
             return taiKhoanMapper.taiKhoanEntityToTaiKhoanResponse(khachHangRepository.save(taiKhoan));
 
         }catch (Exception x){
