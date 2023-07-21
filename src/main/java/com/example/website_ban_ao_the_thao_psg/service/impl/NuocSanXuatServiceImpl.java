@@ -3,10 +3,12 @@ package com.example.website_ban_ao_the_thao_psg.service.impl;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.NuocSanXuat;
+import com.example.website_ban_ao_the_thao_psg.entity.ThuongHieu;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.NuocSanXuatMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNuocSanXuatRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateNuocSanXuatRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.NuocSanXuatResponse;
+import com.example.website_ban_ao_the_thao_psg.model.response.ThuongHieuResponse;
 import com.example.website_ban_ao_the_thao_psg.repository.NuocSanXuatRepository;
 import com.example.website_ban_ao_the_thao_psg.service.NuocSanXuatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -34,6 +37,12 @@ public class NuocSanXuatServiceImpl implements NuocSanXuatService {
         Page<NuocSanXuat> nuocSanXuatPage = nuocSanXuatRepository.pageACTIVE(pageable);
         return nuocSanXuatPage.map(nuocSanXuatMapper::nuocSanXuatEntityToNuocSanXuatResponse);
 
+    }
+
+    @Override
+    public List<NuocSanXuatResponse> getAll() {
+        List<NuocSanXuat> nuocSanXuatList = nuocSanXuatRepository.getAll();
+        return nuocSanXuatMapper.listNuocSanXuatEntityToNuocSanXuatResponses(nuocSanXuatList);
     }
 
     @Override

@@ -11,12 +11,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
-public interface ThuongHieuRepository extends JpaRepository<ThuongHieu,Integer> {
+public interface ThuongHieuRepository extends JpaRepository<ThuongHieu, Integer> {
     @Query(value = "SELECT * FROM thuong_hieu WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<ThuongHieu> pageSearchActive(String searchString, Pageable pageable);
-   @Query(value = "SELECT * FROM thuong_hieu WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
+
+    @Query(value = "SELECT * FROM thuong_hieu WHERE trang_thai='ACTIVE' ", nativeQuery = true)
+    List<ThuongHieu> getAll();
+
+    @Query(value = "SELECT * FROM thuong_hieu WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
     Page<ThuongHieu> pageSearchIvActive(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM thuong_hieu WHERE trang_thai='INACTIVE' ", nativeQuery = true)

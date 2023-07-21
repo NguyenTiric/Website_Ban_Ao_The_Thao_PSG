@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.repository;
 
 import com.example.website_ban_ao_the_thao_psg.entity.NuocSanXuat;
+import com.example.website_ban_ao_the_thao_psg.entity.SanPham;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,11 +12,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface NuocSanXuatRepository extends JpaRepository<NuocSanXuat,Integer> {
     @Query(value = "SELECT * FROM nuoc_san_xuat WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<NuocSanXuat> pageSearchActive(String searchString, Pageable pageable);
+
+    @Query(value = "SELECT * FROM nuoc_san_xuat WHERE trang_thai='ACTIVE' ", nativeQuery = true)
+    List<NuocSanXuat> getAll();
+
     @Query(value = "SELECT * FROM nuoc_san_xuat WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
     Page<NuocSanXuat> pageSearchIvActive(String searchString, Pageable pageable);
 

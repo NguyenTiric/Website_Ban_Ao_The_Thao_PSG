@@ -37,8 +37,6 @@
                             <th scope="col">STT</th>
                             <th scope="col">Mã</th>
                             <th scope="col">Tên</th>
-                            <th scope="col">Ngày Tạo</th>
-                            <th scope="col">Ngày Cập Nhật</th>
                             <th scope="col">Trạng Thái</th>
                         </tr>
                         </thead>
@@ -47,8 +45,6 @@
                             <td th:text="${index.count}"></td>
                             <td th:text="${lsp.ma}"></td>
                             <td th:text="${lsp.ten}"></td>
-                            <td th:text="${lsp.ngayTao}"></td>
-                            <td th:text="${lsp.ngayCapNhat}"></td>
                             <td th:text="${lsp.trangThai.moTa}"></td>
                             <td>
                                 <form th:action="@{/admin/psg/loai-san-pham/revert/{id}(id=${lsp.id})}" method="post">

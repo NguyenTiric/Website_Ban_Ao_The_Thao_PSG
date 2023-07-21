@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -32,6 +33,12 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<ThuongHieu> thuongHieuPage = thuongHieuRepository.pageACTIVE(pageable);
         return thuongHieuPage.map(thuongHieuMapper::thuongHieuEntityToThuongHieuResponse);
+    }
+
+    @Override
+    public List<ThuongHieuResponse> getAll() {
+        List<ThuongHieu> thuongHieuList = thuongHieuRepository.getAll();
+        return thuongHieuMapper.listThuongHieuEntityToThuongHieuResponse(thuongHieuList);
     }
 
     @Override

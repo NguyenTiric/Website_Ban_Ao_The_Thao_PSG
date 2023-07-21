@@ -37,8 +37,6 @@
                             <th scope="col">STT</th>
                             <th scope="col">Mã</th>
                             <th scope="col">Tên</th>
-                            <th scope="col">Ngày Tạo</th>
-                            <th scope="col">Ngày Cập Nhật</th>
                             <th scope="col">Trạng Thái</th>
                         </tr>
                         </thead>
@@ -47,8 +45,6 @@
                             <td th:text="${index.count}"></td>
                             <td th:text="${cl.ma}"></td>
                             <td th:text="${cl.ten}"></td>
-                            <td th:text="${cl.ngayTao}"></td>
-                            <td th:text="${cl.ngayCapNhat}"></td>
                             <td th:text="${cl.trangThai.moTa}"></td>
                             <td>
                                 <form th:action="@{/admin/psg/chat-lieu/revert/{id}(id=${cl.id})}" method="post">
