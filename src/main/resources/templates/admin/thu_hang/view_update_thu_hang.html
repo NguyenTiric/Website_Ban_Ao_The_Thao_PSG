@@ -13,6 +13,9 @@
         <div class="col-3"> </div>
         <div class="col-6">
             <form action="/admin/psg/thu-hang/update" th:object="${thuHang}" method="post" onsubmit="return  confirm('Bạn có cập nhật không?')">
+                <div th:if="${errorMessage}" class="error-message">
+                    <span th:text="${errorMessage}" style="color: red"></span>
+                </div><br>
                 <input type="hidden" th:field="*{id}">
                 <input type="hidden" th:field="*{ngayTao}">
                 <input type="hidden" th:field="*{ma}">

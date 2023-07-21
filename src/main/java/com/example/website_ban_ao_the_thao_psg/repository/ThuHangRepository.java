@@ -1,7 +1,9 @@
 package com.example.website_ban_ao_the_thao_psg.repository;
 
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
+import com.example.website_ban_ao_the_thao_psg.model.response.ThuHangResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +14,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface ThuHangRepository extends JpaRepository<ThuHang,Integer> {
@@ -28,6 +31,7 @@ public interface ThuHangRepository extends JpaRepository<ThuHang,Integer> {
     @Query(value = "SELECT * FROM thu_hang WHERE trang_thai='ACTIVE' ", nativeQuery = true)
     Page<ThuHang> pageACTIVE(Pageable pageable);
 
+    boolean existsByTenAndTrangThai(@Param("ten") ApplicationConstant.TenThuHang ten, @Param("trangThai") ApplicationConstant.TrangThaiThuHang trangThai);
     @Transactional
     @Modifying
     @Query(value = "UPDATE ThuHang m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.id = :id")

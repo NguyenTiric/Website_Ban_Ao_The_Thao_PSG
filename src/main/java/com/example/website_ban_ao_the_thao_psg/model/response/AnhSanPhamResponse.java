@@ -19,11 +19,17 @@ import java.time.LocalDate;
 @Builder
 @ToString
 public class AnhSanPhamResponse {
+
     private Integer id;
+
     private SanPham sanPham;
+
     private String ten;
+
     private LocalDate ngayTao;
+
     private LocalDate ngayCapNhat;
+
     @Enumerated(EnumType.STRING)
     private TrangThaiSanPham trangThai;
 }

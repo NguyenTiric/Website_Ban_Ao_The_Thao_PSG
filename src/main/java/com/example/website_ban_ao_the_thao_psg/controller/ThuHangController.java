@@ -5,6 +5,7 @@ import com.example.website_ban_ao_the_thao_psg.model.request.create_request.Crea
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.ThuHangResponse;
 import com.example.website_ban_ao_the_thao_psg.service.ThuHangService;
+import groovyjarjarpicocli.CommandLine;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class ThuHangController {
     @GetMapping("/pageActive/{pageNo}")
     public String pageThuHangActive(@PathVariable("pageNo") Integer pageNo, Model model) {
         model.addAttribute("thuHang", new ThuHang());
-        Page<ThuHangResponse> thuHangResponsePageActive = thuHangService.pageThuHangActive(pageNo, 3);
+        Page<ThuHangResponse> thuHangResponsePageActive = thuHangService.pageThuHangActive(pageNo, 4);
         model.addAttribute("size", thuHangResponsePageActive.getSize());
         model.addAttribute("totalPages", thuHangResponsePageActive.getTotalPages());
         model.addAttribute("currentPage", pageNo);
@@ -72,28 +73,48 @@ public class ThuHangController {
         return "admin/thu_hang/view_add_thu_hang";
     }
     @PostMapping("/delete/{id}")
-    public String deleteThuHang(@PathVariable("id") Integer id,HttpSession session) {
-        thuHangService.deleteThuHang(id, LocalDate.now());
-        session.setAttribute("successMessage", "Xóa thành công!");
-        return "redirect:/admin/psg/thu-hang/hien-thi";
+    public String deleteThuHang(@PathVariable("id") Integer id,HttpSession session, Model model) {
+        try{
+            thuHangService.deleteThuHang(id, LocalDate.now());
+            session.setAttribute("successMessage", "Xóa thành công!");
+            return "redirect:/admin/psg/thu-hang/hien-thi";
+        }catch (RuntimeException rt){
+            model.addAttribute("errorMessage", rt.getMessage());
+            return pageThuHangActive(0, model);
+        }
+
     }
 
     @PostMapping("/revert/{id}")
-    public String revertThuHang(@PathVariable("id") Integer id,HttpSession session) {
-        thuHangService.revertThuHang(id, LocalDate.now());
-        session.setAttribute("successMessage", "Khôi phục thành công!");
+    public String revertThuHang(@PathVariable("id") Integer id, HttpSession session, Model model) {
+        try {
+            thuHangService.checkDuplicateName(id);
+            thuHangService.revertThuHang(id, LocalDate.now());
+            session.setAttribute("successMessage", "Khôi phục thành công!");
+        } catch (CommandLine.DuplicateNameException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return pageThuHangInActive(0, model);
+        }
         return "redirect:/admin/psg/thu-hang/hien-thi";
     }
 
     @PostMapping("/add")
     public String add(@Valid @ModelAttribute("thuHang") CreateThuHangRequest createThuHangRequest, BindingResult result, Model model, HttpSession session) {
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             model.addAttribute("thuHang", createThuHangRequest);
             return "admin/thu_hang/view_add_thu_hang";
         }
-        thuHangService.add(createThuHangRequest);
-        session.setAttribute("successMessage", "Thêm thành công!");
-        return "redirect:/admin/psg/thu-hang/hien-thi";
+        try {
+            ThuHangResponse response = thuHangService.add(createThuHangRequest);
+            session.setAttribute("successMessage", "Thêm thành công!");
+            return "redirect:/admin/psg/thu-hang/hien-thi";
+        } catch (CommandLine.DuplicateNameException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "admin/thu_hang/view_add_thu_hang";
+        }catch (RuntimeException rt){
+            model.addAttribute("errorMessage", rt.getMessage());
+            return "admin/thu_hang/view_add_thu_hang";
+        }
     }
 
     @PostMapping("/update")
@@ -102,9 +123,14 @@ public class ThuHangController {
             model.addAttribute("thuHang", updateThuHangRequest);
             return "admin/thu_hang/view_update_thu_hang";
         }
-        thuHangService.update(updateThuHangRequest);
-        session.setAttribute("successMessage", "Cập nhập thành công!");
-        return "redirect:/admin/psg/thu-hang/hien-thi";
+        try {
+            thuHangService.update(updateThuHangRequest);
+            session.setAttribute("successMessage", "Cập nhập thành công!");
+            return "redirect:/admin/psg/thu-hang/hien-thi";
+        }catch (RuntimeException rt){
+            model.addAttribute("errorMessage", rt.getMessage());
+            return "admin/thu_hang/view_add_thu_hang";
+        }
     }
 
     @GetMapping("/searchActive/{pageNo}")
