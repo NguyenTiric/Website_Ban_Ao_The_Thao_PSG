@@ -9,11 +9,22 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
+@ToString
 public class UpdateKhachHangRequest {
     private Integer id;
 
@@ -34,6 +45,7 @@ public class UpdateKhachHangRequest {
     private LocalDate ngaySinh;
 
     private MultipartFile anh;
+
     @NotBlank(message = "Địa chỉ không để trống")
     @Size(min = 0, max = 225, message = "Địa chỉ không vượt quá 225 ký tự")
     private String diaChi;

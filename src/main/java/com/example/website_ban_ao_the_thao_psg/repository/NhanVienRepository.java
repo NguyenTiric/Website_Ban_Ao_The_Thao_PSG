@@ -18,14 +18,14 @@ public interface NhanVienRepository extends JpaRepository<TaiKhoan,Integer> {
     @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen " +
             "FROM tai_khoan tk " +
             "JOIN vai_tro vt ON tk.vai_tro_id = vt.id " +
-            "WHERE (tk.ten LIKE %?1% OR tk.sdt LIKE %?1% OR tk.email LIKE %?1% OR tk.dia_chi LIKE %?1% or tk.gioi_tinh) " +
-            "AND tk.trang_thai = 'ACTIVE' AND vt.ten ='Nhân Viên'", nativeQuery = true)
-
+            "WHERE (tk.ten LIKE %?1% OR tk.sdt LIKE %?1% OR tk.email LIKE %?1% OR tk.dia_chi LIKE %?1%) " +
+            "AND tk.trang_thai = 'ACTIVE' AND (vt.ten ='Nhân Viên' OR vt.ten='Admin')", nativeQuery = true)
     Page<TaiKhoan> pageSearchACTIVE(@Param("search") String search, Pageable pageable);
 
 
-    @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) <= :tuoiMax) AND vt.ten ='Nhân Viên' and tk.trang_thai='ACTIVE'",
-            countQuery = "SELECT COUNT(*) FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) <= :tuoiMax) AND vt.ten ='Nhân Viên' and tk.trang_thai='ACTIVE'",
+
+    @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) <= :tuoiMax) AND (vt.ten ='Nhân Viên' or vt.ten='Admin') and tk.trang_thai='ACTIVE'",
+            countQuery = "SELECT COUNT(*) FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) <= :tuoiMax) AND (vt.ten ='Nhân Viên' or vt.ten='Admin') and tk.trang_thai='ACTIVE'",
             nativeQuery = true)
     Page<TaiKhoan> pageSearchTuoiMinMax(
             @Param("tuoiMin") Integer min,
@@ -37,7 +37,7 @@ public interface NhanVienRepository extends JpaRepository<TaiKhoan,Integer> {
     @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE tk.trang_thai = 'INACTIVE' AND vt.ten = 'Nhân Viên'", nativeQuery = true)
     Page<TaiKhoan> pageINACTIVE(Pageable pageable);
 
-    @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE tk.trang_thai = 'ACTIVE' AND vt.ten = 'Nhân Viên'", nativeQuery = true)
+    @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE tk.trang_thai = 'ACTIVE' AND (vt.ten = 'Nhân Viên' OR vt.ten='Admin')", nativeQuery = true)
     Page<TaiKhoan> pageACTIVE(Pageable pageable);
 
 

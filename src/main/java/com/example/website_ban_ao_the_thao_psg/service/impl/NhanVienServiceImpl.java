@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -74,25 +75,43 @@ public class NhanVienServiceImpl implements NhanVienService {
     @Override
     public TaiKhoanResponse update(UpdateNhanVienRequest updateNhanVienRequest) {
         try {
-            Path imageDirectory = Paths.get("src/main/resources/static/image");
-            String originalFilename = updateNhanVienRequest.getAnh().getOriginalFilename().toLowerCase();
-            Path imagePath = imageDirectory.resolve(originalFilename);
+            MultipartFile newImageFile = updateNhanVienRequest.getAnh();
+            TaiKhoan tk = nhanVienRepository.findById(updateNhanVienRequest.getId()).orElse(null);
 
-            // Lưu hình ảnh vào thư mục
-            Files.copy(updateNhanVienRequest.getAnh().getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
-
-            TaiKhoan tk=nhanVienRepository.findById(updateNhanVienRequest.getId()).orElse(null);
-
-            // Xóa hình ảnh cũ nếu tồn tại
-            String oldImageFilename = tk.getAnh();
-            if (oldImageFilename != null) {
-                Path oldImagePath = imageDirectory.resolve(oldImageFilename);
-                Files.deleteIfExists(oldImagePath);
+            if (tk == null) {
+                // Xử lý trường hợp không tìm thấy tài khoản với ID đã cung cấp
+                // Trả về thông báo lỗi hoặc giá trị đại diện cho lỗi
+                return null; // Hoặc thực hiện xử lý khác tùy vào yêu cầu của ứng dụng
             }
 
-            // Cập nhật thông tin trong đối tượng taiKhoan
+            if (newImageFile != null && !newImageFile.isEmpty()) {
+                // Có hình ảnh mới, tiếp tục xử lý hình ảnh mới
+                Path imageDirectory = Paths.get("src/main/resources/static/image");
+                String originalFilename = newImageFile.getOriginalFilename().toLowerCase();
+                Path imagePath = imageDirectory.resolve(originalFilename);
+
+                // Lưu hình ảnh mới vào thư mục
+                Files.copy(newImageFile.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
+
+                // Xóa hình ảnh cũ nếu tồn tại
+                String oldImageFilename = tk.getAnh();
+                if (oldImageFilename != null) {
+                    Path oldImagePath = imageDirectory.resolve(oldImageFilename);
+                    Files.deleteIfExists(oldImagePath);
+                }
+
+                // Cập nhật trường hình ảnh (anh) trong đối tượng taiKhoan
+                tk.setAnh(originalFilename);
+            }
+
+            // Cập nhật các trường khác của tài khoản nếu cần
+            tk.setTen(updateNhanVienRequest.getTen());
+            tk.setEmail(updateNhanVienRequest.getEmail());
+            tk.setDiaChi(updateNhanVienRequest.getDiaChi());
+            tk.setNgaySinh(updateNhanVienRequest.getNgaySinh());
+            tk.setGioiTinh(updateNhanVienRequest.getGioiTinh());
+            tk.setSdt(updateNhanVienRequest.getSdt());
             tk.setNgayCapNhat(LocalDate.now());
-            tk.setAnh(originalFilename);
             tk.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
 
             // Lưu thông tin vào cơ sở dữ liệu

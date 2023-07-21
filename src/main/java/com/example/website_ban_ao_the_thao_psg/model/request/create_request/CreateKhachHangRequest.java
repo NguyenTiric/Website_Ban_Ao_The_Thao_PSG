@@ -43,7 +43,7 @@ public class CreateKhachHangRequest {
     @NotNull(message = "Giới tính không để trống")
     private Boolean gioiTinh;
 
-    @NotNull(message = "Ngày Sinh không để trống")
+//    @NotNull(message = "Ngày Sinh không để trống")
     private LocalDate ngaySinh;
 
     @NotBlank(message = "Địa chỉ không để trống")
@@ -62,13 +62,13 @@ public class CreateKhachHangRequest {
 //    @Column(name = "anh")
     private MultipartFile anh;
 
-    @NotNull(message = "Số lượng đơn hàng thành công không để trống")
+//    @NotNull(message = "Số lượng đơn hàng thành công không để trống")
     private Integer soLuongDonHangThanhCong;
 
     @NotBlank(message = "Mật khẩu không để trống")
     private String matKhau;
 
-    @NotNull(message = "Số tiền đã chi tiêu không để trống")
+//    @NotNull(message = "Số tiền đã chi tiêu không để trống")
     private BigDecimal soTienDaChiTieu;
 
     private LocalDate ngayTao;

@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -72,21 +73,67 @@ public class KhachHangServiceImpl implements KhachHangService {
             taiKhoan.setAnh(originalFilename);
             taiKhoan.setVaiTro(vt);
             return taiKhoanMapper.taiKhoanEntityToTaiKhoanResponse(khachHangRepository.save(taiKhoan));
-
+//
         }catch (Exception x){
             x.printStackTrace();
             return null;
         }
-
-
     }
 
     @Override
     public TaiKhoanResponse update(UpdateKhachHangRequest updateKhachHangRequest) {
-        TaiKhoan taiKhoan=taiKhoanMapper.updateTaiKhoanRequestToTaiKhoanEntity(updateKhachHangRequest);
-        taiKhoan.setNgayCapNhat(LocalDate.now());
-        taiKhoan.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
-        return taiKhoanMapper.taiKhoanEntityToTaiKhoanResponse(khachHangRepository.save(taiKhoan));
+
+        try {
+            MultipartFile newImageFile = updateKhachHangRequest.getAnh();
+            TaiKhoan tk = khachHangRepository.findById(updateKhachHangRequest.getId()).orElse(null);
+
+            if (tk == null) {
+                // Xử lý trường hợp không tìm thấy tài khoản với ID đã cung cấp
+                // Trả về thông báo lỗi hoặc giá trị đại diện cho lỗi
+                return null; // Hoặc thực hiện xử lý khác tùy vào yêu cầu của ứng dụng
+            }
+
+            if (newImageFile != null && !newImageFile.isEmpty()) {
+                // Có hình ảnh mới, tiếp tục xử lý hình ảnh mới
+                Path imageDirectory = Paths.get("src/main/resources/static/image");
+                String originalFilename = newImageFile.getOriginalFilename().toLowerCase();
+                Path imagePath = imageDirectory.resolve(originalFilename);
+
+                // Lưu hình ảnh mới vào thư mục
+                Files.copy(newImageFile.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
+
+                // Xóa hình ảnh cũ nếu tồn tại
+                String oldImageFilename = tk.getAnh();
+                if (oldImageFilename != null) {
+                    Path oldImagePath = imageDirectory.resolve(oldImageFilename);
+                    Files.deleteIfExists(oldImagePath);
+                }
+
+                // Cập nhật trường hình ảnh (anh) trong đối tượng taiKhoan
+                tk.setAnh(originalFilename);
+            }
+
+            // Cập nhật các trường khác của tài khoản nếu cần
+              tk.setTen(updateKhachHangRequest.getTen());
+                   tk.setEmail(updateKhachHangRequest.getEmail());
+           tk.setDiaChi(updateKhachHangRequest.getDiaChi());
+           tk.setNgaySinh(updateKhachHangRequest.getNgaySinh());
+           tk.setGioiTinh(updateKhachHangRequest.getGioiTinh());
+           tk.setSdt(updateKhachHangRequest.getSdt());
+            tk.setNgayCapNhat(LocalDate.now());
+            tk.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
+
+            // Lưu thông tin vào cơ sở dữ liệu
+            TaiKhoan savedTaiKhoan = khachHangRepository.save(tk);
+
+            // Chuyển đổi và trả về kết quả
+            return taiKhoanMapper.taiKhoanEntityToTaiKhoanResponse(savedTaiKhoan);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
     }
 
     @Override

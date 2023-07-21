@@ -109,15 +109,15 @@ public class KhachHangController {
             model.addAttribute("vaiTro",vaiTroService.getAll());
             return "admin/khach_hang/view_add_khach_hang";
         }
-        LocalDate currentDate = LocalDate.now();
-        LocalDate dateOfBirth = createKhachHangRequest.getNgaySinh();
-        int age = Period.between(dateOfBirth, currentDate).getYears();
-        if (age < 18) {
-            result.rejectValue("ngaySinh", "loiNgaySinh", "Vai  Lòng nhập Ngày Sinh Phải Lớn Hơn 18 Tuổi");
-            model.addAttribute("vaiTro", vaiTroService.getAll());
-            return "admin/khach_hang/view_add_khach_hang";
-        }
-        System.out.println("anh-------"+createKhachHangRequest.getAnh());
+//        LocalDate currentDate = LocalDate.now();
+//        LocalDate dateOfBirth = createKhachHangRequest.getNgaySinh();
+//        int age = Period.between(dateOfBirth, currentDate).getYears();
+//        if (age < 18) {
+//            result.rejectValue("ngaySinh", "loiNgaySinh", "Vai  Lòng nhập Ngày Sinh Phải Lớn Hơn 18 Tuổi");
+//            model.addAttribute("vaiTro", vaiTroService.getAll());
+//            return "admin/khach_hang/view_add_khach_hang";
+//        }
+
         khachHangService.add(createKhachHangRequest);
         return "redirect:/admin/psg/khach-hang/hien-thi";
     }

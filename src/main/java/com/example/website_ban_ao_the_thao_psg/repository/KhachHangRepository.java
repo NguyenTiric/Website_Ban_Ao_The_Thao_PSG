@@ -13,8 +13,8 @@ import java.time.LocalDate;
 
 public interface KhachHangRepository extends JpaRepository<TaiKhoan,Integer> {
 
-    @Query(value = "SELECT * FROM tai_khoan tk WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) <= :tuoiMax)",
-            countQuery = "SELECT COUNT(*) FROM tai_khoan tk WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) <= :tuoiMax)",
+    @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) <= :tuoiMax) AND vt.ten ='Khách Hàng' and tk.trang_thai='ACTIVE'",
+            countQuery = "SELECT COUNT(*) FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) <= :tuoiMax) AND vt.ten ='Khách Hàng' and tk.trang_thai='ACTIVE'",
             nativeQuery = true)
     Page<TaiKhoan> pageSearchTuoiMinMax(
             @Param("tuoiMin") Integer min,
@@ -22,8 +22,7 @@ public interface KhachHangRepository extends JpaRepository<TaiKhoan,Integer> {
             Pageable pageable
     );
 
-
-    @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id where tk.ten like %?1% or tk.sdt like %?1% or tk.email like %?1% or tk.dia_chi like %?1% and trang_thai = 'ACTIVE' and vt.ten = 'Khách Hàng'", nativeQuery = true )
+    @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id where tk.ten like %?1% or tk.sdt like %?1% or tk.email like %?1% or tk.dia_chi like %?1% and tk.trang_thai = 'ACTIVE' and vt.ten = 'Khách Hàng'", nativeQuery = true )
     Page<TaiKhoan> pageSearchACTIVE(@Param("search") String search, Pageable pageable);
 
 
@@ -45,4 +44,6 @@ public interface KhachHangRepository extends JpaRepository<TaiKhoan,Integer> {
     @Modifying
     @Query(value = "update TaiKhoan m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
     void revert(@Param("id") Integer id, @Param("now") LocalDate now);
+
+//    TaiKhoan findBySdt ()
 }
