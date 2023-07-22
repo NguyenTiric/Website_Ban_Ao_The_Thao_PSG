@@ -53,7 +53,7 @@ public class ThuHangController {
 
     @GetMapping("/pageInActive/{pageNo}")
     public String pageThuHangInActive(@PathVariable("pageNo") Integer pageNo, Model model) {
-        Page<ThuHangResponse> thuHangResponsePageInActive = thuHangService.pageThuHangInActive(pageNo, 3);
+        Page<ThuHangResponse> thuHangResponsePageInActive = thuHangService.pageThuHangInActive(pageNo, 4);
         model.addAttribute("size", thuHangResponsePageInActive.getSize());
         model.addAttribute("totalPages", thuHangResponsePageInActive.getTotalPages());
         model.addAttribute("currentPage", pageNo);
@@ -111,7 +111,8 @@ public class ThuHangController {
         } catch (CommandLine.DuplicateNameException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
-        }catch (RuntimeException rt){
+        }
+        catch (RuntimeException rt){
             model.addAttribute("errorMessage", rt.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
         }
@@ -136,14 +137,26 @@ public class ThuHangController {
     @GetMapping("/searchActive/{pageNo}")
     public String searchActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchNameOrMa") String searchNameOrMa){
         model.addAttribute("thuHang", new ThuHang());
-        Page<ThuHangResponse> thuHangResponsePage = thuHangService.searchNameOrMaActive(searchNameOrMa, pageNo, 3);
+        Page<ThuHangResponse> thuHangResponsePage = thuHangService.searchNameOrMaActive(searchNameOrMa, pageNo, 4);
         model.addAttribute("size", thuHangResponsePage.getSize());
         model.addAttribute("totalPages", thuHangResponsePage.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("listThuHangActive", thuHangResponsePage);
         return "admin/thu_hang/trang_chu_thu_hang";
     }
-    @GetMapping("/searchInActive/{pageNo}")
+
+    @GetMapping("/searchSoLuongDonHangToiThieuActive/{pageNo}")
+    public String searchSoLuongDonHangToiThieuActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchSoLuongDonHangToiThieu") Integer searchSoLuongDonHangToiThieu){
+        model.addAttribute("thuHang", new ThuHang());
+        Page<ThuHangResponse> thuHangResponsePage = thuHangService.searchSoLuongDonHangToiThieuActive(searchSoLuongDonHangToiThieu, pageNo, 4);
+        model.addAttribute("size", thuHangResponsePage.getSize());
+        model.addAttribute("totalPages", thuHangResponsePage.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listThuHangActive", thuHangResponsePage);
+        return "admin/thu_hang/trang_chu_thu_hang";
+    }
+
+    @GetMapping("/searchIunActive/{pageNo}")
     public String searchInActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchNameOrMa") String searchNameOrMa){
         model.addAttribute("thuHang", new ThuHang());
         Page<ThuHangResponse> thuHangResponsePage = thuHangService.searchNameOrMaInActive(searchNameOrMa, pageNo, 3);

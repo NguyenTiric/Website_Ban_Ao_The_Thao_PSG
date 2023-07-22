@@ -1,11 +1,13 @@
 package com.example.website_ban_ao_the_thao_psg.model.request.create_request;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TenThuHang;
+//import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TenThuHang;
+
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiThuHang;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,8 +30,9 @@ public class CreateThuHangRequest {
 
     private String ma;
 
-    @Enumerated(EnumType.STRING)
-    private TenThuHang ten;
+    //    @Enumerated(EnumType.STRING)
+//    @Pattern(regexp = "^[A-Z a-z\\s]+$", message = "Tên chỉ được chứa chữ cái và dấu cách!")
+    private String ten;
 
     @NotNull(message = "Số tiền chi tiêu tối thiểu không để trống")
     @Min(value = 0, message = "Số tiền chi tiêu tối thiểu là số nguyên")

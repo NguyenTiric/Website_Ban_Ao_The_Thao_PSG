@@ -11,25 +11,7 @@
 <body>
 <div class="container" layout:fragment="content">
     <div class="row">
-        <div class="row">
-
-        </div>
-        <div class="col-8">
-            <li class="nav-item d-none d-md-block">
-                <a class="nav-link" href="javascript:void(0)">
-                    <nav class="navbar bg-body">
-                        <div class="container-fluid">
-                            <form class="d-flex" role="search" action="/admin/psg/thu-hang/searchActive/0" method="get">
-                                <input name="searchNameOrMa"
-                                       class="form-control custom-shadow custom-radius border-0 bg-white"
-                                       type="search" placeholder="Search" aria-label="Search">&nbsp;
-                                <button class="btn btn-rounded btn-primary" type="submit">Search</button>
-                            </form>
-                        </div>
-                    </nav>
-                </a>
-            </li>
-        </div>
+        <div class="col-8"></div>
         <div class="col-2">
             <a href="/admin/psg/thu-hang/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">Thêm thứ
                 hạng</a>
@@ -37,8 +19,51 @@
         <div class="col-2">
             <a href="/admin/psg/thu-hang/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">Thứ hạng đã xóa</a>
         </div>
+    </div><br>
+    <div class="row">
+        <br><div class="col-md-4">
+            <li class="nav-item d-none d-md-block">
+                <a class="nav-link">
+                    <nav class="navbar bg-body">
+                        <div class="container-fluid">
+                            &nbsp;&nbsp;Mã hoặc tên:
+                            <br><form class="d-flex" role="search" action="/admin/psg/thu-hang/searchActive/0" method="get">
+                                <input name="searchNameOrMa"
+                                       class="form-control custom-shadow custom-radius border-0 bg-white"
+                                       type="search" placeholder="VD: TH01, Vàng,..." aria-label="Search">&nbsp;
+                                <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </nav>
+                </a>
+            </li>
+        </div>
+        <div class="col-md-4">
+            <li class="nav-item d-none d-md-block">
+                <a class="nav-link">
+                    <nav class="navbar bg-body">
+                        <div class="container-fluid">
+                            &nbsp;&nbsp;Số tiền hoặc đơn hàng tối thiểu:
+                            <br><form class="d-flex" role="search" action="/admin/psg/thu-hang/searchSoLuongDonHangToiThieuActive/0" method="get">
+                                <input name="searchSoLuongDonHangToiThieu"
+                                       class="form-control custom-shadow custom-radius border-0 bg-white"
+                                       type="search" placeholder="VD: 1000, 20000,..." aria-label="Search">&nbsp;
+                                <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </nav>
+                </a>
+            </li>
+        </div>
+        <br>
     </div></br>
-
+    <div class="row">
+        &nbsp;&nbsp;<div class="col-2">
+            &nbsp;&nbsp;<a href="/admin/psg/thu-hang/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">
+                Lọc theo khoảng
+            </a>
+        </div>
+    </div><br>
     <div class="card">
         <div class="card-body">
             <h4 class="card-title mb-3">Danh Sách</h4>
@@ -51,7 +76,7 @@
                         <thead>
                         <tr>
                             <th scope="col">STT</th>
-                            <th scope="col">Mã</th>
+                            <th scope="col">Mã&nbsp;<i class="fa-solid fa-sort"></i></th>
                             <th scope="col">Tên</th>
                             <th scope="col">Tiền tối thiểu</th>
                             <th scope="col">Đơn hàng tối thiểu</th>
@@ -63,14 +88,14 @@
                         <tr th:each="th, index:${listThuHangActive}">
                             <td th:text="${index.count} + ${currentPage * size - size} +4"></td>
                             <td th:text="${th.ma}"></td>
-                            <td th:text="${th.ten.getMoTa()}"></td>
+                            <td th:text="${th.ten}"></td>
                             <td th:text="${th.soTienKhachChiToiThieu}"></td>
                             <td th:text="${th.soLuongDonHangToiThieu}"></td>
                             <td th:text="${th.trangThai.moTa}"  style="color: #00ff22"></td>
                             <td>
                       <span>
                           <a th:href="@{/admin/psg/thu-hang/view-update/{id}(id=${th.id})}"
-                             th:hidden="${th.ten.getTen() == 'MEMBER'}"
+                             th:hidden="${th.ten == 'Thành viên'}"
                              class="btn waves-effect waves-light btn-rounded btn-warning">
                               Sửa
                           </a>
@@ -78,7 +103,7 @@
                               style="display: inline;">
                         <a th:href="@{/admin/psg/thu-hang/delete/{id}(id=${th.id})}">
                             <button type="submit"
-                                    class="btn waves-effect waves-light btn-rounded btn-danger" th:hidden="${th.ten.getTen() == 'MEMBER'}"
+                                    class="btn waves-effect waves-light btn-rounded btn-danger" th:hidden="${th.ten == 'Thành viên'}"
                                     onclick="return confirm('Bạn có muốn xóa không')" >Xóa
                             </button>
                         </a>
@@ -210,5 +235,9 @@
         </div> <!-- end card-body-->
     </div>
 </div>
+<script
+        src="https://kit.fontawesome.com/1214a1c935.js"
+        crossorigin="anonymous"
+></script>
 </body>
 </html>

@@ -27,7 +27,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-
 @Component
 public class ThuHangServiceImpl implements ThuHangService {
 
@@ -56,14 +55,14 @@ public class ThuHangServiceImpl implements ThuHangService {
 
     @Override
     public ThuHangResponse add(CreateThuHangRequest createThuHangRequest) {
-        ApplicationConstant.TenThuHang tenThuHang = createThuHangRequest.getTen();
+        String tenThuHang = createThuHangRequest.getTen();
         if (this.thuHangRepository.existsByTenAndTrangThai(tenThuHang, ApplicationConstant.TrangThaiThuHang.ACTIVE)){
             throw new CommandLine.DuplicateNameException("Thứ hạng đã tồn tại, vui lòng chọn thứ hạng khác!");
         }
 
         List<TaiKhoan> allTaiKhoan = taiKhoanRepository.findAll();
         for (TaiKhoan taiKhoan : allTaiKhoan) {
-            if (!taiKhoan.getVaiTro().getTen().equals(ApplicationConstant.TenThuHang.MEMBER)) {
+            if (!taiKhoan.getVaiTro().getTen().equalsIgnoreCase("Thành viên")) {
                 throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
             }
         }
@@ -79,7 +78,7 @@ public class ThuHangServiceImpl implements ThuHangService {
     public ThuHangResponse update(UpdateThuHangRequest updateThuHangRequest) {
         List<TaiKhoan> allTaiKhoan = taiKhoanRepository.findAll();
         for (TaiKhoan taiKhoan : allTaiKhoan) {
-            if (!taiKhoan.getVaiTro().getTen().equals(ApplicationConstant.TenThuHang.MEMBER)) {
+            if (!taiKhoan.getVaiTro().getTen().equalsIgnoreCase("Thành viên")) {
                 throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
             }
         }
@@ -103,9 +102,16 @@ public class ThuHangServiceImpl implements ThuHangService {
     }
 
     @Override
+    public Page<ThuHangResponse> searchSoLuongDonHangToiThieuActive(Integer search, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<ThuHang> thuHangPage = this.thuHangRepository.pageSoLuongDonHangToiThieuPageActive(search, pageable);
+        return thuHangPage.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
+    }
+
+    @Override
     public Page<ThuHangResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<ThuHang> thuHangPage = thuHangRepository.pageSearchIvActive(searchName, pageable);
+        Page<ThuHang> thuHangPage = thuHangRepository.pageSearchInActive(searchName, pageable);
         return thuHangPage.map(thuHangMapper::thuHangEntiyToThuHangResponse);
     }
 
@@ -113,7 +119,7 @@ public class ThuHangServiceImpl implements ThuHangService {
     public void deleteThuHang(Integer id, LocalDate now) {
         List<TaiKhoan> allTaiKhoan = taiKhoanRepository.findAll();
         for (TaiKhoan taiKhoan : allTaiKhoan) {
-            if (!taiKhoan.getVaiTro().getTen().equals(ApplicationConstant.TenThuHang.MEMBER)) {
+            if (!taiKhoan.getVaiTro().getTen().equalsIgnoreCase("Thành viên")) {
                 throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
             }
         }
@@ -130,7 +136,7 @@ public class ThuHangServiceImpl implements ThuHangService {
         ThuHang thuHang = thuHangRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy Thứ hạng với id = " + id));
 
-        ApplicationConstant.TenThuHang tenThuHang = thuHang.getTen();
+        String tenThuHang = thuHang.getTen();
         if (thuHangRepository.existsByTenAndTrangThai(tenThuHang, ApplicationConstant.TrangThaiThuHang.ACTIVE)) {
             throw new CommandLine.DuplicateNameException("Thứ hạng đã tồn tại, không thể khôi phục!");
         }

@@ -40,15 +40,19 @@
                         <th scope="col">STT</th>
                         <th scope="col">Mã</th>
                         <th scope="col">Tên</th>
+                        <th scope="col">Tiền tối thiểu</th>
+                        <th scope="col">Đơn hàng tối thiểu</th>
                         <th scope="col">Trạng Thái</th>
                         <th scope="col">Hành động</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="th,index:${listThuHangInActive}">
-                        <td th:text="${index.count} + ${currentPage * size - size} +4"></td>
+                        <td th:text="${index.count} + ${currentPage * size - size} +3"></td>
                         <td th:text="${th.ma}"></td>
-                        <td th:text="${th.ten.getMoTa()}"></td>
+                        <td th:text="${th.ten}"></td>
+                        <td th:text="${th.soTienKhachChiToiThieu}"></td>
+                        <td th:text="${th.soLuongDonHangToiThieu}"></td>
                         <td th:text="${th.trangThai.moTa}" style="color: #ff3e3e"></td>
                         <td>
                             <form th:action="@{/admin/psg/thu-hang/revert/{id}(id=${th.id})}" method="post">

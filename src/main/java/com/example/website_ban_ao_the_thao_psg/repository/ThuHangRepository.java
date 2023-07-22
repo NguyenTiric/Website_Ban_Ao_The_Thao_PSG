@@ -17,13 +17,16 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface ThuHangRepository extends JpaRepository<ThuHang,Integer> {
+public interface ThuHangRepository extends JpaRepository<ThuHang, Integer> {
 
-    @Query(value = "SELECT * FROM thu_hang WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
+    @Query(value = "SELECT * FROM thu_hang WHERE (ten LIKE %?1% OR ma LIKE %?1%) AND trang_thai='ACTIVE'", nativeQuery = true)
     Page<ThuHang> pageSearchActive(String searchString, org.springframework.data.domain.Pageable pageable);
 
-    @Query(value = "SELECT * FROM thu_hang WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
-    Page<ThuHang> pageSearchIvActive(String searchString, org.springframework.data.domain.Pageable pageable);
+    @Query(value = "SELECT * FROM thu_hang WHERE (so_luong_don_hang_toi_thieu LIKE %?1% OR so_tien_khach_chi_toi_thieu LIKE %?1%) AND trang_thai='ACTIVE'", nativeQuery = true)
+    Page<ThuHang> pageSoLuongDonHangToiThieuPageActive(Integer search, Pageable pageable);
+
+    @Query(value = "SELECT * FROM thu_hang WHERE (ten LIKE %?1% OR ma LIKE %?1%) AND trang_thai='INACTIVE'", nativeQuery = true)
+    Page<ThuHang> pageSearchInActive(String searchString, org.springframework.data.domain.Pageable pageable);
 
     @Query(value = "SELECT * FROM thu_hang WHERE trang_thai='INACTIVE' ", nativeQuery = true)
     Page<ThuHang> pageINACTIVE(org.springframework.data.domain.Pageable pageable);
@@ -31,7 +34,8 @@ public interface ThuHangRepository extends JpaRepository<ThuHang,Integer> {
     @Query(value = "SELECT * FROM thu_hang WHERE trang_thai='ACTIVE' ", nativeQuery = true)
     Page<ThuHang> pageACTIVE(Pageable pageable);
 
-    boolean existsByTenAndTrangThai(@Param("ten") ApplicationConstant.TenThuHang ten, @Param("trangThai") ApplicationConstant.TrangThaiThuHang trangThai);
+    boolean existsByTenAndTrangThai(@Param("ten") String ten, @Param("trangThai") ApplicationConstant.TrangThaiThuHang trangThai);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE ThuHang m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.id = :id")

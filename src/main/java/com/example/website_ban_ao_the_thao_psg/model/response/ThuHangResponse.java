@@ -24,8 +24,7 @@ public class ThuHangResponse {
 
     private String ma;
 
-    @Enumerated(EnumType.STRING)
-    private ApplicationConstant.TenThuHang ten;
+    private String ten;
 
     private BigDecimal soTienKhachChiToiThieu;
 
