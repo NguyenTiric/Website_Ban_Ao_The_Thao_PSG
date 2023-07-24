@@ -9,6 +9,7 @@ import com.example.website_ban_ao_the_thao_psg.model.response.ThuHangResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface ThuHangService {
 
     Page<ThuHangResponse> pageThuHangInActive(Integer pageNo, Integer size);
 
-    void updateThuHangTheoTaiKhoan(Integer id);
+    void thucHienCapNhat();
     ThuHangResponse add(CreateThuHangRequest createThuHangRequest);
 
     ThuHangResponse update(UpdateThuHangRequest updateThuHangRequest);
@@ -37,4 +38,6 @@ public interface ThuHangService {
     void revertThuHang(Integer id,LocalDate now);
 
     void checkDuplicateName(Integer id);
+
+    Page<ThuHangResponse> searchMinMaxSoTien(BigDecimal min, BigDecimal max, Integer pageNo, Integer size);
 }

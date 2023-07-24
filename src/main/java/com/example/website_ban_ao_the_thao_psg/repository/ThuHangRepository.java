@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,6 +37,8 @@ public interface ThuHangRepository extends JpaRepository<ThuHang, Integer> {
 
     boolean existsByTenAndTrangThai(@Param("ten") String ten, @Param("trangThai") ApplicationConstant.TrangThaiThuHang trangThai);
 
+    @Query("SELECT th FROM ThuHang th WHERE th.trangThai = 'ACTIVE' AND th.soTienKhachChiToiThieu BETWEEN :minAmount AND :maxAmount")
+    Page<ThuHang> findBySoTienKhachChiToiThieuInRange(BigDecimal minAmount, BigDecimal maxAmount, Pageable pageable);
     @Transactional
     @Modifying
     @Query(value = "UPDATE ThuHang m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.id = :id")

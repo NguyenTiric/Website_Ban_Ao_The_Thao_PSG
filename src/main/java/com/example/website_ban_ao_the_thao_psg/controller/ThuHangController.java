@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Controller
@@ -146,14 +148,21 @@ public class ThuHangController {
     }
 
     @GetMapping("/searchSoLuongDonHangToiThieuActive/{pageNo}")
-    public String searchSoLuongDonHangToiThieuActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchSoLuongDonHangToiThieu") Integer searchSoLuongDonHangToiThieu){
-        model.addAttribute("thuHang", new ThuHang());
-        Page<ThuHangResponse> thuHangResponsePage = thuHangService.searchSoLuongDonHangToiThieuActive(searchSoLuongDonHangToiThieu, pageNo, 4);
-        model.addAttribute("size", thuHangResponsePage.getSize());
-        model.addAttribute("totalPages", thuHangResponsePage.getTotalPages());
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("listThuHangActive", thuHangResponsePage);
-        return "admin/thu_hang/trang_chu_thu_hang";
+    public String searchSoLuongDonHangToiThieuActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchSoLuongDonHangToiThieu") String searchSoLuongDonHangToiThieu){
+        try{
+            model.addAttribute("thuHang", new ThuHang());
+            Page<ThuHangResponse> thuHangResponsePage = thuHangService.searchSoLuongDonHangToiThieuActive(Integer.valueOf(searchSoLuongDonHangToiThieu), pageNo, 4);
+            model.addAttribute("size", thuHangResponsePage.getSize());
+            model.addAttribute("totalPages", thuHangResponsePage.getTotalPages());
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("listThuHangActive", thuHangResponsePage);
+            return "admin/thu_hang/trang_chu_thu_hang";
+
+        }catch (NumberFormatException e){
+            model.addAttribute("errorMessage1", "Tìm kiếm không được bỏ trống!");
+            return pageThuHangActive(0, model);
+        }
+
     }
 
     @GetMapping("/searchIunActive/{pageNo}")
@@ -165,5 +174,25 @@ public class ThuHangController {
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("listThuHangInActive", thuHangResponsePage);
         return "admin/thu_hang/revert_thu_hang";
+    }
+
+    @GetMapping("/searchMiMax")
+    public String searchMinMax(@PathVariable("pageNo") Integer pageNo,
+                               @RequestParam("minAmount") BigDecimal minAmount,
+                               @RequestParam("maxAmount") BigDecimal maxAmount,
+                               Model model){
+        try{
+            model.addAttribute("thuHang", new ThuHang());
+            Page<ThuHangResponse> thuHangResponsePageActive = thuHangService.searchMinMaxSoTien( minAmount, maxAmount, pageNo, 4);
+            model.addAttribute("size", thuHangResponsePageActive.getSize());
+            model.addAttribute("totalPages", thuHangResponsePageActive.getTotalPages());
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("listThuHangActive", thuHangResponsePageActive);
+            return "admin/thu_hang/trang_chu_thu_hang";
+        }catch (IllegalArgumentException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return pageThuHangActive(0, model);
+        }
+
     }
 }

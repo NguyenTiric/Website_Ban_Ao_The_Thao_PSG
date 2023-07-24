@@ -19,14 +19,19 @@
                 <input type="hidden" th:field="*{id}">
                 <input type="hidden" th:field="*{ngayTao}">
                 <input type="hidden" th:field="*{ma}">
-                <select class="form-select rounded"  th:field="*{ten}" style="background-color: white" aria-label="Default select example">
-                    <!--                    <option selected>Chọn tên thứ hạng</option>-->
-                    <option value="MEMBER">Thành viên</option>
-                    <option value="SILVER">Bạc</option>
-                    <option value="GOLD">Vàng</option>
-                    <option value="DIAMOND">Kim cương</option>
-                </select><br>
-
+<!--                <select class="form-select rounded"  th:field="*{ten}" style="background-color: white" aria-label="Default select example">-->
+<!--                    &lt;!&ndash;                    <option selected>Chọn tên thứ hạng</option>&ndash;&gt;-->
+<!--                    <option value="MEMBER">Thành viên</option>-->
+<!--                    <option value="SILVER">Bạc</option>-->
+<!--                    <option value="GOLD">Vàng</option>-->
+<!--                    <option value="DIAMOND">Kim cương</option>-->
+<!--                </select>-->
+                <br>
+                <div class="form-group mb-3">
+                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                            type="text" placeholder="Nhập số tiền tối thiểu" th:field="*{ten}" style="height: 50px">
+                    <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px" th:errors="*{ten}"></span>
+                </div>
                 <div class="form-group mb-3">
                     <input  class="form-control custom-shadow custom-radius border-0 bg-white"
                             type="text" placeholder="Nhập số tiền tối thiểu" th:field="*{soTienKhachChiToiThieu}" style="height: 50px">

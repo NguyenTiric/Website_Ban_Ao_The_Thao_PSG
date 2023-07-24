@@ -4,16 +4,11 @@ import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
-import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.ThuHangMapper;
-import com.example.website_ban_ao_the_thao_psg.model.mapper.ThuHangMapper;
-import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.ThuHangResponse;
-import com.example.website_ban_ao_the_thao_psg.model.response.ThuHangResponse;
 import com.example.website_ban_ao_the_thao_psg.repository.TaiKhoanRepository;
-import com.example.website_ban_ao_the_thao_psg.repository.ThuHangRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.ThuHangRepository;
 import com.example.website_ban_ao_the_thao_psg.service.ThuHangService;
 import groovyjarjarpicocli.CommandLine;
@@ -21,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -28,6 +25,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@EnableScheduling
 @Component
 public class ThuHangServiceImpl implements ThuHangService {
 
@@ -54,21 +52,22 @@ public class ThuHangServiceImpl implements ThuHangService {
         return thuHangPage.map(thuHangMapper::thuHangEntiyToThuHangResponse);
     }
 
-    @Override
-    public void updateThuHangTheoTaiKhoan(Integer id) {
-        TaiKhoan taiKhoan = this.taiKhoanRepository.getOne(id);
+    @Scheduled(fixedDelay = 5000)
+    public void thucHienCapNhat() {
+        List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
 
-        Integer soLuongDonHangThanhCong = taiKhoan.getSoLuongDonHangThanhCong();
-        BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
+        for (TaiKhoan taiKhoan : taiKhoanList) {
+            Integer soLuongDonHangThanhCong = taiKhoan.getSoLuongDonHangThanhCong();
+            BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
 
-        ThuHang mucThuHang = this.thuHangRepository.findByTen(String.valueOf(taiKhoan.getThuHang()));
+            ThuHang mucThuHang = this.thuHangRepository.findByTen(String.valueOf(taiKhoan.getThuHang()));
 
-        if (soLuongDonHangThanhCong.compareTo(mucThuHang.getSoLuongDonHangToiThieu()) >= 0 &&
-                soTienDaChiTieu.compareTo(mucThuHang.getSoTienKhachChiToiThieu()) >= 0) {
-            taiKhoan.setId(mucThuHang.getId());
-            this.taiKhoanRepository.save(taiKhoan);
+            if (mucThuHang != null && soLuongDonHangThanhCong.compareTo(mucThuHang.getSoLuongDonHangToiThieu()) >= 0 &&
+                    soTienDaChiTieu.compareTo(mucThuHang.getSoTienKhachChiToiThieu()) >= 0) {
+                taiKhoan.setId(mucThuHang.getId());
+                this.taiKhoanRepository.save(taiKhoan);
+            }
         }
-
     }
 
     @Override
@@ -158,6 +157,29 @@ public class ThuHangServiceImpl implements ThuHangService {
         if (thuHangRepository.existsByTenAndTrangThai(tenThuHang, ApplicationConstant.TrangThaiThuHang.ACTIVE)) {
             throw new CommandLine.DuplicateNameException("Thứ hạng đã tồn tại, không thể khôi phục!");
         }
+    }
+
+    @Override
+    public Page<ThuHangResponse> searchMinMaxSoTien(BigDecimal min, BigDecimal max, Integer pageNo, Integer size) {
+
+        if (min == null && max == null){
+            throw new IllegalArgumentException("Không được bỏ trống");
+        }
+
+        Pageable pageable = PageRequest.of(pageNo, size);
+
+        if (min == null){
+            Page<ThuHang> page = this.thuHangRepository.findBySoTienKhachChiToiThieuInRange(BigDecimal.ZERO, max, pageable);
+            return page.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
+        }
+
+        if (max == null){
+            Page<ThuHang> page = this.thuHangRepository.findBySoTienKhachChiToiThieuInRange(min, BigDecimal.ONE, pageable);
+            return page.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
+        }
+
+        Page<ThuHang> page = this.thuHangRepository.findBySoTienKhachChiToiThieuInRange(min, max, pageable);
+        return page.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
     }
 
 }

@@ -28,7 +28,6 @@ public class UpdateThuHangRequest {
 
     private String ma;
 
-    @Pattern(regexp = "^[A-Za-z\\s]+$", message = "Tên chỉ được chứa chữ cái và dấu cách!")
     private String ten;
 
     @NotNull(message = "Số tiền chi tiêu tối thiểu không để trống")
