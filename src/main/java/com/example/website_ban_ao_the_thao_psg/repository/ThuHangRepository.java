@@ -46,4 +46,6 @@ public interface ThuHangRepository extends JpaRepository<ThuHang, Integer> {
     @Query(value = "update ThuHang m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
     void revert(@Param("id") Integer id, @Param("now") LocalDate now);
 
+    ThuHang findByTen(String ten);
+
 }

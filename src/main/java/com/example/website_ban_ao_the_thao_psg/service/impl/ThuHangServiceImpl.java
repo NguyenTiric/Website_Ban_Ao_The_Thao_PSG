@@ -23,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +52,23 @@ public class ThuHangServiceImpl implements ThuHangService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<ThuHang> thuHangPage = thuHangRepository.pageINACTIVE(pageable);
         return thuHangPage.map(thuHangMapper::thuHangEntiyToThuHangResponse);
+    }
+
+    @Override
+    public void updateThuHangTheoTaiKhoan(Integer id) {
+        TaiKhoan taiKhoan = this.taiKhoanRepository.getOne(id);
+
+        Integer soLuongDonHangThanhCong = taiKhoan.getSoLuongDonHangThanhCong();
+        BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
+
+        ThuHang mucThuHang = this.thuHangRepository.findByTen(String.valueOf(taiKhoan.getThuHang()));
+
+        if (soLuongDonHangThanhCong.compareTo(mucThuHang.getSoLuongDonHangToiThieu()) >= 0 &&
+                soTienDaChiTieu.compareTo(mucThuHang.getSoTienKhachChiToiThieu()) >= 0) {
+            taiKhoan.setId(mucThuHang.getId());
+            this.taiKhoanRepository.save(taiKhoan);
+        }
+
     }
 
     @Override

@@ -19,6 +19,7 @@ public interface ThuHangService {
 
     Page<ThuHangResponse> pageThuHangInActive(Integer pageNo, Integer size);
 
+    void updateThuHangTheoTaiKhoan(Integer id);
     ThuHangResponse add(CreateThuHangRequest createThuHangRequest);
 
     ThuHangResponse update(UpdateThuHangRequest updateThuHangRequest);
