@@ -55,6 +55,6 @@ public class AnhSanPhamMapperImpl implements AnhSanPhamMapper {
         for (AnhSanPham anhSP : anhSanPhamList) {
             list.add(anhSanPhamEntityToAnhSanPhamResponse(anhSP));
         }
-        return null;
+        return list;
     }
 }

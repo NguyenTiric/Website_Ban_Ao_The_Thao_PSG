@@ -17,9 +17,9 @@ public class HomeController {
         return "admin/hoa_don";
     }
 
-    @GetMapping("/thu-hang")
-    public String thuHang() {
-        return "admin/thu_hang";
+    @GetMapping("/san-pham")
+    public String sanPham() {
+        return "admin/san_pham/trang_chu_san_pham";
     }
     @GetMapping("/voucher")
     public String voucher(){

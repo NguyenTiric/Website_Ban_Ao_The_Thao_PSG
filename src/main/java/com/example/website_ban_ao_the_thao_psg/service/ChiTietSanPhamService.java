@@ -11,20 +11,29 @@ import com.example.website_ban_ao_the_thao_psg.model.response.SanPhamResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public interface ChiTietSanPhamService {
 
+    List<ChiTietSanPhamResponse> listChiTietSanPhamBySanPham(Integer idSP);
+
     Page<ChiTietSanPhamResponse> pageChiTietSanPhamActive(Integer pageNo, Integer size);
 
     Page<ChiTietSanPhamResponse> pageChiTietSanPhamInActive(Integer pageNo, Integer size);
+
     List<ChiTietSanPhamResponse> getAllPending();
 
-    void addCtsp(CreateChiTietSanPhamRequest createChiTietSanPhamRequest,CreateSanPhamRequest createSanPhamRequest,List<KichThuoc> kichThuocList);
+    void addCtsp(CreateSanPhamRequest createSanPhamRequest, List<KichThuoc> kichThuocList,MultipartFile[] files) throws IOException, SQLException;
 
+    ChiTietSanPhamResponse updateSoLuong(Integer id, Integer soLuong);
+
+    void updateTrangThai();
     ChiTietSanPhamResponse updateCtsp(UpdateChiTietSanPhamRequest updateChiTietSanPhamRequest);
 
     ChiTietSanPhamResponse getOneCtsp(Integer id);
@@ -34,8 +43,10 @@ public interface ChiTietSanPhamService {
     Page<ChiTietSanPhamResponse> searchNameOrMaInActiveCtsp(String searchName, Integer pageNo, Integer size);
 
     void deleteChiTietSanPham(Integer id, LocalDate now);
+
     void deletePending(Integer id);
-    void revertChiTietSanPham(Integer id,LocalDate now);
+
+    void revertChiTietSanPham(Integer id, LocalDate now);
 
     Page<SanPhamResponse> pageSanPhamActive(Integer pageNo, Integer size);
 
@@ -43,7 +54,7 @@ public interface ChiTietSanPhamService {
 
     SanPhamResponse addSp(CreateSanPhamRequest createSanPhamRequest);
 
-    SanPhamResponse updateSp(UpdateSanPhamRequest updateSanPhamRequest);
+    void updateSp(UpdateSanPhamRequest updateSanPhamRequest,MultipartFile[] files) throws IOException, SQLException;
 
     SanPhamResponse getOneSp(Integer id);
 
@@ -53,6 +64,6 @@ public interface ChiTietSanPhamService {
 
     void deleteSanPham(Integer id, LocalDate now);
 
-    void revertSanPham(Integer id,LocalDate now);
+    void revertSanPham(Integer id, LocalDate now);
 
 }

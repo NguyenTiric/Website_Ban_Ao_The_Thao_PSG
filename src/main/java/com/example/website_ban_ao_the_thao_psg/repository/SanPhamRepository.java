@@ -15,6 +15,9 @@ import java.util.List;
 
 @Repository
 public interface SanPhamRepository extends JpaRepository<SanPham,Integer> {
+
+
+
     @Query(value = "SELECT * FROM san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<SanPham> pageSearchActive(String searchString, Pageable pageable);
 

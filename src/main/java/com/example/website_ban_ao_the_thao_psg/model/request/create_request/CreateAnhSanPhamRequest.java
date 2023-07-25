@@ -4,6 +4,7 @@ import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangT
 import com.example.website_ban_ao_the_thao_psg.entity.SanPham;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.sql.Blob;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -29,9 +31,9 @@ public class CreateAnhSanPhamRequest {
     @NotNull(message = "Sản phẩm không để trống")
     private SanPham sanPham;
 
-    @NotBlank(message = "Tên không để trống")
-    @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")
-    private String ten;
+    @Lob
+    @NotBlank(message = "Tên ảnh không để trống")
+    private Blob ten;
 
     private LocalDate ngayTao;
 

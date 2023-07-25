@@ -1,7 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.repository;
 
 import com.example.website_ban_ao_the_thao_psg.entity.ChiTietSanPham;
-import com.example.website_ban_ao_the_thao_psg.entity.ChiTietSanPham;
+import com.example.website_ban_ao_the_thao_psg.entity.SanPham;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +16,10 @@ import java.util.List;
 
 @Repository
 public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, Integer> {
+
+
+    List<ChiTietSanPham> getChiTietSanPhamBySanPham(SanPham sanPham);
+
     @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<ChiTietSanPham> pageSearchActive(String searchString, Pageable pageable);
 
@@ -27,8 +31,7 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
 
     @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE trang_thai='INACTIVE' ", nativeQuery = true)
     Page<ChiTietSanPham> pageINACTIVE(Pageable pageable);
-    @Query(value = "delete from chi_tiet_san_pham where trang_thai = 'PENDING' and id = ?", nativeQuery = true)
-    void deletePending(@Param("id") Integer id);
+
     @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE trang_thai='PENDING' ", nativeQuery = true)
     List<ChiTietSanPham> getAllPending();
 
@@ -44,4 +47,9 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
     @Modifying
     @Query(value = "update ChiTietSanPham m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
     void revert(@Param("id") Integer id, @Param("now") LocalDate now);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE ChiTietSanPham c SET c.trangThai = 'ACTIVE' WHERE c.trangThai = 'PENDING'")
+    void updatePendingToActive();
 }
