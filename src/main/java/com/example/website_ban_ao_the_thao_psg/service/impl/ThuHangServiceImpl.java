@@ -126,9 +126,23 @@ public class ThuHangServiceImpl implements ThuHangService {
     }
 
     @Override
+    public Page<ThuHangResponse> searchSoLuongDonHangToiThieuInActive(Integer search, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<ThuHang> thuHangPage = this.thuHangRepository.pageSoLuongDonHangToiThieuPageInActive(search, pageable);
+        return thuHangPage.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
+    }
+
+    @Override
     public Page<ThuHangResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<ThuHang> thuHangPage = thuHangRepository.pageSearchInActive(searchName, pageable);
+        return thuHangPage.map(thuHangMapper::thuHangEntiyToThuHangResponse);
+    }
+
+    @Override
+    public Page<ThuHangResponse> searchSoLuongDonHangOrSoTienInActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<ThuHang> thuHangPage = thuHangRepository.pageSearchSoLuongDonHangOrSoTienInActive(searchName, pageable);
         return thuHangPage.map(thuHangMapper::thuHangEntiyToThuHangResponse);
     }
 
@@ -174,12 +188,78 @@ public class ThuHangServiceImpl implements ThuHangService {
         }
 
         if (max == null){
-            Page<ThuHang> page = this.thuHangRepository.findBySoTienKhachChiToiThieuInRange(min, BigDecimal.ONE, pageable);
+            Page<ThuHang> page = this.thuHangRepository.findBySoTienKhachChiToiThieuInRange(min, BigDecimal.ZERO, pageable);
             return page.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
         }
 
         Page<ThuHang> page = this.thuHangRepository.findBySoTienKhachChiToiThieuInRange(min, max, pageable);
-        return page.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
+        return page.map(thuHangMapper::thuHangEntiyToThuHangResponse);
+    }
+
+    @Override
+    public Page<ThuHangResponse> searchMinMaxDonHang(Integer min, Integer max, Integer pageNo, Integer size) {
+        if (min == null && max == null){
+            throw new IllegalArgumentException("Không được bỏ trống");
+        }
+
+        Pageable pageable = PageRequest.of(pageNo, size);
+
+        if (min == null){
+            Page<ThuHang> page = this.thuHangRepository.findBySoLuongDonHangToiThieuInRange(0, max, pageable);
+            return page.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
+        }
+
+        if (max == null){
+            Page<ThuHang> page = this.thuHangRepository.findBySoLuongDonHangToiThieuInRange(min, 0, pageable);
+            return page.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
+        }
+
+        Page<ThuHang> page = this.thuHangRepository.findBySoLuongDonHangToiThieuInRange(min, max, pageable);
+        return page.map(thuHangMapper::thuHangEntiyToThuHangResponse);
+    }
+
+    @Override
+    public Page<ThuHangResponse> searchMinMaxSoTienInActive(BigDecimal min, BigDecimal max, Integer pageNo, Integer size) {
+        if (min == null && max == null){
+            throw new IllegalArgumentException("Không được bỏ trống");
+        }
+
+        Pageable pageable = PageRequest.of(pageNo, size);
+
+        if (min == null){
+            Page<ThuHang> page = this.thuHangRepository.findBySoTienKhachChiToiThieuInRangeInActive(BigDecimal.ZERO, max, pageable);
+            return page.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
+        }
+
+        if (max == null){
+            Page<ThuHang> page = this.thuHangRepository.findBySoTienKhachChiToiThieuInRangeInActive(min, BigDecimal.ZERO, pageable);
+            return page.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
+        }
+
+        Page<ThuHang> page = this.thuHangRepository.findBySoTienKhachChiToiThieuInRangeInActive(min, max, pageable);
+        return page.map(thuHangMapper::thuHangEntiyToThuHangResponse);
+    }
+
+    @Override
+    public Page<ThuHangResponse> searchMinMaxDonHangInActive(Integer min, Integer max, Integer pageNo, Integer size) {
+        if (min == null && max == null){
+            throw new IllegalArgumentException("Không được bỏ trống");
+        }
+
+        Pageable pageable = PageRequest.of(pageNo, size);
+
+        if (min == null){
+            Page<ThuHang> page = this.thuHangRepository.findBySoLuongDonHangToiThieuInRangeInActive(0, max, pageable);
+            return page.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
+        }
+
+        if (max == null){
+            Page<ThuHang> page = this.thuHangRepository.findBySoLuongDonHangToiThieuInRangeInActive(min, 0, pageable);
+            return page.map(this.thuHangMapper::thuHangEntiyToThuHangResponse);
+        }
+
+        Page<ThuHang> page = this.thuHangRepository.findBySoLuongDonHangToiThieuInRangeInActive(min, max, pageable);
+        return page.map(thuHangMapper::thuHangEntiyToThuHangResponse);
     }
 
 }

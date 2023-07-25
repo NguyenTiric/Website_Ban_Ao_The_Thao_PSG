@@ -27,12 +27,14 @@ public interface ThuHangService {
 
     ThuHangResponse getOne(Integer id);
 
+    Page<ThuHangResponse> searchSoLuongDonHangToiThieuInActive(Integer search, Integer pageNo, Integer size);
+
     Page<ThuHangResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size);
 
     Page<ThuHangResponse> searchSoLuongDonHangToiThieuActive(Integer search, Integer pageNo, Integer size);
 
     Page<ThuHangResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size);
-
+    Page<ThuHangResponse> searchSoLuongDonHangOrSoTienInActive(String searchName, Integer pageNo, Integer size);
     void deleteThuHang(Integer id, LocalDate now);
 
     void revertThuHang(Integer id,LocalDate now);
@@ -40,4 +42,10 @@ public interface ThuHangService {
     void checkDuplicateName(Integer id);
 
     Page<ThuHangResponse> searchMinMaxSoTien(BigDecimal min, BigDecimal max, Integer pageNo, Integer size);
+
+    Page<ThuHangResponse> searchMinMaxDonHang(Integer min, Integer max, Integer pageNo, Integer size);
+
+    Page<ThuHangResponse> searchMinMaxSoTienInActive(BigDecimal min, BigDecimal max, Integer pageNo, Integer size);
+
+    Page<ThuHangResponse> searchMinMaxDonHangInActive(Integer min, Integer max, Integer pageNo, Integer size);
 }

@@ -61,7 +61,7 @@
         <br>
     </div></br>
     <div class="row">
-        &nbsp;&nbsp;<div class="col-2">
+        <br>&nbsp;&nbsp;<div class="col-2">
             &nbsp;&nbsp;<a id="mainButton" class="btn waves-effect waves-light btn-rounded btn-primary">
                 Lọc theo khoảng
             </a>
@@ -69,37 +69,37 @@
         <div class="col-4">
             <button id="removeButton" class="btn waves-effect waves-light btn-rounded btn-primary hidden">Thoát</button>
         </div>
-    </div><br>
+    </div>
     <div class="row">
         <div class="col-4">
             <a id="hiddenButton1" class="hidden">
-                <form>
+                <form action="/admin/psg/thu-hang/searchMinMaxSoTien/0" method="get">
                     <br>&nbsp;&nbsp;Tìm theo khoảng tiền:
                         <div class="form-group mb-3">
-                            <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                                    type="text" placeholder="Nhập số tiền nhỏ nhất" style="height: 50px">
+                            <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="minAmount"
+                                    type="text" placeholder="Nhập số tiền nhỏ nhất">
                         </div>
                         <div class="form-group mb-3">
-                            <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                                    type="text" placeholder="Nhập số tiền lớn nhất" style="height: 50px">
+                            <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="maxAmount"
+                                    type="text" placeholder="Nhập số tiền lớn nhất">
                         </div>
-                    <button class="btn waves-effect waves-light btn-rounded btn-primary" type="submit">Tìm</button><br><br>
+                    <button class="btn waves-effect waves-light btn-rounded btn-primary" type="submit">Tìm kiếm</button><br><br>
                 </form>
             </a>
         </div>
         <div class="col-4">
             <a id="hiddenButton2" class="hidden">
-                <form action="/admin/psg/thu-hang/searchMiMax" method="get">
+                <form action="/admin/psg/thu-hang/searchMinMaxDonHang/0" method="get">
                     <br>&nbsp;&nbsp;Tìm theo số lượng đơn hàng:
                     <div class="form-group mb-3">
                         <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="minAmount"
-                                type="text" placeholder="Nhập số lượng nhỏ nhất" style="height: 50px">
+                                type="text" placeholder="Nhập số lượng nhỏ nhất">
                     </div>
                     <div class="form-group mb-3">
                         <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="maxAmount"
-                                type="text" placeholder="Nhập số lượng lớn nhất" style="height: 50px">
+                                type="text" placeholder="Nhập số lượng lớn nhất">
                     </div>
-                    <button class="btn waves-effect waves-light btn-rounded btn-primary" type="submit">Tìm</button><br><br>
+                    <button class="btn waves-effect waves-light btn-rounded btn-primary" type="submit">Tìm kiếm</button><br><br>
                 </form>
             </a>
         </div>
@@ -117,7 +117,7 @@
                         <thead>
                         <tr>
                             <th scope="col">STT</th>
-                            <th scope="col">Mã&nbsp;<i class="fa-solid fa-sort"></i></th>
+                            <th scope="col">Mã</th>
                             <th scope="col">Tên</th>
                             <th scope="col">Tiền tối thiểu</th>
                             <th scope="col">Đơn hàng tối thiểu</th>
@@ -180,8 +180,6 @@
                             </li>
                         </ul>
                     </nav>
-
-                    <!--                    ----------------------------------------------------------------------------                  -->
                 </div>
             </div>
         </div> <!-- end card-body-->

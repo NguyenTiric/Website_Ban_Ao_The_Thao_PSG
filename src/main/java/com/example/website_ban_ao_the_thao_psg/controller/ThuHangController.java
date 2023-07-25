@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,18 +68,20 @@ public class ThuHangController {
         model.addAttribute("thuHang", thuHangResponse);
         return "admin/thu_hang/view_update_thu_hang";
     }
+
     @GetMapping("/view-add")
     public String viewAdd(Model model) {
         model.addAttribute("thuHang", new CreateThuHangRequest());
         return "admin/thu_hang/view_add_thu_hang";
     }
+
     @PostMapping("/delete/{id}")
-    public String deleteThuHang(@PathVariable("id") Integer id,HttpSession session, Model model) {
-        try{
+    public String deleteThuHang(@PathVariable("id") Integer id, HttpSession session, Model model) {
+        try {
             thuHangService.deleteThuHang(id, LocalDate.now());
             session.setAttribute("successMessage", "Xóa thành công!");
             return "redirect:/admin/psg/thu-hang/hien-thi";
-        }catch (RuntimeException rt){
+        } catch (RuntimeException rt) {
             model.addAttribute("errorMessage", rt.getMessage());
             return pageThuHangActive(0, model);
         }
@@ -113,8 +114,7 @@ public class ThuHangController {
         } catch (CommandLine.DuplicateNameException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
-        }
-        catch (RuntimeException rt){
+        } catch (RuntimeException rt) {
             model.addAttribute("errorMessage", rt.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
         }
@@ -122,7 +122,7 @@ public class ThuHangController {
 
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("thuHang") UpdateThuHangRequest updateThuHangRequest, BindingResult result, Model model, HttpSession session) {
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             model.addAttribute("thuHang", updateThuHangRequest);
             return "admin/thu_hang/view_update_thu_hang";
         }
@@ -130,14 +130,14 @@ public class ThuHangController {
             thuHangService.update(updateThuHangRequest);
             session.setAttribute("successMessage", "Cập nhập thành công!");
             return "redirect:/admin/psg/thu-hang/hien-thi";
-        }catch (RuntimeException rt){
+        } catch (RuntimeException rt) {
             model.addAttribute("errorMessage", rt.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
         }
     }
 
     @GetMapping("/searchActive/{pageNo}")
-    public String searchActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchNameOrMa") String searchNameOrMa){
+    public String searchNameOrMaActive(Model model, @PathVariable("pageNo") Integer pageNo, @RequestParam("searchNameOrMa") String searchNameOrMa) {
         model.addAttribute("thuHang", new ThuHang());
         Page<ThuHangResponse> thuHangResponsePage = thuHangService.searchNameOrMaActive(searchNameOrMa, pageNo, 4);
         model.addAttribute("size", thuHangResponsePage.getSize());
@@ -148,8 +148,8 @@ public class ThuHangController {
     }
 
     @GetMapping("/searchSoLuongDonHangToiThieuActive/{pageNo}")
-    public String searchSoLuongDonHangToiThieuActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchSoLuongDonHangToiThieu") String searchSoLuongDonHangToiThieu){
-        try{
+    public String searchSoLuongDonHangToiThieuActive(Model model, @PathVariable("pageNo") Integer pageNo, @RequestParam("searchSoLuongDonHangToiThieu") String searchSoLuongDonHangToiThieu) {
+        try {
             model.addAttribute("thuHang", new ThuHang());
             Page<ThuHangResponse> thuHangResponsePage = thuHangService.searchSoLuongDonHangToiThieuActive(Integer.valueOf(searchSoLuongDonHangToiThieu), pageNo, 4);
             model.addAttribute("size", thuHangResponsePage.getSize());
@@ -158,15 +158,52 @@ public class ThuHangController {
             model.addAttribute("listThuHangActive", thuHangResponsePage);
             return "admin/thu_hang/trang_chu_thu_hang";
 
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             model.addAttribute("errorMessage1", "Tìm kiếm không được bỏ trống!");
             return pageThuHangActive(0, model);
         }
-
     }
 
-    @GetMapping("/searchIunActive/{pageNo}")
-    public String searchInActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchNameOrMa") String searchNameOrMa){
+    @GetMapping("/searchMinMaxSoTien/{pageNo}")
+    public String searchMinMaxSoTienActive(@PathVariable("pageNo") Integer pageNo,
+                                           @RequestParam(value = "minAmount", required = false) BigDecimal minAmount,
+                                           @RequestParam(value = "maxAmount", required = false) BigDecimal maxAmount,
+                                           Model model) {
+        try {
+            model.addAttribute("thuHang", new ThuHang());
+            Page<ThuHangResponse> thuHangResponsePageActive = thuHangService.searchMinMaxSoTien(minAmount, maxAmount, pageNo, 4);
+            model.addAttribute("size", thuHangResponsePageActive.getSize());
+            model.addAttribute("totalPages", thuHangResponsePageActive.getTotalPages());
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("listThuHangActive", thuHangResponsePageActive);
+            return "admin/thu_hang/trang_chu_thu_hang";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return pageThuHangActive(0, model);
+        }
+    }
+
+    @GetMapping("/searchMinMaxDonHang/{pageNo}")
+    public String searchMinMaxDonHangActive(@PathVariable("pageNo") Integer pageNo,
+                                            @RequestParam(value = "minAmount", required = false) Integer minAmount,
+                                            @RequestParam(value = "maxAmount", required = false) Integer maxAmount,
+                                            Model model) {
+        try {
+            model.addAttribute("thuHang", new ThuHang());
+            Page<ThuHangResponse> thuHangResponsePageActive = thuHangService.searchMinMaxDonHang(minAmount, maxAmount, pageNo, 4);
+            model.addAttribute("size", thuHangResponsePageActive.getSize());
+            model.addAttribute("totalPages", thuHangResponsePageActive.getTotalPages());
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("listThuHangActive", thuHangResponsePageActive);
+            return "admin/thu_hang/trang_chu_thu_hang";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return pageThuHangActive(0, model);
+        }
+    }
+
+    @GetMapping("/searchInActive/{pageNo}")
+    public String searchInActive(Model model, @PathVariable("pageNo") Integer pageNo, @RequestParam("searchNameOrMaInActive") String searchNameOrMa) {
         model.addAttribute("thuHang", new ThuHang());
         Page<ThuHangResponse> thuHangResponsePage = thuHangService.searchNameOrMaInActive(searchNameOrMa, pageNo, 3);
         model.addAttribute("size", thuHangResponsePage.getSize());
@@ -176,23 +213,52 @@ public class ThuHangController {
         return "admin/thu_hang/revert_thu_hang";
     }
 
-    @GetMapping("/searchMiMax")
-    public String searchMinMax(@PathVariable("pageNo") Integer pageNo,
-                               @RequestParam("minAmount") BigDecimal minAmount,
-                               @RequestParam("maxAmount") BigDecimal maxAmount,
-                               Model model){
-        try{
+    @GetMapping("/searchSoTienHoacDonHangInActive/{pageNo}")
+    public String searchSoTienHoacDonHangInActive(Model model, @PathVariable("pageNo") Integer pageNo, @RequestParam("searchSoTienHoacDonHangInActive") String searchNameOrMa) {
+        model.addAttribute("thuHang", new ThuHang());
+        Page<ThuHangResponse> thuHangResponsePage = thuHangService.searchSoLuongDonHangOrSoTienInActive(searchNameOrMa, pageNo, 3);
+        model.addAttribute("size", thuHangResponsePage.getSize());
+        model.addAttribute("totalPages", thuHangResponsePage.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listThuHangInActive", thuHangResponsePage);
+        return "admin/thu_hang/revert_thu_hang";
+    }
+
+    @GetMapping("/searchMinMaxSoTienInActive/{pageNo}")
+    public String searchMinMaxSoTienInActive(@PathVariable("pageNo") Integer pageNo,
+                                             @RequestParam(value = "minAmount", required = false) BigDecimal minAmount,
+                                             @RequestParam(value = "maxAmount", required = false) BigDecimal maxAmount,
+                                             Model model) {
+        try {
             model.addAttribute("thuHang", new ThuHang());
-            Page<ThuHangResponse> thuHangResponsePageActive = thuHangService.searchMinMaxSoTien( minAmount, maxAmount, pageNo, 4);
+            Page<ThuHangResponse> thuHangResponsePageActive = thuHangService.searchMinMaxSoTienInActive(minAmount, maxAmount, pageNo, 4);
             model.addAttribute("size", thuHangResponsePageActive.getSize());
             model.addAttribute("totalPages", thuHangResponsePageActive.getTotalPages());
             model.addAttribute("currentPage", pageNo);
             model.addAttribute("listThuHangActive", thuHangResponsePageActive);
-            return "admin/thu_hang/trang_chu_thu_hang";
-        }catch (IllegalArgumentException e){
+            return "admin/thu_hang/revert_thu_hang";
+        } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return pageThuHangActive(0, model);
+            return pageThuHangInActive(0, model);
         }
+    }
 
+    @GetMapping("/searchMinMaxDonHangInActive/{pageNo}")
+    public String searchMinMaxDonHangInActive(@PathVariable("pageNo") Integer pageNo,
+                                              @RequestParam(value = "minAmount", required = false) Integer minAmount,
+                                              @RequestParam(value = "maxAmount", required = false) Integer maxAmount,
+                                              Model model) {
+        try {
+            model.addAttribute("thuHang", new ThuHang());
+            Page<ThuHangResponse> thuHangResponsePageActive = thuHangService.searchMinMaxDonHangInActive(minAmount, maxAmount, pageNo, 4);
+            model.addAttribute("size", thuHangResponsePageActive.getSize());
+            model.addAttribute("totalPages", thuHangResponsePageActive.getTotalPages());
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("listThuHangActive", thuHangResponsePageActive);
+            return "admin/thu_hang/revert_thu_hang";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return pageThuHangInActive(0, model);
+        }
     }
 }
