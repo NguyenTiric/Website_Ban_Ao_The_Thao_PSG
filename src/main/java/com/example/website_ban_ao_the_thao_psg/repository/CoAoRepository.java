@@ -35,4 +35,5 @@ public interface CoAoRepository extends JpaRepository<CoAo,Integer> {
     @Modifying
     @Query(value = "update CoAo m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
     void revert(@Param("id") Integer id, @Param("now") LocalDate now);
+
 }

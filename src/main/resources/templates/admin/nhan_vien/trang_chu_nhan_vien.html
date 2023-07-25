@@ -6,6 +6,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .symbol-circle {
+            width: 50px; /* Điều chỉnh kích thước rộng của hình ảnh */
+            height: 50px; /* Điều chỉnh kích thước cao của hình ảnh */
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .badge-light-success {
+            color: #22ca2c;
+            background-color: #e8fff3;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,10 +28,13 @@
                 <a class="nav-link" href="javascript:void(0)">
                     <nav class="navbar bg-body">
                         <div class="container-fluid">
-                            <form class="d-flex" role="search" action="/admin/psg/nhan-vien/searchActive/0" method="get">
+                            <form class="d-flex" role="search" action="/admin/psg/nhan-vien/searchActive/0"
+                                  method="get">
                                 <input name="search" class="form-control custom-shadow custom-radius border-0 bg-white"
-                                       style="width: 350px;" type="search" placeholder="Tìm Theo Tên,Số Điện Thoại,Email,Địa Chỉ" aria-label="Search">
-                                <button class="btn btn-rounded btn-primary" style="width: 100px" type="submit">Tìm </button>
+                                       style="width: 350px;" type="search"
+                                       placeholder="Tìm Theo Tên,Số Điện Thoại,Email,Địa Chỉ" aria-label="Search">
+                                <button class="btn btn-rounded btn-primary" style="width: 100px" type="submit">Tìm
+                                </button>
                             </form>
 
                         </div>
@@ -32,12 +47,14 @@
                 <a class="nav-link" href="javascript:void(0)">
                     <nav class="navbar bg-body">
                         <div class="container-fluid">
-                            <form class="d-flex" role="search" action="/admin/psg/nhan-vien/searchTuoiMinMax/0" method="get">
+                            <form class="d-flex" role="search" action="/admin/psg/nhan-vien/searchTuoiMinMax/0"
+                                  method="get">
                                 <input name="tuoiMin" class="form-control custom-shadow custom-radius border-0 bg-white"
                                        style="width: 150px;" type="search" placeholder="Từ Tuổi" aria-label="Search">
                                 <input name="tuoiMax" class="form-control custom-shadow custom-radius border-0 bg-white"
                                        style="width: 150px;" type="search" placeholder="Đến Tuổi" aria-label="Search">
-                                <button class="btn btn-rounded btn-primary" style="width: 100px" type="submit">Tìm </button>
+                                <button class="btn btn-rounded btn-primary" style="width: 100px" type="submit">Tìm
+                                </button>
                             </form>
 
                         </div>
@@ -62,9 +79,9 @@
                             <th scope="col">Tên</th>
                             <th scope="col">Giới Tính</th>
                             <th scope="col">Ngày Sinh</th>
-<!--                            <th scope="col">Địa Chỉ</th>-->
+                            <!--                            <th scope="col">Địa Chỉ</th>-->
                             <th scope="col">Số Điện Thoạỉ</th>
-<!--                            <th scope="col">Email</th>-->
+                            <!--                            <th scope="col">Email</th>-->
                             <th scope="col">Trạng Thái</th>
                             <th scope="col">Vai Trò</th>
                             <th scope="col">Hành Động</th>
@@ -75,25 +92,40 @@
                         <tr th:each="tk,index:${listNhanVienActive}">
                             <td th:text="${index.count}"></td>
                             <td>
-                                <img th:src="@{'/image/' + ${tk.anh}}" style="width: 100px; height: 50px" />
+                                <div class="symbol symbol-circle overflow-hidden me-3">
+                                    <div class="symbol-label">
+                                        <img th:src="@{${'/admin/psg/nhan-vien/display?idAnhNV=' + tk.id}}" style="width: 100%; height: 100%;"/>
+                                    </div>
+                                </div>
                             </td>
                             <td th:text="${tk.ten}"></td>
                             <td th:text="${tk.gioiTinh==true ? 'Nam':'Nữ'}"></td>
                             <td th:text="${tk.ngaySinh}"></td>
-<!--                            <td th:text="${tk.diaChi}"></td>-->
+                            <!--                            <td th:text="${tk.diaChi}"></td>-->
                             <td th:text="${tk.sdt}"></td>
-<!--                            <td th:text="${tk.email}"></td>-->
-                            <td th:text="${tk.trangThai.moTa}"></td>
+                            <!--                            <td th:text="${tk.email}"></td>-->
+                            <td>
+                                <div class="badge badge-light-success fw-bold">
+                                    <span th:text="${tk.trangThai.moTa}"></span>
+                                </div>
+                            </td>
+
                             <td th:text="${tk.vaiTro.ten}"></td>
                             <td>
                       <span>
                                       <a th:href="@{/admin/psg/nhan-vien/view-update/{id}(id=${tk.id})}"
                                          class="btn waves-effect waves-light btn-rounded btn-warning"
-                                      >Sửa</a>
-                                    <form th:action="@{/admin/psg/nhan-vien/delete/{id}(id=${tk.id})}" method="get"  style="display: inline;">
+                                      ><i
+                                              data-feather="edit"
+                                              class="feather-icon"></i></a>
+                                    <form th:action="@{/admin/psg/nhan-vien/delete/{id}(id=${tk.id})}" method="get"
+                                          style="display: inline;">
                                     <a th:href="@{/admin/psg/nhan-vien/delete/{id}(id=${tk.id})}">
                                         <button type="submit"
-                                                class="btn waves-effect waves-light btn-rounded btn-danger" onclick="return confirm('Bạn có muốn xóa không')">Xóa
+                                                class="btn waves-effect waves-light btn-rounded btn-danger"
+                                                onclick="return confirm('Bạn có muốn xóa không')"><i
+                                                data-feather="trash-2"
+                                                class="feather-icon"></i>
                                         </button>
                                     </a>
                                 </form>
@@ -105,7 +137,8 @@
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item" th:if="${currentPage !=0}">
-                                <a class="page-link" th:href="@{'/admin/psg/nhan-vien/pageActive/'+${ currentPage - 1}}">Previous</a>
+                                <a class="page-link"
+                                   th:href="@{'/admin/psg/nhan-vien/pageActive/'+${ currentPage - 1}}">Previous</a>
                             </li>
                             <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
                                 th:classappend="${currentPage == i - 1 ? 'active' : ''}">
@@ -125,10 +158,12 @@
     <div class="row">
         <div class="col-8"></div>
         <div class="col-2">
-            <a href="/admin/psg/nhan-vien/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">Thêm Nhân Viên</a>
+            <a href="/admin/psg/nhan-vien/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">Thêm
+                Nhân Viên</a>
         </div>
         <div class="col-2">
-            <a href="/admin/psg/nhan-vien/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">Không Hoạt Động</a>
+            <a href="/admin/psg/nhan-vien/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">Không
+                Hoạt Động</a>
         </div>
     </div>
 

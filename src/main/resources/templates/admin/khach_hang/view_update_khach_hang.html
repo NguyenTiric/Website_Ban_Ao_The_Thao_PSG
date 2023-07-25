@@ -6,10 +6,38 @@
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <style>
-        .row{
+        .row {
             margin-top: 20px;
             margin-bottom: 20px;
         }
+
+        /* CSS to create rounded image with border */
+        /* CSS to create rounded image with green border */
+        .image-container {
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* CSS to style the custom file upload button */
+        .custom-file-upload {
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+            color: #fff;
+
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+
     </style>
     <script>
         function chooseFile(fileInput) {
@@ -25,84 +53,106 @@
 </head>
 <body>
 <div class="container" layout:fragment="content">
-    <div class="row">
+    <h2 class="text-center mb-4">Sửa Khách Hàng</h2>
 
-
-        <form action="/admin/psg/khach-hang/update" th:object="${khachHang}" method="post" enctype="multipart/form-data"
-              onsubmit="return confirm('Bạn có thêm không?')">
-            <input type="hidden" th:field="*{id}">
-            <div class="row">
-                <div class="col-4">
-                    <img th:src="@{'/image/' + ${khachHang.anh}}" alt="" id="image" class="form-control" width="200px" height="200px">
-                    <input type="file" th:field="*{anh}" id="imageFile" onchange="chooseFile(this)">
-                </div>
-
-                <div class="col-8">
-                    <div class="row">
-
-
-                            <label class="form-label">Tên</label>
-                            <input type="text" class="form-control custom-shadow custom-radius border-0 bg-white"
-                                   th:field="*{ten}"/>
-                            <div th:if="${#fields.hasErrors('ten')}" style="color: red" th:errors="*{ten}"></div>
-
-                    </div>
-
-                    <div class="row">
-                        Địa Chỉ: <input type="text" class="form-control custom-shadow custom-radius border-0 bg-white"
-                                        th:field="*{diaChi}"/>
-                        <div th:if="${#fields.hasErrors('diaChi')}" style="color: red" th:errors="*{diaChi}"></div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-6">
-                            <label class="form-label">Số Điện Thoại</label>
-                            <input type="text" class="form-control custom-shadow custom-radius border-0 bg-white"
-                                   th:field="*{sdt}"/>
-                            <div th:if="${#fields.hasErrors('sdt')}" style="color: red" th:errors="*{sdt}"></div>
+    <form action="/admin/psg/khach-hang/update" th:object="${khachHang}" method="post" enctype="multipart/form-data"
+          onsubmit="return confirm('Bạn có sửa không?')">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group mb-3">
+                            <input type="hidden" th:field="*{id}">
+                            <img th:src="@{${'../display?idAnh=' + khachHang.id}}" id="image" class="form-control mb-1"
+                                 style="width: 250px; height: 150px;margin-left: 100px">
+                            <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                   type="file" name="idAnhSua" onchange="chooseFile(this)"
+                                   style="height: 40px;width: 250px;margin-left: 100px">
                         </div>
-                        <div class="col-6">
-                            <label class="form-label">Giới Tính</label>
-                            <br>
-                            <input type="radio" name="gioiTinh" th:value="true" th:field="*{gioiTinh}"/>
-                            <label >Nam</label>
-                            <input type="radio" name="gioiTinh" th:value="false" th:field="*{gioiTinh}"/>
-                            <label >Nữ</label>
+
+
+                        <div class="form-group mb-3">
+                            <label class="form-label" style="margin-left: 10px">Tên</label>
+                            <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                   type="text" placeholder="Nhập tên Khách Hàng" th:field="*{ten}"
+                                   style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 15px"
+                                  th:errors="*{ten}"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" style="margin-left: 10px">Địa Chỉ</label>
+                            <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                   type="text" placeholder="Nhập địa chỉ" th:field="*{diaChi}"
+                                   style="height: 50px">
+                            <span th:if="${#fields.hasErrors('diaChi')}" style="color: red; font-size: 15px"
+                                  th:errors="*{diaChi}"></span>
                         </div>
                     </div>
+                    <div class="col-6" style="margin-top: 40px">
 
 
-                    <div class="row">
-                        <div class="col-6">
-                            <label class="form-label">Ngày Sinh</label>
-                            <input type="date" class="form-control custom-shadow custom-radius border-0 bg-white"
-                                   th:field="*{ngaySinh}"/>
-                            <div th:if="${#fields.hasErrors('ngaySinh')}" style="color: red" th:errors="*{ngaySinh}"></div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" style="margin-left: 10px">Số Điện Thoại</label>
+                            <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                   type="text" placeholder="Nhập Số Điện Thoại Khách Hàng" th:field="*{sdt}"
+                                   style="height: 50px">
+                            <span th:if="${#fields.hasErrors('sdt')}" style="color: red; font-size: 15px"
+                                  th:errors="*{sdt}"></span>
                         </div>
-                        <div class="col-6">
-                            <label class="form-label">Email</label>
-                            <input type="text" class="form-control custom-shadow custom-radius border-0 bg-white"
-                                   th:field="*{email}"/>
-                            <div th:if="${#fields.hasErrors('email')}" style="color: red" th:errors="*{email}"></div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label" style="margin-left: 10px">Giới Tính</label>
+                            <div class=" d-flex">
+                                <div class="form-check" style="margin-left: 10px;margin-right: 25px">
+                                    <input class="form-check-input" type="radio" name="gioiTinh" th:value="true"
+                                           th:field="*{gioiTinh}" checked>
+                                    <label class="form-check-label">
+                                        Nam
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gioiTinh" th:value="false"
+                                           th:field="*{gioiTinh}">
+                                    <label class="form-check-label">
+                                        Nữ
+                                    </label>
+                                </div>
+                            </div>
+
                         </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label" style="margin-left: 10px">Ngày Sinh</label>
+                            <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                   type="date" th:field="*{ngaySinh}"
+                                   style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ngaySinh')}" style="color: red; font-size: 15px"
+                                  th:errors="*{ngaySinh}"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label" style="margin-left: 10px">Email</label>
+                            <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                   type="text" placeholder="Nhập Email Khách Hàng" th:field="*{email}"
+                                   style="height: 50px">
+                            <span th:if="${#fields.hasErrors('email')}" style="color: red; font-size: 15px"
+                                  th:errors="*{email}"></span>
+                        </div>
+
+
                     </div>
-
-                    <!--                    <div class="row">-->
-                    <!--                        <label class="form-label">Mật Khẩu</label>-->
-                    <!--                        <input type="password" class="form-control custom-shadow custom-radius border-0 bg-white"-->
-                    <!--                               th:field="*{matKhau}"/>-->
-                    <!--                        <div th:if="${#fields.hasErrors('matKhau')}" style="color: red" th:errors="*{matKhau}"></div>-->
-                    <!--                    </div>-->
-
-                    <br><br>
-                    <button type="submit" class="btn btn-success" style="text-align: center">Sửa</button>
                 </div>
 
             </div>
 
-        </form>
-    </div>
+            <div class="col-1"></div>
+
+        </div>
+
+        <button type="submit" class="btn btn-success" style="margin-left: 550px">Update</button>
+    </form>
+
 
 </div>
 </body>

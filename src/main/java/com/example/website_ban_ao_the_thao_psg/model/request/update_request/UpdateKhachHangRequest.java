@@ -5,6 +5,7 @@ import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.VaiTro;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -18,6 +19,7 @@ import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,7 +46,8 @@ public class UpdateKhachHangRequest {
     //    @NotNull(message = "Giới tính không để trống")
     private LocalDate ngaySinh;
 
-    private MultipartFile anh;
+    @Lob
+    private Blob anh;
 
     @NotBlank(message = "Địa chỉ không để trống")
     @Size(min = 0, max = 225, message = "Địa chỉ không vượt quá 225 ký tự")

@@ -5,6 +5,7 @@ import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.VaiTro;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -19,6 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -60,11 +62,12 @@ public class CreateNhanVienRequest {
     @Size(min = 0, max = 225, message = "Email không vượt quá 225 ký tự")
     private String email;
 
-    private MultipartFile anh;
+    @Lob
+    private Blob anh;
 
     private Integer soLuongDonHangThanhCong;
 
-    @NotBlank(message = "Mật khẩu không để trống")
+//    @NotBlank(message = "Mật khẩu không để trống")
     private String matKhau;
 
     private BigDecimal soTienDaChiTieu;

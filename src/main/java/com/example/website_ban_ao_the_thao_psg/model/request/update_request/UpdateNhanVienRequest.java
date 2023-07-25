@@ -5,6 +5,7 @@ import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.VaiTro;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -18,6 +19,7 @@ import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -36,7 +38,8 @@ public class UpdateNhanVienRequest {
     @NotNull(message = "Vai trò không để trống")
     private VaiTro vaiTro;
 
-    private MultipartFile anh;
+    @Lob
+    private Blob anh;
 
     @NotBlank(message = "Tên không để trống")
     @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")
