@@ -2,6 +2,7 @@ package com.example.website_ban_ao_the_thao_psg.repository;
 
 import com.example.website_ban_ao_the_thao_psg.entity.DiaChi;
 import com.example.website_ban_ao_the_thao_psg.entity.DiaChi;
+import com.example.website_ban_ao_the_thao_psg.entity.DiaChi;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,13 +17,16 @@ import java.time.LocalDate;
 @Repository
 public interface DiaChiRepository extends JpaRepository<DiaChi,Integer> {
     @Query(value = "SELECT * FROM dia_chi WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
-    Page<DiaChi> pageSearch(String searchString, Pageable pageable);
+    Page<DiaChi> pageSearchActive(String searchString, Pageable pageable);
+    @Query(value = "SELECT * FROM dia_chi WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
+    Page<DiaChi> pageSearchIvActive(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM dia_chi WHERE trang_thai='INACTIVE' ", nativeQuery = true)
-    Page<DiaChi> pageINACTIVE( Pageable pageable);
+    Page<DiaChi> pageINACTIVE(Pageable pageable);
 
     @Query(value = "SELECT * FROM dia_chi WHERE trang_thai='ACTIVE' ", nativeQuery = true)
-    Page<DiaChi> pageACTIVE( Pageable pageable);
+    Page<DiaChi> pageACTIVE(Pageable pageable);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE DiaChi m SET m.trangThai = 'INACTIVE', m.ngayCapNhap = :now WHERE m.id = :id")

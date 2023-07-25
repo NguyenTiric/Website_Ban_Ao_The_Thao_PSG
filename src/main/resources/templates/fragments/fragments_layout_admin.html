@@ -210,7 +210,8 @@
                                             Màu Sắc
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="/admin/psg/thuong-hieu/hien-thi" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/thuong-hieu/hien-thi"
+                                                        class="sidebar-link"><span
                                     class="hide-menu">
                                             Thương Hiệu
                                         </span></a>
@@ -225,17 +226,20 @@
                                          Ảnh
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="/admin/psg/dong-san-pham/hien-thi" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/dong-san-pham/hien-thi"
+                                                        class="sidebar-link"><span
                                     class="hide-menu">
                                          Dòng Sản Phẩm
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="/admin/psg/loai-san-pham/hien-thi" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/loai-san-pham/hien-thi"
+                                                        class="sidebar-link"><span
                                     class="hide-menu">
                                          Loại Sản Phẩm
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="/admin/psg/nuoc-san-xuat/hien-thi" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/nuoc-san-xuat/hien-thi"
+                                                        class="sidebar-link"><span
                                     class="hide-menu">
                                         Nước sản Xuất
                                         </span></a>
@@ -245,7 +249,8 @@
                                          Chất Liệu
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="/admin/psg/nha-san-xuat/hien-thi" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/nha-san-xuat/hien-thi"
+                                                        class="sidebar-link"><span
                                     class="hide-menu">
                                         Nhà Sản Xuất
                                         </span></a>
@@ -285,7 +290,7 @@
 </div>
 <script th:if="${successMessage}" th:inline="javascript">
     /*<![CDATA[*/
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', function () {
         var successMessage = /*[[${successMessage}]]*/ '';
         if (successMessage) {
             alert(successMessage);
@@ -293,7 +298,77 @@
     });
     /*]]>*/
 </script>
-<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+
+<script th:inline="javascript" th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"
+        integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:inline="javascript">
+    const host = "https://provinces.open-api.vn/api/";
+    var callAPI = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data, "province");
+            });
+    }
+    callAPI('https://provinces.open-api.vn/api/?depth=1');
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.districts, "district");
+            });
+    }
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.wards, "ward");
+            });
+    }
+
+    var renderData = (array, select) => {
+        let row = '';
+        array.forEach(element => {
+            row += `<option value="${element.code}">${element.name}</option>`;
+        });
+        document.querySelector("#" + select).innerHTML = row;
+    }
+    $("#province").change(() => {
+        callApiDistrict(host + "p/" + $("#province").val() + "?depth=2");
+        printResult();
+    });
+    $("#district").change(() => {
+        callApiWard(host + "d/" + $("#district").val() + "?depth=2");
+        printResult();
+    });
+    $("#ward").change(() => {
+        printResult();
+    })
+
+    var printResult = () => {
+        var provinceCode = $("#province").val();
+        var districtCode = $("#district").val();
+        var wardCode = $("#ward").val();
+        var provinceName = $("#province option:selected").text();
+        var districtName = $("#district option:selected").text();
+        var wardName = $("#ward option:selected").text();
+        callApiDistrict(host + "p/" + provinceCode + "?depth=2")
+            .then(() => {
+                $("#district").val(districtCode);
+            });
+
+        callApiWard(host + "d/" + districtCode + "?depth=2")
+            .then(() => {
+                $("#ward").val(wardCode);
+            });
+        $("#provinceInput").val(provinceName);
+        $("#districtInput").val(districtName);
+        $("#wardInput").val(wardName);
+        $("#provinceCodeInput").val(provinceCode);
+        $("#districtCodeInput").val(districtCode);
+        $("#wardCodeInput").val(wardCode);
+    }
+</script>
+
 <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/dist/js/feather.min.js}"></script>
 <script th:src="@{/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"></script>
@@ -301,6 +376,7 @@
 <script th:src="@{/dist/js/custom.min.js}"></script>
 <script th:src="@{/assets/extra-libs/c3/d3.min.js}"></script>
 <script th:src="@{/assets/extra-libs/c3/c3.min.js}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
@@ -308,6 +384,6 @@
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
 
-</body>
 
+</body>
 </html>

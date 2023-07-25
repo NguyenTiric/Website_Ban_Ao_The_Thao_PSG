@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/fragments_layout_admin}"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <div class="col-3"> </div>
+        <div class="col-6">
+            <form action="/admin/psg/voucher-thu-hang/update"  th:object="${voucherThuHang}" method="post" onsubmit="return  confirm('Bạn có cập nhât không?')">
+                <input type="hidden" th:field="*{id}">
+                <div class="form-group mb-3">
+                    <label>Mã Voucher</label>
+                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                            type="text" placeholder="Nhập voucher" th:field="*{ma}" style="height: 50px">
+                    <span th:if="${#fields.hasErrors('ma')}" style="color: red; font-size: 13px" th:errors="*{ma}"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label>Tên Voucher</label>
+                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                            type="text" placeholder="Nhập số gia tri" th:field="*{ten}" style="height: 50px">
+                    <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px" th:errors="*{ten}"></span>
+                </div>
+                <br>
+                <div class="form-group mb-3">
+                    <label>Loại Voucher</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" th:field="*{loaiGiamGia}" value="false" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            VND
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" th:field="*{loaiGiamGia}" value="true" id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            %
+                        </label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Giá Trị</label>
+                        <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                                type="text" placeholder="Nhập giá trị" th:field="*{giaTri}" style="height: 50px">
+                        <span th:if="${#fields.hasErrors('giaTri')}" style="color: red; font-size: 13px" th:errors="*{giaTri}"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Ngày Bắt Đầu</label>
+                        <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                                type="datetime-local"  th:field="*{ngayBatDau}" style="height: 50px">
+                        <span th:if="${#fields.hasErrors('ngayBatDau')}" style="color: red; font-size: 13px" th:errors="*{ngayBatDau}"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Ngày Kết Thúc</label>
+                        <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                                type="datetime-local"  th:field="*{ngayKetThuc}" style="height: 50px">
+                        <span th:if="${#fields.hasErrors('ngayKetThuc')}" style="color: red; font-size: 13px" th:errors="*{ngayKetThuc}"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Điều Kiện Sử Dụng</label>
+                        <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                                type="text" placeholder="Đơn Hàng Từ" th:field="*{dieuKienSuDungVoucher}" style="height: 50px">
+                        <span th:if="${#fields.hasErrors('dieuKienSuDungVoucher')}" style="color: red; font-size: 13px" th:errors="*{dieuKienSuDungVoucher}"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Số Lượng</label>
+                        <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                                type="text" placeholder="Số Lượng" th:field="*{soLuong}" style="height: 50px">
+                        <span th:if="${#fields.hasErrors('soLuong')}" style="color: red; font-size: 13px" th:errors="*{soLuong}"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Mô Tả</label>
+                        <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                                type="text" placeholder="Số Lượng" th:field="*{moTa}" style="height: 100px">
+                        <span th:if="${#fields.hasErrors('moTa')}" style="color: red; font-size: 13px" th:errors="*{moTa}"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group mb-3 text-center">
+                    <a href="/admin/psg/voucher-thu-hang/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Quay lại</a>
+                    <button class="btn btn-rounded btn-primary" type="submit">Update</button>
+                </div>
+
+            </form>
+
+        </div>
+        <div class="col-3"> </div>
+    </div>
+</div>
+</body>
+</html>

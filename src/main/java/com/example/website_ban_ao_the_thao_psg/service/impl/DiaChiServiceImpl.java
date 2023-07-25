@@ -19,7 +19,6 @@ import java.util.Optional;
 
 @Component
 public class DiaChiServiceImpl implements DiaChiService {
-
     @Autowired
     DiaChiRepository diaChiRepository;
 
@@ -32,7 +31,6 @@ public class DiaChiServiceImpl implements DiaChiService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<DiaChi> diaChiPage = diaChiRepository.pageACTIVE(pageable);
         return diaChiPage.map(diaChiMapper::diaChiEntityToDiaChiResponse);
-
     }
 
     @Override
@@ -54,6 +52,8 @@ public class DiaChiServiceImpl implements DiaChiService {
     @Override
     public DiaChiResponse update(UpdateDiaChiRequest updateDiaChiRequest) {
         DiaChi diaChi = diaChiMapper.updateDiaChiRequestToDiaChiEntity(updateDiaChiRequest);
+        diaChi.setNgayCapNhap(LocalDate.now());
+        diaChi.setTrangThai(ApplicationConstant.TrangThaiDiaChi.ACTIVE);
         return diaChiMapper.diaChiEntityToDiaChiResponse(diaChiRepository.save(diaChi));
     }
 
@@ -64,28 +64,27 @@ public class DiaChiServiceImpl implements DiaChiService {
     }
 
     @Override
-    public DiaChiResponse delete(UpdateDiaChiRequest updateDiaChiRequest, Integer id) {
-        return null;
-    }
-
-
-    @Override
-    public Page<DiaChiResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size) {
+    public Page<DiaChiResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
-        Page<DiaChi> diaChiPage = diaChiRepository.pageSearch(searchName, pageable);
+        Page<DiaChi> diaChiPage = diaChiRepository.pageSearchActive(searchName, pageable);
         return diaChiPage.map(diaChiMapper::diaChiEntityToDiaChiResponse);
-
     }
 
     @Override
-    public void deleteDiaChi(Integer id,LocalDate now) {
-        diaChiRepository.delete(id,LocalDate.now());
+    public Page<DiaChiResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<DiaChi> diaChiPage = diaChiRepository.pageSearchIvActive(searchName, pageable);
+        return diaChiPage.map(diaChiMapper::diaChiEntityToDiaChiResponse);
     }
 
     @Override
-    public void revertDiaChi(Integer id,LocalDate now) {
-        diaChiRepository.revert(id,LocalDate.now());
+    public void deleteDiaChi(Integer id, LocalDate now) {
+        diaChiRepository.delete(id, LocalDate.now());
     }
 
+    @Override
+    public void revertDiaChi(Integer id, LocalDate now) {
 
+        diaChiRepository.revert(id, LocalDate.now());
+    }
 }

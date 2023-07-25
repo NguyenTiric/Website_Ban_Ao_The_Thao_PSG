@@ -15,6 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,7 +26,8 @@ import java.time.LocalDate;
 public class CreateVoucherThuHangRequest {
 
     private Integer id;
-
+    @NotBlank(message = "Mã không để trống")
+    @Size(min = 0, max = 50, message = "Tên không vượt quá 50 ký tự")
     private String ma;
 
     @NotBlank(message = "Tên không để trống")
@@ -40,10 +42,10 @@ public class CreateVoucherThuHangRequest {
     private Double giaTri;
 
     @NotNull(message = "Ngày bắt đầu không để trống")
-    private LocalDate ngayBatDau;
+    private LocalDateTime ngayBatDau;
 
     @NotNull(message = "Ngày kết thúc không để trống")
-    private LocalDate ngayKetThuc;
+    private LocalDateTime ngayKetThuc;
 
     @NotNull(message = "Điều kiện sử dung Voucher không để trống")
     private Double dieuKienSuDungVoucher;
@@ -56,9 +58,9 @@ public class CreateVoucherThuHangRequest {
     @Size(min = 0, max = 225, message = "Mô tả không vượt quá 225 ký tự")
     private String moTa;
 
-    private LocalDate ngayTao;
+    private LocalDateTime ngayTao;
 
-    private LocalDate ngayCapNhat;
+    private LocalDateTime ngayCapNhat;
 
     @Enumerated(EnumType.STRING)
     private TrangThaiVoucher trangThai;

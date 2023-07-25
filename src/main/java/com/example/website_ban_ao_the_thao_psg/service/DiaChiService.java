@@ -19,10 +19,8 @@ public interface DiaChiService {
     DiaChiResponse update(UpdateDiaChiRequest updateDiaChiRequest);
 
     DiaChiResponse getOne(Integer id);
-
-    DiaChiResponse delete(UpdateDiaChiRequest updateDiaChiRequest, Integer id);
-
-    Page<DiaChiResponse> searchNameOrMa(String searchName, Integer pageNo, Integer size);
+    Page<DiaChiResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size);
+    Page<DiaChiResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size);
 
     void deleteDiaChi(Integer id, LocalDate now);
 
