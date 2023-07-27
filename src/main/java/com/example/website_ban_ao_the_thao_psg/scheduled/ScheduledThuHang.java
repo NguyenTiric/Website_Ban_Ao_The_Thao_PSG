@@ -18,9 +18,6 @@ import java.util.List;
 public class ScheduledThuHang {
 
     @Autowired
-    private ThuHangService thuHangService;
-
-    @Autowired
     private TaiKhoanRepository taiKhoanRepository;
 
     @Autowired
@@ -30,7 +27,6 @@ public class ScheduledThuHang {
     public void updateThuHang() {
         List<TaiKhoan> taiKhoans = this.taiKhoanRepository.findAll();
         List<ThuHang> activeThuHangList = this.thuHangRepository.findAllByActive();
-        System.out.println(activeThuHangList);
 
         for (TaiKhoan taiKhoan : taiKhoans) {
             BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
@@ -48,6 +44,7 @@ public class ScheduledThuHang {
                     }
                 }
             }
+
             if (selectedThuHang != null) {
                 taiKhoan.setThuHang(selectedThuHang);
                 taiKhoanRepository.save(taiKhoan);
