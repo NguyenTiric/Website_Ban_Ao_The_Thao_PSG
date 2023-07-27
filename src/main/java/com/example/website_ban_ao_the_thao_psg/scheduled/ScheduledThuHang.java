@@ -27,40 +27,31 @@ public class ScheduledThuHang {
     private ThuHangRepository thuHangRepository;
 
     @Scheduled(fixedRate = 5000)
-    public void updateThuHang(){
-        List<TaiKhoan> taiKhoans = taiKhoanRepository.findAll();
+    public void updateThuHang() {
+        List<TaiKhoan> taiKhoans = this.taiKhoanRepository.findAll();
+        List<ThuHang> activeThuHangList = this.thuHangRepository.findAllByActive();
+        System.out.println(activeThuHangList);
 
         for (TaiKhoan taiKhoan : taiKhoans) {
             BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
             Integer soLuongDonHangThanhCong = taiKhoan.getSoLuongDonHangThanhCong();
+            ThuHang selectedThuHang = null;
 
-            List<ThuHang> thuHangList = thuHangRepository.findAllBySoTienKhachChiToiThieuLessThanEqualAndSoLuongDonHangToiThieuLessThanEqual(
-                    soTienDaChiTieu, soLuongDonHangThanhCong);
+            for (ThuHang thuHang : activeThuHangList) {
+                BigDecimal soTienToiThieu = thuHang.getSoTienKhachChiToiThieu();
+                Integer soDonHangToiThieu = thuHang.getSoLuongDonHangToiThieu();
 
-            if (!thuHangList.isEmpty()) {
-                ThuHang thuHang = thuHangList.get(0);
-                taiKhoan.setThuHang(thuHang);
+                if (soDonHangToiThieu <= soLuongDonHangThanhCong && soTienDaChiTieu.compareTo(soTienToiThieu) >= 0) {
+                    if (selectedThuHang == null || (soDonHangToiThieu >= selectedThuHang.getSoLuongDonHangToiThieu()
+                            && soTienToiThieu.compareTo(selectedThuHang.getSoTienKhachChiToiThieu()) >= 0)) {
+                        selectedThuHang = thuHang;
+                    }
+                }
+            }
+            if (selectedThuHang != null) {
+                taiKhoan.setThuHang(selectedThuHang);
                 taiKhoanRepository.save(taiKhoan);
             }
         }
     }
-
-//    @Scheduled(fixedDelay = 6000)
-//    public void thucHienCapNhat() {
-//        List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
-//
-//        for (TaiKhoan taiKhoan : taiKhoanList) {
-//            Integer soLuongDonHangThanhCong = taiKhoan.getSoLuongDonHangThanhCong();
-//            BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
-//
-//            ThuHang mucThuHang = this.thuHangRepository.findByTen(String.valueOf(taiKhoan.getThuHang()));
-//
-//            if (mucThuHang != null && soLuongDonHangThanhCong.compareTo(mucThuHang.getSoLuongDonHangToiThieu()) >= 0 &&
-//                    soTienDaChiTieu.compareTo(mucThuHang.getSoTienKhachChiToiThieu()) >= 0) {
-//                taiKhoan.setId(mucThuHang.getId());
-//                this.taiKhoanRepository.save(taiKhoan);
-//            }
-//        }
-//        System.out.println("void 2");
-//    }
 }

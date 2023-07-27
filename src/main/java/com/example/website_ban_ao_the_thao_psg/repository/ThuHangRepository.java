@@ -68,4 +68,10 @@ public interface ThuHangRepository extends JpaRepository<ThuHang, Integer> {
     ThuHang findByTen(String ten);
 
     List<ThuHang> findAllBySoTienKhachChiToiThieuLessThanEqualAndSoLuongDonHangToiThieuLessThanEqual(BigDecimal soTienDaChi, Integer soLuongDonHangThanhCong);
+
+    @Query(value = "select c.soLuongDonHangToiThieu, c.soTienKhachChiToiThieu from ThuHang c where c.id=?1 and c.trangThai ='ACTIVE'")
+    ThuHang selectSoLuongVaTien(Integer id);
+
+    @Query(value = "select c from  ThuHang c where c.trangThai ='ACTIVE'")
+    List<ThuHang> findAllByActive();
 }
