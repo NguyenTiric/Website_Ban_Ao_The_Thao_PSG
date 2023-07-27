@@ -17,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -52,7 +51,6 @@ public class ThuHangServiceImpl implements ThuHangService {
         return thuHangPage.map(thuHangMapper::thuHangEntiyToThuHangResponse);
     }
 
-    @Scheduled(fixedDelay = 5000)
     public void thucHienCapNhat() {
         List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
 

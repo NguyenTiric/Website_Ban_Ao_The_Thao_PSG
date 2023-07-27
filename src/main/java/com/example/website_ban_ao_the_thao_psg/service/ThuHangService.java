@@ -20,7 +20,6 @@ public interface ThuHangService {
 
     Page<ThuHangResponse> pageThuHangInActive(Integer pageNo, Integer size);
 
-    void thucHienCapNhat();
     ThuHangResponse add(CreateThuHangRequest createThuHangRequest);
 
     ThuHangResponse update(UpdateThuHangRequest updateThuHangRequest);
