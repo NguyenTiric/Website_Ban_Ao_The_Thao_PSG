@@ -20,6 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -40,11 +41,11 @@ public class HoaDon {
     @JoinColumn(name = "tai_khoan_id")
     private TaiKhoan taiKhoan;
 
-    @Column(name = " ma")
+    @Column(name = "ma")
     private String ma;
 
     @Column(name = "ngay_tao")
-    private LocalDateTime ngayTao;
+    private LocalDate ngayTao;
 
     @Column(name = "ngay_thanh_toan")
     private LocalDateTime ngayThanhToan;
