@@ -11,11 +11,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface CauThuRepository extends JpaRepository<CauThu, Integer> {
     @Query(value = "SELECT * FROM cau_thu WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<CauThu> pageSearchActive(String searchString, Pageable pageable);
+
+    @Query(value = "SELECT * FROM cau_thu WHERE trang_thai='ACTIVE' ", nativeQuery = true)
+    List<CauThu> getAll();
+
     @Query(value = "SELECT * FROM cau_thu WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
     Page<CauThu> pageSearchIvActive(String searchString, Pageable pageable);
 

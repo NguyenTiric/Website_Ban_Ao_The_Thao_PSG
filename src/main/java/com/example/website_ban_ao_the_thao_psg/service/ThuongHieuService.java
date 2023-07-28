@@ -7,10 +7,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public interface ThuongHieuService {
     Page<ThuongHieuResponse> pageThuongHieuActive(Integer pageNo, Integer size);
+
+    List<ThuongHieuResponse> getAll();
 
     Page<ThuongHieuResponse> pageThuongHieuInActive(Integer pageNo, Integer size);
 

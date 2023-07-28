@@ -11,11 +11,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface LoaiSanPhamRepository extends JpaRepository<LoaiSanPham,Integer> {
     @Query(value = "SELECT * FROM loai_san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<LoaiSanPham> pageSearchActive(String searchString, Pageable pageable);
+
+    @Query(value = "SELECT * FROM loai_san_pham WHERE trang_thai='ACTIVE' ", nativeQuery = true)
+    List<LoaiSanPham> getAll();
+
     @Query(value = "SELECT * FROM loai_san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
     Page<LoaiSanPham> pageSearchIvActive(String searchString, Pageable pageable);
 

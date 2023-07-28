@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -36,6 +37,12 @@ public class CauThuServiceImpl implements CauThuService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<CauThu> cauThuPage = cauThuRepository.pageACTIVE(pageable);
         return cauThuPage.map(cauThuMapper::cauThuEntityToCauThuResponse);
+    }
+
+    @Override
+    public List<CauThuResponse> getAll() {
+        List<CauThu> cauThuList = cauThuRepository.getAll();
+        return cauThuMapper.listCauThuEntityToCauThuResponse(cauThuList);
     }
 
     @Override

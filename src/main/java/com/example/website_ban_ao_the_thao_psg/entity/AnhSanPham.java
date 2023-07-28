@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.sql.Blob;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -40,8 +42,9 @@ public class AnhSanPham {
     @JoinColumn(name = "san_pham_id")
     private SanPham sanPham;
 
+    @Lob
     @Column(name = "ten")
-    private String ten;
+    private Blob ten;
 
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;

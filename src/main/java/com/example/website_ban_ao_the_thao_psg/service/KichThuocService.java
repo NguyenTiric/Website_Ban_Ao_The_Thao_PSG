@@ -8,10 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public interface KichThuocService {
     Page<KichThuocResponse> pageKichThuocActive(Integer pageNo, Integer size);
+
+    List<KichThuocResponse> getALl();
 
     Page<KichThuocResponse> pageKichThuocInActive(Integer pageNo, Integer size);
 
@@ -22,6 +25,7 @@ public interface KichThuocService {
     KichThuocResponse getOne(Integer id);
 
     Page<KichThuocResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size);
+
     Page<KichThuocResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size);
 
     void deleteKichThuoc(Integer id, LocalDate now);

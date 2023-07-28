@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -32,6 +33,12 @@ public class CoAoServiceImpl implements CoAoService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<CoAo> coAoPage = coAoRepository.pageACTIVE(pageable);
         return coAoPage.map(coAoMapper::coAoEntityToCoAoResponse);
+    }
+
+    @Override
+    public List<CoAoResponse> getAll() {
+        List<CoAo> coAoList = coAoRepository.getAll();
+        return coAoMapper.listCoAoEntityToCoAoResponse(coAoList);
     }
 
     @Override

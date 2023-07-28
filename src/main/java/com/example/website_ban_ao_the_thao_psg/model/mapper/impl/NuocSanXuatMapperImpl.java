@@ -32,7 +32,7 @@ public class NuocSanXuatMapperImpl implements NuocSanXuatMapper {
     public NuocSanXuatResponse nuocSanXuatEntityToNuocSanXuatResponse(NuocSanXuat nuocSanXuat) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
         NuocSanXuatResponse nuocSanXuatResponse = modelMapper.map(nuocSanXuat, NuocSanXuatResponse.class);
-        return null;
+        return nuocSanXuatResponse;
     }
 
     @Override

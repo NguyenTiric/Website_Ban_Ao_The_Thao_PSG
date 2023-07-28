@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -32,6 +33,12 @@ public class DongSanPhamServiceImpl implements DongSanPhamService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<DongSanPham> dongSanPhamPage = dongSanPhamRepository.pageACTIVE(pageable);
         return dongSanPhamPage.map(dongSanPhamMapper::dongSanPhamEntityToDongSanPhamResponse);
+    }
+
+    @Override
+    public List<DongSanPhamResponse> getAll() {
+        List<DongSanPham> dongSanPhamList = dongSanPhamRepository.getAll();
+        return dongSanPhamMapper.listDongSanPhamEntityToDongSanPhamResponse(dongSanPhamList);
     }
 
     @Override
