@@ -367,6 +367,34 @@
         $("#districtCodeInput").val(districtCode);
         $("#wardCodeInput").val(wardCode);
     }
+
+    document.getElementById("selecttTT").addEventListener("change", function() {
+        // Lấy giá trị của tùy chọn đã chọn
+        var selectedValue = this.value;
+
+        // Kiểm tra nếu giá trị là 3 (tương ứng với tùy chọn "Đã Kết Thúc")
+        if (selectedValue === "3") {
+            // Tạo một đối tượng URL để chuyển hướng
+            var url = new URL("/admin/psg/voucher-thu-hang/pageInActive/0", window.location.origin);
+            // Chuyển hướng tới URL đã xây dựng
+            window.location.href = url.href;
+        }
+    });
+
+    document.getElementById("selecttTT").addEventListener("change", function() {
+        // Lấy giá trị của tùy chọn đã chọn
+        var selectedValue = this.value;
+
+        // Kiểm tra nếu giá trị là 3 (tương ứng với tùy chọn "Đã Kết Thúc")
+        if (selectedValue === "2") {
+            // Tạo một đối tượng URL để chuyển hướng
+            var url = new URL("/admin/psg/voucher-thu-hang/hien-thi", window.location.origin);
+            // Chuyển hướng tới URL đã xây dựng
+            window.location.href = url.href;
+        }
+    });
+
+
 </script>
 
 <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>

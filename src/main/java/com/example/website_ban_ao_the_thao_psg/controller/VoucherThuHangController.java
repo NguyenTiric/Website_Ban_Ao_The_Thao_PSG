@@ -113,7 +113,7 @@ public class VoucherThuHangController {
 //        }
         voucherThuHangService.add(createVoucherThuHangRequest);
         session.setAttribute("successMessage", "Thêm thành công!");
-        System.out.println("loi");
+
         return "redirect:/admin/psg/voucher-thu-hang/hien-thi";
     }
     @PostMapping("/update")

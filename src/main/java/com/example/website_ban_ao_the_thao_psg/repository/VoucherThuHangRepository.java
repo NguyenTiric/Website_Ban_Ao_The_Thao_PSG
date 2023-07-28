@@ -1,5 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.repository;
 
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.DiaChi;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
 import jakarta.transaction.Transactional;
@@ -28,10 +29,13 @@ public interface VoucherThuHangRepository extends JpaRepository<VoucherThuHang,I
     @Query(value = "SELECT * FROM voucher_thu_hang WHERE trang_thai='ACTIVE' ", nativeQuery = true)
     Page<VoucherThuHang> pageACTIVE(Pageable pageable);
 
-//    @Query(value = "SELECT * FROM THUHANG where rank = * ", nativeQuery = true)
-//    Page<VoucherThuHang> pageFILLER(Pageable pageable);
 
+//    @Query("SELECT v FROM VoucherThuHang v" +
+//    "WHERE (:ma is null OR v.ma LIKE lower(CONCAT('%', :ma, '%'))) \n "+
+//    "AND    (:ten is null OR v.ten LIKE lower(CONCAT('%', :ten, '%'))) \n)" +
+//            "AND")
 
+    List<VoucherThuHang> findByNgayKetThucBeforeAndTrangThaiNot(LocalDateTime ngayKetThuc, ApplicationConstant.TrangThaiVoucher trangThai);
 
 
     @Transactional
