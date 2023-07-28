@@ -29,7 +29,7 @@ public class CreateVoucherThuHangRequest {
     private String ma;
 
     @NotBlank(message = "Tên không để trống")
-    @Size(min = 1, max = 45, message = "Tên không vượt quá 45 ký tự")
+    @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")
     private String ten;
 
     @NotNull(message = "Loại giảm giá không để trống")
@@ -53,7 +53,7 @@ public class CreateVoucherThuHangRequest {
     private Integer soLuong;
 
     @NotBlank(message = "Mô tả không để trống")
-    @Size(min = 1, max = 225, message = "Mô tả không vượt quá 225 ký tự")
+    @Size(min = 0, max = 225, message = "Mô tả không vượt quá 225 ký tự")
     private String moTa;
 
     private LocalDate ngayTao;

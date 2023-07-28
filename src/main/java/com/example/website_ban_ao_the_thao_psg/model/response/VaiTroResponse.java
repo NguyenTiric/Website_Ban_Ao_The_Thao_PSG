@@ -22,7 +22,7 @@ public class VaiTroResponse {
     private String ma;
     private String ten;
     private LocalDate ngayTao;
-    private LocalDate ngayCapNhap;
+    private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
     private TrangThaiVaiTro trangThai;
 }

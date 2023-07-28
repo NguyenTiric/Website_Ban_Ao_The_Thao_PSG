@@ -22,22 +22,22 @@ public class CreateLyDoTraHangRequest {
 
     private String ma;
     @NotBlank(message = "Mô tả không để trống")
-    @Size(min = 1, max = 225, message = "Mô tả không vượt quá 225 ký tự")
+    @Size(min = 0, max = 225, message = "Mô tả không vượt quá 225 ký tự")
     private String moTa;
 
     @NotBlank(message = "Lý do trả hàng không để trống")
-    @Size(min = 1, max = 225, message = "Lý do trả hàng không vượt quá 225 ký tự")
+    @Size(min = 0, max = 225, message = "Lý do trả hàng không vượt quá 225 ký tự")
     private String lyDoTraHang;
 
     @NotBlank(message = "Hình ảnh không để trống")
-    @Size(min = 1, max = 225, message = "Tên không vượt quá 225 ký tự")
+    @Size(min = 0, max = 225, message = "Tên không vượt quá 225 ký tự")
     private String hinhAnh;
 
     @NotBlank(message = "Video không để trống")
-    @Size(min = 1, max = 225, message = "Video không vượt quá 225 ký tự")
+    @Size(min = 0, max = 225, message = "Video không vượt quá 225 ký tự")
     private String video;
 
     @NotBlank(message = "Trạng thái không để trống")
-    @Size(min = 1, max = 225, message = "Trạng thái không vượt quá 225 ký tự")
+    @Size(min = 0, max = 225, message = "Trạng thái không vượt quá 225 ký tự")
     private String trangThai;
 }

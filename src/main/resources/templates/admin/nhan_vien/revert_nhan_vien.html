@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/fragments_layout_admin}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <div class="col-11">
+            <li class="nav-item d-none d-md-block">
+                <a class="nav-link" href="javascript:void(0)">
+                    <nav class="navbar bg-body">
+                        <div class="container-fluid">
+                            <form class="d-flex" role="search" action="/admin/psg/nha-san-xuat/searchInActive/0"
+                                  method="get">
+                                <input name="searchNameOrMa"
+                                       class="form-control custom-shadow custom-radius border-0 bg-white"
+                                       type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </nav>
+                </a>
+            </li>
+        </div>
+        <div class="col-1">
+            <a href="/admin/psg/nhan-vien/pageActive/0" class="btn waves-effect waves-light btn-rounded btn-primary"
+            >Back</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Danh Sách</h4>
+            <div class="tab-content">
+                <div class="tab-pane show active" id="home">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Vai Trò</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Giới Tính</th>
+                            <th scope="col">Ngày Sinh</th>
+                            <th scope="col">Địa Chỉ</th>
+                            <th scope="col">Số Điện Thoạỉ</th>
+                            <!--                            <th scope="col">Email</th>-->
+                            <th scope="col">Hành Động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="tk,index:${listNhanVienInActive}">
+                            <td th:text="${index.count}"></td>
+                            <td th:text="${tk.vaiTro.ten}"></td>
+                            <td th:text="${tk.ten}"></td>
+                            <td th:text="${tk.gioiTinh==true ? 'Nam':'Nữ'}"></td>
+                            <td th:text="${tk.ngaySinh}"></td>
+                            <td th:text="${tk.diaChi}"></td>
+                            <td th:text="${tk.sdt}"></td>
+                            <!--                            <td th:text="${tk.email}"></td>-->
+
+                            </td>
+
+                            <td>
+                      <span>
+                                   <form th:action="@{/admin/psg/nhan-vien/revert/{id}(id=${tk.id})}" method="get">
+                                        <button type="submit"
+                                                class="btn waves-effect waves-light btn-rounded btn-danger"
+                                                onclick="return confirm('Bạn có muốn khôi phục không')">
+                                           Khôi Phục
+                                        </button>
+                                </form>
+                      </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item" th:if="${currentPage !=0}">
+                                <a class="page-link"
+                                   th:href="@{'/admin/psg/nhan-vien/pageActive/'+${ currentPage - 1}}">Previous</a>
+                            </li>
+                            <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
+                                th:classappend="${currentPage == i - 1 ? 'active' : ''}">
+                                <a class="page-link" th:href="@{'/admin/psg/nhan-vien/pageActive/'+${i - 1}}">
+                                    <span th:text="${i}"></span>
+                                </a>
+                            </li>
+                            <li class="page-item" th:if="${currentPage + 1 != totalPages}">
+                                <a class="page-link" th:href="@{'/admin/psg/nhan-vien/pageActive/'+${currentPage + 1}}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div> <!-- end card-body-->
+    </div>
+</div>
+
+</body>
+</html>
