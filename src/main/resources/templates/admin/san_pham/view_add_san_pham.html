@@ -291,7 +291,8 @@
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="form-group mb-3">
-
+                <form action="/admin/psg/chi-tiet-san-pham/update-so-luong-pending" method="post" id="updateForm"
+                      onsubmit="return confirm('Bạn có thêm không?')">
                     <table class="table">
                         <thead>
                         <tr>
@@ -302,32 +303,27 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="ctsp,index:${listCtspPending}">
-                            <form action="/admin/psg/chi-tiet-san-pham/update-so-luong" method="post">
-                                <td th:text="${index.count}"></td>
-                                <td th:text="${ctsp.sanPham.ten}"></td>
-                                <td th:text="${ctsp.kichThuoc.ten}"></td>
-                                <td>
-                                    <input type="hidden" name="id" th:value="${ctsp.id}"/>
-                                    <input class="form-control border-1 bg-white"
-                                           type="number" placeholder="số lượng" name="soLuong"
-                                           th:value="${ctsp.soLuong}"
-                                           style="height: 35px">
-                                </td>
-                                <td>
-                                    <a th:href="@{/admin/psg/chi-tiet-san-pham/deletePending/{id}(id=${ctsp.id})}"
-                                       class="btn waves-effect waves-light btn-rounded btn-danger">Xóa</a>
-                                </td>
-                            </form>
+                        <tr th:each="ctsp, index : ${listCtspPending}">
+                            <td th:text="${index.count}"></td>
+                            <td th:text="${ctsp.sanPham.ten}"></td>
+                            <td th:text="${ctsp.kichThuoc.ten}"></td>
+                            <td>
+                                <input type="hidden" name="ids" th:value="${ctsp.id}"/>
+                                <input type="number" class="form-control border-1 bg-white" name="soLuongs"
+                                       th:value="${ctsp.soLuong}" style="height: 35px"/>
+                            </td>
+                            <td>
+                                <a th:href="@{/admin/psg/chi-tiet-san-pham/deletePending/{id}(id=${ctsp.id})}"
+                                   class="btn waves-effect waves-light btn-rounded btn-danger">Xóa</a>
+                            </td>
                         </tr>
+
+
                         </tbody>
                     </table>
-                <form action="/admin/psg/chi-tiet-san-pham/update-status"
-                      method="post"
-                      onsubmit="return confirm('Bạn có thêm không?')"
-                >
                     <div class="form-group mb-3 text-center">
-                        <button class="btn btn-rounded btn-primary" type="submit">Save</button>
+                        <button class="btn waves-effect waves-light btn-rounded btn-outline-info" type="submit">Save
+                        </button>
                     </div>
                 </form>
             </div>
@@ -395,7 +391,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="co-ao" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -423,7 +419,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="mau-sac" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -456,7 +452,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="chat-lieu" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -484,7 +480,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="thuong-hieu" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -513,7 +509,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="dong-san-pham" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -542,7 +538,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="loai-san-pham" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -571,7 +567,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="nha-san-xuat" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -600,7 +596,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="nuoc-san-xuat" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -629,7 +625,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     <div id="kich-thuoc" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -658,9 +654,26 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
 
 </div>
-
+<script th:inline="javascript">
+    function updateSoLuong() {
+        var ids = [];
+        var soLuongs = [];
+        var rows = document.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var idInput = row.querySelector("input[name='ids']");
+            var soLuongInput = row.querySelector("input[name='soLuongs']");
+            if (idInput && soLuongInput) {
+                ids.push(idInput.value);
+                soLuongs.push(soLuongInput.value);
+            }
+        }
+        document.getElementById("updateForm").action = "/update-so-luong-pending?ids=" + ids.join(",") + "&soLuongs=" + soLuongs.join(",");
+        document.getElementById("updateForm").submit();
+    }
+</script>
 </body>
 </html>

@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,13 +111,37 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
-    public ChiTietSanPhamResponse updateSoLuong(Integer id, Integer soLuong) {
-        ChiTietSanPham chiTietSanPham = chiTietSanPhamRepository.findById(id).get();
-        chiTietSanPham.setSoLuong(soLuong);
-        chiTietSanPham.setNgayCapNhat(LocalDate.now());
-        chiTietSanPham.setTrangThai(ApplicationConstant.TrangThaiChiTietSanPham.PENDING);
-        return chiTietSanPhamMapper.chiTietSanPhamEntityTochiTietSanPhamResponse(chiTietSanPhamRepository.save(chiTietSanPham));
+    public void updateSoLuongPending(List<Integer> id, List<Integer> soLuong) {
+        for (int i = 0; i < id.size(); i++) {
+            Integer ids = id.get(i);
+            Integer soLuongs = soLuong.get(i);
+            Optional<ChiTietSanPham> optionalChiTietSanPham = chiTietSanPhamRepository.findById(ids);
+            if (optionalChiTietSanPham.isPresent()) {
+                ChiTietSanPham ctsp = optionalChiTietSanPham.get();
+                ctsp.setSoLuong(soLuongs);
+                ctsp.setNgayCapNhat(LocalDate.now());
+                ctsp.setTrangThai(ApplicationConstant.TrangThaiChiTietSanPham.ACTIVE);
+                chiTietSanPhamRepository.save(ctsp);
+            }
+        }
     }
+
+    @Override
+    public void updateSoLuongActive(List<Integer> id, List<Integer> soLuong) {
+        for (int i = 0; i < id.size(); i++) {
+            Integer ids = id.get(i);
+            Integer soLuongs = soLuong.get(i);
+            Optional<ChiTietSanPham> optionalChiTietSanPham = chiTietSanPhamRepository.findById(ids);
+            if (optionalChiTietSanPham.isPresent()) {
+                ChiTietSanPham ctsp = optionalChiTietSanPham.get();
+                ctsp.setSoLuong(soLuongs);
+                ctsp.setNgayCapNhat(LocalDate.now());
+                ctsp.setTrangThai(ApplicationConstant.TrangThaiChiTietSanPham.ACTIVE);
+                chiTietSanPhamRepository.save(ctsp);
+            }
+        }
+    }
+
 
     @Override
     public void updateTrangThai() {
@@ -124,11 +149,35 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
-    public ChiTietSanPhamResponse updateCtsp(UpdateChiTietSanPhamRequest updateChiTietSanPhamRequest) {
-        ChiTietSanPham chiTietSanPham = chiTietSanPhamMapper.updateChiTietSanPhamRequestToChiTietSanPhamEntity(updateChiTietSanPhamRequest);
-        chiTietSanPham.setNgayTao(LocalDate.now());
-        chiTietSanPham.setTrangThai(ApplicationConstant.TrangThaiChiTietSanPham.ACTIVE);
-        return chiTietSanPhamMapper.chiTietSanPhamEntityTochiTietSanPhamResponse(chiTietSanPhamRepository.save(chiTietSanPham));
+    public void insertCtsp(List<KichThuoc> kichThuocList, Integer idSP) {
+        for (KichThuoc ktId : kichThuocList) {
+            // Lấy danh sách chi tiết sản phẩm có trong sản phẩm
+            List<ChiTietSanPham> chiTietSanPhamList = chiTietSanPhamRepository.getChiTietSanPhamBySanPham(sanPhamRepository.findById(idSP).get());
+
+            // Kiểm tra xem kích thước đã tồn tại trong danh sách chi tiết sản phẩm hay chưa
+            boolean kichThuocExists = false;
+            for (ChiTietSanPham ctsp : chiTietSanPhamList) {
+                if (ktId.getId().equals(ctsp.getKichThuoc().getId())) {
+                    kichThuocExists = true;
+                    break;
+                }
+            }
+
+            // Nếu kích thước đã tồn tại, không thêm mới nữa
+            if (kichThuocExists) {
+                continue;
+            }
+
+            // Tạo mới chi tiết sản phẩm với kích thước mới
+            ChiTietSanPham chiTietSanPham = chiTietSanPhamMapper.createChiTietSanPhamRequestToChiTietSanPhamEntity(new CreateChiTietSanPhamRequest());
+            SanPham sanPham = sanPhamRepository.findById(idSP).get();
+            chiTietSanPham.setSanPham(sanPham);
+            chiTietSanPham.setKichThuoc(ktId);
+            chiTietSanPham.setSoLuong(1);
+            chiTietSanPham.setNgayTao(LocalDate.now());
+            chiTietSanPham.setTrangThai(ApplicationConstant.TrangThaiChiTietSanPham.ACTIVE);
+            chiTietSanPhamMapper.chiTietSanPhamEntityTochiTietSanPhamResponse(chiTietSanPhamRepository.save(chiTietSanPham));
+        }
     }
 
     @Override

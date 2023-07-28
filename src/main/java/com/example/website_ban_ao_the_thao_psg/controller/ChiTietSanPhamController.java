@@ -137,8 +137,8 @@ public class ChiTietSanPhamController {
     @GetMapping("/view-update/{id}")
     public String viewUpdate(@PathVariable("id") Integer id, Model model) {
         SanPhamResponse sanPhamResponse = chiTietSanPhamService.getOneSp(id);
-        model.addAttribute("sanPham", sanPhamResponse);
 
+        model.addAttribute("sanPham", sanPhamResponse);
         model.addAttribute("congNghe", new CreateCongNgheRequest());
         model.addAttribute("cauThu", new CreateCauThuRequest());
         model.addAttribute("coAo", new CreateCoAoRequest());
@@ -225,10 +225,22 @@ public class ChiTietSanPhamController {
         return "redirect:/admin/psg/chi-tiet-san-pham/view-add";
     }
 
-    @PostMapping("/update-so-luong")
-    public String updateSoLuong(@RequestParam("id") Integer id, @RequestParam("soLuong") Integer soLuong) {
-        chiTietSanPhamService.updateSoLuong(id, soLuong);
-        return "redirect:/admin/psg/chi-tiet-san-pham/view-add";
+    @PostMapping("/update-so-luong-pending")
+    public String updateSoLuongPending(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong) {
+        chiTietSanPhamService.updateSoLuongPending(id, soLuong);
+        return "redirect:/admin/psg/chi-tiet-san-pham/hien-thi";
+    }
+
+    @PostMapping("/update-so-luong-active")
+    public String updateSoLuongActive(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong) {
+        chiTietSanPhamService.updateSoLuongActive(id, soLuong);
+        return "redirect:/admin/psg/chi-tiet-san-pham/hien-thi";
+    }
+
+    @PostMapping("/insert-chi-tiet-san-pham")
+    public String insertChiTietSanPham(@RequestParam("kichThuoc") List<KichThuoc> kichThuocList, @RequestParam("idSP") Integer idSP) {
+        chiTietSanPhamService.insertCtsp(kichThuocList, idSP);
+        return "redirect:/admin/psg/chi-tiet-san-pham/view-update/"+idSP;
     }
 
     @PostMapping("/update-status")
@@ -247,11 +259,6 @@ public class ChiTietSanPhamController {
 
     @PostMapping("/update-san-pham")
     public String updateSanPham(@Valid @ModelAttribute("sanPham") UpdateSanPhamRequest updateSanPhamRequest, BindingResult result, Model model, @RequestParam("image") MultipartFile[] files, HttpSession session) throws IOException, SQLException {
-        if (files != null && files.length > 0) {
-            System.out.println("Có file được tải lên.");
-        } else {
-            System.out.println("Không có file được tải lên.");
-        }
         chiTietSanPhamService.updateSp(updateSanPhamRequest, files);
         session.setAttribute("successMessage", "Cập nhập thành công!");
         return "redirect:/admin/psg/chi-tiet-san-pham/hien-thi";

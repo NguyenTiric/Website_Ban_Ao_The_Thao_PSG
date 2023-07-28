@@ -20,10 +20,10 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
 
     List<ChiTietSanPham> getChiTietSanPhamBySanPham(SanPham sanPham);
 
-    @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
+    @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE'", nativeQuery = true)
     Page<ChiTietSanPham> pageSearchActive(String searchString, Pageable pageable);
 
-    @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE trang_thai='ACTIVE' ", nativeQuery = true)
+    @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE trang_thai='ACTIVE'", nativeQuery = true)
     List<ChiTietSanPham> getAll();
 
     @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
