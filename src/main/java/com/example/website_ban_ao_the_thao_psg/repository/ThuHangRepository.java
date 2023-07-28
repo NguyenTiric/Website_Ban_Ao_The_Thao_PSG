@@ -74,4 +74,5 @@ public interface ThuHangRepository extends JpaRepository<ThuHang, Integer> {
 
     @Query(value = "select c from  ThuHang c where c.trangThai ='ACTIVE'")
     List<ThuHang> findAllByActive();
+
 }

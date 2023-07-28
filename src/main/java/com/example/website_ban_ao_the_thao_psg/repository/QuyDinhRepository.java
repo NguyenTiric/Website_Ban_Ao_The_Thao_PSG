@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface QuyDinhRepository extends JpaRepository<QuyDinh,Integer> {
@@ -27,6 +28,9 @@ public interface QuyDinhRepository extends JpaRepository<QuyDinh,Integer> {
     @Query(value = "SELECT * FROM quy_dinh WHERE trang_thai='ACTIVE' ", nativeQuery = true)
     Page<QuyDinh> pageACTIVE(Pageable pageable);
 
+    @Query(value = "select c from QuyDinh c where c.trangThai = 'ACTIVE'")
+    List<QuyDinh> findByNgayCapNhatByTrangThai();
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE QuyDinh m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.id = :id")
@@ -36,5 +40,4 @@ public interface QuyDinhRepository extends JpaRepository<QuyDinh,Integer> {
     @Modifying
     @Query(value = "update QuyDinh m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
     void revert(@Param("id") Integer id, @Param("now") LocalDate now);
-    
 }
