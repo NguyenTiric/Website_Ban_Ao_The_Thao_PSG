@@ -260,6 +260,11 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
+    public List<SanPhamResponse> getAllSP() {
+        return sanPhamMapper.listSanPhamEntityToSanPhamResponse(sanPhamRepository.getAll());
+    }
+
+    @Override
     public Page<SanPhamResponse> searchNameOrMaActiveSp(String searchName, Integer pageNo, Integer size) {
         return null;
     }

@@ -1,12 +1,10 @@
 package com.example.website_ban_ao_the_thao_psg.model.mapper.impl;
 
 import com.example.website_ban_ao_the_thao_psg.entity.LichSuHoaDon;
-import com.example.website_ban_ao_the_thao_psg.entity.MauSac;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.LichSuHoaDonMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateLichSuHoaDonRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateLichSuHoaDonRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.LichSuHoaDonResponse;
-import com.example.website_ban_ao_the_thao_psg.model.response.MauSacResponse;
 import jakarta.annotation.Generated;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -19,40 +17,40 @@ import java.util.List;
 @Generated(value = "org.mapstruct.ap.MappingProcessor", date = "2023-03-29T01:09:18+0700", comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.6 (JetBrains s.r.o.)")
 public class LichSuHoaDonMapperImpl implements LichSuHoaDonMapper {
     @Autowired
-    ModelMapper mapper;
+    ModelMapper modelMapper;
     @Override
-    public LichSuHoaDon hoaDonResponseToHoaDonEntity(LichSuHoaDonResponse lichSuHoaDonResponse) {
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        LichSuHoaDon lichSuHoaDon = mapper.map(lichSuHoaDonResponse,LichSuHoaDon.class);
+    public LichSuHoaDon lichSuHoaDonResponseToLichSuHoaDonEntity(LichSuHoaDonResponse lichSuHoaDonResponse) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        LichSuHoaDon lichSuHoaDon = modelMapper.map(lichSuHoaDonResponse, LichSuHoaDon.class);
         return lichSuHoaDon;
     }
 
     @Override
-    public LichSuHoaDonResponse hoaDonEntityToHoaDonResponse(LichSuHoaDon lichSuHoaDon) {
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        LichSuHoaDonResponse lichSuHoaDonResponse = mapper.map(lichSuHoaDon,LichSuHoaDonResponse.class);
+    public LichSuHoaDonResponse lichSuHoaDonEntityToLichSuHoaDonResponse(LichSuHoaDon lichSuHoaDon) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        LichSuHoaDonResponse lichSuHoaDonResponse = modelMapper.map(lichSuHoaDon, LichSuHoaDonResponse.class);
         return lichSuHoaDonResponse;
     }
 
     @Override
-    public LichSuHoaDon createHoaDonRequestToHoaDonEntity(CreateLichSuHoaDonRequest createLichSuHoaDonRequest) {
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        LichSuHoaDon lichSuHoaDon = mapper.map(createLichSuHoaDonRequest,LichSuHoaDon.class);
+    public LichSuHoaDon createLichSuHoaDonRequestToLichSuHoaDonEntity(CreateLichSuHoaDonRequest createLichSuHoaDonRequest) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        LichSuHoaDon lichSuHoaDon = modelMapper.map(createLichSuHoaDonRequest, LichSuHoaDon.class);
         return lichSuHoaDon;
     }
 
     @Override
-    public LichSuHoaDon updateHoaDonRequestToHoaDonEntity(UpdateLichSuHoaDonRequest updateLichSuHoaDonRequest) {
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        LichSuHoaDon lichSuHoaDon = mapper.map(updateLichSuHoaDonRequest,LichSuHoaDon.class);
+    public LichSuHoaDon updateLichSuHoaDonRequestToLichSuHoaDonEntity(UpdateLichSuHoaDonRequest updateLichSuHoaDonRequest) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        LichSuHoaDon lichSuHoaDon = modelMapper.map(updateLichSuHoaDonRequest, LichSuHoaDon.class);
         return lichSuHoaDon;
     }
 
     @Override
-    public List<LichSuHoaDonResponse> listHoaDonEntityToHoaDonResponse(List<LichSuHoaDon> listHoaDon) {
-        List<LichSuHoaDonResponse> list = new ArrayList<>(listHoaDon.size());
-        for (LichSuHoaDon hd : listHoaDon) {
-            list.add(hoaDonEntityToHoaDonResponse(hd));
+    public List<LichSuHoaDonResponse> listLichSuHoaDonEntityToLichSuHoaDonResponse(List<LichSuHoaDon> lichSuHoaDonList) {
+        List<LichSuHoaDonResponse> list = new ArrayList<>(lichSuHoaDonList.size());
+        for (LichSuHoaDon th : lichSuHoaDonList) {
+            list.add(lichSuHoaDonEntityToLichSuHoaDonResponse(th));
         }
         return list;
     }

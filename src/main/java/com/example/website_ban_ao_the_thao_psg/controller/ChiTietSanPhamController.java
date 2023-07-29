@@ -15,7 +15,6 @@ import com.example.website_ban_ao_the_thao_psg.model.request.create_request.Crea
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNuocSanXuatRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateSanPhamRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateThuongHieuRequest;
-import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateChatLieuRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateSanPhamRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.AnhSanPhamResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.SanPhamResponse;
@@ -52,12 +51,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/admin/psg/chi-tiet-san-pham")
-public class ChiTietSanPhamController {
+public class  ChiTietSanPhamController {
 
     @Autowired
     ChiTietSanPhamService chiTietSanPhamService;
