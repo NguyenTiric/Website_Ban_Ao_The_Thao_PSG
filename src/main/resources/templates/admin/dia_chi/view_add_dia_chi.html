@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/fragments_layout_admin}"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <div class="col-3"> </div>
+        <div class="col-6">
+            <form action="/admin/psg/dia-chi/add" th:object="${diaChi}" method="post" onsubmit="return  confirm('Bạn có thêm không?')">
+                <div class="form-group mb-3">
+                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                           type="text" placeholder="Nhập tên" th:field="*{hoTen}" style="height: 50px">
+                    <span th:if="${#fields.hasErrors('hoTen')}" style="color: red; font-size: 13px" th:errors="*{hoTen}"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                            type="text" placeholder="Nhập số điện thoại" th:field="*{sdt}" style="height: 50px">
+                    <span th:if="${#fields.hasErrors('sdt')}" style="color: red; font-size: 13px" th:errors="*{sdt}"></span>
+                </div><div class="form-group mb-3">
+                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                            type="text" placeholder="Nhập địa chỉ" th:field="*{diaChiChiTiet}" style="height: 50px">
+                    <span th:if="${#fields.hasErrors('diaChiChiTiet')}" style="color: red; font-size: 13px" th:errors="*{diaChiChiTiet}"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <div class="select-containe r d-flex">
+                        <select class="custom-select form-control bg-white custom-radius custom-shadow border-1"
+                                style="height: 45px"
+                                name="province" id="province">
+                        </select>
+                        <select class="custom-select form-control bg-white custom-radius custom-shadow border-1"
+                                style="height: 45px"
+                                name="district" id="district">
+                            <option value="">Chọn quận</option>
+                        </select>
+                        <select class="custom-select form-control bg-white custom-radius custom-shadow border-1"
+                                style="height: 45px"
+                                name="ward" id="ward">
+                            <option value="">Chọn phường</option>
+                        </select>
+                    </div>
+                    <input type="hidden" th:field="*{tenTinh}" id="provinceInput" readonly>
+                    <input type="hidden" th:field="*{tenQuanHuyen}" id="districtInput" readonly>
+                    <input type="hidden" th:field="*{tenPhuongXa}" id="wardInput" readonly>
+                    <input type="hidden" th:field="*{maTinh}"  id="provinceCodeInput" readonly>
+                    <input type="hidden" th:field="*{maQuanHuyen}" id="districtCodeInput" readonly>
+                    <input type="hidden" th:field="*{maPhuongXa}" id="wardCodeInput" readonly>
+                    </div>
+
+                    <div class="form-group mb-3 text-center">
+                    <a href="/admin/psg/dia-chi/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Quay lại</a>
+                    <button class="btn btn-rounded btn-primary" type="submit">Thêm</button>
+                </div>
+
+            </form>
+
+        </div>
+        <div class="col-3"> </div>
+</div>
+</div>
+</body>
+</html>

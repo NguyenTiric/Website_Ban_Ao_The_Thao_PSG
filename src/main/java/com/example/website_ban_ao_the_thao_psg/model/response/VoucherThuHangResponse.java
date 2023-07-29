@@ -9,8 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -23,13 +26,15 @@ public class VoucherThuHangResponse {
     private String ten;
     private Boolean loaiGiamGia;
     private Double giaTri;
-    private LocalDate ngayBatDau;
-    private LocalDate ngayKetThuc;
+    private LocalDateTime ngayBatDau;
+    private LocalDateTime ngayKetThuc;
     private Double dieuKienSuDungVoucher;
     private Integer soLuong;
     private String moTa;
-    private LocalDate ngayTao;
-    private LocalDate ngayCapNhat;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime ngayTao;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime ngayCapNhat;
     @Enumerated(EnumType.STRING)
     private TrangThaiVoucher trangThai;
 }

@@ -27,7 +27,7 @@ public class CreateDiaChiRequest {
 
     private Integer id;
 
-    @NotNull(message = "Tài khoản không để trống")
+//    @NotNull(message = "Tài khoản không để trống")
     private TaiKhoan taiKhoan;
 
     @NotBlank(message = "Họ tên không để trống")
