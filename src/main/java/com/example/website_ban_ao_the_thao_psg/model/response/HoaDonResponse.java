@@ -15,7 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,14 +24,18 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 public class HoaDonResponse {
+
     private Integer id;
     private TaiKhoan taiKhoan;
     private String ma;
     @DateTimeFormat(pattern = "dd-MM/yyyy")
     private LocalDate ngayTao;
-    private LocalDateTime ngayThanhToan;
-    private LocalDateTime ngayShip;
-    private LocalDateTime ngayNhan;
+    @DateTimeFormat(pattern = "dd-MM/yyyy")
+    private LocalDate ngayThanhToan;
+    @DateTimeFormat(pattern = "dd-MM/yyyy")
+    private LocalDate ngayShip;
+    @DateTimeFormat(pattern = "dd-MM/yyyy")
+    private LocalDate ngayNhan;
     private BigDecimal tienMatKhachTra;
     private BigDecimal tienKhachChuyenKhoan;
     private BigDecimal tienShip;
@@ -44,7 +48,7 @@ public class HoaDonResponse {
     private String maVoucherThuHang;
     private Boolean phanTramGiamGia;
     private String maGiaoDich;
-    private LocalDateTime ngayCapNhat;
+    private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
     private HinhThucBanHang hinhThucBanHang;
     @Enumerated(EnumType.STRING)

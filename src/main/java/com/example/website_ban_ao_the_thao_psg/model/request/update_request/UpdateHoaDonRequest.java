@@ -13,7 +13,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,48 +25,27 @@ import java.time.LocalDateTime;
 public class UpdateHoaDonRequest {
 
     private Integer id;
-
     private TaiKhoan taiKhoan;
-
     private String ma;
-
-    private LocalDateTime ngayTao;
-
-    private LocalDateTime ngayThanhToan;
-
-    private LocalDateTime ngayShip;
-
-    private LocalDateTime ngayNhan;
-
+    private LocalDate ngayTao;
+    private LocalDate ngayThanhToan;
+    private LocalDate ngayShip;
+    private LocalDate ngayNhan;
     private BigDecimal tienMatKhachTra;
-
     private BigDecimal tienKhachChuyenKhoan;
-
     private BigDecimal tienShip;
-
     private BigDecimal tienThua;
-
     private BigDecimal thanhTien;
-
     private String tenNguoiNhan;
-
     private String diaChi;
-
     private String sdtNguoiNhan;
-
     private String sdtNguoiShip;
-
     private String maVoucherThuHang;
-
     private Boolean phanTramGiamGia;
-
     private String maGiaoDich;
-
-    private LocalDateTime ngayCapNhat;
+    private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
-
     private HinhThucBanHang hinhThucBanHang;
     @Enumerated(EnumType.STRING)
-
     private TrangThaiHoaDon trangThai;
 }

@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
+
 @Service
 public interface HoaDonService {
-    Page<HoaDonResponse> pageAllHoaDon(Integer pageNo, Integer size);
-
-    Page<HoaDonResponse> pageHoaDonCho(Integer pageNo, Integer size);
+    List<HoaDonResponse> getAllHoaDonCho();
 
     HoaDonResponse getDetailHoaDon(Integer id);
 

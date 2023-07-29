@@ -1,7 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.entity;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiHoaDon;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.HinhThucBanHang;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiHoaDon;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,7 +21,6 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,13 +47,13 @@ public class HoaDon {
     private LocalDate ngayTao;
 
     @Column(name = "ngay_thanh_toan")
-    private LocalDateTime ngayThanhToan;
+    private LocalDate ngayThanhToan;
 
     @Column(name = "ngay_ship")
-    private LocalDateTime ngayShip;
+    private LocalDate ngayShip;
 
     @Column(name = "ngay_nhan")
-    private LocalDateTime ngayNhan;
+    private LocalDate ngayNhan;
 
     @Column(name = "tien_mat_khach_tra")
     private BigDecimal tienMatKhachTra;
@@ -93,7 +92,7 @@ public class HoaDon {
     private String maGiaoDich;
 
     @Column(name = "ngay_cap_nhat")
-    private LocalDateTime ngayCapNhat;
+    private LocalDate ngayCapNhat;
 
     @Column(name = "hinh_thuc_ban_hang")
     @Enumerated(EnumType.STRING)

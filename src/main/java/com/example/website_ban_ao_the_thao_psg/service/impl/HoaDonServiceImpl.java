@@ -1,5 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.HoaDonMapper;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonResponse;
@@ -14,28 +15,25 @@ import org.springframework.stereotype.Component;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class HoaDonServiceImpl implements HoaDonService {
+
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
     @Autowired
     private HoaDonRepository hoaDonRepository;
     @Autowired
     private HoaDonMapper hoaDonMapper;
 
-    @Override
-    public Page<HoaDonResponse> pageAllHoaDon(Integer pageNo, Integer size) {
-        Pageable pageable = PageRequest.of(pageNo, size);
-        Page<HoaDon> pageHoaDon = hoaDonRepository.findAll(pageable);
-        return pageHoaDon.map(hoaDonMapper::hoaDonEntityToHoaDonResponse);
-    }
 
     @Override
-    public Page<HoaDonResponse> pageHoaDonCho(Integer pageNo, Integer size) {
-        Pageable pageable = PageRequest.of(pageNo, size);
-        Page<HoaDon> pageHoaDonCho = hoaDonRepository.listHDCho(pageable);
-        return pageHoaDonCho.map(hoaDonMapper::hoaDonEntityToHoaDonResponse);
+    public List<HoaDonResponse> getAllHoaDonCho() {
+        List<HoaDon> hoaDonList = hoaDonRepository.getHoaDonByTrangThai(ApplicationConstant.TrangThaiHoaDon.PENDING);
+        return hoaDonMapper.listHoaDonEntityToHoaDonResponse(hoaDonList);
     }
+
 
     @Override
     public HoaDonResponse getDetailHoaDon(Integer id) {
