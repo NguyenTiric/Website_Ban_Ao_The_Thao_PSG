@@ -18,10 +18,12 @@ import java.util.List;
 public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, Integer> {
 
 
+
     List<ChiTietSanPham> getChiTietSanPhamBySanPham(SanPham sanPham);
 
-    @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE'", nativeQuery = true)
+    @Query(value = "SELECT ctsp.*, sp.ten AS sanPhamTen FROM chi_tiet_san_pham ctsp JOIN san_pham sp ON tk.vai_tro_id = vt.id WHERE ctsp.trang_thai = 'ACTIVE' AND sp.ten like %?1% ", nativeQuery = true)
     Page<ChiTietSanPham> pageSearchActive(String searchString, Pageable pageable);
+
 
     @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE trang_thai='ACTIVE'", nativeQuery = true)
     List<ChiTietSanPham> getAll();
@@ -41,7 +43,7 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
     @Transactional
     @Modifying
     @Query(value = "UPDATE ChiTietSanPham m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.id = :id")
-    void delete(@Param("id") Integer id, @Param("now") LocalDate now);
+    void deleteChiTietSanPhamUpdate(@Param("id") Integer id, @Param("now") LocalDate now);
 
     @Transactional
     @Modifying

@@ -258,7 +258,7 @@
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="form-group mb-3">
                 <form action="/admin/psg/chi-tiet-san-pham/update-so-luong-active" method="post" id="updateForm"
-                      onsubmit="return confirm('Bạn có thêm không?')">
+                      onsubmit="return confirm('Bạn có cập nhập không?')">
                     <table class="table">
                         <thead>
                         <tr>
@@ -278,6 +278,11 @@
                                 <input type="hidden" name="ids" th:value="${ctsp.id}"/>
                                 <input type="number" class="form-control border-1 bg-white" name="soLuongs"
                                        th:value="${ctsp.soLuong}" style="height: 35px"/>
+                            </td>
+                            <td>
+
+                                <a th:href="@{/admin/psg/chi-tiet-san-pham/delete-ctsp-update/{id}(id=${ctsp.id})}"
+                                   class="btn waves-effect waves-light btn-rounded btn-danger">Xóa</a>
                             </td>
                         </tr>
                         </tbody>

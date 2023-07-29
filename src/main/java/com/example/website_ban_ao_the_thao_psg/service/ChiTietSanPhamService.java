@@ -2,6 +2,7 @@ package com.example.website_ban_ao_the_thao_psg.service;
 
 import com.example.website_ban_ao_the_thao_psg.entity.ChiTietSanPham;
 import com.example.website_ban_ao_the_thao_psg.entity.KichThuoc;
+import com.example.website_ban_ao_the_thao_psg.entity.SanPham;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateChiTietSanPhamRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateSanPhamRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateChiTietSanPhamRequest;
@@ -39,14 +40,14 @@ public interface ChiTietSanPhamService {
     void insertCtsp(List<KichThuoc> kichThuocList,Integer idSP);
 
     ChiTietSanPhamResponse getOneCtsp(Integer id);
+//
+//    Page<ChiTietSanPhamResponse> searchNameOrMaActiveCtsp(String searchName, Integer pageNo, Integer size);
+//
+//    Page<ChiTietSanPhamResponse> searchNameOrMaInActiveCtsp(String searchName, Integer pageNo, Integer size);
 
-    Page<ChiTietSanPhamResponse> searchNameOrMaActiveCtsp(String searchName, Integer pageNo, Integer size);
+//    void deleteChiTietSanPham(Integer id);
 
-    Page<ChiTietSanPhamResponse> searchNameOrMaInActiveCtsp(String searchName, Integer pageNo, Integer size);
-
-    void deleteChiTietSanPham(Integer id, LocalDate now);
-
-    void deletePending(Integer id);
+    void deleteChiTietSanPham(Integer id);
 
     void revertChiTietSanPham(Integer id, LocalDate now);
 
@@ -67,5 +68,8 @@ public interface ChiTietSanPhamService {
     void deleteSanPham(Integer id, LocalDate now);
 
     void revertSanPham(Integer id, LocalDate now);
+
+    void deleteChiTietSanPhamUpdate(Integer id, LocalDate now);
+
 
 }

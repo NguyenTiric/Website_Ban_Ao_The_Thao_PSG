@@ -47,13 +47,10 @@
                             <td th:text="${sp.ten}"></td>
                             <td th:text="${sp.trangThai.moTa}"></td>
                             <td>
-                                <form th:action="@{/admin/psg/san-pham/revert/{id}(id=${sp.id})}" method="post">
-                                        <button type="submit"
-                                                class="btn waves-effect waves-light btn-rounded btn-danger"
-                                                onclick="return confirm('Bạn có muốn khôi phục không')">
-                                            Revert
-                                        </button>
-                                </form>
+                                <a th:href="@{/admin/psg/chi-tiet-san-pham/revert/{id}(id=${sp.id})}"
+                                   onclick="return confirm('Bạn có muốn xóa không')"
+                                   class="btn waves-effect waves-light btn-rounded btn-warning"
+                                >Revert</a>
                             </td>
                         </tr>
                         </tbody>

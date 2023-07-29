@@ -15,7 +15,6 @@ import com.example.website_ban_ao_the_thao_psg.model.request.create_request.Crea
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNuocSanXuatRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateSanPhamRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateThuongHieuRequest;
-import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateChatLieuRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateSanPhamRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.AnhSanPhamResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.SanPhamResponse;
@@ -52,7 +51,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -195,15 +193,6 @@ public class ChiTietSanPhamController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
     }
 
-    @GetMapping("/pageActive/{pageNo}")
-    public String pageSanPhamActive(@PathVariable("pageNo") Integer pageNo, Model model) {
-        Page<SanPhamResponse> sanPhamResponsesActive = chiTietSanPhamService.pageSanPhamActive(pageNo, 10);
-        model.addAttribute("size", sanPhamResponsesActive.getSize());
-        model.addAttribute("totalPages", sanPhamResponsesActive.getTotalPages());
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("listSanPhamActive", sanPhamResponsesActive);
-        return "admin/san_pham/trang_chu_san_pham";
-    }
 
     @GetMapping("/pageInActive/{pageNo}")
     public String pageSanPhamInActive(@PathVariable("pageNo") Integer pageNo, Model model) {
@@ -231,6 +220,13 @@ public class ChiTietSanPhamController {
         return "redirect:/admin/psg/chi-tiet-san-pham/hien-thi";
     }
 
+    @GetMapping("/delete-ctsp-update/{id}")
+    public String deleteChiTietSanPhamUpdate(@PathVariable("id") Integer id) {
+        chiTietSanPhamService.deleteChiTietSanPhamUpdate(id, LocalDate.now());
+       Integer idSP = chiTietSanPhamService.getOneCtsp(id).getSanPham().getId();
+        return "redirect:/admin/psg/chi-tiet-san-pham/view-update/" + idSP;
+    }
+
     @PostMapping("/update-so-luong-active")
     public String updateSoLuongActive(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong) {
         chiTietSanPhamService.updateSoLuongActive(id, soLuong);
@@ -240,7 +236,7 @@ public class ChiTietSanPhamController {
     @PostMapping("/insert-chi-tiet-san-pham")
     public String insertChiTietSanPham(@RequestParam("kichThuoc") List<KichThuoc> kichThuocList, @RequestParam("idSP") Integer idSP) {
         chiTietSanPhamService.insertCtsp(kichThuocList, idSP);
-        return "redirect:/admin/psg/chi-tiet-san-pham/view-update/"+idSP;
+        return "redirect:/admin/psg/chi-tiet-san-pham/view-update/" + idSP;
     }
 
     @PostMapping("/update-status")
@@ -330,9 +326,60 @@ public class ChiTietSanPhamController {
         return "redirect:/admin/psg/chi-tiet-san-pham/view-add";
     }
 
-    @GetMapping("/deletePending/{id}")
-    public String deletePending(@PathVariable("id") Integer id) {
-        chiTietSanPhamService.deletePending(id);
+    //    @GetMapping("/deletePending/{id}")
+//    public String deletePending(@PathVariable("id") Integer id) {
+//        chiTietSanPhamService.deletePending(id);
+//        return "redirect:/admin/psg/chi-tiet-san-pham/view-add";
+//    }
+    @GetMapping("/searchActive/{pageNo}")
+    public String searchActiveCtsp(@RequestParam(value = "searchNameOrMa", required = false) String search, @PathVariable("pageNo") Integer pageNo, Model model) {
+        Page<SanPhamResponse> sanPhamResponsesActive = chiTietSanPhamService.searchNameOrMaActiveSp(search, pageNo, 3);
+        model.addAttribute("size", sanPhamResponsesActive.getSize());
+        model.addAttribute("totalPages", sanPhamResponsesActive.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listSanPhamActive", sanPhamResponsesActive);
+        return "admin/san_pham/trang_chu_san_pham";
+    }
+
+    @GetMapping("/pageActive/{pageNo}")
+    public String pageSanPhamActive(@PathVariable("pageNo") Integer pageNo, Model model) {
+        Page<SanPhamResponse> sanPhamResponsesActive = chiTietSanPhamService.pageSanPhamActive(pageNo, 3);
+        model.addAttribute("size", sanPhamResponsesActive.getSize());
+        model.addAttribute("totalPages", sanPhamResponsesActive.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listSanPhamActive", sanPhamResponsesActive);
+        return "admin/san_pham/trang_chu_san_pham";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        chiTietSanPhamService.deleteSanPham(id, LocalDate.now());
+        return "redirect:/admin/psg/chi-tiet-san-pham/hien-thi";
+    }
+
+    @GetMapping("/revert/{id}")
+    public String revertSanPham(@PathVariable("id") Integer id) {
+        chiTietSanPhamService.revertSanPham(id, LocalDate.now());
+        return "redirect:/admin/psg/chi-tiet-san-pham/hien-thi";
+    }
+
+    @GetMapping("/delete-chi-tiet-san-pham/{id}")
+    public String deleteChiTietSanPham(@PathVariable("id") Integer id) {
+        chiTietSanPhamService.deleteChiTietSanPham(id);
         return "redirect:/admin/psg/chi-tiet-san-pham/view-add";
     }
+
+
+
+//    @GetMapping("/pageInActive/{pageNo}")
+//    public String viewRevert(@PathVariable("pageNo") Integer pageNo, Model model) {
+//        Page<SanPhamResponse> sanPhamResponsesActive = chiTietSanPhamService.pageSanPhamInActive(pageNo, 3);
+//        model.addAttribute("size", sanPhamResponsesActive.getSize());
+//        model.addAttribute("totalPages", sanPhamResponsesActive.getTotalPages());
+//        model.addAttribute("currentPage", pageNo);
+//        model.addAttribute("listSanPhamActive", sanPhamResponsesActive);
+//        return "admin/san_pham/revert_san_pham";
+//    }
+
+
 }
