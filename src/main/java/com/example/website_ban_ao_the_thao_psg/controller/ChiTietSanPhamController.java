@@ -55,7 +55,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/psg/chi-tiet-san-pham")
-public class ChiTietSanPhamController {
+public class  ChiTietSanPhamController {
 
     @Autowired
     ChiTietSanPhamService chiTietSanPhamService;

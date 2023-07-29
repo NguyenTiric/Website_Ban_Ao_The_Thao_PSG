@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
     List<HoaDon> getHoaDonByTrangThai(ApplicationConstant.TrangThaiHoaDon trangThai);
+
+
     @Query(value = "select * from hoa_don where sdt_nguoi_nhan = ?1 or ma = ?1 or tai_khoan_id = (SELECT id FROM tai_khoan WHERE ten = ?1) ", nativeQuery = true)
     Page<HoaDon> listSearch(String path, Pageable pageable);
 
