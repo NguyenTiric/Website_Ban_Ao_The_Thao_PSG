@@ -1,11 +1,11 @@
 package com.example.website_ban_ao_the_thao_psg.model.request.update_request;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TenThuHang;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiThuHang;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,8 +28,7 @@ public class UpdateThuHangRequest {
 
     private String ma;
 
-    @Enumerated(EnumType.STRING)
-    private TenThuHang ten;
+    private String ten;
 
     @NotNull(message = "Số tiền chi tiêu tối thiểu không để trống")
     @Min(value = 1, message = "Số tiền chi tiêu tối thiểu là số nguyên")

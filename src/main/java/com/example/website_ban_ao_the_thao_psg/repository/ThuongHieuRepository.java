@@ -1,5 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.repository;
 
+import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuongHieu;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;

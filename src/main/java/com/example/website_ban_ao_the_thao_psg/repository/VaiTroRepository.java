@@ -18,6 +18,7 @@ import java.util.List;
 public interface VaiTroRepository extends JpaRepository<VaiTro,Integer> {
     @Query(value = "SELECT * FROM vai_tro WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<VaiTro> pageSearchActive(String searchString, Pageable pageable);
+
     @Query(value = "SELECT * FROM vai_tro WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
     Page<VaiTro> pageSearchIvActive(String searchString, Pageable pageable);
 

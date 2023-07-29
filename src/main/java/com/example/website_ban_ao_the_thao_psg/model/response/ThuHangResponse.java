@@ -19,14 +19,21 @@ import java.time.LocalDate;
 @Builder
 @ToString
 public class ThuHangResponse {
+
     private Integer id;
+
     private String ma;
-    @Enumerated(EnumType.STRING)
-    private ApplicationConstant.TenThuHang ten;
+
+    private String ten;
+
     private BigDecimal soTienKhachChiToiThieu;
+
     private Integer soLuongDonHangToiThieu;
+
     @Enumerated(EnumType.STRING)
     private ApplicationConstant.TrangThaiThuHang trangThai;
+
     private LocalDate ngayTao;
+
     private LocalDate ngayCapNhat;
 }

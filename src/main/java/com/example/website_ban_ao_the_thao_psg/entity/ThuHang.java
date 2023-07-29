@@ -1,6 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.entity;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TenThuHang;
+//import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TenThuHang;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiThuHang;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,8 +39,7 @@ public class ThuHang {
     private String ma;
 
     @Column(name = "ten")
-    @Enumerated(EnumType.STRING)
-    private TenThuHang ten;
+    private String ten;
 
     @Column(name = "so_tien_khach_chi_toi_thieu")
     private BigDecimal soTienKhachChiToiThieu;
