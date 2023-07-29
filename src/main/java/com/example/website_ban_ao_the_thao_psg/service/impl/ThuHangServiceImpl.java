@@ -24,7 +24,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@EnableScheduling
 @Component
 public class ThuHangServiceImpl implements ThuHangService {
 
@@ -51,22 +50,22 @@ public class ThuHangServiceImpl implements ThuHangService {
         return thuHangPage.map(thuHangMapper::thuHangEntiyToThuHangResponse);
     }
 
-    public void thucHienCapNhat() {
-        List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
-
-        for (TaiKhoan taiKhoan : taiKhoanList) {
-            Integer soLuongDonHangThanhCong = taiKhoan.getSoLuongDonHangThanhCong();
-            BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
-
-            ThuHang mucThuHang = this.thuHangRepository.findByTen(String.valueOf(taiKhoan.getThuHang()));
-
-            if (mucThuHang != null && soLuongDonHangThanhCong.compareTo(mucThuHang.getSoLuongDonHangToiThieu()) >= 0 &&
-                    soTienDaChiTieu.compareTo(mucThuHang.getSoTienKhachChiToiThieu()) >= 0) {
-                taiKhoan.setId(mucThuHang.getId());
-                this.taiKhoanRepository.save(taiKhoan);
-            }
-        }
-    }
+//    public void thucHienCapNhat() {
+//        List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
+//
+//        for (TaiKhoan taiKhoan : taiKhoanList) {
+//            Integer soLuongDonHangThanhCong = taiKhoan.getSoLuongDonHangThanhCong();
+//            BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
+//
+//            ThuHang mucThuHang = this.thuHangRepository.findByTen(String.valueOf(taiKhoan.getThuHang()));
+//
+//            if (mucThuHang != null && soLuongDonHangThanhCong.compareTo(mucThuHang.getSoLuongDonHangToiThieu()) >= 0 &&
+//                    soTienDaChiTieu.compareTo(mucThuHang.getSoTienKhachChiToiThieu()) >= 0) {
+//                taiKhoan.setId(mucThuHang.getId());
+//                this.taiKhoanRepository.save(taiKhoan);
+//            }
+//        }
+//    }
 
     @Override
     public ThuHangResponse add(CreateThuHangRequest createThuHangRequest) {

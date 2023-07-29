@@ -11,6 +11,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface TaiKhoanRepository extends JpaRepository<TaiKhoan,Integer> {
@@ -78,5 +80,18 @@ public interface TaiKhoanRepository extends JpaRepository<TaiKhoan,Integer> {
 
     @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE tk.trang_thai = 'INACTIVE' AND vt.ten = 'Khách Hàng'", nativeQuery = true)
     Page<TaiKhoan> pageINACTIVEKhachHang(Pageable pageable);
+
+    List<TaiKhoan> findByNgayCapNhatBeforeAndTrangThai(Date ngayReset, String trangThai);
+
+    @Query(value = "select c.ngayDatLaiThuHang from QuyDinh c WHERE c.trangThai = 'ACTIVE'")
+    LocalDate findNgayDatLai();
+
+    @Query(value = "UPDATE TaiKhoan t SET t.soLuongDonHangThanhCong = 0, t.soTienDaChiTieu = 0")
+    List<TaiKhoan> resetToanBoThuHang();
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE TaiKhoan t SET t.soLuongDonHangThanhCong = 0, t.soTienDaChiTieu = 0 ")
+    void resetSoLuongDonHangThanhCongAndSoTienDaChiTieuVeKhong();
 
 }
