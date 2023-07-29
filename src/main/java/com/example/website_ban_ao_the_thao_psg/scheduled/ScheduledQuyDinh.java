@@ -26,13 +26,10 @@ public class ScheduledQuyDinh {
     private TaiKhoanRepository taiKhoanRepository;
 
     @Scheduled(fixedRate = 6000)
-    public void thongBaoReset(){
-        SimpleMailMessage message = new SimpleMailMessage();
-
+    public void thongBaoReset() {
         LocalDate currentDate = LocalDate.now();
-
         List<QuyDinh> listQuyDinh = quyDinhRepository.findByNgayCapNhatByTrangThai();
-        System.out.println(listQuyDinh);
+
         for (QuyDinh quyDinh : listQuyDinh) {
             LocalDate ngayDatLaiThuHang = quyDinh.getNgayDatLaiThuHang();
             LocalDate ngayThongBao = ngayDatLaiThuHang.minusDays(30);
@@ -41,7 +38,8 @@ public class ScheduledQuyDinh {
                 List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
                 taiKhoanRepository.resetSoLuongDonHangThanhCongAndSoTienDaChiTieuVeKhong();
                 for (TaiKhoan taiKhoan : taiKhoanList) {
-                    message.setTo("tunganh.devj@gmail.com");
+                    SimpleMailMessage message = new SimpleMailMessage();
+                    message.setTo(taiKhoan.getEmail());
                     message.setSubject("Thông báo đặt lại thứ hạng");
                     message.setText("Xin chào " + taiKhoan.getTen() + ",\n\nĐến trước 1 tháng nữa, chúng ta sẽ đặt lại thứ hạng. Vui lòng chuẩn bị cho điều này.\n\nTrân trọng,\nWebsite của chúng tôi");
                     emailSender.send(message);
@@ -49,8 +47,8 @@ public class ScheduledQuyDinh {
             } else if (ngayDatLaiThuHang.isEqual(ngayThongBao)) {
                 List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
                 for (TaiKhoan taiKhoan : taiKhoanList) {
-                    System.out.println(ngayThongBao);
-                    message.setTo("tunganh.devj@gmail.com");
+                    SimpleMailMessage message = new SimpleMailMessage();
+                    message.setTo(taiKhoan.getEmail());
                     message.setSubject("Thông báo đặt lại thứ hạng");
                     message.setText("Xin chào " + taiKhoan.getTen() + ",\n\nĐến trước 1 tháng nữa, chúng ta sẽ đặt lại thứ hạng. Vui lòng chuẩn bị cho điều này.\n\nTrân trọng,\nWebsite của chúng tôi");
                     emailSender.send(message);
@@ -58,4 +56,5 @@ public class ScheduledQuyDinh {
             }
         }
     }
+
 }
