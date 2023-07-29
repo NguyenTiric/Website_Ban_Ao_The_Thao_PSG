@@ -13,29 +13,32 @@
     <div>
 
 
-    <div class="row">
-        <div class="col-8">
-            <li class="nav-item d-none d-md-block">
-                <a class="nav-link" href="javascript:void(0)">
-                    <nav class="navbar bg-body">
-                        <div class="container-fluid">
-                            <form class="d-flex" role="search" action="" method="get">
-                                <input name="searchNameOrMa" class="form-control custom-shadow custom-radius border-0 bg-white"
-                                       type="search" placeholder="Search Tên Or Mã" aria-label="Search">
-                                <button class="btn btn-rounded btn-primary" type="submit">Search</button>
-                            </form>
-                        </div>
-                    </nav>
-                </a>
-            </li>
+        <div class="row">
+            <div class="col-8">
+                <li class="nav-item d-none d-md-block">
+                    <a class="nav-link" href="javascript:void(0)">
+                        <nav class="navbar bg-body">
+                            <div class="container-fluid">
+                                <form class="d-flex" role="search" action="/admin/psg/chi-tiet-san-pham/searchActive/0"
+                                      method="get">
+                                    <input name="searchNameOrMa"
+                                           class="form-control custom-shadow custom-radius border-0 bg-white"
+                                           type="search" placeholder="Search Tên Or Mã" aria-label="Search">
+                                    <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+                                </form>
+                            </div>
+                        </nav>
+                    </a>
+                </li>
+            </div>
+            <div class="col-2">
+                <a href="/admin/psg/chi-tiet-san-pham/view-add"
+                   class="btn waves-effect waves-light btn-rounded btn-primary">View Add</a>
+            </div>
+            <div class="col-2">
+                <a href="/admin/psg/chi-tiet-san-pham/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">View Revert</a>
+            </div>
         </div>
-        <div class="col-2">
-            <a href="/admin/psg/chi-tiet-san-pham/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">View Add</a>
-        </div>
-        <div class="col-2">
-            <a href="#" class="btn waves-effect waves-light btn-rounded btn-primary">View Revert</a>
-        </div>
-    </div>
     </div>
     <div class="card">
         <div class="card-body">
@@ -57,7 +60,7 @@
                         <tr th:each="sp,index:${listSanPhamActive}">
                             <td th:text="${index.count}"></td>
                             <td class="d-flex align-items-center">
-                                <div class="symbol symbol-circle symbol-50px overflow-hidden me-3" >
+                                <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                     <a href="#" class="d-block border rounded-2">
                                         <div class="symbol-label">
                                             <img th:src="@{${'/admin/psg/chi-tiet-san-pham/display?id=' + sp.id}}"
@@ -80,26 +83,32 @@
                                 <a th:href="@{/admin/psg/chi-tiet-san-pham/view-update/{id}(id=${sp.id})}"
                                    class="btn waves-effect waves-light btn-rounded btn-warning"
                                 >Update</a>
+                                <a th:href="@{/admin/psg/chi-tiet-san-pham/delete/{id}(id=${sp.id})}"
+                                   onclick="return confirm('Bạn có muốn xóa không')"
+                                   class="btn waves-effect waves-light btn-rounded btn-warning"
+                                >Delete</a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-                    <!--                    <nav aria-label="Page navigation example">-->
-                    <!--                        <ul class="pagination">-->
-                    <!--                            <li class="page-item" th:if="${currentPage !=0}">-->
-                    <!--                                <a class="page-link" th:href="@{'/admin/psg/san-pham/pageActive/'+${ currentPage - 1}}">Previous</a>-->
-                    <!--                            </li>-->
-                    <!--                            <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"-->
-                    <!--                                th:classappend="${currentPage == i - 1 ? 'active' : ''}">-->
-                    <!--                                <a class="page-link" th:href="@{'/admin/psg/san-pham/pageActive/'+${i - 1}}">-->
-                    <!--                                    <span th:text="${i}"></span>-->
-                    <!--                                </a>-->
-                    <!--                            </li>-->
-                    <!--                            <li class="page-item" th:if="${currentPage + 1 != totalPages}">-->
-                    <!--                                <a class="page-link" th:href="@{'/admin/psg/san-pham/pageActive/'+${currentPage + 1}}">Next</a>-->
-                    <!--                            </li>-->
-                    <!--                        </ul>-->
-                    <!--                    </nav>-->
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item" th:if="${currentPage !=0}">
+                                <a class="page-link"
+                                   th:href="@{'/admin/psg/chi-tiet-san-pham/pageActive/'+${ currentPage - 1}}">Previous</a>
+                            </li>
+                            <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
+                                th:classappend="${currentPage == i - 1 ? 'active' : ''}">
+                                <a class="page-link" th:href="@{'/admin/psg/chi-tiet-san-pham/pageActive/'+${i - 1}}">
+                                    <span th:text="${i}"></span>
+                                </a>
+                            </li>
+                            <li class="page-item" th:if="${currentPage + 1 != totalPages}">
+                                <a class="page-link"
+                                   th:href="@{'/admin/psg/chi-tiet-san-pham/pageActive/'+${currentPage + 1}}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div> <!-- end card-body-->

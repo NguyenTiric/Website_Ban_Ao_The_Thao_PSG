@@ -182,31 +182,32 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
     @Override
     public ChiTietSanPhamResponse getOneCtsp(Integer id) {
-        Optional<ChiTietSanPham> chiTietSanPhamOptional = chiTietSanPhamRepository.findById(id);
-        return chiTietSanPhamMapper.chiTietSanPhamEntityTochiTietSanPhamResponse(chiTietSanPhamOptional.get());
+        ChiTietSanPham chiTietSanPham = chiTietSanPhamRepository.findById(id).get();
+        return chiTietSanPhamMapper.chiTietSanPhamEntityTochiTietSanPhamResponse(chiTietSanPham);
     }
 
-    @Override
-    public Page<ChiTietSanPhamResponse> searchNameOrMaActiveCtsp(String searchName, Integer pageNo, Integer size) {
-        Pageable pageable = PageRequest.of(pageNo, size);
-        Page<ChiTietSanPham> chiTietSanPhamPage = chiTietSanPhamRepository.pageSearchActive(searchName, pageable);
-        return chiTietSanPhamPage.map(chiTietSanPhamMapper::chiTietSanPhamEntityTochiTietSanPhamResponse);
-    }
+//    @Override
+//    public ChiTietSanPhamResponse getOneCtsp(Integer id) {
+//        Optional<ChiTietSanPham> chiTietSanPhamOptional = chiTietSanPhamRepository.findById(id);
+//        return chiTietSanPhamMapper.chiTietSanPhamEntityTochiTietSanPhamResponse(chiTietSanPhamOptional.get());
+//    }
+
+//    @Override
+//    public Page<ChiTietSanPhamResponse> searchNameOrMaActiveCtsp(String searchName, Integer pageNo, Integer size) {
+//        Pageable pageable = PageRequest.of(pageNo, size);
+//        Page<ChiTietSanPham> chiTietSanPhamPage = chiTietSanPhamRepository.pageSearchActive(searchName, pageable);
+//        return chiTietSanPhamPage.map(chiTietSanPhamMapper::chiTietSanPhamEntityTochiTietSanPhamResponse);
+//    }
+
+//    @Override
+//    public Page<ChiTietSanPhamResponse> searchNameOrMaInActiveCtsp(String searchName, Integer pageNo, Integer size) {
+//
+//    }
+
+//c
 
     @Override
-    public Page<ChiTietSanPhamResponse> searchNameOrMaInActiveCtsp(String searchName, Integer pageNo, Integer size) {
-        Pageable pageable = PageRequest.of(pageNo, size);
-        Page<ChiTietSanPham> chiTietSanPhamPage = chiTietSanPhamRepository.pageSearchIvActive(searchName, pageable);
-        return chiTietSanPhamPage.map(chiTietSanPhamMapper::chiTietSanPhamEntityTochiTietSanPhamResponse);
-    }
-
-    @Override
-    public void deleteChiTietSanPham(Integer id, LocalDate now) {
-        chiTietSanPhamRepository.delete(id, LocalDate.now());
-    }
-
-    @Override
-    public void deletePending(Integer id) {
+    public void deleteChiTietSanPham(Integer id) {
         chiTietSanPhamRepository.deleteById(id);
     }
 
@@ -224,7 +225,9 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
     @Override
     public Page<SanPhamResponse> pageSanPhamInActive(Integer pageNo, Integer size) {
-        return null;
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<SanPham> sanPhamPage = sanPhamRepository.pageINACTIVE(pageable);
+        return sanPhamPage.map(sanPhamMapper::sanPhamEntityToSanPhamResponse);
     }
 
     @Override
@@ -261,7 +264,9 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
     @Override
     public Page<SanPhamResponse> searchNameOrMaActiveSp(String searchName, Integer pageNo, Integer size) {
-        return null;
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<SanPham> sanPhamPage = sanPhamRepository.pageSearchActive(searchName, pageable);
+        return sanPhamPage.map(sanPhamMapper::sanPhamEntityToSanPhamResponse);
     }
 
     @Override
@@ -271,11 +276,16 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
     @Override
     public void deleteSanPham(Integer id, LocalDate now) {
-
+        sanPhamRepository.delete(id, now);
     }
 
     @Override
     public void revertSanPham(Integer id, LocalDate now) {
+        sanPhamRepository.revert(id, now);
+    }
 
+    @Override
+    public void deleteChiTietSanPhamUpdate(Integer id, LocalDate now) {
+        chiTietSanPhamRepository.deleteChiTietSanPhamUpdate(id,now);
     }
 }
