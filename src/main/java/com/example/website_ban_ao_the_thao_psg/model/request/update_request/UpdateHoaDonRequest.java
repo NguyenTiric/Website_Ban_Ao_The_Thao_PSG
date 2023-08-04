@@ -5,6 +5,8 @@ import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangT
 import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,4 +50,5 @@ public class UpdateHoaDonRequest {
     private HinhThucBanHang hinhThucBanHang;
     @Enumerated(EnumType.STRING)
     private TrangThaiHoaDon trangThai;
+
 }

@@ -31,7 +31,6 @@ public class HoaDonController {
         return "admin/hoa_don/hoa_don_cho";
     }
 
-
     @GetMapping("/detail-hoa-don/{id}")
     public String hoaDonDetail(@PathVariable("id") Integer id, Model model) {
         HoaDonResponse hoaDonResponse = hoaDonService.getDetailHoaDon(id);

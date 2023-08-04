@@ -55,17 +55,8 @@ public class HoaDon {
     @Column(name = "ngay_nhan")
     private LocalDate ngayNhan;
 
-    @Column(name = "tien_mat_khach_tra")
-    private BigDecimal tienMatKhachTra;
-
-    @Column(name = "tien_khach_chuyen_khoan")
-    private BigDecimal tienKhachChuyenKhoan;
-
     @Column(name = "tien_ship")
     private BigDecimal tienShip;
-
-    @Column(name = "tien_thua")
-    private BigDecimal tienThua;
 
     @Column(name = "thanh_tien")
     private BigDecimal thanhTien;
@@ -86,7 +77,7 @@ public class HoaDon {
     private String maVoucherThuHang;
 
     @Column(name = "phan_tram_giam_gia")
-    private Boolean phanTramGiamGia;
+    private Integer phanTramGiamGia;
 
     @Column(name = "ma_giao_dich")
     private String maGiaoDich;

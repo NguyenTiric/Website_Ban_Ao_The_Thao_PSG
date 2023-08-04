@@ -64,6 +64,11 @@
                             <td th:text="${dhc.ma}"></td>
                             <td th:text="${dhc.ngayTao}"></td>
                             <td th:text="${dhc.trangThai.moTa}"></td>
+                            <td>
+                                <a th:href="@{/admin/psg/hoa-don/detail-hoa-don/{id}(id=${dhc.id})}"
+                                   class="btn waves-effect waves-light btn-rounded btn-warning"
+                                >Update</a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
