@@ -34,14 +34,13 @@ public class CreateHoaDonRequest {
     private BigDecimal tienMatKhachTra;
     private BigDecimal tienKhachChuyenKhoan;
     private BigDecimal tienShip;
-    private BigDecimal tienThua;
     private BigDecimal thanhTien;
     private String tenNguoiNhan;
     private String diaChi;
     private String sdtNguoiNhan;
     private String sdtNguoiShip;
     private String maVoucherThuHang;
-    private Boolean phanTramGiamGia;
+    private Integer phanTramGiamGia;
     private String maGiaoDich;
     private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)

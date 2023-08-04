@@ -55,6 +55,12 @@ public class HoaDon {
     @Column(name = "ngay_nhan")
     private LocalDate ngayNhan;
 
+    @Column(name = "tien_mat_khach_tra")
+    private BigDecimal tienMatKhachTra;
+
+    @Column(name = "tien_khach_chuyen_khoan")
+    private BigDecimal tienKhachChuyenKhoan;
+
     @Column(name = "tien_ship")
     private BigDecimal tienShip;
 
