@@ -26,6 +26,13 @@ public class ScheduledQuyDinh {
     @Autowired
     private TaiKhoanRepository taiKhoanRepository;
 
+    private boolean isEmailSentToday = false;
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void resetEmailFlag() {
+        isEmailSentToday = false;
+    }
+
     @Scheduled(fixedRate = 6000)
     public void thongBaoReset() {
 
@@ -45,31 +52,38 @@ public class ScheduledQuyDinh {
             if (ngayDatLaiThuHang.isEqual(currentDateTime)) {
                 List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
                 taiKhoanRepository.resetSoLuongDonHangThanhCongAndSoTienDaChiTieuVeKhong();
-
+                this.quyDinhRepository.updateTrangThaiSauResetThuHang(ngayDatLaiThuHang);
                 System.out.println("Thành công nhé!");
-                for (TaiKhoan taiKhoan : taiKhoanList) {
-//                    SimpleMailMessage message = new SimpleMailMessage();
-//                    message.setTo(taiKhoan.getEmail());
-//                    message.setSubject("Thông báo đặt lại thứ hạng");
-//                    message.setText("Xin chào " + taiKhoan.getTen() + ",\n\nĐã đến ngày reset lại thứ hạng của bạn về mặc định. Cảm ơn vì bạn đã đông hành cùng chúng tôi.\n\nTrân trọng,\nWebsite bán áo thể thao PSG");
-//                    emailSender.send(message);
-                    System.out.println("Ngon!");
 
+                if (!isEmailSentToday){
+                    for (TaiKhoan taiKhoan : taiKhoanList) {
+                        SimpleMailMessage message = new SimpleMailMessage();
+                        message.setTo(taiKhoan.getEmail());
+                        message.setSubject("Thông báo đặt lại thứ hạng");
+                        message.setText("Xin chào " + taiKhoan.getTen() + ",\n\nĐã đến ngày reset lại thứ hạng của bạn về mặc định. Cảm ơn vì bạn đã đông hành cùng chúng tôi.\n\nTrân trọng,\nWebsite bán áo thể thao PSG");
+                        emailSender.send(message);
+
+                        System.out.println("Ngon!");
+                        isEmailSentToday = true;
+                    }
                 }
-            } else if (currentDateTime.isEqual(ngayThongBao)) {
+
+            }else if (ngayThongBao.isEqual(currentDateTime)) {
                 List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
-                for (TaiKhoan taiKhoan : taiKhoanList) {
-//                    SimpleMailMessage message = new SimpleMailMessage();
-//                    message.setTo(taiKhoan.getEmail());
-//                    message.setSubject("Thông báo đặt lại thứ hạng");
-//                    message.setText("Xin chào " + taiKhoan.getTen() + ",\n\nĐến trước 1 tháng nữa, chúng ta sẽ đặt lại thứ hạng. Vui lòng chuẩn bị cho điều này.\n\nTrân trọng,\nWebsite bán áo thể thao PSG");
-//                    emailSender.send(message);
-                    System.out.println("Ngon2!");
+                if (!isEmailSentToday){
+                    for (TaiKhoan taiKhoan : taiKhoanList) {
+                        SimpleMailMessage message = new SimpleMailMessage();
+                        message.setTo(taiKhoan.getEmail());
+                        message.setSubject("Thông báo đặt lại thứ hạng");
+                        message.setText("Xin chào " + taiKhoan.getTen() + ",\n\nĐến trước 1 tháng nữa, chúng ta sẽ đặt lại thứ hạng. Vui lòng chuẩn bị cho điều này.\n\nTrân trọng,\nWebsite bán áo thể thao PSG");
+                        emailSender.send(message);
+                        System.out.println("Ngon2!");
+                        isEmailSentToday = true;
+                    }
                 }
+
             } else {
-
                 System.out.println("Ngu, chết rồi\n");
-
             }
         }
     }

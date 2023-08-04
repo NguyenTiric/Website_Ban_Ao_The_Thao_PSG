@@ -39,8 +39,8 @@ public interface QuyDinhRepository extends JpaRepository<QuyDinh,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE QuyDinh m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.ngayDatLaiThuHang = :ngayDatLaiThuHang")
-    void updateTrangThaiSauResetThuHang(LocalDateTime ngayDatLaiThuHang, LocalDateTime now);
+    @Query(value = "UPDATE QuyDinh m SET m.trangThai = 'INACTIVE' WHERE m.ngayDatLaiThuHang = :ngayDatLaiThuHang")
+    void updateTrangThaiSauResetThuHang(LocalDate ngayDatLaiThuHang);
 
 
     @Transactional

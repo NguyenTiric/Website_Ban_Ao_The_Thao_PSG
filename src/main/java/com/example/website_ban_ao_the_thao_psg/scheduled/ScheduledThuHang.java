@@ -55,6 +55,7 @@ public class ScheduledThuHang {
             if (selectedThuHang != null) {
                 taiKhoan.setThuHang(selectedThuHang);
                 taiKhoanRepository.save(taiKhoan);
+                System.out.println("Đã tự động nâng thứ hạng");
 //                message.setTo(taiKhoan.getEmail());
 //                message.setSubject("Thông báo thứ hạng đã được nâng");
 //                message.setText("Xin chào " + taiKhoan.getTen() + ",\n\nChúc mừng bạn đã đạt được nâng lên. Cảm ơn đã ủng hộ và gắn bó với chúng tôi.\n\nTrân trọng,\nWebsite bán áo thể thao PSG");
