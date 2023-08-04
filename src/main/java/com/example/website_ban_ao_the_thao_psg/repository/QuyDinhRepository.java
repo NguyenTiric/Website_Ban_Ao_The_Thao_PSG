@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -35,6 +36,12 @@ public interface QuyDinhRepository extends JpaRepository<QuyDinh,Integer> {
     @Modifying
     @Query(value = "UPDATE QuyDinh m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.id = :id")
     void delete(@Param("id") Integer id, @Param("now") LocalDate now);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE QuyDinh m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.ngayDatLaiThuHang = :ngayDatLaiThuHang")
+    void updateTrangThaiSauResetThuHang(LocalDateTime ngayDatLaiThuHang, LocalDateTime now);
+
 
     @Transactional
     @Modifying

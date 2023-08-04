@@ -17,7 +17,7 @@
                 <input type="hidden" th:field="*{ngayTao}">
                 <div class="form-group mb-3">
                     <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                            type="date" th:field="*{ngayDatLaiThuHang}" style="height: 50px" th:value="${#temporals.format(quyDinh.ngayDatLaiThuHang, 'dd-MM-yyyy')}">
+                            type="datetime-local" th:field="*{ngayDatLaiThuHang}" style="height: 50px" th:value="${#temporals.format(quyDinh.ngayDatLaiThuHang, 'dd-MM-yyyy')}">
                     <span th:if="${#fields.hasErrors('ngayDatLaiThuHang')}" style="color: red; font-size: 13px" th:errors="*{ngayDatLaiThuHang}"></span>
                 </div>
                 <div class="form-group mb-3 text-center">

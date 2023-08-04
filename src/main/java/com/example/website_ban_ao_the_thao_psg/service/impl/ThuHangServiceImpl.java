@@ -77,7 +77,7 @@ public class ThuHangServiceImpl implements ThuHangService {
 
         List<TaiKhoan> allTaiKhoan = taiKhoanRepository.findAll();
         for (TaiKhoan taiKhoan : allTaiKhoan) {
-            if (!taiKhoan.getVaiTro().getTen().equalsIgnoreCase("Thành viên")) {
+            if (!taiKhoan.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
                 throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
             }
         }
@@ -93,7 +93,7 @@ public class ThuHangServiceImpl implements ThuHangService {
     public ThuHangResponse update(UpdateThuHangRequest updateThuHangRequest) {
         List<TaiKhoan> allTaiKhoan = taiKhoanRepository.findAll();
         for (TaiKhoan taiKhoan : allTaiKhoan) {
-            if (!taiKhoan.getVaiTro().getTen().equalsIgnoreCase("Thành viên")) {
+            if (!taiKhoan.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
                 throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
             }
         }
@@ -148,7 +148,7 @@ public class ThuHangServiceImpl implements ThuHangService {
     public void deleteThuHang(Integer id, LocalDate now) {
         List<TaiKhoan> allTaiKhoan = taiKhoanRepository.findAll();
         for (TaiKhoan taiKhoan : allTaiKhoan) {
-            if (!taiKhoan.getVaiTro().getTen().equalsIgnoreCase("Thành viên")) {
+            if (!taiKhoan.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
                 throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
             }
         }
