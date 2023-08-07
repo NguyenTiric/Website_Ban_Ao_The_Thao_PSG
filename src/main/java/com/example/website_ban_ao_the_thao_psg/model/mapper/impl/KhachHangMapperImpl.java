@@ -1,6 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.model.mapper.impl;
 
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.KhachHangMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateKhachHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateKhachHangRequest;
@@ -19,30 +19,30 @@ public class KhachHangMapperImpl implements KhachHangMapper {
     @Autowired
     ModelMapper modelMapper;
     @Override
-    public TaiKhoan taiKhoanResponseToTaiKhoanEntity(KhachHangResponse khachHangResponse) {
+    public KhachHang khachHangResponseToTaiKhoanEntity(KhachHangResponse khachHangResponse) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        TaiKhoan taiKhoan=modelMapper.map(khachHangResponse,TaiKhoan.class);
-        return taiKhoan;
+        KhachHang khachHang =modelMapper.map(khachHangResponse, KhachHang.class);
+        return khachHang;
     }
 
     @Override
-    public KhachHangResponse khachHangEntityToTaiKhoanResponse(TaiKhoan taiKhoan) {
+    public KhachHangResponse khachHangEntityToTaiKhoanResponse(KhachHang khachHang) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        KhachHangResponse khachHangResponse =modelMapper.map(taiKhoan, KhachHangResponse.class);
+        KhachHangResponse khachHangResponse =modelMapper.map(khachHang, KhachHangResponse.class);
         return khachHangResponse;
     }
 
     @Override
-    public TaiKhoan createKhachHangRequestToTaiKhoanEntity(CreateKhachHangRequest createKhachHangRequest) {
+    public KhachHang createKhachHangRequestToTaiKhoanEntity(CreateKhachHangRequest createKhachHangRequest) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        TaiKhoan taiKhoan=modelMapper.map(createKhachHangRequest,TaiKhoan.class);
-        return taiKhoan;
+        KhachHang khachHang =modelMapper.map(createKhachHangRequest, KhachHang.class);
+        return khachHang;
     }
 
     @Override
-    public TaiKhoan updateKhachHangRequestToTaiKhoanEntity(UpdateKhachHangRequest updateKhachHangRequest) {
+    public KhachHang updateKhachHangRequestToTaiKhoanEntity(UpdateKhachHangRequest updateKhachHangRequest) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        TaiKhoan taiKhoan=modelMapper.map(updateKhachHangRequest,TaiKhoan.class);
-        return taiKhoan;
+        KhachHang khachHang =modelMapper.map(updateKhachHangRequest, KhachHang.class);
+        return khachHang;
     }
 }

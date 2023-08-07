@@ -2,11 +2,10 @@ package com.example.website_ban_ao_the_thao_psg.model.request.update_request;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.HinhThucBanHang;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiHoaDon;
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
+import com.example.website_ban_ao_the_thao_psg.entity.NhanVien;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +14,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -27,7 +25,8 @@ import java.time.LocalDate;
 public class UpdateHoaDonRequest {
 
     private Integer id;
-    private TaiKhoan taiKhoan;
+    private KhachHang khachHang;
+    private NhanVien nhanVien;
     private String ma;
     private LocalDate ngayTao;
     private LocalDate ngayThanhToan;

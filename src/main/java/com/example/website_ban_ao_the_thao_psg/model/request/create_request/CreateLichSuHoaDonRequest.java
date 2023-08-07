@@ -2,7 +2,7 @@ package com.example.website_ban_ao_the_thao_psg.model.request.create_request;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.LoaiLichSuHoaDon;
 import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.NhanVien;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -22,16 +22,11 @@ import java.time.LocalDateTime;
 @ToString
 public class CreateLichSuHoaDonRequest {
 
-    private Integer id;
-
-    private TaiKhoan taiKhoan;
-
+    private Integer Id;
+    private NhanVien nhanVien;
     private HoaDon hoaDon;
-
     private LocalDateTime ngayTao;
-
     private String moTa;
-
     @Enumerated(EnumType.STRING)
     private LoaiLichSuHoaDon loaiLichSuHoaDon;
 }

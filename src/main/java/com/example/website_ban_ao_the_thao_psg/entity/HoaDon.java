@@ -37,8 +37,12 @@ public class HoaDon {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "tai_khoan_id")
-    private TaiKhoan taiKhoan;
+    @JoinColumn(name = "khach_hang_id")
+    private KhachHang khachHang;
+
+    @ManyToOne
+    @JoinColumn(name = "nhan_vien_id")
+    private NhanVien nhanVien;
 
     @Column(name = "ma")
     private String ma;

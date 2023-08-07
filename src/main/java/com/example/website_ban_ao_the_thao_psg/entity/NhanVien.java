@@ -30,16 +30,12 @@ import java.time.LocalDate;
 @Builder
 @ToString
 @Entity
-@Table(name = "tai_khoan")
-public class TaiKhoan {
+@Table(name = "nhan_vien")
+public class NhanVien {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "thu_hang_id")
-    private ThuHang thuHang;
 
     @ManyToOne
     @JoinColumn(name = "vai_tro_id")
@@ -60,17 +56,14 @@ public class TaiKhoan {
     @Column(name = "sdt")
     private String sdt;
 
+    @Column(name = "so_can_cuoc_cong_dan")
+    private String soCanCuocCongDan;
+
     @Column(name = "email")
     private String email;
 
-    @Column(name = "so_luong_don_hang_thanh_cong")
-    private Integer soLuongDonHangThanhCong;
-
     @Column(name = "mat_khau")
     private String matKhau;
-
-    @Column(name = "so_tien_da_chi_tieu")
-    private BigDecimal soTienDaChiTieu;
 
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;

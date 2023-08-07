@@ -1,7 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.model.response;
 
 import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +20,7 @@ import java.time.LocalDate;
 public class HoaDonTraHangResponse {
     private Integer id;
     private HoaDon hoaDon;
-    private TaiKhoan taiKhoan;
+    private KhachHang khachHang;
     private LocalDate ngayDoiTra;
     private BigDecimal tienHoanTraKhach;
     private String ghiChu;

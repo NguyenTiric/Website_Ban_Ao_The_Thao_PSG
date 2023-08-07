@@ -1,7 +1,8 @@
 package com.example.website_ban_ao_the_thao_psg.model.request.create_request;
 
 import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
+import com.example.website_ban_ao_the_thao_psg.entity.NhanVien;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +25,7 @@ public class CreateHoaDonTraHangRequest {
 
     private HoaDon hoaDon;
 
-    private TaiKhoan taiKhoan;
+    private NhanVien nhanVien;
 
     private LocalDate ngayDoiTra;
 

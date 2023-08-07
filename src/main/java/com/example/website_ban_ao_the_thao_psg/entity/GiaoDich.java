@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -41,8 +42,12 @@ public class GiaoDich {
     private HoaDon hoaDon;
 
     @ManyToOne
-    @JoinColumn(name = "tai_khoan_id")
-    private TaiKhoan taiKhoan;
+    @JoinColumn(name = "khach_hang_id")
+    private KhachHang khachHang;
+
+    @ManyToOne
+    @JoinColumn(name = "nhan_vien_id")
+    private NhanVien nhanVien;
 
     @Column(name = "trang_thai_giao_dich")
     @Enumerated(EnumType.STRING)
@@ -54,6 +59,9 @@ public class GiaoDich {
 
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;
+
+    @Column(name = "so_tien")
+    private BigDecimal soTien;
 
     @Column(name = "ngay_cap_nhat")
     private LocalDate ngayCapNhat;
