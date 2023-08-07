@@ -1,9 +1,9 @@
 package com.example.website_ban_ao_the_thao_psg.scheduled;
 
 import com.example.website_ban_ao_the_thao_psg.entity.QuyDinh;
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.repository.QuyDinhRepository;
-import com.example.website_ban_ao_the_thao_psg.repository.TaiKhoanRepository;
+import com.example.website_ban_ao_the_thao_psg.repository.NhanVienRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,7 +23,7 @@ public class ScheduledQuyDinh {
     private QuyDinhRepository quyDinhRepository;
 
     @Autowired
-    private TaiKhoanRepository taiKhoanRepository;
+    private NhanVienRepository nhanVienRepository;
 
     @Scheduled(fixedRate = 6000)
     public void thongBaoReset() {
@@ -35,22 +35,22 @@ public class ScheduledQuyDinh {
             LocalDate ngayThongBao = ngayDatLaiThuHang.minusDays(30);
 
             if (ngayDatLaiThuHang.isEqual(currentDate)) {
-                List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
-                taiKhoanRepository.resetSoLuongDonHangThanhCongAndSoTienDaChiTieuVeKhong();
-                for (TaiKhoan taiKhoan : taiKhoanList) {
+                List<KhachHang> khachHangList = nhanVienRepository.findAll();
+                nhanVienRepository.resetSoLuongDonHangThanhCongAndSoTienDaChiTieuVeKhong();
+                for (KhachHang khachHang : khachHangList) {
                     SimpleMailMessage message = new SimpleMailMessage();
-                    message.setTo(taiKhoan.getEmail());
+                    message.setTo(khachHang.getEmail());
                     message.setSubject("Thông báo đặt lại thứ hạng");
-                    message.setText("Xin chào " + taiKhoan.getTen() + ",\n\nĐến trước 1 tháng nữa, chúng ta sẽ đặt lại thứ hạng. Vui lòng chuẩn bị cho điều này.\n\nTrân trọng,\nWebsite của chúng tôi");
+                    message.setText("Xin chào " + khachHang.getTen() + ",\n\nĐến trước 1 tháng nữa, chúng ta sẽ đặt lại thứ hạng. Vui lòng chuẩn bị cho điều này.\n\nTrân trọng,\nWebsite của chúng tôi");
                     emailSender.send(message);
                 }
             } else if (ngayDatLaiThuHang.isEqual(ngayThongBao)) {
-                List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
-                for (TaiKhoan taiKhoan : taiKhoanList) {
+                List<KhachHang> khachHangList = nhanVienRepository.findAll();
+                for (KhachHang khachHang : khachHangList) {
                     SimpleMailMessage message = new SimpleMailMessage();
-                    message.setTo(taiKhoan.getEmail());
+                    message.setTo(khachHang.getEmail());
                     message.setSubject("Thông báo đặt lại thứ hạng");
-                    message.setText("Xin chào " + taiKhoan.getTen() + ",\n\nĐến trước 1 tháng nữa, chúng ta sẽ đặt lại thứ hạng. Vui lòng chuẩn bị cho điều này.\n\nTrân trọng,\nWebsite của chúng tôi");
+                    message.setText("Xin chào " + khachHang.getTen() + ",\n\nĐến trước 1 tháng nữa, chúng ta sẽ đặt lại thứ hạng. Vui lòng chuẩn bị cho điều này.\n\nTrân trọng,\nWebsite của chúng tôi");
                     emailSender.send(message);
                 }
             }

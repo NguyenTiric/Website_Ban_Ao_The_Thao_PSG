@@ -37,8 +37,8 @@ public class HoaDonTraHang {
     private HoaDon hoaDon;
 
     @ManyToOne
-    @JoinColumn(name = "tai_khoan_id")
-    private TaiKhoan taiKhoan;
+    @JoinColumn(name = "nhan_vien_id")
+    private NhanVien nhanVien;
 
     @Column(name = "ngay_doi_tra")
     private LocalDate ngayDoiTra;

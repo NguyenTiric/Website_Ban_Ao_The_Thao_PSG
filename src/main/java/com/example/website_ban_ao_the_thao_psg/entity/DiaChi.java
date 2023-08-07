@@ -35,8 +35,8 @@ public class DiaChi {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "tai_khoan_id")
-    private TaiKhoan taiKhoan;
+    @JoinColumn(name = "khach_hang_id")
+    private KhachHang khachHang;
 
     @Column(name = "ho_ten")
     private String hoTen;
