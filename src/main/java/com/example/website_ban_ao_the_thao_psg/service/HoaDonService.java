@@ -1,7 +1,14 @@
 package com.example.website_ban_ao_the_thao_psg.service;
 
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
+import com.example.website_ban_ao_the_thao_psg.entity.LichSuHoaDon;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateHoaDonRequest;
+import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateLichSuHoaDonRequest;
+import com.example.website_ban_ao_the_thao_psg.model.response.GiaoDichResponse;
+import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonChiTietResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonResponse;
+import com.example.website_ban_ao_the_thao_psg.model.response.LichSuHoaDonResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +20,13 @@ import java.util.List;
 public interface HoaDonService {
     List<HoaDonResponse> getAllHoaDonCho();
 
+    List<LichSuHoaDonResponse> getAllLichSuHoaDon(Integer idHd);
+    List<GiaoDichResponse> getAllGiaoDich(Integer idHd);
+    List<HoaDonChiTietResponse> getAllHoaDonChiTiet(Integer idHd);
+
     HoaDonResponse addHoaDon();
+
+    void updateTrangThaiHoaDon(ApplicationConstant.TrangThaiHoaDon trangThaiHoaDon,Integer idHd,String moTa);
 
     HoaDonResponse getDetailHoaDon(Integer id);
 

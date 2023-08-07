@@ -28,6 +28,7 @@ public class CreateKhachHangRequest {
     private Integer id;
 
     private ThuHang thuHang;
+
     private VaiTro vaiTro;
 
     private String ten;

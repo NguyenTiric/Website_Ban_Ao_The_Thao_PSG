@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
-import com.example.website_ban_ao_the_thao_psg.model.response.ChiTietSanPhamResponse;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.SanPhamResponse;
 import com.example.website_ban_ao_the_thao_psg.service.ChiTietSanPhamService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -40,10 +42,29 @@ public class HoaDonController {
         return "admin/hoa_don/hoa_don_detail";
     }
 
+    @GetMapping("/lich-su-hoa-don/{id}")
+    public String lichSuHoaDon(@PathVariable("id") Integer id, Model model) {
+        HoaDonResponse hoaDonResponse = hoaDonService.getDetailHoaDon(id);
+        hoaDonResponse.setTrangThai(ApplicationConstant.TrangThaiHoaDon.PENDING);
+        model.addAttribute("hoaDon", hoaDonResponse);
+        model.addAttribute("listLichSuHoaDon", hoaDonService.getAllLichSuHoaDon(id));
+        model.addAttribute("listGiaoDich", hoaDonService.getAllGiaoDich(id));
+        model.addAttribute("listHoaDonChiTiet", hoaDonService.getAllHoaDonChiTiet(id));
+        model.addAttribute("trangThaiHoaDon", hoaDonResponse.getTrangThai());
+        return "admin/hoa_don/lich_su_hoa_don";
+    }
+
     @PostMapping("/add-hoa-don-cho")
     public String addHoaDonCho() {
         hoaDonService.addHoaDon();
         return "redirect:/admin/psg/hoa-don/hoa-don-cho";
+    }
+
+
+    @PostMapping("/update-trang-thai-hoa-don/{id}")
+    public String updateTrangThaiHoaDon(@PathVariable("id") Integer idhd, @RequestParam("trangThai") ApplicationConstant.TrangThaiHoaDon trangThaiHoaDon) {
+        hoaDonService.updateTrangThaiHoaDon(trangThaiHoaDon, idhd, "OK");
+        return "redirect:/admin/psg/hoa-don/lich-su-hoa-don/" + idhd;
     }
 
 }

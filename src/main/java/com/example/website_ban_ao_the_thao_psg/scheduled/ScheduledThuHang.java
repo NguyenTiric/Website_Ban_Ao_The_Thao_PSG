@@ -4,7 +4,6 @@ import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.repository.TaiKhoanRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.ThuHangRepository;
-import com.example.website_ban_ao_the_thao_psg.service.ThuHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -59,34 +58,34 @@ public class ScheduledThuHang {
         this.emailSender.send(message);
     }
 
-    @Scheduled(fixedRate = 5000)
-    public void updateThuHang() {
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        List<TaiKhoan> taiKhoans = this.taiKhoanRepository.findAll();
-        List<ThuHang> activeThuHangList = this.thuHangRepository.findAllByActive();
-
-        for (TaiKhoan taiKhoan : taiKhoans) {
-            BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
-            Integer soLuongDonHangThanhCong = taiKhoan.getSoLuongDonHangThanhCong();
-            ThuHang selectedThuHang = null;
-
-            for (ThuHang thuHang : activeThuHangList) {
-                BigDecimal soTienToiThieu = thuHang.getSoTienKhachChiToiThieu();
-                Integer soDonHangToiThieu = thuHang.getSoLuongDonHangToiThieu();
-
-                if (soDonHangToiThieu <= soLuongDonHangThanhCong && soTienDaChiTieu.compareTo(soTienToiThieu) >= 0) {
-                    if (selectedThuHang == null || (soDonHangToiThieu >= selectedThuHang.getSoLuongDonHangToiThieu()
-                            && soTienToiThieu.compareTo(selectedThuHang.getSoTienKhachChiToiThieu()) >= 0)) {
-                        selectedThuHang = thuHang;
-                    }
-                }
-            }
-
-            if (selectedThuHang != null) {
-                taiKhoan.setThuHang(selectedThuHang);
-                taiKhoanRepository.save(taiKhoan);
-            }
-        }
-    }
+//    @Scheduled(fixedRate = 5000)
+//    public void updateThuHang() {
+//        SimpleMailMessage message = new SimpleMailMessage();
+//
+//        List<TaiKhoan> taiKhoans = this.taiKhoanRepository.findAll();
+//        List<ThuHang> activeThuHangList = this.thuHangRepository.findAllByActive();
+//
+//        for (TaiKhoan taiKhoan : taiKhoans) {
+//            BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
+//            Integer soLuongDonHangThanhCong = taiKhoan.getSoLuongDonHangThanhCong();
+//            ThuHang selectedThuHang = null;
+//
+//            for (ThuHang thuHang : activeThuHangList) {
+//                BigDecimal soTienToiThieu = thuHang.getSoTienKhachChiToiThieu();
+//                Integer soDonHangToiThieu = thuHang.getSoLuongDonHangToiThieu();
+//
+//                if (soDonHangToiThieu <= soLuongDonHangThanhCong && soTienDaChiTieu.compareTo(soTienToiThieu) >= 0) {
+//                    if (selectedThuHang == null || (soDonHangToiThieu >= selectedThuHang.getSoLuongDonHangToiThieu()
+//                            && soTienToiThieu.compareTo(selectedThuHang.getSoTienKhachChiToiThieu()) >= 0)) {
+//                        selectedThuHang = thuHang;
+//                    }
+//                }
+//            }
+//
+//            if (selectedThuHang != null) {
+//                taiKhoan.setThuHang(selectedThuHang);
+//                taiKhoanRepository.save(taiKhoan);
+//            }
+//        }
+//    }
 }
