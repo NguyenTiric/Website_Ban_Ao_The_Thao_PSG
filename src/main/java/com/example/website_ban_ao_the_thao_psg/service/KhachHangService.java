@@ -29,5 +29,7 @@ public interface KhachHangService {
     Page<KhachHangResponse>pageSearchTuoiMinMax(Integer min, Integer max, Integer pageNo, Integer size);
 
     public TaiKhoan viewById(Integer id);
+    Boolean existsBySdtKhachHang(String sdt);
+    Boolean existsByEmailKhachHang(String email);
 
 }

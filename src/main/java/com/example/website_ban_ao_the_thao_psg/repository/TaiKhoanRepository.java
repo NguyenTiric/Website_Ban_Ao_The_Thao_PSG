@@ -79,4 +79,18 @@ public interface TaiKhoanRepository extends JpaRepository<TaiKhoan,Integer> {
     @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE tk.trang_thai = 'INACTIVE' AND vt.ten = 'Khách Hàng'", nativeQuery = true)
     Page<TaiKhoan> pageINACTIVEKhachHang(Pageable pageable);
 
+    @Query("SELECT CASE WHEN COUNT(tk) > 0 THEN true ELSE false END FROM TaiKhoan tk JOIN tk.vaiTro vt WHERE tk.sdt = :sdt AND vt.ten = 'Khách Hàng'")
+    boolean existsBySdtKhachHang(String sdt);
+
+    @Query("SELECT CASE WHEN COUNT(tk) > 0 THEN true ELSE false END FROM TaiKhoan tk JOIN tk.vaiTro vt WHERE tk.sdt = :sdt AND vt.ten = 'Nhân Viên'")
+    boolean existsBySdtNhanVien(String sdt);
+
+    @Query("SELECT CASE WHEN COUNT(tk) > 0 THEN true ELSE false END FROM TaiKhoan tk JOIN tk.vaiTro vt WHERE tk.email = :email AND vt.ten = 'Nhân Viên'")
+    boolean existsByEmailNhanVien(String email);
+
+    @Query("SELECT CASE WHEN COUNT(tk) > 0 THEN true ELSE false END FROM TaiKhoan tk JOIN tk.vaiTro vt WHERE tk.email = :email AND vt.ten = 'Khách Hàng'")
+    boolean existsByEmailKhachHang(String email);
+
+
+
 }

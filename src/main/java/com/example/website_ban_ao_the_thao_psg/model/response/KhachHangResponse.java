@@ -29,7 +29,7 @@ public class KhachHangResponse {
     private VaiTro vaiTro;
     private String ten;
     private Boolean gioiTinh;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-YYYY")
     private LocalDate ngaySinh;
     private String diaChi;
     private String sdt;

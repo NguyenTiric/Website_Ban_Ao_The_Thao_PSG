@@ -48,6 +48,9 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public void add(CreateNhanVienRequest createNhanVienRequest, MultipartFile file) throws IOException, SQLException {
+//        if (file == null) {
+//            throw new IllegalArgumentException("File is null. Please upload a file.");
+//        }
         TaiKhoan taiKhoan = nhanVienMapper.createNhanVienRequestToTaiKhoanEntity(createNhanVienRequest);
         byte[] bytes = file.getBytes();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
@@ -113,5 +116,15 @@ public class NhanVienServiceImpl implements NhanVienService {
     @Override
     public TaiKhoan viewById(Integer id) {
         return taiKhoanRepository.findById(id).get();
+    }
+
+    @Override
+    public Boolean existsBySdtNhanVien(String sdt) {
+        return taiKhoanRepository.existsBySdtNhanVien(sdt);
+    }
+
+    @Override
+    public Boolean existsByEmailNhanVien(String email) {
+        return taiKhoanRepository.existsByEmailNhanVien(email);
     }
 }

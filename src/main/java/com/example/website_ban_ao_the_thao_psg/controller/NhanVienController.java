@@ -114,13 +114,25 @@ public class NhanVienController {
             model.addAttribute("vaiTro", vaiTroService.getAll());
             return "admin/nhan_vien/view_add_nhan-vien";
         }
+        if (nhanVienService.existsBySdtNhanVien(createNhanVienRequest.getSdt())){
+            result.rejectValue("sdt", "checkSdt", "Số Điện Thoại này đã tồn tại ");
+            model.addAttribute("vaiTro", vaiTroService.getAll());
+            return "admin/nhan_vien/view_add_nhan-vien";
+        }
+        if (nhanVienService.existsByEmailNhanVien(createNhanVienRequest.getEmail())){
+            result.rejectValue("email", "email", "Email này đã tồn tại ");
+            model.addAttribute("vaiTro", vaiTroService.getAll());
+            return "admin/nhan_vien/view_add_nhan-vien";
+        }
 
         LocalDate currentDate = LocalDate.now();
         LocalDate ngaySinh = createNhanVienRequest.getNgaySinh();
-        if (ngaySinh != null && ngaySinh.isAfter(currentDate)) {
-            result.rejectValue("ngaySinh", "loiNgaySinh", "Vui lòng nhập ngày sinh không lớn hơn ngày hôm nay");
+
+        if (ngaySinh != null && ngaySinh.plusYears(18).isAfter(currentDate)) {
+            result.rejectValue("ngaySinh", "loiNgaySinh", "Vui lòng nhập ngày sinh không lớn hơn " +
+                    "ngày hôm nay hoặc không đủ 18 tuổi");
             model.addAttribute("vaiTro", vaiTroService.getAll());
-            return "admin/nhan_vien/view_add_nhan-vien";
+            return "admin/khach_hang/view_add_khach_hang";
         }
 
         nhanVienService.add(createNhanVienRequest, file);

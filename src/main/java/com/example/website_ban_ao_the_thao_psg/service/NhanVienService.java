@@ -28,5 +28,7 @@ public interface NhanVienService {
     Page<KhachHangResponse>pageSearchACTIVE(String search, Integer pageNo, Integer size);
     Page<KhachHangResponse>pageSearchTuoiMinMax(Integer min, Integer max, Integer pageNo, Integer size);
     public TaiKhoan viewById(Integer id);
+    Boolean existsBySdtNhanVien(String sdt);
+    Boolean existsByEmailNhanVien(String email);
 
 }

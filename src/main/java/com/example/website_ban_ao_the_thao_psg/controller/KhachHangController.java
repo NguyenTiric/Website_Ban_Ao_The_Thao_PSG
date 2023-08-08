@@ -117,6 +117,19 @@ public class KhachHangController {
             model.addAttribute("vaiTro", vaiTroService.getAll());
             return "admin/khach_hang/view_add_khach_hang";
         }
+        if (file == null || file.isEmpty()) {
+            result.rejectValue("anh", "anh", "Vui lòng tải lên một tệp tin ảnh");
+            model.addAttribute("vaiTro", vaiTroService.getAll());
+            return "admin/khach_hang/view_add_khach_hang";
+        }
+        if (khachHangService.existsBySdtKhachHang(createKhachHangRequest.getSdt())){
+            result.rejectValue("sdt", "Sdt", "Số Điện Thoại này đã tồn tại ");
+            return "admin/khach_hang/view_add_khach_hang";
+        }
+        if (khachHangService.existsByEmailKhachHang(createKhachHangRequest.getEmail())){
+            result.rejectValue("email", "email", "Email này đã tồn tại ");
+            return "admin/khach_hang/view_add_khach_hang";
+        }
 
         LocalDate currentDate = LocalDate.now();
         LocalDate ngaySinh = createKhachHangRequest.getNgaySinh();
@@ -125,6 +138,7 @@ public class KhachHangController {
             model.addAttribute("vaiTro", vaiTroService.getAll());
             return "admin/khach_hang/view_add_khach_hang";
         }
+
 
         khachHangService.add(createKhachHangRequest, file);
         return "redirect:/admin/psg/khach-hang/hien-thi";

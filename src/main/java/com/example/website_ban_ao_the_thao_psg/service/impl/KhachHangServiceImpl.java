@@ -123,4 +123,15 @@ public class KhachHangServiceImpl implements KhachHangService {
     public TaiKhoan viewById(Integer id) {
         return taiKhoanRepository.findById(id).get();
     }
+
+    @Override
+    public Boolean existsBySdtKhachHang(String sdt) {
+        return taiKhoanRepository.existsBySdtKhachHang(sdt);
+    }
+
+    @Override
+    public Boolean existsByEmailKhachHang(String email) {
+        return taiKhoanRepository.existsByEmailKhachHang(email);
+    }
+
 }
