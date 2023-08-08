@@ -1,10 +1,9 @@
 package com.example.website_ban_ao_the_thao_psg.model.mapper.impl;
 
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.NhanVien;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.NhanVienMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNhanVienRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateNhanVienRequest;
-import com.example.website_ban_ao_the_thao_psg.model.response.KhachHangResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.NhanVienResponse;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -21,40 +20,40 @@ public class NhanVienMapperImpl implements NhanVienMapper {
     @Autowired
     ModelMapper modelMapper;
     @Override
-    public TaiKhoan taiKhoanResponseToTaiKhoanEntity(NhanVienResponse nhanVienResponse) {
+    public NhanVien nhanVienResponseToNhanVienEntity(NhanVienResponse nhanVienResponse) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        TaiKhoan taiKhoan=modelMapper.map(nhanVienResponse,TaiKhoan.class);
-        return taiKhoan;
+        NhanVien nhanVien =modelMapper.map(nhanVienResponse, NhanVien.class);
+        return nhanVien;
     }
 
     @Override
-    public KhachHangResponse nhanVienEntityToTaiKhoanResponse(TaiKhoan taiKhoan) {
+    public NhanVienResponse nhanVienEntityToNhanVienResponse(NhanVien nhanVien) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        KhachHangResponse khachHangResponse =modelMapper.map(taiKhoan, KhachHangResponse.class);
-        return khachHangResponse;
+        NhanVienResponse nhanVienResponse =modelMapper.map(nhanVien, NhanVienResponse.class);
+        return nhanVienResponse;
     }
 
     @Override
-    public TaiKhoan createNhanVienRequestToTaiKhoanEntity(CreateNhanVienRequest createTaiKhoanRequest) {
+    public NhanVien createNhanVienRequestToNhanVienEntity(CreateNhanVienRequest createNhanVienRequest) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        TaiKhoan taiKhoan=modelMapper.map(createTaiKhoanRequest,TaiKhoan.class);
-        return taiKhoan;
+        NhanVien nhanVien =modelMapper.map(createNhanVienRequest, NhanVien.class);
+        return nhanVien;
     }
 
     @Override
-    public TaiKhoan updateNhanVienRequestToTaiKhoanEntity(UpdateNhanVienRequest updateNhanVienRequest) {
+    public NhanVien updateNhanVienRequestToNhanVienEntity(UpdateNhanVienRequest updateNhanVienRequest) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        TaiKhoan taiKhoan=modelMapper.map(updateNhanVienRequest,TaiKhoan.class);
-        return taiKhoan;
+        NhanVien nhanVien =modelMapper.map(updateNhanVienRequest, NhanVien.class);
+        return nhanVien;
     }
 
 
 
     @Override
-    public List<KhachHangResponse> listTaiKhoanEntityToTaiKhoanResponse(List<TaiKhoan> taiKhoanList) {
-        List<KhachHangResponse> list = new ArrayList<>(taiKhoanList.size());
-        for (TaiKhoan th : taiKhoanList) {
-            list.add(nhanVienEntityToTaiKhoanResponse(th));
+    public List<NhanVienResponse> listNhanVienEntityToNhanVienResponse(List<NhanVien> nhanVienList) {
+        List<NhanVienResponse> list = new ArrayList<>(nhanVienList.size());
+        for (NhanVien th : nhanVienList) {
+            list.add(nhanVienEntityToNhanVienResponse(th));
         }
         return list;
     }

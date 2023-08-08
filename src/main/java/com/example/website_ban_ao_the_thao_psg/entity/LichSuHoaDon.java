@@ -35,8 +35,8 @@ public class LichSuHoaDon {
     private Integer Id;
 
     @ManyToOne
-    @JoinColumn(name = "tai_khoan_id")
-    private TaiKhoan taiKhoan;
+    @JoinColumn(name = "nhan_vien_id")
+    private NhanVien nhanVien;
 
     @ManyToOne
     @JoinColumn(name = "hoa_don_id")

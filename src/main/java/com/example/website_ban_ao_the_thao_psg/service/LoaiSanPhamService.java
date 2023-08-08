@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public interface LoaiSanPhamService {
     Page<LoaiSanPhamResponse> pageLoaiSanPhamActive(Integer pageNo, Integer size);
+
     List<LoaiSanPhamResponse> getAll();
     Page<LoaiSanPhamResponse> pageLoaiSanPhamInActive(Integer pageNo, Integer size);
 

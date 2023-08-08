@@ -263,6 +263,11 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
+    public List<SanPhamResponse> getAllSP() {
+        return sanPhamMapper.listSanPhamEntityToSanPhamResponse(sanPhamRepository.getAll());
+    }
+
+    @Override
     public Page<SanPhamResponse> searchNameOrMaActiveSp(String searchName, Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<SanPham> sanPhamPage = sanPhamRepository.pageSearchActive(searchName, pageable);

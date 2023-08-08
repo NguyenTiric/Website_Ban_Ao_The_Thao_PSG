@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -33,13 +34,7 @@ public class CreateVoucherThuHangRequest {
     @NotBlank(message = "Tên không để trống")
     @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")
     private String ten;
-
-    @NotNull(message = "Loại giảm giá không để trống")
-    private Boolean loaiGiamGia;
-
-    @NotNull(message = "Gía trị không để trống")
-    @Min(value = 1, message = "Gía trị là số nguyên và lớn hơn 0")
-    private Double giaTri;
+    private BigDecimal soTienGiam;
 
     @NotNull(message = "Ngày bắt đầu không để trống")
     private LocalDateTime ngayBatDau;

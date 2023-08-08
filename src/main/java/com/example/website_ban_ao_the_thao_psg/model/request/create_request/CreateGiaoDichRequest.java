@@ -4,10 +4,10 @@ import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.HinhTh
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.LoaiGiaoDich;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiGiaoDich;
 import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
+import com.example.website_ban_ao_the_thao_psg.entity.NhanVien;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -26,23 +27,16 @@ import java.time.LocalDate;
 public class CreateGiaoDichRequest {
 
     private Integer id;
-
-    @NotNull(message = "Hóa đơn không để trống")
     private HoaDon hoaDon;
-
-    @NotNull(message = "Tài khoản không để trống")
-    private TaiKhoan taiKhoan;
-
+    private KhachHang khachHang;
+    private NhanVien nhanVien;
     @Enumerated(EnumType.STRING)
     private TrangThaiGiaoDich trangThaiGiaoDich;
-
     @Enumerated(EnumType.STRING)
     private HinhThucThanhToan phuongThucThanhToan;
-
     private LocalDate ngayTao;
-
+    private BigDecimal soTien;
     private LocalDate ngayCapNhat;
-
     @Enumerated(EnumType.STRING)
     private LoaiGiaoDich loaiGiaoDich;
 }
