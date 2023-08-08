@@ -1,5 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.model.request.update_request;
 
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiSanPham;
 import com.example.website_ban_ao_the_thao_psg.entity.KichThuoc;
 import com.example.website_ban_ao_the_thao_psg.entity.SanPham;
@@ -42,5 +43,5 @@ public class UpdateChiTietSanPhamRequest {
     private LocalDate ngayCapNhat;
 
     @Enumerated(EnumType.STRING)
-    private TrangThaiSanPham trangThai;
+    private ApplicationConstant.TrangThaiChiTietSanPham trangThai;
 }

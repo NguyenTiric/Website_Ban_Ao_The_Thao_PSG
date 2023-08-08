@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/fragments_layout_admin}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <div class="col-6">
+            <li class="nav-item d-none d-md-block">
+                <a class="nav-link" href="javascript:void(0)">
+                    <nav class="navbar bg-body">
+                        <div class="container-fluid">
+                            <form class="d-flex" role="search" action="/admin/psg/hoa-don/search" method="get">
+                                <input name="searchNameOrMa"
+                                       class="form-control custom-shadow custom-radius border-0 bg-white"
+                                       type="search" placeholder="Tìm đơn hàng" aria-label="Search">
+                                <button class="btn btn-rounded btn-primary" type="submit" style="margin-left: 7px">
+                                    Search
+                                </button>
+                            </form>
+                        </div>
+                    </nav>
+                </a>
+            </li>
+        </div>
+        <div class="col-6">
+            <li class="nav-item d-none d-md-block">
+                <a class="nav-link" href="javascript:void(0)">
+                    <nav class="navbar bg-body">
+                        <div class="container-fluid justify-content-end">
+                            <form action="/admin/psg/hoa-don/add-hoa-don-cho" method="post">
+                                <button class="btn btn-rounded btn-primary" type="submit" style="margin-right: 10px;">
+                                    Tạo Đơn Hàng
+                                </button>
+                            </form>
+                        </div>
+                    </nav>
+                </a>
+            </li>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Danh Sách Hóa Đơn</h4>
+            <div class="tab-content">
+                <div class="tab-pane show active" id="home-b1">
+                    <table class="table table-striped" id="table-alert">
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Mã Hóa Đơn</th>
+                            <th scope="col">Ngày Tạo</th>
+                            <th scope="col">Trạng Thái</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="dhc,index:${listHoaDonCho}">
+                            <td th:text="${index.count}"></td>
+                            <td th:text="${dhc.ma}"></td>
+                            <td th:text="${dhc.ngayTao}"></td>
+                            <td th:text="${dhc.trangThai.moTa}"></td>
+                            <td>
+                                <a th:href="@{/admin/psg/hoa-don/detail-hoa-don/{id}(id=${dhc.id})}"
+                                   class="btn waves-effect waves-light btn-rounded btn-warning"
+                                >Update</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div> <!-- end card-body-->
+    </div>
+</div>
+</body>
+</html>

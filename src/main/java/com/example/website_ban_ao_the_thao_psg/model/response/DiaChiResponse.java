@@ -1,7 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.model.response;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiDiaChi;
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @ToString
 public class DiaChiResponse {
     private Integer id;
-    private TaiKhoan taiKhoan;
+    private KhachHang khachHang;
     private String hoTen;
     private String sdt;
     private String diaChiChiTiet;

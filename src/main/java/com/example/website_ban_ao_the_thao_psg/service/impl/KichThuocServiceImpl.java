@@ -7,6 +7,7 @@ import com.example.website_ban_ao_the_thao_psg.model.mapper.KichThuocMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateKichThuocRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateKichThuocRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.KichThuocResponse;
+import com.example.website_ban_ao_the_thao_psg.model.response.LoaiSanPhamResponse;
 import com.example.website_ban_ao_the_thao_psg.repository.KichThuocRepository;
 import com.example.website_ban_ao_the_thao_psg.service.KichThuocService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +17,29 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
 public class KichThuocServiceImpl implements KichThuocService {
+
     @Autowired
     KichThuocRepository kichThuocRepository;
 
     @Autowired
     KichThuocMapper kichThuocMapper;
 
-
     @Override
     public Page<KichThuocResponse> pageKichThuocActive(Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<KichThuoc> kichThuocPage = kichThuocRepository.pageACTIVE(pageable);
         return kichThuocPage.map(kichThuocMapper::kichThuocEntityToKichThuocResponse);
+    }
 
+    @Override
+    public List<KichThuocResponse> getALl() {
+        List<KichThuoc> kichThuocList = kichThuocRepository.getAll();
+        return kichThuocMapper.listKichThuocEntityToKichThuocResponses(kichThuocList);
     }
 
     @Override

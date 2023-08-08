@@ -18,7 +18,7 @@
                 <div class="container-fluid">
                     <form class="d-flex" role="search" action="/admin/psg/nuoc-san-xuat/searchActive/0" method="get">
                         <input name="searchNameOrMa" class="form-control custom-shadow custom-radius border-0 bg-white"
-                               type="search" placeholder="Search" aria-label="Search">
+                               type="search" placeholder="Search Tên Or Mã" aria-label="Search">
                         <button class="btn btn-rounded btn-primary" type="submit">Search</button>
                     </form>
                 </div>
@@ -32,8 +32,42 @@
         <div class="col-2">
             <a href="/admin/psg/nuoc-san-xuat/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">View Revert</a>
         </div>
-
     </div>
+
+    <div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-4">
+                        <a href="index.html" class="text-success">
+                                                        <span><img class="me-2" th:src="@{/assets/images/image1.png}"
+                                                                   alt="" height="80"></span>
+                        </a>
+                    </div>
+
+                    <form action="/admin/psg/nuoc-san-xuat/add" th:object="${nuocSanXuat}" method="post" onsubmit="return  confirm('Bạn có thêm không?')">
+                        <div class="form-group mb-3">
+                            <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                                    id="tenNuocSanXuat"
+                                    type="text" placeholder="Nhập tên nước sản xuất" th:field="*{ten}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px" th:errors="*{ten}"></span>
+                        </div>
+                        <div class="form-group mb-3 text-center">
+                            <a href="/admin/psg/nuoc-san-xuat/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Back</a>
+                            <button class="btn btn-rounded btn-primary" type="submit">Add</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="btn-list">
+        <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                data-bs-target="#login-modal">Add</button>
+    </div>
+
 
     <div class="card">
         <div class="card-body">
@@ -46,8 +80,6 @@
                             <th scope="col">STT</th>
                             <th scope="col">Mã</th>
                             <th scope="col">Tên</th>
-                            <th scope="col">Ngày Tạo</th>
-                            <th scope="col">Ngày Cập Nhật</th>
                             <th scope="col">Trạng Thái</th>
                             <th scope="col">Hành Động</th>
                         </tr>
@@ -57,8 +89,6 @@
                             <td th:text="${index.count}"></td>
                             <td th:text="${nuoc.ma}"></td>
                             <td th:text="${nuoc.ten}"></td>
-                            <td th:text="${nuoc.ngayTao}"></td>
-                            <td th:text="${nuoc.ngayCapNhat}"></td>
                             <td th:text="${nuoc.trangThai.moTa}"></td>
                             <td>
                       <span>

@@ -15,14 +15,9 @@
     <!-- Custom CSS -->
     <link th:href="@{/assets/extra-libs/c3/c3.min.css}" rel="stylesheet">
     <link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
+    <script th:src="@{/assets/js/config.js}"></script>
 </head>
-<style>
-    .modal-content {
-        border-radius: 10px;
-    }
-
-</style>
 <body>
 <div class="preloader">
     <div class="lds-ripple">
@@ -89,17 +84,6 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav float-end">
-                    <li class="nav-item d-none d-md-block">
-                        <a class="nav-link" href="javascript:void(0)">
-                            <form>
-                                <div class="customize-input">
-                                    <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                                           type="search" placeholder="Search" aria-label="Search">
-                                    <i class="form-control-icon" data-feather="search"></i>
-                                </div>
-                            </form>
-                        </a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
@@ -174,11 +158,11 @@
                                                                          class="feather-icon"></i><span
                             class="hide-menu">Tài Khoản </span></a>
                         <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/nhan-vien/hien-thi" class="sidebar-link"><span
                                     class="hide-menu"> Nhân Viên
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="#" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/khach-hang/hien-thi" class="sidebar-link"><span
                                     class="hide-menu"> Khách Hàng
                                         </span></a>
                             </li>
@@ -210,8 +194,7 @@
                                             Màu Sắc
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="/admin/psg/thuong-hieu/hien-thi"
-                                                        class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/thuong-hieu/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                             Thương Hiệu
                                         </span></a>
@@ -226,20 +209,17 @@
                                          Ảnh
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="/admin/psg/dong-san-pham/hien-thi"
-                                                        class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/dong-san-pham/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                          Dòng Sản Phẩm
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="/admin/psg/loai-san-pham/hien-thi"
-                                                        class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/loai-san-pham/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                          Loại Sản Phẩm
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="/admin/psg/nuoc-san-xuat/hien-thi"
-                                                        class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/nuoc-san-xuat/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                         Nước sản Xuất
                                         </span></a>
@@ -249,8 +229,7 @@
                                          Chất Liệu
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="/admin/psg/nha-san-xuat/hien-thi"
-                                                        class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="/admin/psg/nha-san-xuat/hien-thi" class="sidebar-link"><span
                                     class="hide-menu">
                                         Nhà Sản Xuất
                                         </span></a>
@@ -272,9 +251,9 @@
                     </li>
                 </ul>
             </nav>
-
+            <!-- End Sidebar navigation -->
         </div>
-
+        <!-- End Sidebar scroll-->
     </aside>
     <div class="page-wrapper">
         <div class="container-fluid">
@@ -393,10 +372,37 @@
 
 
 
-
-
 </script>
+<script th:inline="javascript">
+    const maxImages = 5;
 
+    document.getElementById('filesAnhSanPham').addEventListener('change', function () {
+        const previewImagesContainer = document.getElementById('previewImages');
+        previewImagesContainer.innerHTML = '';
+
+        if (this.files.length > maxImages) {
+            alert('You can only upload ' + maxImages + ' images at a time.');
+            this.value = '';
+            return;
+        }
+
+        for (let i = 0; i < this.files.length; i++) {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                const img = document.createElement('img');
+                img.src = reader.result;
+                img.style.marginTop = '20px';
+                img.style.marginRight = '20px';
+                img.style.border = '1px';
+                img.style.borderRadius = '20px';
+                img.style.width = '150px';
+                img.style.height = '150px';
+                previewImagesContainer.appendChild(img);
+            }
+            reader.readAsDataURL(this.files[i]);
+        }
+    });
+</script>
 <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/dist/js/feather.min.js}"></script>
 <script th:src="@{/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"></script>

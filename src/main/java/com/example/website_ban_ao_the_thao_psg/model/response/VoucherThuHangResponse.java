@@ -25,18 +25,15 @@ public class VoucherThuHangResponse {
     private Integer id;
     private String ma;
     private String ten;
-    private Boolean loaiGiamGia;
-    private BigDecimal giaTri;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private BigDecimal soTienGiam;
     private LocalDateTime ngayBatDau;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime ngayKetThuc;
     private Double dieuKienSuDungVoucher;
     private Integer soLuong;
     private String moTa;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime ngayTao;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime ngayCapNhat;
     @Enumerated(EnumType.STRING)
     private TrangThaiVoucher trangThai;

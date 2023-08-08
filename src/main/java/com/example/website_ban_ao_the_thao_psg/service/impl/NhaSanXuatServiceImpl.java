@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -34,6 +35,13 @@ public class NhaSanXuatServiceImpl implements NhaSanXuatService {
         Page<NhaSanXuat> nhaSanXuatPage = nhaSanXuatRepository.pageACTIVE(pageable);
         return nhaSanXuatPage.map(nhaSanXuatMapper::nhaSanXuatEntityToNhaSanXuatResponse);
 
+    }
+
+    @Override
+    public List<NhaSanXuatResponse> getAll() {
+        List<NhaSanXuat> nhaSanXuatList = nhaSanXuatRepository.getAll();
+
+        return nhaSanXuatMapper.listNhaSanXuatEntityToNhaSanXuatRespnse(nhaSanXuatList);
     }
 
     @Override

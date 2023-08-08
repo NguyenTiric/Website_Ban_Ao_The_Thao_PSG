@@ -2,6 +2,7 @@ package com.example.website_ban_ao_the_thao_psg.repository;
 
 import com.example.website_ban_ao_the_thao_psg.entity.CoAo;
 import com.example.website_ban_ao_the_thao_psg.entity.CoAo;
+import com.example.website_ban_ao_the_thao_psg.entity.CongNghe;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,11 +13,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
-public interface CoAoRepository extends JpaRepository<CoAo,Integer> {
+public interface CoAoRepository extends JpaRepository<CoAo, Integer> {
     @Query(value = "SELECT * FROM co_ao WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<CoAo> pageSearchActive(String searchString, Pageable pageable);
+
+    @Query(value = "SELECT * FROM co_ao WHERE trang_thai='ACTIVE' ", nativeQuery = true)
+    List<CoAo> getAll();
+
     @Query(value = "SELECT * FROM co_ao WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
     Page<CoAo> pageSearchIvActive(String searchString, Pageable pageable);
 
@@ -35,4 +41,5 @@ public interface CoAoRepository extends JpaRepository<CoAo,Integer> {
     @Modifying
     @Query(value = "update CoAo m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
     void revert(@Param("id") Integer id, @Param("now") LocalDate now);
+
 }

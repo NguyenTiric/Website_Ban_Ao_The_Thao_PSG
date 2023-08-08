@@ -1,5 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.service;
 
+import com.example.website_ban_ao_the_thao_psg.entity.DongSanPham;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateDongSanPhamRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateDongSanPhamRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.DongSanPhamResponse;
@@ -8,10 +9,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public interface DongSanPhamService {
     Page<DongSanPhamResponse> pageDongSanPhamActive(Integer pageNo, Integer size);
+
+    List<DongSanPhamResponse> getAll();
 
     Page<DongSanPhamResponse> pageDongSanPhamInActive(Integer pageNo, Integer size);
 

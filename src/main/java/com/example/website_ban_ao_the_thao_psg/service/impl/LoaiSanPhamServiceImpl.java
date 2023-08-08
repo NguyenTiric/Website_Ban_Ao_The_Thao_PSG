@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -33,6 +34,12 @@ public class LoaiSanPhamServiceImpl implements LoaiSanPhamService {
         Page<LoaiSanPham> loaiSanPhamPage = loaiSanPhamRepository.pageACTIVE(pageable);
         return loaiSanPhamPage.map(loaiSanPhamMapper::loaiSanPhamEntityToLoaiSanPhamResponse);
 
+    }
+
+    @Override
+    public List<LoaiSanPhamResponse> getAll() {
+        List<LoaiSanPham> loaiSanPhamList = loaiSanPhamRepository.getAll();
+        return loaiSanPhamMapper.listLoaiSanPhamEntityToLoaiSanPhamResponses(loaiSanPhamList);
     }
 
     @Override

@@ -8,10 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public interface CongNgheService {
     Page<CongNgheResponse> pageCongNgheActive(Integer pageNo, Integer size);
+
+    List<CongNgheResponse> getAll();
 
     Page<CongNgheResponse> pageCongNgheInActive(Integer pageNo, Integer size);
 

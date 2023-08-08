@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -32,6 +33,12 @@ public class ChatLieuServiceImpl implements ChatLieuService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<ChatLieu> chatLieuPage = chatLieuRepository.pageACTIVE(pageable);
         return chatLieuPage.map(chatLieuMapper::chatLieuEntityToChatLieuResponse);
+    }
+
+    @Override
+    public List<ChatLieuResponse> getAll() {
+        List<ChatLieu> chatLieuList = chatLieuRepository.getAll();
+        return chatLieuMapper.listChatLieuEntityToChatLieuResponse(chatLieuList);
     }
 
     @Override

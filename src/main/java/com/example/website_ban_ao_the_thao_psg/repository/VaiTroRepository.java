@@ -11,11 +11,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface VaiTroRepository extends JpaRepository<VaiTro,Integer> {
     @Query(value = "SELECT * FROM vai_tro WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<VaiTro> pageSearchActive(String searchString, Pageable pageable);
+
     @Query(value = "SELECT * FROM vai_tro WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
     Page<VaiTro> pageSearchIvActive(String searchString, Pageable pageable);
 
@@ -34,4 +36,9 @@ public interface VaiTroRepository extends JpaRepository<VaiTro,Integer> {
     @Modifying
     @Query(value = "update VaiTro m set m.trangThai = 'ACTIVE', m.ngayCapNhap= :now where m.id = :id")
     void revert(@Param("id") Integer id, @Param("now") LocalDate now);
+
+    @Query(value = "SELECT * FROM vai_tro vt WHERE vt.trang_thai = 'ACTIVE' and vt.ten='Nhân Viên'", nativeQuery = true)
+    List<VaiTro> getAll();
+
+
 }
