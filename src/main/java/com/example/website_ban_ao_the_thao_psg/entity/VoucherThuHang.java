@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -44,7 +45,7 @@ public class VoucherThuHang {
     private Boolean loaiGiamGia;
 
     @Column(name = "gia_tri")
-    private Double giaTri;
+    private BigDecimal giaTri;
 
     @Column(name = "ngay_bat_dau")
     private LocalDateTime ngayBatDau;

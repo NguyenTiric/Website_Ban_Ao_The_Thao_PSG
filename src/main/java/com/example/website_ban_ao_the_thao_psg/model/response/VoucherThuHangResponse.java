@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -25,15 +26,17 @@ public class VoucherThuHangResponse {
     private String ma;
     private String ten;
     private Boolean loaiGiamGia;
-    private Double giaTri;
+    private BigDecimal giaTri;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime ngayBatDau;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime ngayKetThuc;
     private Double dieuKienSuDungVoucher;
     private Integer soLuong;
     private String moTa;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
     private LocalDateTime ngayTao;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
     private LocalDateTime ngayCapNhat;
     @Enumerated(EnumType.STRING)
     private TrangThaiVoucher trangThai;

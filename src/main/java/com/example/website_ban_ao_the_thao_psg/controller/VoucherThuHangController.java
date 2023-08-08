@@ -1,12 +1,8 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
-import com.example.website_ban_ao_the_thao_psg.entity.DiaChi;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
-import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateDiaChiRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateVoucherThuHangRequest;
-import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateDiaChiRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateVoucherThuHangRequest;
-import com.example.website_ban_ao_the_thao_psg.model.response.DiaChiResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.VoucherThuHangResponse;
 import com.example.website_ban_ao_the_thao_psg.service.VoucherThuHangService;
 import jakarta.servlet.http.HttpSession;
@@ -16,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin/psg/voucher-thu-hang")
@@ -97,20 +89,27 @@ public class VoucherThuHangController {
     public String add(@Valid @ModelAttribute("voucherThuHang") CreateVoucherThuHangRequest createVoucherThuHangRequest, BindingResult result, Model model, HttpSession session) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime ngayKetThuc = createVoucherThuHangRequest.getNgayKetThuc();
+        LocalDateTime ngayBatDau = createVoucherThuHangRequest.getNgayBatDau();
+        LocalDate localDateTimecz = now.toLocalDate();
+        LocalDate batDauDate = ngayBatDau.toLocalDate();
+        LocalDate ketThucDate = ngayKetThuc.toLocalDate();
+        if (batDauDate.isBefore(localDateTimecz) || ketThucDate.isBefore(localDateTimecz)) {
+            model.addAttribute("error", "Ngày bắt đầu hoặc ngày kết thúc không được là ngày trong quá khứ!");
+            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
+        }
+
         if (ngayKetThuc == null || ngayKetThuc.isBefore(now)){
+            model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
+            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
+        }
+        if (ngayKetThuc.isBefore(ngayBatDau)) {
             model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
         if(result.hasErrors()){
             model.addAttribute("voucherThuHang", createVoucherThuHangRequest);
-            System.out.println("vai l");
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
-
-//        if(1==1) {
-//            model.addAttribute("error", "Mã trùng");
-//            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
-//        }
         voucherThuHangService.add(createVoucherThuHangRequest);
         session.setAttribute("successMessage", "Thêm thành công!");
 
@@ -118,6 +117,23 @@ public class VoucherThuHangController {
     }
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("voucherThuHang")UpdateVoucherThuHangRequest updateVoucherThuHangRequest, BindingResult result, Model model, HttpSession session) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime ngayKetThuc = updateVoucherThuHangRequest.getNgayKetThuc();
+        LocalDateTime ngayBatDau = updateVoucherThuHangRequest.getNgayBatDau();
+        LocalDate localDateTimecz = now.toLocalDate();
+        LocalDate batDauDate = ngayBatDau.toLocalDate();
+        if (batDauDate.isBefore(localDateTimecz)) {
+            model.addAttribute("error", "Ngày bắt đầu không được là ngày trong quá khứ!");
+            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
+        }
+        if (ngayKetThuc == null || ngayKetThuc.isBefore(now)){
+            model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
+            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
+        }
+        if (ngayKetThuc.isBefore(ngayBatDau)) {
+            model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
+            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
+        }
         if(result.hasErrors()){
             model.addAttribute("voucherThuHang", updateVoucherThuHangRequest);
             return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
