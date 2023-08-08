@@ -100,7 +100,6 @@
                         <tr>
                             <th scope="col">STT</th>
                             <th scope="col">Mã</th>
-                            <th scope="col">Giá Trị</th>
                             <th scope="col">Số Lượng</th>
                             <th scope="col">Trạng Thái</th>
                             <th scope="col">Ngày Bắt Đầu</th>
@@ -112,7 +111,6 @@
                         <tr th:each="vc,index:${listVoucherThuHangActive}">
                             <td th:text="${index.count}"></td>
                             <td th:text="${vc.ma}"></td>
-                            <td th:text="${vc.giaTri}"></td>
                             <td th:text="${vc.soLuong}"></td>
                             <td th:text="${vc.trangThai.moTa}"></td>
                             <td th:text="${#temporals.format(vc.ngayBatDau, 'dd/MM/yyyy')}"></td>

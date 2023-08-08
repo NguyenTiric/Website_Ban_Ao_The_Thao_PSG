@@ -46,33 +46,6 @@
                                      type="text" placeholder="Nhập số gia tri" th:field="*{ten}" style="height: 50px">
                              <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px" th:errors="*{ten}"></span>
                          </div>
-                         <br>
-                         <div class="form-group mb-3">
-                             <label>Loại Voucher</label>
-                             <div class="form-check">
-                                 <input class="form-check-input" type="radio" th:field="*{loaiGiamGia}" value="false" id="flexRadioDefault1" >
-                                 <label class="form-check-label" for="flexRadioDefault1">
-                                     VND
-                                 </label>
-                             </div>
-                         </div>
-
-                         <div class="form-group mb-3">
-                             <div class="form-check">
-                                 <input class="form-check-input" type="radio" th:field="*{loaiGiamGia}" value="true" id="flexRadioDefault2"  checked>
-                                 <label class="form-check-label" for="flexRadioDefault2">
-                                     %
-                                 </label>
-                             </div>
-                         </div>
-                         <div class="form-group mb-3">
-                             <label>Giá Trị</label>
-                             <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                                     type="text" placeholder="Nhập giá trị" th:field="*{giaTri}" style="height: 50px">
-                             <span th:if="${#fields.hasErrors('giaTri')}" style="color: red; font-size: 13px" th:errors="*{giaTri}"></span>
-                         </div>
-                     </div>
-                     <div class="list-form-voucher">
                          <div class="form-group mb-3">
                              <label>Ngày Bắt Đầu</label>
                              <input  class="form-control custom-shadow custom-radius border-0 bg-white"
@@ -91,6 +64,10 @@
                                  <div class="alert alert-danger" th:text="${error}"></div>
                              </th:block>
                          </div>
+                         <br>
+                     </div>
+                     <div class="list-form-voucher">
+
                          <div class="form-group mb-3">
                              <label>Điều Kiện Sử Dụng</label>
                              <input  class="form-control custom-shadow custom-radius border-0 bg-white"
