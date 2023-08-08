@@ -28,12 +28,12 @@ public class ScheduledQuyDinh {
 
     private boolean isEmailSentToday = false;
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(fixedRate = 600000)
     public void resetEmailFlag() {
         isEmailSentToday = false;
     }
 
-    @Scheduled(fixedRate = 6000)
+    @Scheduled(fixedRate = 60000000)
     public void thongBaoReset() {
 
         LocalDate currentDateTime = LocalDate.now();

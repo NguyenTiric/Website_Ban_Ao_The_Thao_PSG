@@ -27,5 +27,13 @@ public class HomeController {
     }
 
 
+    @GetMapping("/nhan-vien")
+    public String nhanVien(){
+        return "admin/nhan_vien";
+    }
 
+    @GetMapping("/khach-hang")
+    public String khachHang(){
+        return "admin/khach_hang";
+    }
 }

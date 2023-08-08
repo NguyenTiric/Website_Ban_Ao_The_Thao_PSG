@@ -67,6 +67,9 @@ public class TaiKhoan {
     @Column(name = "mat_khau")
     private String matKhau;
 
+    @Column(name = "anh")
+    private String anh;
+
     @Column(name = "so_tien_da_chi_tieu")
     private BigDecimal soTienDaChiTieu;
 

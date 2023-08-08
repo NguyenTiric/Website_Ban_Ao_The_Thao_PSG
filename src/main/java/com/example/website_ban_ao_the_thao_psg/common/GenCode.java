@@ -17,6 +17,7 @@ public class GenCode {
     private static final String hoaDon = "HD0";
     private static final String vaiTro = "VT0";
     private static final String thuHang = "TH0";
+    private static  final String taiKhoan="TK0";
     private static final int NUMBER_LENGTH = 5;
     private static final int NUMBER_HOADON_LENGTH = 10;
 

@@ -29,7 +29,7 @@ public class ScheduledThuHang {
     @Autowired
     public JavaMailSender emailSender;
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 600000000)
     public void updateThuHang() {
         SimpleMailMessage message = new SimpleMailMessage();
 
