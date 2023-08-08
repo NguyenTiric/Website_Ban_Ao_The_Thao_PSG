@@ -2,13 +2,13 @@ package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.common.GenCode;
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.ThuHangMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.ThuHangResponse;
-import com.example.website_ban_ao_the_thao_psg.repository.TaiKhoanRepository;
+import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.ThuHangRepository;
 import com.example.website_ban_ao_the_thao_psg.service.ThuHangService;
 import groovyjarjarpicocli.CommandLine;
@@ -23,6 +23,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @EnableScheduling
 @Component
@@ -35,7 +37,7 @@ public class ThuHangServiceImpl implements ThuHangService {
     ThuHangMapper thuHangMapper;
 
     @Autowired
-    TaiKhoanRepository taiKhoanRepository;
+    KhachHangRepository khachHangRepository;
 
     @Override
     public Page<ThuHangResponse> pageThuHangActive(Integer pageNo, Integer size) {
@@ -51,33 +53,25 @@ public class ThuHangServiceImpl implements ThuHangService {
         return thuHangPage.map(thuHangMapper::thuHangEntiyToThuHangResponse);
     }
 
-    public void thucHienCapNhat() {
-        List<TaiKhoan> taiKhoanList = taiKhoanRepository.findAll();
-
-        for (TaiKhoan taiKhoan : taiKhoanList) {
-            Integer soLuongDonHangThanhCong = taiKhoan.getSoLuongDonHangThanhCong();
-            BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
-
-            ThuHang mucThuHang = this.thuHangRepository.findByTen(String.valueOf(taiKhoan.getThuHang()));
-
-            if (mucThuHang != null && soLuongDonHangThanhCong.compareTo(mucThuHang.getSoLuongDonHangToiThieu()) >= 0 &&
-                    soTienDaChiTieu.compareTo(mucThuHang.getSoTienKhachChiToiThieu()) >= 0) {
-                taiKhoan.setId(mucThuHang.getId());
-                this.taiKhoanRepository.save(taiKhoan);
-            }
-        }
-    }
-
     @Override
     public ThuHangResponse add(CreateThuHangRequest createThuHangRequest) {
         String tenThuHang = createThuHangRequest.getTen();
-        if (this.thuHangRepository.existsByTenAndTrangThai(tenThuHang, ApplicationConstant.TrangThaiThuHang.ACTIVE)){
-            throw new CommandLine.DuplicateNameException("Thứ hạng đã tồn tại, vui lòng chọn thứ hạng khác!");
+
+        // Kiểm tra regex để đảm bảo chỉ chứa số
+        String regex = "^[0-9]+(\\.[0-9]+)?$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(tenThuHang);
+        if (!matcher.matches()) {
+            throw new RuntimeException("Lỗi định dạng tên: Tên chỉ được chứa số nguyên hoặc số thập phân!");
         }
 
-        List<TaiKhoan> allTaiKhoan = taiKhoanRepository.findAll();
-        for (TaiKhoan taiKhoan : allTaiKhoan) {
-            if (!taiKhoan.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
+        if (this.thuHangRepository.existsByTenAndTrangThai(tenThuHang, ApplicationConstant.TrangThaiThuHang.ACTIVE)){
+            throw new CommandLine.DuplicateNameException("Thứ hạng đã tồn tại, vui lòng đặt thứ hạng khác!");
+        }
+
+        List<KhachHang> allKhachHang = khachHangRepository.findAll();
+        for (KhachHang khachHang : allKhachHang) {
+            if (!khachHang.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
                 throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
             }
         }
@@ -91,9 +85,9 @@ public class ThuHangServiceImpl implements ThuHangService {
 
     @Override
     public ThuHangResponse update(UpdateThuHangRequest updateThuHangRequest) {
-        List<TaiKhoan> allTaiKhoan = taiKhoanRepository.findAll();
-        for (TaiKhoan taiKhoan : allTaiKhoan) {
-            if (!taiKhoan.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
+        List<KhachHang> allKhachHang = khachHangRepository.findAll();
+        for (KhachHang khachHang : allKhachHang) {
+            if (!khachHang.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
                 throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
             }
         }
@@ -146,9 +140,9 @@ public class ThuHangServiceImpl implements ThuHangService {
 
     @Override
     public void deleteThuHang(Integer id, LocalDate now) {
-        List<TaiKhoan> allTaiKhoan = taiKhoanRepository.findAll();
-        for (TaiKhoan taiKhoan : allTaiKhoan) {
-            if (!taiKhoan.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
+        List<KhachHang> allKhachHang = khachHangRepository.findAll();
+        for (KhachHang khachHang : allKhachHang) {
+            if (!khachHang.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
                 throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
             }
         }

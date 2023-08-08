@@ -12,21 +12,21 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public interface KhachHangService {
-//    Page<KhachHangResponse> pageTaiKhoanActive(Integer pageNo, Integer size);
-//    Page<KhachHangResponse>pageTaiKhoanInActive(Integer pageNo, Integer size);
-//
+    Page<KhachHangResponse> pageTaiKhoanActive(Integer pageNo, Integer size);
+    Page<KhachHangResponse>pageTaiKhoanInActive(Integer pageNo, Integer size);
+
 //    void add(CreateKhachHangRequest createKhachHangRequest, MultipartFile file) throws IOException, SQLException;
-//    void update(Integer id,MultipartFile file,UpdateKhachHangRequest updateKhachHangRequest)throws IOException, SQLException;
-//
-//    KhachHangResponse getOne(Integer id);
-//
-//    void delete(Integer id, LocalDate now);
-//
-//    void revertTaiKhoan(Integer id,LocalDate now);
-//
-//    Page<KhachHangResponse>pageSearchACTIVE(String search, Integer pageNo, Integer size);
-//    Page<KhachHangResponse>pageSearchTuoiMinMax(Integer min, Integer max, Integer pageNo, Integer size);
-//
-//    public KhachHang viewById(Integer id);
+    void update(Integer id,MultipartFile file,UpdateKhachHangRequest updateKhachHangRequest)throws IOException, SQLException;
+
+    KhachHangResponse getOne(Integer id);
+
+    void delete(Integer id, LocalDate now);
+
+    void revertTaiKhoan(Integer id,LocalDate now);
+
+    Page<KhachHangResponse>pageSearchACTIVE(String search, Integer pageNo, Integer size);
+    Page<KhachHangResponse>pageSearchTuoiMinMax(Integer min, Integer max, Integer pageNo, Integer size);
+
+    public KhachHang viewById(Integer id);
 
 }

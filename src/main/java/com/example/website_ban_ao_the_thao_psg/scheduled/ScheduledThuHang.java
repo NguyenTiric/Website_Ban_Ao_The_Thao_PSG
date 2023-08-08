@@ -1,10 +1,10 @@
 package com.example.website_ban_ao_the_thao_psg.scheduled;
 
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
+import com.example.website_ban_ao_the_thao_psg.model.response.KhachHangResponse;
+import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
-import com.example.website_ban_ao_the_thao_psg.repository.TaiKhoanRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.ThuHangRepository;
-import com.example.website_ban_ao_the_thao_psg.service.ThuHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,14 +14,13 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Random;
 
 @EnableScheduling
 @Component
 public class ScheduledThuHang {
 
     @Autowired
-    private TaiKhoanRepository taiKhoanRepository;
+    private KhachHangRepository khachHangRepository;
 
     @Autowired
     private ThuHangRepository thuHangRepository;
@@ -29,15 +28,15 @@ public class ScheduledThuHang {
     @Autowired
     public JavaMailSender emailSender;
 
-    @Scheduled(fixedRate = 600000000)
+    @Scheduled(fixedRate = 6000)
     public void updateThuHang() {
         SimpleMailMessage message = new SimpleMailMessage();
 
-        List<TaiKhoan> taiKhoans = this.taiKhoanRepository.findAll();
+        List<KhachHang> khachHangs = this.khachHangRepository.findAll();
         List<ThuHang> activeThuHangList = this.thuHangRepository.findAllByActive();
-        for (TaiKhoan taiKhoan : taiKhoans) {
-            BigDecimal soTienDaChiTieu = taiKhoan.getSoTienDaChiTieu();
-            Integer soLuongDonHangThanhCong = taiKhoan.getSoLuongDonHangThanhCong();
+        for (KhachHang khachHang : khachHangs) {
+            BigDecimal soTienDaChiTieu = khachHang.getSoTienDaChiTieu();
+            Integer soLuongDonHangThanhCong = khachHang.getSoLuongDonHangThanhCong();
             ThuHang selectedThuHang = null;
 
             for (ThuHang thuHang : activeThuHangList) {
@@ -53,12 +52,12 @@ public class ScheduledThuHang {
             }
 
             if (selectedThuHang != null) {
-                taiKhoan.setThuHang(selectedThuHang);
-                taiKhoanRepository.save(taiKhoan);
-                System.out.println("Đã tự động nâng thứ hạng");
-//                message.setTo(taiKhoan.getEmail());
+                khachHang.setThuHang(selectedThuHang);
+                khachHangRepository.save(khachHang);
+//                System.out.println("Đã tự động nâng thứ hạng");
+//                message.setTo(khachHang.getEmail());
 //                message.setSubject("Thông báo thứ hạng đã được nâng");
-//                message.setText("Xin chào " + taiKhoan.getTen() + ",\n\nChúc mừng bạn đã đạt được nâng lên. Cảm ơn đã ủng hộ và gắn bó với chúng tôi.\n\nTrân trọng,\nWebsite bán áo thể thao PSG");
+//                message.setText("Xin chào " + khachHang.getTen() + ",\n\nChúc mừng bạn đã đạt được nâng lên. Cảm ơn đã ủng hộ và gắn bó với chúng tôi.\n\nTrân trọng,\nWebsite bán áo thể thao PSG");
 //                emailSender.send(message);
             }
         }
