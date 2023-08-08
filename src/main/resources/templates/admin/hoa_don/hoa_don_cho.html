@@ -33,12 +33,11 @@
                 <a class="nav-link" href="javascript:void(0)">
                     <nav class="navbar bg-body">
                         <div class="container-fluid justify-content-end">
-                            <a th:href="@{/admin/psg/hoa-don/tao-hoa-don}">
-                                <button class="btn btn-rounded btn-primary" type="submit" style="margin-right: 10px;"
-                                        onclick="return checkAdd();">
+                            <form action="/admin/psg/hoa-don/add-hoa-don-cho" method="post">
+                                <button class="btn btn-rounded btn-primary" type="submit" style="margin-right: 10px;">
                                     Tạo Đơn Hàng
                                 </button>
-                            </a>
+                            </form>
                         </div>
                     </nav>
                 </a>
@@ -54,32 +53,21 @@
                         <thead>
                         <tr>
                             <th scope="col">STT</th>
+                            <th scope="col">Mã Hóa Đơn</th>
                             <th scope="col">Ngày Tạo</th>
                             <th scope="col">Trạng Thái</th>
-                            <th scope="col">Thao Tác</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="hdoncho,index:${listHoaDonCho}">
+                        <tr th:each="dhc,index:${listHoaDonCho}">
                             <td th:text="${index.count}"></td>
-                            <td th:text="${hdoncho.ngayTao}"></td>
-                            <td th:text="${hdoncho.trangThai}"></td>
-                            <td th:text="${hdoncho.trangThai}"></td>
+                            <td th:text="${dhc.ma}"></td>
+                            <td th:text="${dhc.ngayTao}"></td>
+                            <td th:text="${dhc.trangThai.moTa}"></td>
                             <td>
-                                <span>
-                                    <a th:href="@{/admin/psg/hoa-don/cho/edit/{id}(id=${ms.id})}"
-                                       class="btn waves-effect waves-light btn-rounded btn-warning"
-                                    >Edit</a>
-                                    <form th:action="@{/admin/psg/hoa-don/delete/{id}(id=${ms.id})}" method="post"
-                                          style="display: inline;">
-                                    <a th:href="@{/admin/psg/hoa-don/cho/delete/{id}(id=${ms.id})}">
-                                        <button type="submit"
-                                                class="btn waves-effect waves-light btn-rounded btn-danger"
-                                                onclick="return confirm('Bạn có muốn xóa không')">Delete
-                                        </button>
-                                    </a>
-                                    </form>
-                                 </span>
+                                <a th:href="@{/admin/psg/hoa-don/detail-hoa-don/{id}(id=${dhc.id})}"
+                                   class="btn waves-effect waves-light btn-rounded btn-warning"
+                                >Update</a>
                             </td>
                         </tr>
                         </tbody>
@@ -90,13 +78,5 @@
         </div> <!-- end card-body-->
     </div>
 </div>
-<script>
-    function checkAdd() {
-        var tableNum = document.getElementById("table-alert").rows.length;
-        if (tableNum > 10) {
-            console.log("Vui lòng xử lý các hóa đơn chờ khác");
-        }
-    }
-</script>
 </body>
 </html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/fragments_layout_admin}"
+>
+<head>
+    <link rel="stylesheet" href="/style/style.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <div class="col-4">
+            <li class="nav-item d-none d-md-block">
+                <a class="nav-link" href="javascript:void(0)">
+                    <nav class="navbar bg-body">
+                        <div class="container-fluid">
+                            <form class="d-flex" role="search" action="/admin/psg/thu-hang/searchInActive/0" method="get">
+                                <input name="searchNameOrMaInActive" class="form-control custom-shadow custom-radius border-0 bg-white"
+                                       type="search" placeholder="VD: TH01, Vàng,..." aria-label="Search">
+                                <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </nav>
+                </a>
+            </li>
+        </div>
+        <div class="col-4">
+            <li class="nav-item d-none d-md-block">
+                <a class="nav-link" href="javascript:void(0)">
+                    <nav class="navbar bg-body">
+                        <div class="container-fluid">
+                            <form class="d-flex" role="search" action="/admin/psg/thu-hang/searchSoTienHoacDonHangInActive/0" method="get">
+                                <input name="searchSoTienHoacDonHangInActive" class="form-control custom-shadow custom-radius border-0 bg-white"
+                                       type="search" placeholder="VD: 1000, 20000,..." aria-label="Search">
+                                <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </nav>
+                </a>
+            </li>
+        </div>
+        <div class="col-2">
+            <a href="/admin/psg/thu-hang/pageActive/0" class="btn waves-effect waves-light btn-rounded btn-primary"
+            >Trở lại</a>
+        </div>
+    </div>
+    <div class="row">
+        &nbsp;&nbsp;<div class="col-2">
+        &nbsp;&nbsp;<a id="mainButton" class="btn waves-effect waves-light btn-rounded btn-primary">
+        Lọc theo khoảng
+    </a>
+    </div>
+        <div class="col-4">
+            <button id="removeButton" class="btn waves-effect waves-light btn-rounded btn-primary hidden">Thoát</button>
+        </div>
+    </div><br>
+    <div class="row">
+        <div class="col-4">
+            <a id="hiddenButton1" class="hidden">
+                <form action="/admin/psg/thu-hang/searchMinMaxSoTienInActive/0" method="get">
+                    <br>&nbsp;&nbsp;Tìm theo khoảng tiền:
+                    <div class="form-group mb-3">
+                        <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="minAmount"
+                                type="text" placeholder="Nhập số tiền nhỏ nhất">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="maxAmount"
+                                type="text" placeholder="Nhập số tiền lớn nhất">
+                    </div>
+                    <button class="btn waves-effect waves-light btn-rounded btn-primary" type="submit">Tìm kiếm</button><br><br>
+                </form>
+            </a>
+        </div>
+        <div class="col-4">
+            <a id="hiddenButton2" class="hidden">
+                <form action="/admin/psg/thu-hang/searchMinMaxDonHangInActive/0" method="get">
+                    <br>&nbsp;&nbsp;Tìm theo số lượng đơn hàng:
+                    <div class="form-group mb-3">
+                        <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="minAmount"
+                                type="text" placeholder="Nhập số lượng nhỏ nhất">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="maxAmount"
+                                type="text" placeholder="Nhập số lượng lớn nhất">
+                    </div>
+                    <button class="btn waves-effect waves-light btn-rounded btn-primary" type="submit">Tìm kiếm</button><br><br>
+                </form>
+            </a>
+        </div>
+    </div><br>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Danh Sách</h4>
+            <div th:if="${errorMessage}" class="error-message">
+                <span th:text="${errorMessage}" style="color: red"></span>
+            </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Mã</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Tiền tối thiểu</th>
+                        <th scope="col">Đơn hàng tối thiểu</th>
+                        <th scope="col">Trạng Thái</th>
+                        <th scope="col">Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="th,index:${listThuHangInActive}">
+                        <td th:text="${index.count} + ${currentPage * size - size} +4"></td>
+                        <td th:text="${th.ma}"></td>
+                        <td th:text="${th.ten}"></td>
+                        <td th:text="${th.soTienKhachChiToiThieu}"></td>
+                        <td th:text="${th.soLuongDonHangToiThieu}"></td>
+                        <td th:text="${th.trangThai.moTa}" style="color: #ff3e3e"></td>
+                        <td>
+                            <form th:action="@{/admin/psg/thu-hang/revert/{id}(id=${th.id})}" method="post">
+                                    <button type="submit"
+                                            class="btn waves-effect waves-light btn-rounded btn-danger"
+                                            onclick="return confirm('Bạn có muốn khôi phục không')">
+                                        Khôi phục
+                                    </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" th:if="${currentPage != 0}">
+                        <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageInActive/'+${currentPage - 1}}">Previous</a>
+                    </li>
+                    <li class="page-item" th:if="${currentPage > 1}">
+                        <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageInActive/0'}">1</a>
+                    </li>
+                    <li class="page-item" th:if="${currentPage > 1}">
+                        <span class="page-link">...</span>
+                    </li>
+                    <li class="page-item active">
+                        <span class="page-link" th:text="${currentPage + 1}"></span>
+                    </li>
+                    <li class="page-item" th:if="${currentPage + 2 < totalPages}">
+                        <span class="page-link">...</span>
+                    </li>
+                    <li class="page-item" th:if="${currentPage + 1 != totalPages}">
+                        <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageInActive/'+${totalPages - 1}}"><b
+                                th:text="${totalPages}"></b></a>
+                    </li>
+                    <li class="page-item" th:if="${currentPage + 1 != totalPages}">
+                        <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageInActive/'+${currentPage + 1}}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

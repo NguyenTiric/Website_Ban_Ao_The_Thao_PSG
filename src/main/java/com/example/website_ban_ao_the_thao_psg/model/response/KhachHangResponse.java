@@ -1,5 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.model.response;
 
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiTaiKhoan;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.VaiTro;
@@ -26,21 +27,19 @@ import java.time.LocalDate;
 public class KhachHangResponse {
     private Integer id;
     private ThuHang thuHang;
-    private VaiTro vaiTro;
     private String ten;
     private Boolean gioiTinh;
-    @DateTimeFormat(pattern = "dd-MM-YYYY")
     private LocalDate ngaySinh;
     private String diaChi;
     private String sdt;
     private String email;
     private Integer soLuongDonHangThanhCong;
     private String matKhau;
-    @Lob
-    private Blob anh;
     private BigDecimal soTienDaChiTieu;
     private LocalDate ngayTao;
     private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
-    private TrangThaiTaiKhoan trangThai;
+    private ApplicationConstant.TrangThaiTaiKhoan trangThai;
+    @Lob
+    private Blob anh;
 }

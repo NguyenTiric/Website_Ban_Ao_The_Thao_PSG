@@ -1,5 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.model.request.create_request;
 
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiTaiKhoan;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.VaiTro;
@@ -32,50 +33,19 @@ import java.time.LocalDate;
 public class CreateNhanVienRequest {
 
     private Integer id;
-
-    private ThuHang thuHang;
-
-//    @NotNull(message = "Vai trò không để trống")
     private VaiTro vaiTro;
-
-    @NotBlank(message = "Tên không để trống")
-    @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")
     private String ten;
-
-    @NotNull(message = "Giới tính không để trống")
     private Boolean gioiTinh;
-
-//    @NotNull(message = "Giới tính không để trống")
-//@DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate ngaySinh;
-
-    @NotBlank(message = "Địa chỉ không để trống")
-    @Size(min = 0, max = 225, message = "Địa chỉ không vượt quá 225 ký tự")
     private String diaChi;
-
-    @NotBlank(message = "Email không để trống")
-    @Size(min = 0, max = 10, message = "Số điện thoại không vượt quá 10 ký tự")
-    @Pattern(regexp = "\\d{10}", message = "Số điện thoại không hợp lệ")
     private String sdt;
-
-    @NotBlank(message = "Email không để trống")
-    @Size(min = 0, max = 225, message = "Email không vượt quá 225 ký tự")
+    private String soCanCuocCongDan;
     private String email;
-
+    private String matKhau;
+    private LocalDate ngayTao;
+    private LocalDate ngayCapNhat;
+    @Enumerated(EnumType.STRING)
+    private ApplicationConstant.TrangThaiTaiKhoan trangThai;
     @Lob
     private Blob anh;
-
-    private Integer soLuongDonHangThanhCong;
-
-//    @NotBlank(message = "Mật khẩu không để trống")
-    private String matKhau;
-
-    private BigDecimal soTienDaChiTieu;
-
-    private LocalDate ngayTao;
-
-    private LocalDate ngayCapNhat;
-
-    @Enumerated(EnumType.STRING)
-    private TrangThaiTaiKhoan trangThai;
 }

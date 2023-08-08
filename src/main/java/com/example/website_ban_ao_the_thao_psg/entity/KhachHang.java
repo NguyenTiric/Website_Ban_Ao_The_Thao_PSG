@@ -31,8 +31,8 @@ import java.time.LocalDate;
 @Builder
 @ToString
 @Entity
-@Table(name = "tai_khoan")
-public class TaiKhoan {
+@Table(name = "khach_hang")
+public class KhachHang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -41,10 +41,6 @@ public class TaiKhoan {
     @ManyToOne
     @JoinColumn(name = "thu_hang_id")
     private ThuHang thuHang;
-
-    @ManyToOne
-    @JoinColumn(name = "vai_tro_id")
-    private VaiTro vaiTro;
 
     @Column(name = "ten")
     private String ten;

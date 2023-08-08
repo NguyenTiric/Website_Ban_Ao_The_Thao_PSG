@@ -1,7 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.entity;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiHoaDon;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.HinhThucBanHang;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiHoaDon;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,7 +21,6 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,8 +37,12 @@ public class HoaDon {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "tai_khoan_id")
-    private TaiKhoan taiKhoan;
+    @JoinColumn(name = "khach_hang_id")
+    private KhachHang khachHang;
+
+    @ManyToOne
+    @JoinColumn(name = "nhan_vien_id")
+    private NhanVien nhanVien;
 
     @Column(name = "ma")
     private String ma;
@@ -48,13 +51,13 @@ public class HoaDon {
     private LocalDate ngayTao;
 
     @Column(name = "ngay_thanh_toan")
-    private LocalDateTime ngayThanhToan;
+    private LocalDate ngayThanhToan;
 
     @Column(name = "ngay_ship")
-    private LocalDateTime ngayShip;
+    private LocalDate ngayShip;
 
     @Column(name = "ngay_nhan")
-    private LocalDateTime ngayNhan;
+    private LocalDate ngayNhan;
 
     @Column(name = "tien_mat_khach_tra")
     private BigDecimal tienMatKhachTra;
@@ -64,9 +67,6 @@ public class HoaDon {
 
     @Column(name = "tien_ship")
     private BigDecimal tienShip;
-
-    @Column(name = "tien_thua")
-    private BigDecimal tienThua;
 
     @Column(name = "thanh_tien")
     private BigDecimal thanhTien;
@@ -87,13 +87,13 @@ public class HoaDon {
     private String maVoucherThuHang;
 
     @Column(name = "phan_tram_giam_gia")
-    private Boolean phanTramGiamGia;
+    private Integer phanTramGiamGia;
 
     @Column(name = "ma_giao_dich")
     private String maGiaoDich;
 
     @Column(name = "ngay_cap_nhat")
-    private LocalDateTime ngayCapNhat;
+    private LocalDate ngayCapNhat;
 
     @Column(name = "hinh_thuc_ban_hang")
     @Enumerated(EnumType.STRING)

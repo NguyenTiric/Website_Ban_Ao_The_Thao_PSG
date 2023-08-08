@@ -33,6 +33,7 @@ public class NhanVienResponse {
     private LocalDate ngaySinh;
     private String diaChi;
     private String sdt;
+    private String soCanCuocCongDan;
     private String email;
     private String matKhau;
     @Lob

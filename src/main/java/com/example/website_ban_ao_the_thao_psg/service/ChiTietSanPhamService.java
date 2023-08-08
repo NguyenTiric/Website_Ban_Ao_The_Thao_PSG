@@ -61,6 +61,7 @@ public interface ChiTietSanPhamService {
 
     SanPhamResponse getOneSp(Integer id);
 
+    List<SanPhamResponse> getAllSP();
     Page<SanPhamResponse> searchNameOrMaActiveSp(String searchName, Integer pageNo, Integer size);
 
     Page<SanPhamResponse> searchNameOrMaInActiveSp(String searchName, Integer pageNo, Integer size);
