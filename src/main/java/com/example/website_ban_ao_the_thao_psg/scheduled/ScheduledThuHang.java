@@ -2,6 +2,7 @@ package com.example.website_ban_ao_the_thao_psg.scheduled;
 
 import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
+import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.NhanVienRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.ThuHangRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class ScheduledThuHang {
 
     @Autowired
     private NhanVienRepository nhanVienRepository;
+
+    @Autowired
+    private KhachHangRepository khachHangRepository;
 
     @Autowired
     private ThuHangRepository thuHangRepository;
@@ -62,7 +66,7 @@ public class ScheduledThuHang {
     public void updateThuHang() {
         SimpleMailMessage message = new SimpleMailMessage();
 
-        List<KhachHang> khachHangs = this.nhanVienRepository.findAll();
+        List<KhachHang> khachHangs = this.khachHangRepository.findAll();
         List<ThuHang> activeThuHangList = this.thuHangRepository.findAllByActive();
 
         for (KhachHang khachHang : khachHangs) {
@@ -84,7 +88,7 @@ public class ScheduledThuHang {
 
             if (selectedThuHang != null) {
                 khachHang.setThuHang(selectedThuHang);
-                nhanVienRepository.save(khachHang);
+                khachHangRepository.save(khachHang);
             }
         }
     }

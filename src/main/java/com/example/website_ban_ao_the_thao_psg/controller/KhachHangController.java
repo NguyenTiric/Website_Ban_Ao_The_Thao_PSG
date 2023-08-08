@@ -1,6 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateKhachHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateKhachHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.KhachHangResponse;
@@ -36,9 +36,10 @@ import java.time.LocalDate;
 public class KhachHangController {
     @Autowired
     private KhachHangService khachHangService;
-    @Autowired
-    VaiTroService vaiTroService;
 
+    //    @Autowired
+//    VaiTroService vaiTroService;
+//
     @GetMapping("/hien-thi")
     public String hienThi(Model model, HttpSession session) {
         if (session.getAttribute("successMessage") != null) {
@@ -46,12 +47,13 @@ public class KhachHangController {
             model.addAttribute("successMessage", successMessage);
             session.removeAttribute("successMessage");
         }
-        model.addAttribute("khachHang", new TaiKhoan());
+        model.addAttribute("khachHang", new KhachHang());
         return pageTaiKhoanActive(0, model);
     }
+
     @GetMapping("/pageActive/{pageNo}")
     public String pageTaiKhoanActive(@PathVariable("pageNo") Integer pageNo, Model model) {
-        model.addAttribute("khachHang", new TaiKhoan());
+        model.addAttribute("khachHang", new KhachHang());
         Page<KhachHangResponse> taiKhoanResponsePageActive = khachHangService.pageTaiKhoanActive(pageNo, 3);
         model.addAttribute("size", taiKhoanResponsePageActive.getSize());
         model.addAttribute("totalPages", taiKhoanResponsePageActive.getTotalPages());
@@ -59,9 +61,10 @@ public class KhachHangController {
         model.addAttribute("listKhachHangActive", taiKhoanResponsePageActive);
         return "admin/khach_hang/trang_chu_khach_hang";
     }
-    @GetMapping("/searchActive/{pageNo}")
+
+        @GetMapping("/searchActive/{pageNo}")
     public String searchTaiKhoanActive(@PathVariable("pageNo") Integer pageNo, Model model, @RequestParam("search") String search) {
-        model.addAttribute("khachHang", new TaiKhoan());
+        model.addAttribute("khachHang", new KhachHang());
         Page<KhachHangResponse> taiKhoanResponsePageActive = khachHangService.pageSearchACTIVE(search,pageNo, 3);
         model.addAttribute("size", taiKhoanResponsePageActive.getSize());
         model.addAttribute("totalPages", taiKhoanResponsePageActive.getTotalPages());
@@ -72,7 +75,7 @@ public class KhachHangController {
 
     @GetMapping("/searchTuoiMinMax/{pageNo}")
     public String searchTuoiMinMax(@PathVariable("pageNo") Integer pageNo, Model model, @RequestParam(value = "tuoiMin",required = false) Integer min,@RequestParam(value = "tuoiMax",required = false) Integer max) {
-        model.addAttribute("khachHang", new TaiKhoan());
+        model.addAttribute("khachHang", new KhachHang());
         Page<KhachHangResponse> taiKhoanResponsePageActive = khachHangService.pageSearchTuoiMinMax(min,max,pageNo, 3);
         model.addAttribute("size", taiKhoanResponsePageActive.getSize());
         model.addAttribute("totalPages", taiKhoanResponsePageActive.getTotalPages());
@@ -82,7 +85,7 @@ public class KhachHangController {
     }
     @GetMapping("/pageInActive/{pageNo}")
     public String khoiPhuc(@PathVariable("pageNo") Integer pageNo, Model model) {
-        model.addAttribute("khachHang", new TaiKhoan());
+        model.addAttribute("khachHang", new KhachHang());
         Page<KhachHangResponse> taiKhoanResponsePageActive = khachHangService.pageTaiKhoanInActive(pageNo, 3);
         model.addAttribute("size", taiKhoanResponsePageActive.getSize());
         model.addAttribute("totalPages", taiKhoanResponsePageActive.getTotalPages());
@@ -94,10 +97,10 @@ public class KhachHangController {
     @GetMapping("/view-add")
     public String viewAdd(Model model) {
         model.addAttribute("khachHang", new CreateKhachHangRequest());
-        model.addAttribute("vaiTro",vaiTroService.getAll());
         return "admin/khach_hang/view_add_khach_hang";
     }
-    @GetMapping("/delete/{id}")
+
+        @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id")Integer id,Model model) {
         khachHangService.delete(id, LocalDate.now());
         return "redirect:/admin/psg/khach-hang/hien-thi";
@@ -109,24 +112,23 @@ public class KhachHangController {
         return "redirect:/admin/psg/khach-hang/hien-thi";
     }
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("khachHang") CreateKhachHangRequest createKhachHangRequest,
+    public String add(@Valid @ModelAttribute("khachHang") CreateKhachHangRequest createKhachHangRequest, BindingResult result,
                       @RequestParam("anhKH") MultipartFile file,
-                      BindingResult result,
                       Model model) throws IOException, SQLException {
         if (result.hasErrors()) {
-            model.addAttribute("vaiTro", vaiTroService.getAll());
             return "admin/khach_hang/view_add_khach_hang";
         }
         if (file == null || file.isEmpty()) {
-            result.rejectValue("anh", "anh", "Vui lòng tải lên một tệp tin ảnh");
-            model.addAttribute("vaiTro", vaiTroService.getAll());
-            return "admin/khach_hang/view_add_khach_hang";
+            result.rejectValue("anhKH", "anhKH", "Vui lòng tải lên một tệp tin ảnh");
+
+            return "admin/nhan_vien/view_add_nhan_vien";
         }
-        if (khachHangService.existsBySdtKhachHang(createKhachHangRequest.getSdt())){
+
+        if (khachHangService.existsBySdtKhachHang(createKhachHangRequest.getSdt())) {
             result.rejectValue("sdt", "Sdt", "Số Điện Thoại này đã tồn tại ");
             return "admin/khach_hang/view_add_khach_hang";
         }
-        if (khachHangService.existsByEmailKhachHang(createKhachHangRequest.getEmail())){
+        if (khachHangService.existsByEmailKhachHang(createKhachHangRequest.getEmail())) {
             result.rejectValue("email", "email", "Email này đã tồn tại ");
             return "admin/khach_hang/view_add_khach_hang";
         }
@@ -135,7 +137,6 @@ public class KhachHangController {
         LocalDate ngaySinh = createKhachHangRequest.getNgaySinh();
         if (ngaySinh != null && ngaySinh.isAfter(currentDate)) {
             result.rejectValue("ngaySinh", "loiNgaySinh", "Vui lòng nhập ngày sinh không lớn hơn ngày hôm nay");
-            model.addAttribute("vaiTro", vaiTroService.getAll());
             return "admin/khach_hang/view_add_khach_hang";
         }
 
@@ -144,10 +145,10 @@ public class KhachHangController {
         return "redirect:/admin/psg/khach-hang/hien-thi";
     }
 
+    //
     @GetMapping("/view-update/{id}")
     public String viewUpdate(@PathVariable("id")Integer id,Model model) {
         KhachHangResponse tk= khachHangService.getOne(id);
-        model.addAttribute("vaiTro",vaiTroService.getAll());
         model.addAttribute("khachHang",tk);
         return "admin/khach_hang/view_update_khach_hang";
     }
@@ -155,16 +156,30 @@ public class KhachHangController {
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("khachHang") UpdateKhachHangRequest updateKhachHangRequest,@RequestParam("idAnhSua")MultipartFile anh, BindingResult result, Model model) throws IOException, SQLException{
         if (result.hasErrors()){
-            model.addAttribute("vaiTro",vaiTroService.getAll());
+            return "admin/khach_hang/view_update_khach_hang";
+        }
+        // Kiểm tra nếu số điện thoại mới (nếu có) khác với số điện thoại cũ
+        if (khachHangService.existsBySdtKhachHangWithDifferentId(updateKhachHangRequest.getSdt(), updateKhachHangRequest.getId())) {
+            result.rejectValue("sdt", "sdt", "Số điện thoại này đã tồn tại");
+            return "admin/khach_hang/view_update_khach_hang";
+        }
+        if (khachHangService.existsByEmailKhachHangWithDifferentId(updateKhachHangRequest.getEmail(), updateKhachHangRequest.getId())) {
+            result.rejectValue("email", "email", "Số điện thoại này đã tồn tại");
+            return "admin/khach_hang/view_update_khach_hang";
+        }
+        LocalDate currentDate = LocalDate.now();
+        LocalDate ngaySinh = updateKhachHangRequest.getNgaySinh();
+        if (ngaySinh != null && ngaySinh.isAfter(currentDate)) {
+            result.rejectValue("ngaySinh", "loiNgaySinh", "Vui lòng nhập ngày sinh không lớn hơn ngày hôm nay");
             return "admin/khach_hang/view_update_khach_hang";
         }
         khachHangService.update(updateKhachHangRequest.getId(),anh,updateKhachHangRequest);
         return "redirect:/admin/psg/khach-hang/hien-thi";
     }
-
+//
     @GetMapping("/display")
     public ResponseEntity<byte[]> displayImage(@RequestParam("idAnh") Integer id) throws IOException, SQLException {
-        TaiKhoan tk = khachHangService.viewById(id);
+        KhachHang tk = khachHangService.viewById(id);
         byte[] imageBytes = null;
         imageBytes = tk.getAnh().getBytes(1, (int) tk.getAnh().length());
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);

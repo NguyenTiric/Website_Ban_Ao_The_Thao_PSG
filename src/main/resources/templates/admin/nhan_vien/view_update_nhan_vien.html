@@ -62,7 +62,9 @@
                             <input type="hidden" th:field="*{id}">
                             <img th:src="@{${'/admin/psg/nhan-vien/display?idAnhNV=' + nhanVien.id}}" id="image" class="form-control mb-1" style="width: 250px; height: 150px;margin-left: 100px">
                             <input class="form-control custom-shadow custom-radius border-1 bg-white"
-                                   type="file" name="idAnhNV" onchange="chooseFile(this)" style="height: 40px;width: 250px;margin-left: 100px">
+                                   type="file"  name="idAnhNV"  onchange="chooseFile(this)" style="height: 40px;width: 250px;margin-left: 100px">
+                            <span th:if="${#fields.hasErrors('anhNV')}" style="color: red; font-size: 15px"
+                                  th:errors="*{anhNV}"></span>
                         </div>
 
                         <div class="form-group mb-3 mt-2">
@@ -114,6 +116,7 @@
                                             Nữ
                                         </label>
                                     </div>
+
                                 </div>
 
                             </div>

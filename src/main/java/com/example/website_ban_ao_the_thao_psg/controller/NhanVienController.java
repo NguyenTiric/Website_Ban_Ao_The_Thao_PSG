@@ -1,10 +1,11 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.NhanVien;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNhanVienRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateKhachHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateNhanVienRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.KhachHangResponse;
+import com.example.website_ban_ao_the_thao_psg.model.response.NhanVienResponse;
 import com.example.website_ban_ao_the_thao_psg.service.NhanVienService;
 import com.example.website_ban_ao_the_thao_psg.service.VaiTroService;
 import jakarta.servlet.http.HttpSession;
@@ -33,8 +34,9 @@ import java.time.LocalDate;
 public class NhanVienController {
     @Autowired
     private NhanVienService nhanVienService;
+
     @Autowired
-    VaiTroService vaiTroService;
+    private VaiTroService vaiTroService;
 
     @GetMapping("/hien-thi")
     public String hienThi(Model model, HttpSession session) {
@@ -43,13 +45,13 @@ public class NhanVienController {
             model.addAttribute("successMessage", successMessage);
             session.removeAttribute("successMessage");
         }
-        model.addAttribute("nhanVien", new TaiKhoan());
-        return pageTaiKhoanActive(0, model);
+        model.addAttribute("nhanVien", new NhanVien());
+        return pageNhanVienActive(0, model);
     }
     @GetMapping("/pageActive/{pageNo}")
-    public String pageTaiKhoanActive(@PathVariable("pageNo") Integer pageNo, Model model) {
-        model.addAttribute("nhanVien", new TaiKhoan());
-        Page<KhachHangResponse> taiKhoanResponsePageActive = nhanVienService.pageTaiKhoanActive(pageNo, 3);
+    public String pageNhanVienActive(@PathVariable("pageNo") Integer pageNo, Model model) {
+        model.addAttribute("nhanVien", new NhanVien());
+        Page<NhanVienResponse> taiKhoanResponsePageActive = nhanVienService.pageNhanVienActive(pageNo, 3);
         model.addAttribute("size", taiKhoanResponsePageActive.getSize());
         model.addAttribute("totalPages", taiKhoanResponsePageActive.getTotalPages());
         model.addAttribute("currentPage", pageNo);
@@ -58,8 +60,8 @@ public class NhanVienController {
     }
     @GetMapping("/searchActive/{pageNo}")
     public String searchTaiKhoanActive(@PathVariable("pageNo") Integer pageNo, Model model, @RequestParam("search") String search) {
-        model.addAttribute("nhanVien", new TaiKhoan());
-        Page<KhachHangResponse> taiKhoanResponsePageActive = nhanVienService.pageSearchACTIVE(search,pageNo, 3);
+        model.addAttribute("nhanVien", new NhanVien());
+        Page<NhanVienResponse> taiKhoanResponsePageActive = nhanVienService.pageSearchACTIVE(search,pageNo, 3);
         model.addAttribute("size", taiKhoanResponsePageActive.getSize());
         model.addAttribute("totalPages", taiKhoanResponsePageActive.getTotalPages());
         model.addAttribute("currentPage", pageNo);
@@ -69,8 +71,8 @@ public class NhanVienController {
 
     @GetMapping("/searchTuoiMinMax/{pageNo}")
     public String searchTuoiMinMax(@PathVariable("pageNo") Integer pageNo, Model model, @RequestParam(value = "tuoiMin",required = false) Integer min,@RequestParam(value = "tuoiMax",required = false) Integer max) {
-        model.addAttribute("nhanVien", new TaiKhoan());
-        Page<KhachHangResponse> taiKhoanResponsePageActive = nhanVienService.pageSearchTuoiMinMax(min,max,pageNo, 3);
+        model.addAttribute("nhanVien", new NhanVien());
+        Page<NhanVienResponse> taiKhoanResponsePageActive = nhanVienService.pageSearchTuoiMinMax(min,max,pageNo, 3);
         model.addAttribute("size", taiKhoanResponsePageActive.getSize());
         model.addAttribute("totalPages", taiKhoanResponsePageActive.getTotalPages());
         model.addAttribute("currentPage", pageNo);
@@ -79,15 +81,15 @@ public class NhanVienController {
     }
     @GetMapping("/pageInActive/{pageNo}")
     public String khoiPhuc(@PathVariable("pageNo") Integer pageNo, Model model) {
-        model.addAttribute("nhanVien", new TaiKhoan());
-        Page<KhachHangResponse> taiKhoanResponsePageActive = nhanVienService.pageTaiKhoanInActive(pageNo, 3);
+        model.addAttribute("nhanVien", new NhanVien());
+        Page<NhanVienResponse> taiKhoanResponsePageActive = nhanVienService.pageTaiKhoanInActive(pageNo, 3);
         model.addAttribute("size", taiKhoanResponsePageActive.getSize());
         model.addAttribute("totalPages", taiKhoanResponsePageActive.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("listNhanVienInActive", taiKhoanResponsePageActive);
         return "admin/nhan_vien/revert_nhan_vien";
     }
-
+//
     @GetMapping("/view-add")
     public String viewAdd(Model model) {
         model.addAttribute("nhanVien", new CreateNhanVienRequest());
@@ -106,33 +108,39 @@ public class NhanVienController {
         return "redirect:/admin/psg/nhan-vien/hien-thi";
     }
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("nhanVien") CreateNhanVienRequest createNhanVienRequest,
-                      @RequestParam("anhNV") MultipartFile file,
-                      BindingResult result,
+    public String add(@Valid @ModelAttribute("nhanVien") CreateNhanVienRequest createNhanVienRequest, BindingResult result,
+                      @RequestParam("anhNV1") MultipartFile file,
                       Model model) throws IOException, SQLException {
         if (result.hasErrors()) {
             model.addAttribute("vaiTro", vaiTroService.getAll());
-            return "admin/nhan_vien/view_add_nhan-vien";
+            return "admin/nhan_vien/view_add_nhan_vien";
         }
-        if (nhanVienService.existsBySdtNhanVien(createNhanVienRequest.getSdt())){
-            result.rejectValue("sdt", "checkSdt", "Số Điện Thoại này đã tồn tại ");
+
+        if (file == null || file.isEmpty()) {
+            result.rejectValue("anhNV", "anhNV", "Vui lòng tải lên một tệp tin ảnh");
             model.addAttribute("vaiTro", vaiTroService.getAll());
-            return "admin/nhan_vien/view_add_nhan-vien";
+            return "admin/nhan_vien/view_add_nhan_vien";
+        }
+
+        if (nhanVienService.existsBySdtNhanVien(createNhanVienRequest.getSdt())){
+            result.rejectValue("sdt", "sdt", "Số Điện Thoại này đã tồn tại ");
+            model.addAttribute("vaiTro", vaiTroService.getAll());
+            return "admin/nhan_vien/view_add_nhan_vien";
         }
         if (nhanVienService.existsByEmailNhanVien(createNhanVienRequest.getEmail())){
             result.rejectValue("email", "email", "Email này đã tồn tại ");
             model.addAttribute("vaiTro", vaiTroService.getAll());
-            return "admin/nhan_vien/view_add_nhan-vien";
+            return "admin/nhan_vien/view_add_nhan_vien";
         }
 
         LocalDate currentDate = LocalDate.now();
         LocalDate ngaySinh = createNhanVienRequest.getNgaySinh();
 
-        if (ngaySinh != null && ngaySinh.plusYears(18).isAfter(currentDate)) {
+        if (ngaySinh.plusYears(18).isAfter(currentDate)) {
             result.rejectValue("ngaySinh", "loiNgaySinh", "Vui lòng nhập ngày sinh không lớn hơn " +
                     "ngày hôm nay hoặc không đủ 18 tuổi");
             model.addAttribute("vaiTro", vaiTroService.getAll());
-            return "admin/khach_hang/view_add_khach_hang";
+            return "admin/nhan_vien/view_add_nhan_vien";
         }
 
         nhanVienService.add(createNhanVienRequest, file);
@@ -140,17 +148,47 @@ public class NhanVienController {
     }
     @GetMapping("/view-update/{id}")
     public String viewUpdate(@PathVariable("id")Integer id,Model model) {
-                KhachHangResponse tk= nhanVienService.getOne(id);
+                NhanVienResponse tk= nhanVienService.getOne(id);
         model.addAttribute("vaiTro",vaiTroService.getAll());
         model.addAttribute("nhanVien",tk);
         return "admin/nhan_vien/view_update_nhan_vien";
     }
 
     @PostMapping("/update")
-    public String update(@Valid @ModelAttribute("nhanVien") UpdateNhanVienRequest updateNhanVienRequest, @RequestParam("idAnhNV")MultipartFile anh, BindingResult result, Model model) throws IOException, SQLException{
+    public String update(@Valid @ModelAttribute("nhanVien") UpdateNhanVienRequest updateNhanVienRequest, BindingResult result,@RequestParam("idAnhNV")MultipartFile anh,  Model model) throws IOException, SQLException{
         if (result.hasErrors()){
             model.addAttribute("vaiTro",vaiTroService.getAll());
-            return "admin/nhan-vien/view_update_khach_hang";
+            return "admin/nhan_vien/view_update_nhan_vien";
+        }
+        if (anh == null || anh.isEmpty()) {
+            result.rejectValue("anhNV", "anhNV", "Vui lòng tải lên một tệp tin ảnh");
+            model.addAttribute("vaiTro", vaiTroService.getAll());
+            return "admin/nhan_vien/view_update_nhan_vien";
+        }
+
+
+
+        // Kiểm tra nếu số điện thoại mới (nếu có) khác với số điện thoại cũ
+        if (nhanVienService.existsBySdtNhanVienWithDifferentId(updateNhanVienRequest.getSdt(), updateNhanVienRequest.getId())) {
+            result.rejectValue("sdt", "sdt", "Số điện thoại này đã tồn tại");
+            model.addAttribute("vaiTro", vaiTroService.getAll());
+            return "admin/nhan_vien/view_update_nhan_vien";
+        }
+        if (nhanVienService.existsByEmailNhanVienWithDifferentId(updateNhanVienRequest.getEmail(), updateNhanVienRequest.getId())) {
+            result.rejectValue("email", "email", "Email này đã tồn tại");
+            model.addAttribute("vaiTro", vaiTroService.getAll());
+            return "admin/nhan_vien/view_update_nhan_vien";
+        }
+        model.addAttribute("htAnh",updateNhanVienRequest.getAnhNV());
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate ngaySinh = updateNhanVienRequest.getNgaySinh();
+
+        if (ngaySinh.plusYears(18).isAfter(currentDate)) {
+            result.rejectValue("ngaySinh", "loiNgaySinh", "Vui lòng nhập ngày sinh không lớn hơn " +
+                    "ngày hôm nay hoặc không đủ 18 tuổi");
+            model.addAttribute("vaiTro", vaiTroService.getAll());
+            return "admin/nhan_vien/view_update_nhan_vien";
         }
         nhanVienService.update(updateNhanVienRequest.getId(),anh,updateNhanVienRequest);
         return "redirect:/admin/psg/nhan-vien/hien-thi";
@@ -158,9 +196,9 @@ public class NhanVienController {
 
     @GetMapping("/display")
     public ResponseEntity<byte[]> displayImage(@RequestParam("idAnhNV") Integer id) throws IOException, SQLException {
-        TaiKhoan tk = nhanVienService.viewById(id);
+        NhanVien tk = nhanVienService.viewById(id);
         byte[] imageBytes = null;
-        imageBytes = tk.getAnh().getBytes(1, (int) tk.getAnh().length());
+        imageBytes = tk.getAnhNV().getBytes(1, (int) tk.getAnhNV().length());
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
     }
 }

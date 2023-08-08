@@ -1,12 +1,12 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
-import com.example.website_ban_ao_the_thao_psg.entity.TaiKhoan;
+import com.example.website_ban_ao_the_thao_psg.entity.NhanVien;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.NhanVienMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNhanVienRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateNhanVienRequest;
-import com.example.website_ban_ao_the_thao_psg.model.response.KhachHangResponse;
-import com.example.website_ban_ao_the_thao_psg.repository.TaiKhoanRepository;
+import com.example.website_ban_ao_the_thao_psg.model.response.NhanVienResponse;
+import com.example.website_ban_ao_the_thao_psg.repository.NhanVienRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.VaiTroRepository;
 import com.example.website_ban_ao_the_thao_psg.service.NhanVienService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,52 +24,54 @@ import java.util.Optional;
 
 @Component
 public class NhanVienServiceImpl implements NhanVienService {
+//    @Autowired
+//    private TaiKhoanRepository taiKhoanRepository;
+//
     @Autowired
-    private TaiKhoanRepository taiKhoanRepository;
-
+    private NhanVienRepository nhanVienRepository;
     @Autowired
     private NhanVienMapper nhanVienMapper;
 
     @Autowired
     private VaiTroRepository vaiTroRepository;
     @Override
-    public Page<KhachHangResponse> pageTaiKhoanActive(Integer pageNo, Integer size) {
+    public Page<NhanVienResponse> pageNhanVienActive(Integer pageNo, Integer size) {
         Pageable pageable= PageRequest.of(pageNo,size);
-        Page<TaiKhoan>taiKhoanPage= taiKhoanRepository.pageACTIVENhanVien(pageable);
-        return taiKhoanPage.map(nhanVienMapper::nhanVienEntityToTaiKhoanResponse);
+        Page<NhanVien>taiKhoanPage= nhanVienRepository.pageACTIVENhanVien(pageable);
+        return taiKhoanPage.map(nhanVienMapper::nhanVienEntityToNhanVienResponse);
     }
-
+//
     @Override
-    public Page<KhachHangResponse> pageTaiKhoanInActive(Integer pageNo, Integer size) {
+    public Page<NhanVienResponse> pageTaiKhoanInActive(Integer pageNo, Integer size) {
         Pageable pageable= PageRequest.of(pageNo,size);
-        Page<TaiKhoan>taiKhoanPage= taiKhoanRepository.pageINACTIVENhanVien(pageable);
-        return taiKhoanPage.map(nhanVienMapper::nhanVienEntityToTaiKhoanResponse);
+        Page<NhanVien> taiKhoanPage= nhanVienRepository.pageINACTIVENhanVien(pageable);
+        return taiKhoanPage.map(nhanVienMapper::nhanVienEntityToNhanVienResponse);
     }
 
     @Override
     public void add(CreateNhanVienRequest createNhanVienRequest, MultipartFile file) throws IOException, SQLException {
-//        if (file == null) {
-//            throw new IllegalArgumentException("File is null. Please upload a file.");
-//        }
-        TaiKhoan taiKhoan = nhanVienMapper.createNhanVienRequestToTaiKhoanEntity(createNhanVienRequest);
+////        if (file == null) {
+////            throw new IllegalArgumentException("File is null. Please upload a file.");
+////        }
+        NhanVien nhanVien = nhanVienMapper.createNhanVienRequestToNhanVienEntity(createNhanVienRequest);
         byte[] bytes = file.getBytes();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-        taiKhoan.setNgayTao(LocalDate.now());
-        taiKhoan.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
-        taiKhoan.setAnh(blob);
+        nhanVien.setNgayTao(LocalDate.now());
+        nhanVien.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
+        nhanVien.setAnhNV(blob);
 
 
-        taiKhoanRepository.save(taiKhoan);
+        nhanVienRepository.save(nhanVien);
     }
 
     @Override
     public void update(Integer id, MultipartFile file, UpdateNhanVienRequest updateNhanVienRequest) throws IOException, SQLException {
-        TaiKhoan tk = taiKhoanRepository.findById(id).orElse(null);
+        NhanVien tk = nhanVienRepository.findById(id).orElse(null);
         if (tk != null) {
             if (!file.isEmpty()) {
                 byte[] bytes = file.getBytes();
                 Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-                tk.setAnh(blob);
+                tk.setAnhNV(blob);
             }
             tk.setSdt(updateNhanVienRequest.getSdt());
             tk.setTen(updateNhanVienRequest.getTen());
@@ -77,54 +79,64 @@ public class NhanVienServiceImpl implements NhanVienService {
             tk.setGioiTinh(updateNhanVienRequest.getGioiTinh());
             tk.setDiaChi(updateNhanVienRequest.getDiaChi());
             tk.setEmail(updateNhanVienRequest.getEmail());
-            taiKhoanRepository.save(tk);
+            nhanVienRepository.save(tk);
         }
     }
 
+////
 //
-
     @Override
-    public KhachHangResponse getOne(Integer id) {
-        Optional<TaiKhoan>optionalTaiKhoan= taiKhoanRepository.findById(id);
-        return nhanVienMapper.nhanVienEntityToTaiKhoanResponse(optionalTaiKhoan.get());
+    public NhanVienResponse getOne(Integer id) {
+        Optional<NhanVien>optionalTaiKhoan= nhanVienRepository.findById(id);
+        return nhanVienMapper.nhanVienEntityToNhanVienResponse(optionalTaiKhoan.get());
     }
-
+//
     @Override
     public void delete(Integer id, LocalDate now) {
-       taiKhoanRepository.deleteNhanVien(id,now);
+       nhanVienRepository.deleteNhanVien(id,now);
     }
 
     @Override
     public void revertTaiKhoan(Integer id, LocalDate now) {
-    taiKhoanRepository.revertNhanVien(id, now);
+    nhanVienRepository.revertNhanVien(id, now);
     }
 
     @Override
-    public Page<KhachHangResponse> pageSearchACTIVE(String search, Integer pageNo, Integer size) {
+    public Page<NhanVienResponse> pageSearchACTIVE(String search, Integer pageNo, Integer size) {
         Pageable pageable=PageRequest.of(pageNo,size);
-        Page<TaiKhoan> taiKhoanPage= taiKhoanRepository.pageSearchACTIVENhanVien(search,pageable);
-        return taiKhoanPage.map(nhanVienMapper::nhanVienEntityToTaiKhoanResponse);
+        Page<NhanVien> taiKhoanPage= nhanVienRepository.pageSearchACTIVENhanVien(search,pageable);
+        return taiKhoanPage.map(nhanVienMapper::nhanVienEntityToNhanVienResponse);
     }
 
     @Override
-    public Page<KhachHangResponse> pageSearchTuoiMinMax(Integer min, Integer max, Integer pageNo, Integer size) {
+    public Page<NhanVienResponse> pageSearchTuoiMinMax(Integer min, Integer max, Integer pageNo, Integer size) {
         Pageable pageable=PageRequest.of(pageNo,size);
-        Page<TaiKhoan>taiKhoanPage= taiKhoanRepository.pageSearchTuoiMinMaxNhanVien(min,max,pageable);
-        return taiKhoanPage.map(nhanVienMapper::nhanVienEntityToTaiKhoanResponse);
+        Page<NhanVien>taiKhoanPage= nhanVienRepository.pageSearchTuoiMinMaxNhanVien(min,max,pageable);
+        return taiKhoanPage.map(nhanVienMapper::nhanVienEntityToNhanVienResponse);
     }
 
     @Override
-    public TaiKhoan viewById(Integer id) {
-        return taiKhoanRepository.findById(id).get();
+    public NhanVien viewById(Integer id) {
+        return nhanVienRepository.findById(id).get();
     }
 
     @Override
     public Boolean existsBySdtNhanVien(String sdt) {
-        return taiKhoanRepository.existsBySdtNhanVien(sdt);
+        return nhanVienRepository.existsBySdtNhanVien(sdt);
     }
 
     @Override
     public Boolean existsByEmailNhanVien(String email) {
-        return taiKhoanRepository.existsByEmailNhanVien(email);
+        return nhanVienRepository.existsByEmailNhanVien(email);
+    }
+
+    @Override
+    public Boolean existsBySdtNhanVienWithDifferentId(String sdt, Integer id) {
+        return nhanVienRepository.existsBySdtNhanVienWithDifferentId(sdt,id);
+    }
+
+    @Override
+    public Boolean existsByEmailNhanVienWithDifferentId(String sdt, Integer id) {
+        return nhanVienRepository.existsByEmailNhanVienWithDifferentId(sdt,id);
     }
 }

@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <style>
         .row {
             margin-top: 20px;
@@ -39,8 +38,10 @@
                                 <img src="https://static.thenounproject.com/png/625182-200.png" alt="" id="image" class="form-control mb-1"
                                      style="width: 250px; height: 150px;margin-left: 100px">
                                 <input class="form-control custom-shadow custom-radius border-1 bg-white"
-                                       type="file" name="anhNV" onchange="chooseFile(this)"
+                                       type="file" name="anhNV1" onchange="chooseFile(this)"
                                        style="height: 40px;width: 250px;margin-left: 100px">
+                                <span th:if="${#fields.hasErrors('anhNV')}" style="color: red; font-size: 15px"
+                                      th:errors="*{anhNV}"></span>
                             </div>
 
                             <div class="form-group mb-3 mt-2">
@@ -58,7 +59,7 @@
                             <div class="form-group mb-3">
                                 <label class="form-label" style="margin-left: 10px">Tên</label>
                                 <input class="form-control custom-shadow custom-radius border-1 bg-white"
-                                       type="text" placeholder="Nhập tên sản phẩm" th:field="*{ten}"
+                                       type="text" placeholder="Nhập tên Nhân Viên" th:field="*{ten}"
                                        style="height: 50px">
                                 <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 15px"
                                       th:errors="*{ten}"></span>
@@ -92,6 +93,9 @@
                                             Nữ
                                         </label>
                                     </div>
+
+                                    <span th:if="${#fields.hasErrors('gioiTinh')}" style="color: red; font-size: 15px"
+                                          th:errors="*{gioiTinh}"></span>
                                 </div>
 
                             </div>

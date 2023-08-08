@@ -29,15 +29,17 @@ public class NhanVienResponse {
     private VaiTro vaiTro;
     private String ten;
     private Boolean gioiTinh;
-    @DateTimeFormat(pattern = "dd-MM-YYYY")
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate ngaySinh;
+
     private String diaChi;
     private String sdt;
     private String soCanCuocCongDan;
     private String email;
     private String matKhau;
     @Lob
-    private Blob anh;
+    private Blob anhNV;
     private LocalDate ngayTao;
     private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
