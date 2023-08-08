@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -32,6 +33,12 @@ public class MauSacServiceImpl implements MauSacService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<MauSac> mauSacPage = mauSacRepository.pageACTIVE(pageable);
         return mauSacPage.map(mauSacMapper::mauSacEntityToMauSacResponse);
+    }
+
+    @Override
+    public List<MauSacResponse> getAll() {
+        List<MauSac> mauSac = mauSacRepository.getAll();
+        return mauSacMapper.listMauSacEntityToMauSacResponse(mauSac);
     }
 
     @Override

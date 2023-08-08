@@ -1,9 +1,11 @@
 package com.example.website_ban_ao_the_thao_psg.model.mapper.impl;
 
+import com.example.website_ban_ao_the_thao_psg.entity.CoAo;
 import com.example.website_ban_ao_the_thao_psg.entity.NhaSanXuat;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.NhaSanXuatMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNhaSanXuatRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateNhaSanXuatRequest;
+import com.example.website_ban_ao_the_thao_psg.model.response.CoAoResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.NhaSanXuatResponse;
 import jakarta.annotation.Generated;
 import org.modelmapper.ModelMapper;
@@ -52,6 +54,9 @@ public class NhaSanXuatMapperImpl implements NhaSanXuatMapper {
     @Override
     public List<NhaSanXuatResponse> listNhaSanXuatEntityToNhaSanXuatRespnse(List<NhaSanXuat> nhaSanXuatList) {
         List<NhaSanXuatResponse> list = new ArrayList<>(nhaSanXuatList.size());
+        for (NhaSanXuat nsx : nhaSanXuatList) {
+            list.add(nhaSanXuatEntityToNhaSanXuatResponse(nsx));
+        }
         return list;
     }
 }

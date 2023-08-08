@@ -39,8 +39,8 @@ public class GioHangChiTiet {
     private ChiTietSanPham chiTietSanPham;
 
     @ManyToOne
-    @JoinColumn(name = "tai_khoan_id")
-    private TaiKhoan taiKhoan;
+    @JoinColumn(name = "khach_hang_id")
+    private KhachHang khachHang;
 
     @Column(name = "so_luong")
     private Integer soLuong;

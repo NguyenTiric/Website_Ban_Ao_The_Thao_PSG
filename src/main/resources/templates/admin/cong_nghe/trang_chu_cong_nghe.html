@@ -18,7 +18,7 @@
                 <div class="container-fluid">
                     <form class="d-flex" role="search" action="/admin/psg/cong-nghe/searchActive/0" method="get">
                         <input name="searchNameOrMa" class="form-control custom-shadow custom-radius border-0 bg-white"
-                               type="search" placeholder="Search" aria-label="Search">
+                               type="search" placeholder="Search Tên Or Mã" aria-label="Search">
                         <button class="btn btn-rounded btn-primary" type="submit">Search</button>
                     </form>
                 </div>
@@ -47,8 +47,6 @@
                             <th scope="col">Mã</th>
                             <th scope="col">Tên</th>
                             <th scope="col">Mô Tả</th>
-                            <th scope="col">Ngày Tạo</th>
-                            <th scope="col">Ngày Cập Nhật</th>
                             <th scope="col">Trạng Thái</th>
                             <th scope="col">Hành Động</th>
                         </tr>
@@ -59,8 +57,6 @@
                             <td th:text="${cn.ma}"></td>
                             <td th:text="${cn.ten}"></td>
                             <td th:text="${cn.moTa}"></td>
-                            <td th:text="${cn.ngayTao}"></td>
-                            <td th:text="${cn.ngayCapNhat}"></td>
                             <td th:text="${cn.trangThai.moTa}"></td>
                             <td>
                       <span>

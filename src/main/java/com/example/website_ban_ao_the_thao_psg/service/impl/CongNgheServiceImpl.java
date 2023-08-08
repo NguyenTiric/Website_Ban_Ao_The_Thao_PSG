@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -32,6 +33,12 @@ public class CongNgheServiceImpl implements CongNgheService {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<CongNghe> congNghePage = congNgheRepository.pageACTIVE(pageable);
         return congNghePage.map(congNgheMapper::congNgheEntityToCongNgheResponse);
+    }
+
+    @Override
+    public List<CongNgheResponse> getAll() {
+        List<CongNghe> congNgheList = congNgheRepository.getAll();
+        return congNgheMapper.listCongNgheEntityToCongNgheResponses(congNgheList);
     }
 
     @Override

@@ -38,8 +38,6 @@
                             <th scope="col">Mã</th>
                             <th scope="col">Tên</th>
                             <th scope="col">Số Áo</th>
-                            <th scope="col">Ngày Tạo</th>
-                            <th scope="col">Ngày Cập Nhật</th>
                             <th scope="col">Trạng Thái</th>
                         </tr>
                         </thead>
@@ -49,8 +47,6 @@
                             <td th:text="${ct.ma}"></td>
                             <td th:text="${ct.ten}"></td>
                             <td th:text="${ct.soAo}"></td>
-                            <td th:text="${ct.ngayTao}"></td>
-                            <td th:text="${ct.ngayCapNhat}"></td>
                             <td th:text="${ct.trangThai.moTa}"></td>
                             <td>
                                 <form th:action="@{/admin/psg/cau-thu/revert/{id}(id=${ct.id})}" method="post">

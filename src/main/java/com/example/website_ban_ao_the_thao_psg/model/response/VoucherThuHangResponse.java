@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,8 +22,7 @@ public class VoucherThuHangResponse {
     private Integer id;
     private String ma;
     private String ten;
-    private Boolean loaiGiamGia;
-    private Double giaTri;
+    private BigDecimal soTienGiam;
     private LocalDate ngayBatDau;
     private LocalDate ngayKetThuc;
     private Double dieuKienSuDungVoucher;

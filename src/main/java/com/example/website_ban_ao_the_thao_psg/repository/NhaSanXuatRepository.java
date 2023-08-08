@@ -11,11 +11,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
-public interface NhaSanXuatRepository extends JpaRepository<NhaSanXuat,Integer> {
+public interface NhaSanXuatRepository extends JpaRepository<NhaSanXuat, Integer> {
     @Query(value = "SELECT * FROM nha_san_xuat WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<NhaSanXuat> pageSearchActive(String searchString, Pageable pageable);
+
+    @Query(value = "SELECT * FROM nha_san_xuat WHERE trang_thai='ACTIVE' ", nativeQuery = true)
+    List<NhaSanXuat> getAll();
+
     @Query(value = "SELECT * FROM nha_san_xuat WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
     Page<NhaSanXuat> pageSearchIvActive(String searchString, Pageable pageable);
 

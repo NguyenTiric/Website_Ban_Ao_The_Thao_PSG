@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -28,16 +30,12 @@ import java.time.LocalDate;
 @Builder
 @ToString
 @Entity
-@Table(name = "tai_khoan")
-public class TaiKhoan {
+@Table(name = "nhan_vien")
+public class NhanVien {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "thu_hang_id")
-    private ThuHang thuHang;
 
     @ManyToOne
     @JoinColumn(name = "vai_tro_id")
@@ -58,20 +56,14 @@ public class TaiKhoan {
     @Column(name = "sdt")
     private String sdt;
 
+    @Column(name = "so_can_cuoc_cong_dan")
+    private String soCanCuocCongDan;
+
     @Column(name = "email")
     private String email;
 
-    @Column(name = "so_luong_don_hang_thanh_cong")
-    private Integer soLuongDonHangThanhCong;
-
     @Column(name = "mat_khau")
     private String matKhau;
-
-    @Column(name = "anh")
-    private String anh;
-
-    @Column(name = "so_tien_da_chi_tieu")
-    private BigDecimal soTienDaChiTieu;
 
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;
@@ -82,4 +74,8 @@ public class TaiKhoan {
     @Column(name = "trang_thai")
     @Enumerated(EnumType.STRING)
     private TrangThaiTaiKhoan trangThai;
+
+    @Lob
+    @Column(name = "anh")
+    private Blob anh;
 }

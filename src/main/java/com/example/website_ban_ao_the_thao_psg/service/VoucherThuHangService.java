@@ -1,30 +1,21 @@
 package com.example.website_ban_ao_the_thao_psg.service;
 
-import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNuocSanXuatRequest;
-import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateNuocSanXuatRequest;
-import com.example.website_ban_ao_the_thao_psg.model.response.NuocSanXuatResponse;
+import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateVoucherThuHangRequest;
+import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateVoucherThuHangRequest;
+import com.example.website_ban_ao_the_thao_psg.model.response.VoucherThuHangResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @Service
 public interface VoucherThuHangService {
+    Page<VoucherThuHangResponse> pageVoucherThuHangResponse(Integer pageNo, Integer size);
 
-    Page<NuocSanXuatResponse> pageNuocSanXuatActive(Integer pageNo, Integer size);
+    VoucherThuHangResponse add(CreateVoucherThuHangRequest createVoucherThuHangRequest);
 
-    Page<NuocSanXuatResponse> pageNuocSanXuatInActive(Integer pageNo, Integer size);
+    VoucherThuHangResponse update(UpdateVoucherThuHangRequest updateVoucherThuHangRequest);
 
-    NuocSanXuatResponse add(CreateNuocSanXuatRequest createNuocSanXuatRequest);
+    VoucherThuHangResponse getOne(Integer id);
 
-    NuocSanXuatResponse update(UpdateNuocSanXuatRequest updateNuocSanXuatRequest);
+    VoucherThuHangResponse delete(UpdateVoucherThuHangRequest updateVoucherThuHangRequest, Integer id);
 
-    NuocSanXuatResponse getOne(Integer id);
-
-    Page<NuocSanXuatResponse> searchNameOrMaActive(String searchName, Integer pageNo, Integer size);
-    Page<NuocSanXuatResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size);
-
-    void deleteNuocSanXuat(Integer id, LocalDate now);
-
-    void revertNuocSanXuat(Integer id,LocalDate now);
 }
