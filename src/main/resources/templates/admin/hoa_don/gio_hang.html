@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/hoa_don/hoa_don_cho}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="" layout:fragment="gioHang">
+    <div class="tab-content">
+        <div class="tab-pane show active" id="home">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="gh,index:${listGioHang}">
+                    <td th:text="${index.count}"></td>
+                    <td th:text="${gh.chiTietSanPham.sanPham.ma}"></td>
+                    <td th:text="${gh.chiTietSanPham.sanPham.ten}"></td>
+                    <td class="d-flex">
+                        <button class="btn btn-sm btn-secondary decrease-quantity">-</button>
+                        <input type="number" class="form-control border-1 bg-white quantity-input" th:name="soLuongSP" th:value="${gh.soLuong}" style="height: 35px">
+                        <button class="btn btn-sm btn-secondary increase-quantity">+</button>
+                    </td>
+                    <td id="unitPrice" th:text="${gh.chiTietSanPham.sanPham.gia}"></td>
+                    <td id="totalPrice" th:text="${gh.donGia}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

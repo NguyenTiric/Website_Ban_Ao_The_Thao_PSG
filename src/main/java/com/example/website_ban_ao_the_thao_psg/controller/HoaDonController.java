@@ -1,7 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
-import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
+import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonChiTietResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.SanPhamResponse;
 import com.example.website_ban_ao_the_thao_psg.service.ChiTietSanPhamService;
@@ -40,6 +40,14 @@ public class HoaDonController {
         model.addAttribute("hoaDon", hoaDonResponse);
         model.addAttribute("listSanPham", sanPhamResponseList);
         return "admin/hoa_don/hoa_don_detail";
+    }
+
+    @GetMapping("/gio-hang/{id}")
+    public String gioHang(@PathVariable("id") Integer id, Model model) {
+        List<HoaDonChiTietResponse> listGioHang = hoaDonService.getAllHoaDonChiTiet(id);
+        model.addAttribute("listHoaDonCho", hoaDonService.getAllHoaDonCho());
+        model.addAttribute("listGioHang", listGioHang);
+        return "admin/hoa_don/gio_hang";
     }
 
     @GetMapping("/lich-su-hoa-don/{id}")

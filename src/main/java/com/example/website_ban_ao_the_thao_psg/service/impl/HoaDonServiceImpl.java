@@ -121,7 +121,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         lichSuHoaDon.setHoaDon(hoaDon);
         lichSuHoaDon.setNgayTao(LocalDateTime.now());
         lichSuHoaDon.setMoTa(moTa);
-        lichSuHoaDon.setTaiKhoan(null);
+        lichSuHoaDon.setNhanVien(null);
 
         switch (trangThaiHoaDon) {
             case APPROVED:

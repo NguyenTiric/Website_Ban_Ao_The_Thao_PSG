@@ -1,82 +1,174 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/fragments_layout_admin}"
+
 >
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/site-logo.8a953140.png">
+    <title>Paris Saint-Germain Boutique | PSG Maillots, PSG Boutique | Official PSG Shop</title>
+    <!-- Custom CSS -->
+    <link th:href="@{/assets/extra-libs/c3/c3.min.css}" rel="stylesheet">
+    <link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/plugins.bundle5883.css}" rel="stylesheet">
+    <script th:src="@{/assets/js/config.js}"></script>
 </head>
 <body>
-<div class="container" layout:fragment="content">
-    <div class="row">
-        <div class="col-6">
-            <li class="nav-item d-none d-md-block">
-                <a class="nav-link" href="javascript:void(0)">
-                    <nav class="navbar bg-body">
-                        <div class="container-fluid">
-                            <form class="d-flex" role="search" action="/admin/psg/hoa-don/search" method="get">
-                                <input name="searchNameOrMa"
-                                       class="form-control custom-shadow custom-radius border-0 bg-white"
-                                       type="search" placeholder="Tìm đơn hàng" aria-label="Search">
-                                <button class="btn btn-rounded btn-primary" type="submit" style="margin-left: 7px">
-                                    Search
-                                </button>
-                            </form>
-                        </div>
-                    </nav>
-                </a>
-            </li>
-        </div>
-        <div class="col-6">
-            <li class="nav-item d-none d-md-block">
-                <a class="nav-link" href="javascript:void(0)">
-                    <nav class="navbar bg-body">
-                        <div class="container-fluid justify-content-end">
-                            <form action="/admin/psg/hoa-don/add-hoa-don-cho" method="post">
-                                <button class="btn btn-rounded btn-primary" type="submit" style="margin-right: 10px;">
-                                    Tạo Đơn Hàng
-                                </button>
-                            </form>
-                        </div>
-                    </nav>
-                </a>
-            </li>
+<div class="row mt-3 mb-3">
+    <div class="col-4">
+        <div class="container-fluid">
+            <form class="d-flex" role="search" action="/admin/psg/hoa-don/search" method="get">
+                <input name="searchNameOrMa"
+                       class="form-control custom-shadow custom-radius border-0 bg-white"
+                       type="search" placeholder="Tìm đơn hàng" aria-label="Search">
+                <button class="btn btn-rounded btn-primary" type="submit" style="margin-left: 7px">
+                    Search
+                </button>
+            </form>
         </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title mb-3">Danh Sách Hóa Đơn</h4>
-            <div class="tab-content">
-                <div class="tab-pane show active" id="home-b1">
-                    <table class="table table-striped" id="table-alert">
-                        <thead>
-                        <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Mã Hóa Đơn</th>
-                            <th scope="col">Ngày Tạo</th>
-                            <th scope="col">Trạng Thái</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="dhc,index:${listHoaDonCho}">
-                            <td th:text="${index.count}"></td>
-                            <td th:text="${dhc.ma}"></td>
-                            <td th:text="${dhc.ngayTao}"></td>
-                            <td th:text="${dhc.trangThai.moTa}"></td>
-                            <td>
-                                <a th:href="@{/admin/psg/hoa-don/detail-hoa-don/{id}(id=${dhc.id})}"
-                                   class="btn waves-effect waves-light btn-rounded btn-warning"
-                                >Update</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <div class="col-8">
+        <div class="inline-block-container">
+            <div th:each="hdc:${listHoaDonCho}" class="inline-block-element d-inline-block" style="margin-right: 20px">
+                <a class="btn btn-outline-primary" th:href="@{/admin/psg/hoa-don/gio-hang/{id}(id=${hdc.id})}"
+                   role="button" th:text="${hdc.ma}"></a>
             </div>
-
-        </div> <!-- end card-body-->
+            <form action="/admin/psg/hoa-don/add-hoa-don-cho" method="post" class="d-inline-block">
+                <button class="btn btn-outline-primary" type="submit" style="margin-right: 10px;">+</button>
+            </form>
+        </div>
     </div>
 </div>
+<div class="card">
+    <div class="card-body">
+        <div class="row h-1000">
+            <div class="col-7">
+                <h4 class="card-title mb-3">Giỏ Hàng</h4>
+                <section layout:fragment="gioHang">
+                </section>
+            </div>
+            <div class="col-5">
+                <div
+                        class="tab-pane fade show active"
+                        id="kt_tab_pane_1"
+                        role="tabpanel"
+                        aria-labelledby="kt_tab_pane_2"
+                >
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s.
+                </div>
+                <div
+                        class="tab-pane fade"
+                        id="kt_tab_pane_2"
+                        role="tabpanel"
+                        aria-labelledby="kt_tab_pane_2"
+                >
+                    Lorem Ipsum passages, and more recently with desktop
+                    publishing software like Aldus PageMaker including
+                    versions of Lorem Ipsum.
+                </div>
+                <div
+                        class="tab-pane fade"
+                        id="kt_tab_pane_3"
+                        role="tabpanel"
+                        aria-labelledby="kt_tab_pane_3"
+                >
+                    OK
+                </div>
+            </div>
+        </div>
+        <div class="example-preview">
+            <ul class="nav nav-tabs nav-tabs-line">
+                <li class="nav-item">
+                    <a
+                            class="nav-link active"
+                            data-toggle="tab"
+                            href="#kt_tab_pane_1"
+                    >Sản Phẩm</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a
+                            class="nav-link"
+                            data-toggle="tab"
+                            href="#kt_tab_pane_2"
+                    >Bán Nhanh</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a
+                            class="nav-link"
+                            data-toggle="tab"
+                            href="#kt_tab_pane_3"
+                    >Bán Giao Hàng</a
+                    >
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const quantityInput = document.querySelector(".quantity-input");
+        const unitPriceField = document.getElementById("unitPrice");
+        const totalPriceField = document.getElementById("totalPrice");
+        const decreaseButton = document.querySelector(".decrease-quantity");
+        const increaseButton = document.querySelector(".increase-quantity");
+
+        // Get the initial unit price value from the template
+        const initialUnitPrice = parseFloat(unitPriceField.textContent);
+
+        // Function to update unit price and total price based on the quantity input
+        function updatePrices() {
+            const quantity = parseInt(quantityInput.value, 10);
+            if (!isNaN(quantity)) {
+                const totalPrice = initialUnitPrice * quantity;
+                totalPriceField.textContent = totalPrice.toFixed(2);
+            }
+        }
+
+        // Function to adjust quantity and update prices
+        function adjustQuantity(change) {
+            const currentQuantity = parseInt(quantityInput.value, 10);
+            if (!isNaN(currentQuantity)) {
+                const newQuantity = currentQuantity + change;
+                if (newQuantity >= 1) {
+                    quantityInput.value = newQuantity;
+                    updatePrices();
+                }
+            }
+        }
+
+        // Add event listeners to quantity input and buttons
+        decreaseButton.addEventListener("click", function () {
+            adjustQuantity(-1);
+        });
+
+        increaseButton.addEventListener("click", function () {
+            adjustQuantity(1);
+        });
+
+        // Update prices initially and when input changes
+        updatePrices();
+        quantityInput.addEventListener("input", updatePrices);
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/js/plugins.bundle5883.js}"></script>
+<script th:src="@{/dist/js/feather.min.js}"></script>
+<script th:src="@{/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"></script>
 </body>
 </html>
