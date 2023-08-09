@@ -5,6 +5,7 @@ import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,11 @@ public class UpdateChiTietVoucherThuHangRequest {
 
     @NotNull(message = "Thứ hạng không để trống")
     private VoucherThuHang voucherThuHang;
+
+
+    @NotNull(message = "Số lượng không để trống")
+    @Min(value = 1, message = "Số lượng là số nguyên và lớn hơn 0")
+    private Integer soLuong;
 
     @Enumerated(EnumType.STRING)
     private TrangThaiVoucher trangThai;
