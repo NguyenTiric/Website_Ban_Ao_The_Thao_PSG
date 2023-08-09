@@ -1,5 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.entity;
 
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiSanPham;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,13 +43,18 @@ public class ChiTietVoucherThuHang {
     @JoinColumn(name = "voucher_thu_hang_id")
     private VoucherThuHang voucherThuHang;
 
-    @Column(name = "trang_thai")
-    @Enumerated(EnumType.STRING)
-    private TrangThaiSanPham trangThai;
+    @Column(name = "so_luong")
+    private Integer soLuong;
 
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;
 
     @Column(name = "ngay_cap_nhat")
     private LocalDate ngayCapNhat;
+
+    @Column(name = "trang_thai")
+    @Enumerated(EnumType.STRING)
+    private ApplicationConstant.TrangThaiVoucher trangThai;
+
+
 }

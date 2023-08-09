@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.entity;
 
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiVoucher;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiSanPham;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -8,6 +9,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +21,6 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,34 +29,29 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 @Entity
-@Table(name = "voucher_thu_hang")
-public class VoucherThuHang {
-
+@Table(name = "vi_voucher")
+public class ViVoucher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    @ManyToOne
+    @JoinColumn(name = "khach_hang_id")
+    private KhachHang khachHang;
+
+    @ManyToOne
+    @JoinColumn(name = "chi_tiet_voucher_thu_hang_id")
+    private ChiTietVoucherThuHang chiTietVoucherThuHang;
+
     @Column(name = "ma")
     private String ma;
-
-    @Column(name = "ten")
-    private String ten;
 
     @Column(name = "so_tien_giam")
     private BigDecimal soTienGiam;
 
-    @Column(name = "ngay_bat_dau")
-    private LocalDateTime ngayBatDau;
-
-    @Column(name = "ngay_ket_thuc")
-    private LocalDateTime ngayKetThuc;
-
     @Column(name = "gia_tri_don_hang_toi_thieu")
     private BigDecimal giaTriDonHangToiThieu;
-
-    @Column(name = "mo_ta")
-    private String moTa;
 
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;
@@ -64,5 +61,6 @@ public class VoucherThuHang {
 
     @Column(name = "trang_thai")
     @Enumerated(EnumType.STRING)
-    private TrangThaiVoucher trangThai;
+    private ApplicationConstant.TrangThaiViVoucher trangThai;
+
 }
