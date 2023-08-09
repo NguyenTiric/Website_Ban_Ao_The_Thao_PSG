@@ -9,64 +9,92 @@
 </head>
 <body>
 <div class="container" layout:fragment="content">
-    <div class="row">
-        <div class="col-3"> </div>
-        <div class="col-6">
-            <form action="/admin/psg/thu-hang/add" th:object="${thuHang}" method="post" onsubmit="return  confirm('Bạn có thêm không?')">
-                <div th:if="${errorMessage}" class="error-message">
-                    <span th:text="${errorMessage}" style="color: red"></span>
-                </div><br>
+    <h2 class="text-center mb-4">Thêm Thứ hạng</h2>
+    <form action="/admin/psg/thu-hang/add" th:object="${thuHang}" method="post" onsubmit="return  confirm('Bạn có thêm không?')">
+        <div class="card card-custom">
+            <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                <div class="row">
+                    <div th:if="${errorMessage}" class="error-message">
+                        <span th:text="${errorMessage}" style="color: red"></span>
+                    </div><br>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group mb-3">
+                            <label class="form-label" style="margin-left: 10px;font-size: 14px">Tên thứ hạng</label>
+                            <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                                    type="text" placeholder="Nhập tên thứ hạng" th:field="*{ten}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px" th:errors="*{ten}"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group mb-3">
+                            <label class="form-label" style="margin-left: 10px;font-size: 14px">Số tiền tối thiểu</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="text" placeholder="Nhập số tiền tối thiểu" th:field="*{soTienKhachChiToiThieu}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('soTienKhachChiToiThieu')}" style="color: red; font-size: 13px" th:errors="*{soTienKhachChiToiThieu}"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group mb-3">
+                            <label class="form-label" style="margin-left: 10px;font-size: 14px">Số lượng đơn hàng tối thiểu</label>
+                            <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                                    type="text" placeholder="Nhập số lượng tối thiểu" th:field="*{soLuongDonHangToiThieu}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('soLuongDonHangToiThieu')}" style="color: red; font-size: 13px" th:errors="*{soLuongDonHangToiThieu}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+            </div>
+        </div><br>
 
-                <div class="form-group mb-3">
-                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                            type="text" placeholder="Nhập tên thứ hạng" th:field="*{ten}" style="height: 50px">
-                    <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px" th:errors="*{ten}"></span>
-                </div>
+        <div class="card card-custom">
+            <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                <div class="row">
+                    <div class="col-2">
+                        <!-- Button trigger modal -->
+                        <label class="form-label" style="margin-left: 10px;font-size: 14px"><h3>Voucher</h3></label>
+                        <p class="text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Thêm voucher
+                        </p>
 
-                <div class="form-group mb-3">
-                    <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                           type="text" placeholder="Nhập số tiền tối thiểu" th:field="*{soTienKhachChiToiThieu}" style="height: 50px">
-                    <span th:if="${#fields.hasErrors('soTienKhachChiToiThieu')}" style="color: red; font-size: 13px" th:errors="*{soTienKhachChiToiThieu}"></span>
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Chọn voucher</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn waves-effect waves-light btn-rounded btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn waves-effect waves-light btn-rounded btn-primary">Understood</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <div class="form-group mb-3">
+                            <label class="check" style="margin-right: 15px;margin-top: 15px">
+                                <input type="checkbox" />
+                                <span>hihih</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group mb-3">
-                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                            type="text" placeholder="Nhập số lượng tối thiểu" th:field="*{soLuongDonHangToiThieu}" style="height: 50px">
-                    <span th:if="${#fields.hasErrors('soLuongDonHangToiThieu')}" style="color: red; font-size: 13px" th:errors="*{soLuongDonHangToiThieu}"></span>
-                </div>
-                <div class="form-group mb-3 text-center">
-                    <a href="/admin/psg/thu-hang/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Trở lại</a>
-                    <button class="btn btn-rounded btn-primary" type="submit">Thêm</button>
-                </div>
-            </form>
+            </div>
         </div>
-        <div class="col-3"> </div>
+
+        <div class="form-group mb-3 text-center">
+            <a href="/admin/psg/thu-hang/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Trở lại</a>
+            <button class="btn btn-rounded btn-primary" type="submit">Thêm</button>
+        </div>
+    </form>
 </div>
 </div>
-<script>document.getElementById("mainButton").addEventListener("click", function() {
-    // Lấy các button ẩn
-    var hiddenButtons = document.querySelectorAll(".hidden");
-
-    // Hiển thị các button ẩn
-    hiddenButtons.forEach(function(button) {
-        button.style.display = "inline-block";
-    });
-
-    // Hiển thị nút "Remove" và ẩn nút chính
-    document.getElementById("removeButton").style.display = "inline-block";
-    document.getElementById("mainButton").style.display = "none";
-});
-
-// Đặt sự kiện nhấn vào nút "Remove"
-document.getElementById("removeButton").addEventListener("click", function() {
-    // Ẩn các button ẩn và nút "Remove"
-    var hiddenButtons = document.querySelectorAll(".hidden");
-    hiddenButtons.forEach(function(button) {
-        button.style.display = "none";
-    });
-    document.getElementById("removeButton").style.display = "none";
-
-    // Hiển thị lại nút chính
-    document.getElementById("mainButton").style.display = "inline-block";
-});</script>
 </body>
 </html>

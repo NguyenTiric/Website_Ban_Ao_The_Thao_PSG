@@ -40,6 +40,11 @@ public class ThuHangServiceImpl implements ThuHangService {
     KhachHangRepository khachHangRepository;
 
     @Override
+    public List<ThuHang> getAll() {
+        return this.thuHangRepository.findAll();
+    }
+
+    @Override
     public Page<ThuHangResponse> pageThuHangActive(Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<ThuHang> thuHangPage = thuHangRepository.pageACTIVE(pageable);
@@ -56,14 +61,6 @@ public class ThuHangServiceImpl implements ThuHangService {
     @Override
     public ThuHangResponse add(CreateThuHangRequest createThuHangRequest) {
         String tenThuHang = createThuHangRequest.getTen();
-
-        // Kiểm tra regex để đảm bảo chỉ chứa số
-        String regex = "^[0-9]+(\\.[0-9]+)?$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(tenThuHang);
-        if (!matcher.matches()) {
-            throw new RuntimeException("Lỗi định dạng tên: Tên chỉ được chứa số nguyên hoặc số thập phân!");
-        }
 
         if (this.thuHangRepository.existsByTenAndTrangThai(tenThuHang, ApplicationConstant.TrangThaiThuHang.ACTIVE)){
             throw new CommandLine.DuplicateNameException("Thứ hạng đã tồn tại, vui lòng đặt thứ hạng khác!");

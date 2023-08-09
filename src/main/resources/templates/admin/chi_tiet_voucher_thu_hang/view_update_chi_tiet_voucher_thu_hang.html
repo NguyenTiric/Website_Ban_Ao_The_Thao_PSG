@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/fragments_layout_admin}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <div class="row">
+        <div class="col-3"> </div>
+        <div class="col-6">
+            <form action="/admin/psg/chi-tiet-voucher-thu-hang/update" th:object="${chiTietVoucherThuHang}" method="post" onsubmit="return  confirm('Bạn có cập nhật không?')">
+                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{ngayTao}">
+                <div class="form-group mb-3">
+                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                            type="text" placeholder="Nhập tên cổ áo" th:field="*{thuHang}" style="height: 50px">
+                    <span th:if="${#fields.hasErrors('thuHang')}" style="color: red; font-size: 13px" th:errors="*{thuHang}"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
+                            type="text" placeholder="Nhập tên cổ áo" th:field="*{voucherThuHang}" style="height: 50px">
+                    <span th:if="${#fields.hasErrors('voucherThuHang')}" style="color: red; font-size: 13px" th:errors="*{voucherThuHang}"></span>
+                </div>
+                <div class="form-group mb-3 text-center">
+                    <a href="/admin/psg/chi-tiet-voucher-thu-hang/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Back</a>
+                    <button class="btn btn-rounded btn-primary" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-3"> </div>
+</div>
+</div>
+
+</body>
+</html>
