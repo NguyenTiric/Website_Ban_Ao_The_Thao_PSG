@@ -140,6 +140,35 @@ public class ApplicationConstant {
         }
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
+    public enum TrangThaiViVoucher {
+        ACTIVE("ACTIVE", "Hoạt động", "primary"),
+        FAILED("FAILED", "Đã sử dụng", "error"),
+        INACTIVE("INACTIVE", "Ngừng hoạt động", "error");
+
+        private final String ten;
+        private final String moTa;
+        private final String mauSac;
+
+        private TrangThaiViVoucher(String ten, String moTa, String mauSac) {
+            this.ten = ten;
+            this.moTa = moTa;
+            this.mauSac = mauSac;
+        }
+
+        public String getTen() {
+            return ten;
+        }
+
+        public String getMoTa() {
+            return moTa;
+        }
+
+        public String getMauSac() {
+            return mauSac;
+        }
+    }
+
 //    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 //    public enum TenThuHang {
 //        MEMBER("MEMBER", "Thành viên", "success"), SILVER("SILVER", "Bạc", "primary"), GOLD("GOLD", "Vàng", "warning"), DIAMOND("DIAMOND", "Kim cương", "error");
