@@ -151,6 +151,7 @@ public class NhanVienController {
                 NhanVienResponse tk= nhanVienService.getOne(id);
         model.addAttribute("vaiTro",vaiTroService.getAll());
         model.addAttribute("nhanVien",tk);
+        model.addAttribute("htAnh",tk.getAnhNV());
         return "admin/nhan_vien/view_update_nhan_vien";
     }
 
@@ -161,13 +162,12 @@ public class NhanVienController {
             return "admin/nhan_vien/view_update_nhan_vien";
         }
         if (anh == null || anh.isEmpty()) {
-            result.rejectValue("anhNV", "anhNV", "Vui lòng tải lên một tệp tin ảnh");
-            model.addAttribute("vaiTro", vaiTroService.getAll());
-            return "admin/nhan_vien/view_update_nhan_vien";
+            // Lấy thông tin nhân viên từ service hoặc repository
+            NhanVien existingNhanVien = nhanVienService.viewById(updateNhanVienRequest.getId());
+
+            // Gán ảnh cũ từ thông tin nhân viên
+            updateNhanVienRequest.setAnhNV(existingNhanVien.getAnhNV());
         }
-
-
-
         // Kiểm tra nếu số điện thoại mới (nếu có) khác với số điện thoại cũ
         if (nhanVienService.existsBySdtNhanVienWithDifferentId(updateNhanVienRequest.getSdt(), updateNhanVienRequest.getId())) {
             result.rejectValue("sdt", "sdt", "Số điện thoại này đã tồn tại");
@@ -179,7 +179,6 @@ public class NhanVienController {
             model.addAttribute("vaiTro", vaiTroService.getAll());
             return "admin/nhan_vien/view_update_nhan_vien";
         }
-        model.addAttribute("htAnh",updateNhanVienRequest.getAnhNV());
 
         LocalDate currentDate = LocalDate.now();
         LocalDate ngaySinh = updateNhanVienRequest.getNgaySinh();

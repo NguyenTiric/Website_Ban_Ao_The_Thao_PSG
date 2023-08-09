@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
 import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
+import com.example.website_ban_ao_the_thao_psg.entity.NhanVien;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateKhachHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateKhachHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.KhachHangResponse;
@@ -157,6 +158,13 @@ public class KhachHangController {
     public String update(@Valid @ModelAttribute("khachHang") UpdateKhachHangRequest updateKhachHangRequest,@RequestParam("idAnhSua")MultipartFile anh, BindingResult result, Model model) throws IOException, SQLException{
         if (result.hasErrors()){
             return "admin/khach_hang/view_update_khach_hang";
+        }
+        if (anh == null || anh.isEmpty()) {
+            // Lấy thông tin nhân viên từ service hoặc repository
+            KhachHang existingKhachHang = khachHangService.viewById(updateKhachHangRequest.getId());
+
+            // Gán ảnh cũ từ thông tin nhân viên
+            updateKhachHangRequest.setAnh(existingKhachHang.getAnh());
         }
         // Kiểm tra nếu số điện thoại mới (nếu có) khác với số điện thoại cũ
         if (khachHangService.existsBySdtKhachHangWithDifferentId(updateKhachHangRequest.getSdt(), updateKhachHangRequest.getId())) {
