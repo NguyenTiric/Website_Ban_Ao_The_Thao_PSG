@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.NhanVien;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.NhanVienMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateNhanVienRequest;
@@ -56,30 +57,29 @@ public class NhanVienServiceImpl implements NhanVienService {
         NhanVien nhanVien = nhanVienMapper.createNhanVienRequestToNhanVienEntity(createNhanVienRequest);
         byte[] bytes = file.getBytes();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+        nhanVien.setMa(GenCode.generateNhanVienCode());
         nhanVien.setNgayTao(LocalDate.now());
         nhanVien.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
         nhanVien.setAnhNV(blob);
-
-
         nhanVienRepository.save(nhanVien);
     }
 
     @Override
     public void update(Integer id, MultipartFile file, UpdateNhanVienRequest updateNhanVienRequest) throws IOException, SQLException {
-        NhanVien tk = nhanVienRepository.findById(id).orElse(null);
-        if (tk != null) {
+        NhanVien nv = nhanVienRepository.findById(id).orElse(null);
+        if (nv != null) {
             if (!file.isEmpty()) {
                 byte[] bytes = file.getBytes();
                 Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-                tk.setAnhNV(blob);
+                nv.setAnhNV(blob);
             }
-            tk.setSdt(updateNhanVienRequest.getSdt());
-            tk.setTen(updateNhanVienRequest.getTen());
-            tk.setNgaySinh(updateNhanVienRequest.getNgaySinh());
-            tk.setGioiTinh(updateNhanVienRequest.getGioiTinh());
-            tk.setDiaChi(updateNhanVienRequest.getDiaChi());
-            tk.setEmail(updateNhanVienRequest.getEmail());
-            nhanVienRepository.save(tk);
+            nv.setSdt(updateNhanVienRequest.getSdt());
+            nv.setTen(updateNhanVienRequest.getTen());
+            nv.setNgaySinh(updateNhanVienRequest.getNgaySinh());
+            nv.setGioiTinh(updateNhanVienRequest.getGioiTinh());
+            nv.setDiaChi(updateNhanVienRequest.getDiaChi());
+            nv.setEmail(updateNhanVienRequest.getEmail());
+            nhanVienRepository.save(nv);
         }
     }
 

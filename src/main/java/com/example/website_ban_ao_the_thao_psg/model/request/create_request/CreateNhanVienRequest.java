@@ -31,6 +31,9 @@ public class CreateNhanVienRequest {
     @NotBlank(message = "Không Được để Trống")
     private String ten;
 
+    @NotBlank(message = "Không Được để Trống")
+    private String ma;
+
     @NotNull(message = "Giới Tính Không Được Để Trống")
     private Boolean gioiTinh;
 

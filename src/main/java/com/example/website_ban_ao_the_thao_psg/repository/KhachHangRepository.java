@@ -33,39 +33,25 @@ public interface KhachHangRepository extends JpaRepository<KhachHang,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE KhachHang m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.id = :id")
+    @Query(value = "UPDATE KhachHang kh SET kh.trangThai = 'INACTIVE', kh.ngayCapNhat = :now WHERE kh.id = :id")
     void deleteKhachHang(@Param("id") Integer id, @Param("now") LocalDate now);
 
     @Transactional
     @Modifying
-    @Query(value = "update KhachHang m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
+    @Query(value = "update KhachHang kh set kh.trangThai = 'ACTIVE', kh.ngayCapNhat= :now where kh.id = :id")
     void revertKhachHang(@Param("id") Integer id, @Param("now") LocalDate now);
 
     @Query(value = "SELECT * FROM khach_hang  WHERE trang_thai = 'INACTIVE'", nativeQuery = true)
     Page<KhachHang> pageINACTIVEKhachHang(Pageable pageable);
-
-//    List<KhachHang> findByNgayCapNhatBeforeAndTrangThai(Date ngayReset, String trangThai);
-//
-//    @Query(value = "select c.ngayDatLaiThuHang from QuyDinh c WHERE c.trangThai = 'ACTIVE'")
-//    LocalDate findNgayDatLai();
-//
-//    @Query(value = "UPDATE KhachHang t SET t.soLuongDonHangThanhCong = 0, t.soTienDaChiTieu = 0")
-//    List<KhachHang> resetToanBoThuHang();
-
-//    @Transactional
-//    @Modifying
-//    @Query("UPDATE KhachHang t SET t.soLuongDonHangThanhCong = 0, t.soTienDaChiTieu = 0 ")
-//    void resetSoLuongDonHangThanhCongAndSoTienDaChiTieuVeKhong();
-
-        @Query("SELECT CASE WHEN COUNT(tk) > 0 THEN true ELSE false END FROM KhachHang tk  WHERE tk.sdt = :sdt ")
+        @Query("SELECT CASE WHEN COUNT(kh) > 0 THEN true ELSE false END FROM KhachHang kh  WHERE kh.sdt = :sdt ")
     boolean existsBySdtKhachHang(String sdt);
 
-    @Query("SELECT CASE WHEN COUNT(tk) > 0 THEN true ELSE false END FROM KhachHang tk  WHERE tk.email = :email")
+    @Query("SELECT CASE WHEN COUNT(kh) > 0 THEN true ELSE false END FROM KhachHang kh  WHERE kh.email = :email")
     boolean existsByEmailKhachHang(String email);
 
-    @Query("SELECT CASE WHEN COUNT(tk) > 0 THEN true ELSE false END FROM KhachHang tk WHERE tk.sdt = :sdt AND tk.id <> :id")
+    @Query("SELECT CASE WHEN COUNT(kh) > 0 THEN true ELSE false END FROM KhachHang kh WHERE kh.sdt = :sdt AND kh.id <> :id")
     boolean existsBySdtKhachHangWithDifferentId(String sdt, Integer id);
 
-    @Query("SELECT CASE WHEN COUNT(tk) > 0 THEN true ELSE false END FROM KhachHang tk WHERE tk.email = :email AND tk.id <> :id")
+    @Query("SELECT CASE WHEN COUNT(kh) > 0 THEN true ELSE false END FROM KhachHang kh WHERE kh.email = :email AND kh.id <> :id")
     boolean existsByEmailKhachHangWithDifferentId(String email, Integer id);
 }

@@ -37,6 +37,8 @@ public class UpdateNhanVienRequest {
     @NotBlank(message = "Không Được để Trống")
     private String ten;
 
+    private String ma;
+
     @NotNull(message = "Giới Tính Không Được Để Trống")
     private Boolean gioiTinh;
 

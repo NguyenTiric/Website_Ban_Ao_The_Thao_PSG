@@ -42,6 +42,9 @@ public class KhachHang {
     @JoinColumn(name = "thu_hang_id")
     private ThuHang thuHang;
 
+    @Column(name = "ma")
+    private String ma;
+
     @Column(name = "ten")
     private String ten;
 

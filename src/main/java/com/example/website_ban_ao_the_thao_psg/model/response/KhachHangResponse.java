@@ -28,6 +28,7 @@ public class KhachHangResponse {
     private Integer id;
     private ThuHang thuHang;
     private String ten;
+    private String ma;
     private Boolean gioiTinh;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate ngaySinh;
