@@ -25,16 +25,10 @@ import java.util.Optional;
 
 @Component
 public class NhanVienServiceImpl implements NhanVienService {
-//    @Autowired
-//    private TaiKhoanRepository taiKhoanRepository;
-//
     @Autowired
     private NhanVienRepository nhanVienRepository;
     @Autowired
     private NhanVienMapper nhanVienMapper;
-
-    @Autowired
-    private VaiTroRepository vaiTroRepository;
     @Override
     public Page<NhanVienResponse> pageNhanVienActive(Integer pageNo, Integer size) {
         Pageable pageable= PageRequest.of(pageNo,size);
@@ -51,9 +45,7 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public void add(CreateNhanVienRequest createNhanVienRequest, MultipartFile file) throws IOException, SQLException {
-////        if (file == null) {
-////            throw new IllegalArgumentException("File is null. Please upload a file.");
-////        }
+
         NhanVien nhanVien = nhanVienMapper.createNhanVienRequestToNhanVienEntity(createNhanVienRequest);
         byte[] bytes = file.getBytes();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);

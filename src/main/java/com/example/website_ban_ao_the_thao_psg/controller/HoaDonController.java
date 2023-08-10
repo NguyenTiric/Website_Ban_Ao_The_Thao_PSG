@@ -1,14 +1,10 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
-import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
-import com.example.website_ban_ao_the_thao_psg.model.response.ChiTietSanPhamResponse;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonChiTietResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonResponse;
-import com.example.website_ban_ao_the_thao_psg.model.response.KhachHangResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.SanPhamResponse;
 import com.example.website_ban_ao_the_thao_psg.service.ChiTietSanPhamService;
-import com.example.website_ban_ao_the_thao_psg.service.HoaDonService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

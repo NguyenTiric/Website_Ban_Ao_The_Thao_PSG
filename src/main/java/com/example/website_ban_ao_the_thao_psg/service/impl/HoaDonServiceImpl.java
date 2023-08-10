@@ -20,8 +20,6 @@ import com.example.website_ban_ao_the_thao_psg.repository.GiaoDichRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.HoaDonChiTietRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.HoaDonRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.LichSuHoaDonRepository;
-import com.example.website_ban_ao_the_thao_psg.service.HoaDonService;
-import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
