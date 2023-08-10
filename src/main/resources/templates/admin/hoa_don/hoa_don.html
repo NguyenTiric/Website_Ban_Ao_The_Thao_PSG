@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en"
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/fragments_layout_admin}"
 >
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+<style>
+    .badge-light-success {
+        color: #d9b115;
+        background-color: #e8fff3;
+    }
+</style>
 </head>
 <body>
 <div class="container" layout:fragment="content">
@@ -15,10 +21,10 @@
                 <a class="nav-link" href="javascript:void(0)">
                     <nav class="navbar bg-body">
                         <div class="container-fluid">
-                            <form class="d-flex" role="search" action="/admin/psg/hoa-don/search" method="get">
+                            <form class="d-flex" role="search" action="/admin/psg/hoa-don/searchHoaDon/0" method="get">
                                 <input name="pathSearch"
                                        class="form-control custom-shadow custom-radius border-0 bg-white"
-                                       type="search" placeholder="Tìm đơn hàng" aria-label="Search">
+                                       type="search"  placeholder="Tìm Theo Tên và Số Điện Thoại" aria-label="Search">
                                 <button class="btn btn-rounded btn-primary" type="submit" style="margin-left: 7px">
                                     Search
                                 </button>
@@ -31,7 +37,7 @@
         <div class="col-8">
             <a class="nav-link" href="javascript:void(0)">
                 <div class="container-fluid">
-                    <form class="d-flex" role="search" id="searchForm" action="/admin/psg/hoa-don/search-by-date"
+                    <form class="d-flex" role="search" id="searchForm" action="/admin/psg/hoa-don/searchDate/0"
                           method="get">
                         <label style="padding-top: 15px">Từ ngày</label>
                         <input name="beginDate" id="beginDateInput"
@@ -125,18 +131,26 @@
                             <th scope="col">Ngày Tạo</th>
                             <th scope="col">Loại Đơn</th>
                             <th scope="col">Trạng Thái</th>
+                            <th scope="col">Hành Động</th>
+
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="hd,index:${listHoaDon}">
                             <td th:text="${index.count}"></td>
                             <td th:text="${hd.ma}"></td>
-                            <td th:text="${hd.getThanhTien()}"></td>
-                            <td th:text="${hd.getTaiKhoan().getTen()}"></td>
+                            <td th:text="${hd.formattedThanhTien}"></td>
+                            <td th:text="${hd.getKhachHang().getTen()}"></td>
                             <td th:text="${hd.getSdtNguoiNhan()}"></td>
-                            <td th:text="${hd.getNgayTao()}"></td>
-                            <td th:text="${hd.getHinhThucBanHang()}"></td>
-                            <td th:text="${hd.getTrangThai()}"></td>
+                            <td th:text="${#temporals.format(hd.getNgayTao, 'dd/MM/yyyy')}"></td>
+                            <td th:text="${hd.getHinhThucBanHang().getMoTa()}"></td>
+                            <td>
+                                <div class="badge badge-light-success fw-bold">
+                                    <span th:text="${hd.getTrangThai().getMoTa()}"></span>
+                                </div>
+                            </td>
+
+
                             <td>
                                 <span>
                                       <a th:href="@{/admin/psg/hoa-don/detail/{id}(id=${hd.id})}"

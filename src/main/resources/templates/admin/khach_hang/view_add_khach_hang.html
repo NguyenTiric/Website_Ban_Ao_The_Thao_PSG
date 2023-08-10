@@ -25,104 +25,111 @@
 </head>
 <body>
 <div class="container" layout:fragment="content">
-    <h2 class="text-center mb-4">Thêm Khách Hàng</h2>
+    <div class="card">
+        <div class="card-body">
+            <h2 class="text-center mb-4">Thêm Khách Hàng</h2>
+            <form action="/admin/psg/khach-hang/add" th:object="${khachHang}" method="post" enctype="multipart/form-data"
+                  onsubmit="return confirm('Bạn có thêm không?')">
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group mb-3">
+                                    <img src="https://static.thenounproject.com/png/625182-200.png" alt="" id="image" class="form-control mb-1"
+                                         style="width: 250px; height: 150px;margin-left: 100px">
+                                    <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                           type="file" name="anhKH" onchange="chooseFile(this)"
+                                           style="height: 40px;width: 250px;margin-left: 100px">
+                                    <span th:if="${#fields.hasErrors('anh')}" style="color: red; font-size: 15px"
+                                          th:errors="*{anh}"></span>
+                                </div>
 
 
-        <form action="/admin/psg/khach-hang/add" th:object="${khachHang}" method="post" enctype="multipart/form-data"
-              onsubmit="return confirm('Bạn có thêm không?')">
-            <div class="row">
-                <div class="col-1"></div>
-                <div class="col-10">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group mb-3">
-                                <img src="https://static.thenounproject.com/png/625182-200.png" alt="" id="image" class="form-control mb-1"
-                                     style="width: 250px; height: 150px;margin-left: 100px">
-                                <input class="form-control custom-shadow custom-radius border-1 bg-white"
-                                       type="file" name="anhKH" onchange="chooseFile(this)"
-                                       style="height: 40px;width: 250px;margin-left: 100px">
-                            </div>
-
-
-                            <div class="form-group mb-3">
-                                <label class="form-label" style="margin-left: 10px">Tên</label>
-                                <input class="form-control custom-shadow custom-radius border-1 bg-white"
-                                       type="text" placeholder="Nhập tên Khách Hàng" th:field="*{ten}"
-                                       style="height: 50px">
-                                <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 15px"
-                                      th:errors="*{ten}"></span>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" style="margin-left: 10px">Địa Chỉ</label>
-                                <input class="form-control custom-shadow custom-radius border-1 bg-white"
-                                       type="text" placeholder="Nhập địa chỉ" th:field="*{diaChi}"
-                                       style="height: 50px">
-                                <span th:if="${#fields.hasErrors('diaChi')}" style="color: red; font-size: 15px"
-                                      th:errors="*{diaChi}"></span>
-                            </div>
-
-                        </div>
-                        <div class="col-6" style="margin-top: 40px">
-
-
-                            <div class="form-group mb-3">
-                                <label class="form-label" style="margin-left: 10px">Số Điện Thoại</label>
-                                <input class="form-control custom-shadow custom-radius border-1 bg-white"
-                                       type="text" placeholder="Nhập Số Điện Thoại Khách Hàng" th:field="*{sdt}"
-                                       style="height: 50px">
-                                <span th:if="${#fields.hasErrors('sdt')}" style="color: red; font-size: 15px"
-                                      th:errors="*{sdt}"></span>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label class="form-label" style="margin-left: 10px">Giới Tính</label>
-                                <div class=" d-flex">
-                                    <div class="form-check" style="margin-left: 10px;margin-right: 25px">
-                                        <input class="form-check-input" type="radio" name="gioiTinh" th:value="true" th:field="*{gioiTinh}"   checked>
-                                        <label class="form-check-label" >
-                                            Nam
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gioiTinh" th:value="false" th:field="*{gioiTinh}">
-                                        <label class="form-check-label" >
-                                            Nữ
-                                        </label>
-                                    </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label" style="margin-left: 10px">Tên</label>
+                                    <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                           type="text" placeholder="Nhập tên Khách Hàng" th:field="*{ten}"
+                                           style="height: 50px">
+                                    <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 15px"
+                                          th:errors="*{ten}"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label" style="margin-left: 10px">Địa Chỉ</label>
+                                    <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                           type="text" placeholder="Nhập địa chỉ" th:field="*{diaChi}"
+                                           style="height: 50px">
+                                    <span th:if="${#fields.hasErrors('diaChi')}" style="color: red; font-size: 15px"
+                                          th:errors="*{diaChi}"></span>
                                 </div>
 
                             </div>
+                            <div class="col-6" style="margin-top: 40px">
 
-                            <div class="form-group mb-3">
-                                <label class="form-label" style="margin-left: 10px">Ngày Sinh</label>
-                                <input class="form-control custom-shadow custom-radius border-1 bg-white"
-                                       type="date" th:field="*{ngaySinh}"
-                                       style="height: 50px">
-                                <span th:if="${#fields.hasErrors('ngaySinh')}" style="color: red; font-size: 15px"
-                                      th:errors="*{ngaySinh}"></span>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label" style="margin-left: 10px">Số Điện Thoại</label>
+                                    <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                           type="text" placeholder="Nhập Số Điện Thoại Khách Hàng" th:field="*{sdt}"
+                                           style="height: 50px">
+                                    <span th:if="${#fields.hasErrors('sdt')}" style="color: red; font-size: 15px"
+                                          th:errors="*{sdt}"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label" style="margin-left: 10px">Giới Tính</label>
+                                    <div class=" d-flex">
+                                        <div class="form-check" style="margin-left: 10px; margin-right: 25px">
+                                            <input class="form-check-input" type="radio" name="gioiTinh" th:value="0" th:field="*{gioiTinh}"  />
+                                            <label class="form-check-label">
+                                                Nam
+                                            </label>
+                                        </div>
+                                        <div class="form-check" style="margin-left: 10px; margin-right: 25px">
+                                            <input class="form-check-input" type="radio" name="gioiTinh" th:value="1" th:field="*{gioiTinh}" />
+                                            <label class="form-check-label">
+                                                Nữ
+                                            </label>
+                                        </div>
+
+                                        <span th:if="${#fields.hasErrors('gioiTinh')}" style="color: red; font-size: 15px"
+                                              th:errors="*{gioiTinh}"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label" style="margin-left: 10px">Ngày Sinh</label>
+                                    <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                           type="date" th:field="*{ngaySinh}"
+                                           style="height: 50px">
+                                    <span th:if="${#fields.hasErrors('ngaySinh')}" style="color: red; font-size: 15px"
+                                          th:errors="*{ngaySinh}"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label" style="margin-left: 10px">Email</label>
+                                    <input class="form-control custom-shadow custom-radius border-1 bg-white"
+                                           type="text" placeholder="Nhập Email Khách Hàng" th:field="*{email}"
+                                           style="height: 50px">
+                                    <span th:if="${#fields.hasErrors('email')}" style="color: red; font-size: 15px"
+                                          th:errors="*{email}"></span>
+                                </div>
+
+
+
                             </div>
-
-                            <div class="form-group mb-3">
-                                <label class="form-label" style="margin-left: 10px">Email</label>
-                                <input class="form-control custom-shadow custom-radius border-1 bg-white"
-                                       type="text" placeholder="Nhập Email Khách Hàng" th:field="*{email}"
-                                       style="height: 50px">
-                                <span th:if="${#fields.hasErrors('email')}" style="color: red; font-size: 15px"
-                                      th:errors="*{email}"></span>
-                            </div>
-
-
-
                         </div>
                     </div>
+
+                    <div class="col-1"></div>
+
                 </div>
 
-                <div class="col-1"></div>
-
+                <button type="submit" class="btn btn-success" style="margin-left: 550px">ADD</button>
+            </form>
+        </div>
             </div>
-
-            <button type="submit" class="btn btn-success" style="margin-left: 550px">ADD</button>
-        </form>
 
 
 

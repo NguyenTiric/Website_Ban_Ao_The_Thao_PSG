@@ -50,11 +50,8 @@ public class VoucherThuHang {
     @Column(name = "ngay_ket_thuc")
     private LocalDateTime ngayKetThuc;
 
-    @Column(name = "dieu_kien_su_dung_voucher")
-    private Double dieuKienSuDungVoucher;
-
-    @Column(name = "so_luong")
-    private Integer soLuong;
+    @Column(name = "gia_tri_don_hang_toi_thieu")
+    private BigDecimal giaTriDonHangToiThieu;
 
     @Column(name = "mo_ta")
     private String moTa;

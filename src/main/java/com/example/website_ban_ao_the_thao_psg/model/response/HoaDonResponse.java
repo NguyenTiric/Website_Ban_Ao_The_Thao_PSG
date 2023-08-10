@@ -49,4 +49,5 @@ public class HoaDonResponse {
     private HinhThucBanHang hinhThucBanHang;
     @Enumerated(EnumType.STRING)
     private TrangThaiHoaDon trangThai;
+    private String formattedThanhTien;
 }

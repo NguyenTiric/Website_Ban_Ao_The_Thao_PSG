@@ -1,6 +1,8 @@
 package com.example.website_ban_ao_the_thao_psg.repository;
 
 import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
+import com.example.website_ban_ao_the_thao_psg.entity.NhanVien;
+import com.example.website_ban_ao_the_thao_psg.model.response.NhanVienResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,44 +17,57 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface NhanVienRepository extends JpaRepository<KhachHang,Integer> {
+public interface NhanVienRepository extends JpaRepository<NhanVien,Integer> {
 
-    @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen " +
-            "FROM tai_khoan tk " +
-            "JOIN vai_tro vt ON tk.vai_tro_id = vt.id " +
+    @Query(value = "SELECT * " +
+            "FROM nhan_vien tk " +
             "WHERE (tk.ten LIKE %?1% OR tk.sdt LIKE %?1% OR tk.email LIKE %?1% OR tk.dia_chi LIKE %?1%) " +
-            "AND tk.trang_thai = 'ACTIVE' AND (vt.ten ='Nhân Viên' OR vt.ten='Admin')", nativeQuery = true)
-    Page<KhachHang> pageSearchACTIVENhanVien(@Param("search") String search, Pageable pageable);
+            "AND tk.trang_thai = 'ACTIVE'", nativeQuery = true)
+    Page<NhanVien> pageSearchACTIVENhanVien(@Param("search") String search, Pageable pageable);
 
 
 
-    @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) <= :tuoiMax) AND (vt.ten ='Nhân Viên' or vt.ten='Admin') and tk.trang_thai='ACTIVE'",
-            countQuery = "SELECT COUNT(*) FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM tk.ngay_sinh) <= :tuoiMax) AND (vt.ten ='Nhân Viên' or vt.ten='Admin') and tk.trang_thai='ACTIVE'",
+    @Query(value = "SELECT * FROM nhan_vien  WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM ngay_sinh) <= :tuoiMax)  and trang_thai='ACTIVE'",
+            countQuery = "SELECT COUNT(*) FROM nhan_vien  WHERE (:tuoiMin IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM ngay_sinh) >= :tuoiMin) AND (:tuoiMax IS NULL OR EXTRACT(YEAR FROM CURRENT_DATE()) - EXTRACT(YEAR FROM ngay_sinh) <= :tuoiMax)  and trang_thai='ACTIVE'",
             nativeQuery = true)
-    Page<KhachHang> pageSearchTuoiMinMaxNhanVien(
+    Page<NhanVien> pageSearchTuoiMinMaxNhanVien(
             @Param("tuoiMin") Integer min,
             @Param("tuoiMax") Integer max,
             Pageable pageable
     );
 
 
-    @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE tk.trang_thai = 'INACTIVE' AND vt.ten = 'Nhân Viên'", nativeQuery = true)
-    Page<KhachHang> pageINACTIVENhanVien(Pageable pageable);
+    @Query(value = "SELECT *  FROM nhan_vien  WHERE trang_thai = 'INACTIVE' ", nativeQuery = true)
+    Page<NhanVien> pageINACTIVENhanVien(Pageable pageable);
 
-    @Query(value = "SELECT tk.*, vt.ten AS vaiTroTen FROM tai_khoan tk JOIN vai_tro vt ON tk.vai_tro_id = vt.id WHERE tk.trang_thai = 'ACTIVE' AND (vt.ten = 'Nhân Viên' OR vt.ten='Admin')", nativeQuery = true)
-    Page<KhachHang> pageACTIVENhanVien(Pageable pageable);
+    @Query(value = "SELECT * FROM nhan_vien  WHERE trang_thai = 'ACTIVE'", nativeQuery = true)
+    Page<NhanVien> pageACTIVENhanVien(Pageable pageable);
 
 
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE KhachHang m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.id = :id")
+    @Query(value = "UPDATE NhanVien m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.id = :id")
     void deleteNhanVien(@Param("id") Integer id, @Param("now") LocalDate now);
 
     @Transactional
     @Modifying
-    @Query(value = "update KhachHang m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
+    @Query(value = "update NhanVien m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
     void revertNhanVien(@Param("id") Integer id, @Param("now") LocalDate now);
+
+
+
+    @Query("SELECT CASE WHEN COUNT(nv) > 0 THEN true ELSE false END FROM NhanVien nv WHERE nv.sdt = :sdt ")
+    boolean existsBySdtNhanVien(String sdt);
+
+    @Query("SELECT CASE WHEN COUNT(nv) > 0 THEN true ELSE false END FROM NhanVien nv  WHERE nv.email = :email ")
+    boolean existsByEmailNhanVien(String email);
+
+    @Query("SELECT CASE WHEN COUNT(nv) > 0 THEN true ELSE false END FROM NhanVien nv WHERE nv.sdt = :sdt AND nv.id <> :id")
+    boolean existsBySdtNhanVienWithDifferentId(String sdt, Integer id);
+
+    @Query("SELECT CASE WHEN COUNT(nv) > 0 THEN true ELSE false END FROM NhanVien nv WHERE nv.email = :email AND nv.id <> :id")
+    boolean existsByEmailNhanVienWithDifferentId(String email, Integer id);
 
 
 
