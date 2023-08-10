@@ -5,6 +5,7 @@ import java.util.Random;
 public class GenCode {
     private static final String chatLieu = "CL0";
     private static final String sanPham = "SP0";
+    private static final String voucher = "VC0";
     private static final String loaiSanPham = "LSP0";
     private static final String nhaSanXuat = "NhaSX0";
     private static final String kichThuoc = "KT0";
@@ -27,6 +28,12 @@ public class GenCode {
         int randomNumber = random.nextInt((int) Math.pow(10, NUMBER_LENGTH));
         String formattedNumber = String.format("%0" + NUMBER_LENGTH + "d", randomNumber);
         return chatLieu + formattedNumber;
+    }
+    public static String generateVoucherCode() {
+        Random random = new Random();
+        int randomNumber = random.nextInt((int) Math.pow(10, NUMBER_LENGTH));
+        String formattedNumber = String.format("%0" + NUMBER_LENGTH + "d", randomNumber);
+        return voucher + formattedNumber;
     }
     public static String generateNhanVienCode() {
         Random random = new Random();

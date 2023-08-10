@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.VoucherThuHangMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateVoucherThuHangRequest;
@@ -44,6 +45,7 @@ public class VoucherThuHangServiceImpl implements VoucherThuHangService {
     @Override
     public VoucherThuHangResponse add(CreateVoucherThuHangRequest createVoucherThuHangRequest) {
         VoucherThuHang voucherThuHang = voucherThuHangMapper.createVoucherThuHangRequestToVoucherThuHangEntity(createVoucherThuHangRequest);
+        voucherThuHang.setMa(GenCode.generateVoucherCode());
         voucherThuHang.setNgayTao(LocalDateTime.now());
         voucherThuHang.setTrangThai(ApplicationConstant.TrangThaiVoucher.ACTIVE);
         return voucherThuHangMapper.voucherThuHangEntityToVoucherThuHangResponse(voucherThuHangRepository.save(voucherThuHang));

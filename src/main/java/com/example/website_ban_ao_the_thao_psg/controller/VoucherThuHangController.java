@@ -117,10 +117,6 @@ public class VoucherThuHangController {
             model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
-        if (voucherThuHangService.existsByMa(createVoucherThuHangRequest.getMa())) {
-            model.addAttribute("checkma", "Mã voucher đã tồn tại, vui lòng chọn mã khác!");
-            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
-        }
         if (result.hasErrors()) {
             model.addAttribute("voucherThuHang", createVoucherThuHangRequest);
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
@@ -158,10 +154,6 @@ public class VoucherThuHangController {
 
         if (ngayKetThuc.isBefore(ngayBatDau)) {
             model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
-            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
-        }
-        if (voucherThuHangService.existsByMa(updateVoucherThuHangRequest.getMa())) {
-            model.addAttribute("checkma", "Mã voucher đã tồn tại, vui lòng chọn mã khác!");
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
 
