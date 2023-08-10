@@ -79,6 +79,7 @@
                         <select id="selecttTT" name="selecttTT" class="form-select custom-shadow custom-radius border-0 bg-white"
                                 aria-label="Default select example" style="width: 180px">
                             <option value="1">Tất cả</option>
+                            <option value="4">Sắp Diễn Ra</option>
                             <option value="2">Đang Diễn Ra</option>
                             <option value="3" >Đã Kết Thúc</option>
                         </select>
@@ -113,8 +114,8 @@
                             <td th:text="${vc.ma}"></td>
                             <td th:text="${vc.soLuong}"></td>
                             <td th:text="${vc.trangThai.moTa}"></td>
-                            <td th:text="${#temporals.format(vc.ngayBatDau, 'dd/MM/yyyy')}"></td>
-                            <td th:text="${#temporals.format(vc.ngayKetThuc, 'dd/MM/yyyy')}"></td>
+                            <td th:text="${#temporals.format(vc.ngayBatDau, 'dd/MM/yyyy hh:mm')}"></td>
+                            <td th:text="${#temporals.format(vc.ngayKetThuc, 'dd/MM/yyyy hh:mm')}"></td>
                             <td>
                       <span>
                                       <a th:href="@{/admin/psg/voucher-thu-hang/view-update/{id}(id=${vc.id})}"

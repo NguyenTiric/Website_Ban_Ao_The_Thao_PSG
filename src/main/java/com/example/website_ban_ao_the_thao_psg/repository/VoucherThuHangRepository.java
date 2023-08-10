@@ -18,7 +18,7 @@ import java.util.List;
 
 @Repository
 public interface VoucherThuHangRepository extends JpaRepository<VoucherThuHang,Integer> {
-    @Query(value = "SELECT * FROM voucher_thu_hang WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
+    @Query(value = "SELECT * FROM voucher_thu_hang WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE'  ", nativeQuery = true)
     Page<VoucherThuHang> pageSearchActive(String searchString, Pageable pageable);
     @Query(value = "SELECT * FROM voucher_thu_hang WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
     Page<VoucherThuHang> pageSearchIvActive(String searchString, Pageable pageable);
@@ -26,14 +26,10 @@ public interface VoucherThuHangRepository extends JpaRepository<VoucherThuHang,I
     @Query(value = "SELECT * FROM voucher_thu_hang WHERE trang_thai='INACTIVE' ", nativeQuery = true)
     Page<VoucherThuHang> pageINACTIVE(Pageable pageable);
 
-    @Query(value = "SELECT * FROM voucher_thu_hang WHERE trang_thai='ACTIVE' ", nativeQuery = true)
+    @Query(value = "SELECT * FROM voucher_thu_hang WHERE trang_thai='ACTIVE'  ", nativeQuery = true)
     Page<VoucherThuHang> pageACTIVE(Pageable pageable);
 
 
-//    @Query("SELECT v FROM VoucherThuHang v" +
-//    "WHERE (:ma is null OR v.ma LIKE lower(CONCAT('%', :ma, '%'))) \n "+
-//    "AND    (:ten is null OR v.ten LIKE lower(CONCAT('%', :ten, '%'))) \n)" +
-//            "AND")
 
     List<VoucherThuHang> findByNgayKetThucBeforeAndTrangThaiNot(LocalDateTime ngayKetThuc, ApplicationConstant.TrangThaiVoucher trangThai);
 
@@ -46,7 +42,7 @@ public interface VoucherThuHangRepository extends JpaRepository<VoucherThuHang,I
 
     @Transactional
     @Modifying
-    @Query(value = "update VoucherThuHang m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
+    @Query(value = "update VoucherThuHang m set m.trangThai = 'ACTIVE' , m.ngayCapNhat= :now where m.id = :id")
     void revert(@Param("id") Integer id, @Param("now") LocalDateTime now);
 
 

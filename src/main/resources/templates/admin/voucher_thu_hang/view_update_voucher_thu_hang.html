@@ -47,6 +47,13 @@
                              <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px" th:errors="*{ten}"></span>
                          </div>
                          <div class="form-group mb-3">
+                             <label>Số Tiền Giảm</label>
+                             <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                    type="text" placeholder="Nhập số tiền giảm" th:field="*{soTienGiam}" style="height: 50px">
+                             <span th:if="${#fields.hasErrors('soTienGiam')}" style="color: red; font-size: 13px">
+                                   </span>
+                         </div>
+                         <div class="form-group mb-3">
                              <label>Ngày Bắt Đầu</label>
                              <input  class="form-control custom-shadow custom-radius border-0 bg-white"
                                      type="datetime-local"  th:field="*{ngayBatDau}" style="height: 50px" >
@@ -57,13 +64,14 @@
                          </div>
                          <div class="form-group mb-3">
                              <label>Ngày Kết Thúc</label>
-                             <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                                     type="datetime-local"  th:field="*{ngayKetThuc}" style="height: 50px">
+                             <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                    type="datetime-local" th:field="*{ngayKetThuc}" pattern="dd-MM-yyyy hh:mm a" style="height: 50px">
                              <span th:if="${#fields.hasErrors('ngayKetThuc')}" style="color: red; font-size: 13px" th:errors="*{ngayKetThuc}"></span>
                              <th:block th:if="${error}">
                                  <div class="alert alert-danger" th:text="${error}"></div>
                              </th:block>
                          </div>
+
                          <br>
                      </div>
                      <div class="list-form-voucher">
@@ -82,8 +90,8 @@
                          </div>
                          <div class="form-group mb-3">
                              <label>Mô Tả</label>
-                             <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                                     type="text" placeholder="Số Lượng" th:field="*{moTa}" style="height: 100px">
+                             <textarea  class="form-control custom-shadow custom-radius border-0 bg-white"
+                                     type="text" placeholder="Số Lượng" th:field="*{moTa}" style="height: 100px"/>
                              <span th:if="${#fields.hasErrors('moTa')}" style="color: red; font-size: 13px" th:errors="*{moTa}"></span>
                          </div>
                      </div>

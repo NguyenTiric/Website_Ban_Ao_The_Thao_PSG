@@ -67,46 +67,61 @@ public class VoucherThuHangController {
         model.addAttribute("voucherThuHang", voucherThuHangResponse);
         return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
     }
+
     @GetMapping("/view-add")
     public String viewAdd(Model model) {
         model.addAttribute("voucherThuHang", new CreateVoucherThuHangRequest());
         return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
     }
+
     @PostMapping("/delete/{id}")
-    public String deleteVoucher(@PathVariable("id") Integer id,HttpSession session) {
+    public String deleteVoucher(@PathVariable("id") Integer id, HttpSession session) {
         voucherThuHangService.deleteVoucherThuHang(id, LocalDateTime.now());
         session.setAttribute("successMessage", "Xóa thành công!");
         return "redirect:/admin/psg/voucher-thu-hang/hien-thi";
     }
 
     @PostMapping("/revert/{id}")
-    public String revertVoucher(@PathVariable("id") Integer id,HttpSession session) {
+    public String revertVoucher(@PathVariable("id") Integer id, HttpSession session) {
         voucherThuHangService.revertVoucherThuHang(id, LocalDateTime.now());
         session.setAttribute("successMessage", "Khôi phục thành công!");
         return "redirect:/admin/psg/voucher-thu-hang/hien-thi";
     }
+
     @PostMapping("/add")
     public String add(@Valid @ModelAttribute("voucherThuHang") CreateVoucherThuHangRequest createVoucherThuHangRequest, BindingResult result, Model model, HttpSession session) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime ngayKetThuc = createVoucherThuHangRequest.getNgayKetThuc();
         LocalDateTime ngayBatDau = createVoucherThuHangRequest.getNgayBatDau();
         LocalDate localDateTimecz = now.toLocalDate();
+
+        if (ngayBatDau == null || ngayKetThuc == null) {
+            model.addAttribute("error", "Ngày bắt đầu hoặc ngày kết thúc không được để trống!");
+            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
+        }
+
         LocalDate batDauDate = ngayBatDau.toLocalDate();
         LocalDate ketThucDate = ngayKetThuc.toLocalDate();
+
         if (batDauDate.isBefore(localDateTimecz) || ketThucDate.isBefore(localDateTimecz)) {
             model.addAttribute("error", "Ngày bắt đầu hoặc ngày kết thúc không được là ngày trong quá khứ!");
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
 
-        if (ngayKetThuc == null || ngayKetThuc.isBefore(now)){
-            model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
+        if (ngayKetThuc.isBefore(now)) {
+            model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày hiện tại!");
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
+
         if (ngayKetThuc.isBefore(ngayBatDau)) {
             model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
-        if(result.hasErrors()){
+        if (voucherThuHangService.existsByMa(createVoucherThuHangRequest.getMa())) {
+            model.addAttribute("checkma", "Mã voucher đã tồn tại, vui lòng chọn mã khác!");
+            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
+        }
+        if (result.hasErrors()) {
             model.addAttribute("voucherThuHang", createVoucherThuHangRequest);
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
@@ -115,35 +130,52 @@ public class VoucherThuHangController {
 
         return "redirect:/admin/psg/voucher-thu-hang/hien-thi";
     }
+
     @PostMapping("/update")
-    public String update(@Valid @ModelAttribute("voucherThuHang")UpdateVoucherThuHangRequest updateVoucherThuHangRequest, BindingResult result, Model model, HttpSession session) {
+    public String update(@Valid @ModelAttribute("voucherThuHang") UpdateVoucherThuHangRequest updateVoucherThuHangRequest, BindingResult result, Model model, HttpSession session) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime ngayKetThuc = updateVoucherThuHangRequest.getNgayKetThuc();
         LocalDateTime ngayBatDau = updateVoucherThuHangRequest.getNgayBatDau();
         LocalDate localDateTimecz = now.toLocalDate();
+
+        if (ngayBatDau == null || ngayKetThuc == null) {
+            model.addAttribute("error", "Ngày bắt đầu hoặc ngày kết thúc không được để trống!");
+            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
+        }
+
         LocalDate batDauDate = ngayBatDau.toLocalDate();
-        if (batDauDate.isBefore(localDateTimecz)) {
-            model.addAttribute("error", "Ngày bắt đầu không được là ngày trong quá khứ!");
-            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
+        LocalDate ketThucDate = ngayKetThuc.toLocalDate();
+
+        if (batDauDate.isBefore(localDateTimecz) || ketThucDate.isBefore(localDateTimecz)) {
+            model.addAttribute("error", "Ngày bắt đầu hoặc ngày kết thúc không được là ngày trong quá khứ!");
+            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
-        if (ngayKetThuc == null || ngayKetThuc.isBefore(now)){
-            model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
-            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
+
+        if (ngayKetThuc.isBefore(now)) {
+            model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày hiện tại!");
+            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
+
         if (ngayKetThuc.isBefore(ngayBatDau)) {
             model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
-            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
+            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
-        if(result.hasErrors()){
+        if (voucherThuHangService.existsByMa(updateVoucherThuHangRequest.getMa())) {
+            model.addAttribute("checkma", "Mã voucher đã tồn tại, vui lòng chọn mã khác!");
+            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
+        }
+
+        if (result.hasErrors()) {
             model.addAttribute("voucherThuHang", updateVoucherThuHangRequest);
-            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
+            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
         voucherThuHangService.update(updateVoucherThuHangRequest);
         session.setAttribute("successMessage", "Cập nhập thành công!");
         return "redirect:/admin/psg/voucher-thu-hang/hien-thi";
     }
+
     @GetMapping("/searchActive/{pageNo}")
-    public String searchActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchNameOrMa") String searchNameOrMa){
+    public String searchActive(Model model, @PathVariable("pageNo") Integer pageNo, @RequestParam("searchNameOrMa") String searchNameOrMa) {
         model.addAttribute("voucherThuHang", new VoucherThuHang());
         Page<VoucherThuHangResponse> voucherThuHangResponses = voucherThuHangService.searchNameOrMaActive(searchNameOrMa, pageNo, 3);
         model.addAttribute("size", voucherThuHangResponses.getSize());
@@ -152,8 +184,9 @@ public class VoucherThuHangController {
         model.addAttribute("listVoucherThuHangActive", voucherThuHangResponses);
         return "admin/voucher_thu_hang/trang_chu_voucher_thu_hang";
     }
+
     @GetMapping("/searchInActive/{pageNo}")
-    public String searchInActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchNameOrMa") String searchNameOrMa){
+    public String searchInActive(Model model, @PathVariable("pageNo") Integer pageNo, @RequestParam("searchNameOrMa") String searchNameOrMa) {
         model.addAttribute("voucherThuHang", new VoucherThuHang());
         Page<VoucherThuHangResponse> voucherThuHangResponses = voucherThuHangService.searchNameOrMaInActive(searchNameOrMa, pageNo, 3);
         model.addAttribute("size", voucherThuHangResponses.getSize());

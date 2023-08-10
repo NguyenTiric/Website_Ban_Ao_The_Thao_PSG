@@ -11,6 +11,7 @@
         .voucher {
             width: 100%;
         }
+
         .form-voucher {
             width: 100%;
             display: flex;
@@ -39,6 +40,9 @@
                                    type="text" placeholder="Nhập voucher" th:field="*{ma}" style="height: 50px">
                             <span th:if="${#fields.hasErrors('ma')}" style="color: red; font-size: 13px"
                                   th:errors="*{ma}"></span>
+                            <th:block th:if="${checkma}">
+                                <div class="alert alert-danger" th:text="${checkma}"></div>
+                            </th:block>
                         </div>
                         <div class="form-group mb-3">
                             <label>Tên Voucher</label>
@@ -50,21 +54,22 @@
                         <div class="form-group mb-3">
                             <label>Số Tiền Giảm</label>
                             <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                                   type="text" placeholder="Nhập số tiền giảm" th:field="*{soTienGiam}" style="height: 50px">
+                                   type="text" placeholder="Nhập số tiền giảm" th:field="*{soTienGiam}"
+                                   style="height: 50px">
                             <span th:if="${#fields.hasErrors('soTienGiam')}" style="color: red; font-size: 13px"
                                   th:errors="*{soTienGiam}"></span>
                         </div>
                         <div class="form-group mb-3">
                             <label>Ngày Bắt Đầu</label>
                             <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                                   type="datetime-local" th:field="*{ngayBatDau}" style="height: 50px"  >
+                                   type="datetime-local" th:field="*{ngayBatDau}" style="height: 50px">
                             <span th:if="${#fields.hasErrors('ngayBatDau')}" style="color: red; font-size: 13px"
                                   th:errors="*{ngayBatDau}"></span>
                             <th:block th:if="${error}">
                                 <div class="alert alert-danger" th:text="${error}"></div>
                             </th:block>
                         </div>
-                      </div>
+                    </div>
                     <div class="list-form-voucher">
 
                         <div class="form-group mb-3">
@@ -95,8 +100,8 @@
                         </div>
                         <div class="form-group mb-3">
                             <label>Mô Tả</label>
-                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                                   type="text" placeholder="Số Lượng" th:field="*{moTa}" style="height: 100px">
+                            <textarea class="form-control custom-shadow custom-radius border-0 bg-white"
+                                      th:field="*{moTa}" placeholder="Mô tả" style="height: 100px"></textarea>
                             <span th:if="${#fields.hasErrors('moTa')}" style="color: red; font-size: 13px"
                                   th:errors="*{moTa}"></span>
                         </div>

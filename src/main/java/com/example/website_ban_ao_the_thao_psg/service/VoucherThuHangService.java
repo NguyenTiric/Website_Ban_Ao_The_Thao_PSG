@@ -20,6 +20,8 @@ public interface VoucherThuHangService {
 
     Page<VoucherThuHangResponse> pageVouCherThuHangInActive(Integer pageNo, Integer size);
 
+//    Page<VoucherThuHangResponse> pageVouCherThuHangPending(Integer pageNo, Integer size);
+
     VoucherThuHangResponse add(CreateVoucherThuHangRequest createVouCherThuHangRequest);
 
     VoucherThuHangResponse update(UpdateVoucherThuHangRequest updateVouCherThuHangRequest);
@@ -31,6 +33,8 @@ public interface VoucherThuHangService {
     void deleteVoucherThuHang(Integer id, LocalDateTime now);
 
     void revertVoucherThuHang(Integer id,LocalDateTime now);
+
+
 
 
 

@@ -368,6 +368,13 @@
             window.location.href = url.href;
         }
     });
+    document.getElementById("selecttTT").addEventListener("change", function() {
+        var selectedValue = this.value;
+        if (selectedValue === "4") {
+            var url = new URL("/admin/psg/voucher-thu-hang/hien-thi", window.location.origin);
+            window.location.href = url.href;
+        }
+    });
 
 
 

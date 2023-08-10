@@ -34,6 +34,8 @@ public class CreateVoucherThuHangRequest {
     @NotBlank(message = "Tên không để trống")
     @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")
     private String ten;
+    @NotNull(message = "Số tiền giảm không để trống")
+    @Min(value = 1, message = "Số tiền là số nguyên và lớn hơn 0")
     private BigDecimal soTienGiam;
 
     @NotNull(message = "Ngày bắt đầu không để trống")
