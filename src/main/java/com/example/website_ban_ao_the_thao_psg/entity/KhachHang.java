@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
@@ -48,6 +49,7 @@ public class KhachHang {
     private Boolean gioiTinh;
 
     @Column(name = "ngay_sinh")
+    @DateTimeFormat(pattern = "dd-MM-YYYY")
     private LocalDate ngaySinh;
 
     @Column(name = "dia_chi")

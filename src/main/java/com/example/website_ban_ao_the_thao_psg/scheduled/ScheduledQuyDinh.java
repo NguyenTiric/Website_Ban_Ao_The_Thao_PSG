@@ -2,6 +2,7 @@ package com.example.website_ban_ao_the_thao_psg.scheduled;
 
 import com.example.website_ban_ao_the_thao_psg.entity.QuyDinh;
 import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
+import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.QuyDinhRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.NhanVienRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class ScheduledQuyDinh {
     private QuyDinhRepository quyDinhRepository;
 
     @Autowired
-    private NhanVienRepository nhanVienRepository;
+    private KhachHangRepository khachHangRepository;
 
     @Scheduled(fixedRate = 6000)
     public void thongBaoReset() {
@@ -35,8 +36,8 @@ public class ScheduledQuyDinh {
             LocalDate ngayThongBao = ngayDatLaiThuHang.minusDays(30);
 
             if (ngayDatLaiThuHang.isEqual(currentDate)) {
-                List<KhachHang> khachHangList = nhanVienRepository.findAll();
-                nhanVienRepository.resetSoLuongDonHangThanhCongAndSoTienDaChiTieuVeKhong();
+                List<KhachHang> khachHangList = khachHangRepository.findAll();
+//                nhanVienRepository.resetSoLuongDonHangThanhCongAndSoTienDaChiTieuVeKhong();
                 for (KhachHang khachHang : khachHangList) {
                     SimpleMailMessage message = new SimpleMailMessage();
                     message.setTo(khachHang.getEmail());
@@ -45,7 +46,7 @@ public class ScheduledQuyDinh {
                     emailSender.send(message);
                 }
             } else if (ngayDatLaiThuHang.isEqual(ngayThongBao)) {
-                List<KhachHang> khachHangList = nhanVienRepository.findAll();
+                List<KhachHang> khachHangList = khachHangRepository.findAll();
                 for (KhachHang khachHang : khachHangList) {
                     SimpleMailMessage message = new SimpleMailMessage();
                     message.setTo(khachHang.getEmail());
