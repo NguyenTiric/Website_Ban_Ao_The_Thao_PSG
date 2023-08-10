@@ -24,12 +24,15 @@ public class HoaDonController {
     @Autowired
     private HoaDonService hoaDonService;
 
+
+
     @Autowired
     private ChiTietSanPhamService chiTietSanPhamService;
 
     @GetMapping("/hoa-don-cho")
     public String getAllHoaDonCho(Model model) {
         model.addAttribute("listHoaDonCho", hoaDonService.getAllHoaDonCho());
+        model.addAttribute("listSanPhamActive",chiTietSanPhamService.getAllSanPhamActive());
         return "admin/hoa_don/hoa_don_cho";
     }
 
@@ -39,6 +42,7 @@ public class HoaDonController {
         List<SanPhamResponse> sanPhamResponseList = chiTietSanPhamService.getAllSP();
         model.addAttribute("hoaDon", hoaDonResponse);
         model.addAttribute("listSanPham", sanPhamResponseList);
+        model.addAttribute("listSanPhamActive",chiTietSanPhamService.getAllSanPhamActive());
         return "admin/hoa_don/hoa_don_detail";
     }
 
@@ -47,6 +51,7 @@ public class HoaDonController {
         List<HoaDonChiTietResponse> listGioHang = hoaDonService.getAllHoaDonChiTiet(id);
         model.addAttribute("listHoaDonCho", hoaDonService.getAllHoaDonCho());
         model.addAttribute("listGioHang", listGioHang);
+        model.addAttribute("listSanPhamActive",chiTietSanPhamService.getAllSanPhamActive());
         return "admin/hoa_don/gio_hang";
     }
 
@@ -67,7 +72,6 @@ public class HoaDonController {
         hoaDonService.addHoaDon();
         return "redirect:/admin/psg/hoa-don/hoa-don-cho";
     }
-
 
     @PostMapping("/update-trang-thai-hoa-don/{id}")
     public String updateTrangThaiHoaDon(@PathVariable("id") Integer idhd, @RequestParam("trangThai") ApplicationConstant.TrangThaiHoaDon trangThaiHoaDon) {

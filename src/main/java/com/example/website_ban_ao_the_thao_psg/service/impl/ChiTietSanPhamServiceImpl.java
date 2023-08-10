@@ -231,6 +231,11 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
+    public List<SanPhamResponse> getAllSanPhamActive() {
+        return sanPhamMapper.listSanPhamEntityToSanPhamResponse(sanPhamRepository.getAll());
+    }
+
+    @Override
     public SanPhamResponse addSp(CreateSanPhamRequest createSanPhamRequest) {
         return null;
     }

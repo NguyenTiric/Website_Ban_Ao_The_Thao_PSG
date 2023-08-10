@@ -26,7 +26,6 @@ public class VoucherThuHangResponse {
     private LocalDate ngayBatDau;
     private LocalDate ngayKetThuc;
     private BigDecimal giaTriDonHangToiThieu;
-    private Integer soLuong;
     private String moTa;
     private LocalDate ngayTao;
     private LocalDate ngayCapNhat;
