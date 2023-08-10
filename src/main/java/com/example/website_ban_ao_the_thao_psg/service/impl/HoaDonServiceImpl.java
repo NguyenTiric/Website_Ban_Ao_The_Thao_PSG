@@ -171,4 +171,25 @@ public class HoaDonServiceImpl implements HoaDonService {
         Page<HoaDon> pageHoaDonByDate = hoaDonRepository.listSearchByDate(begin, end, pageable);
         return pageHoaDonByDate.map(hoaDonMapper::hoaDonEntityToHoaDonResponse);
     }
+
+    @Override
+    public Page<HoaDonResponse> pageHoaDon(Integer page, Integer size) {
+        Pageable pageable=PageRequest.of(page,size);
+        Page<HoaDon>hoaDonResponses=hoaDonRepository.pageHoaDon(pageable);
+        return hoaDonResponses.map(hoaDonMapper ::hoaDonEntityToHoaDonResponse);
+    }
+
+    @Override
+    public Page<HoaDonResponse> pageSearchHoaDon(Integer page, Integer size, String tim) {
+        Pageable pageable=PageRequest.of(page,size);
+        Page<HoaDon>hoaDonResponses=hoaDonRepository.pageSearchHoaDon(pageable,tim);
+        return hoaDonResponses.map(hoaDonMapper ::hoaDonEntityToHoaDonResponse);
+    }
+
+    @Override
+    public Page<HoaDonResponse> pageSearchHoaDonBetweenDates(Integer page, Integer size, LocalDate batdau, LocalDate ketThuc) {
+        Pageable pageable=PageRequest.of(page,size);
+        Page<HoaDon>hoaDonResponses=hoaDonRepository.pageSearchHoaDonBetweenDates(pageable,batdau,ketThuc);
+        return hoaDonResponses.map(hoaDonMapper ::hoaDonEntityToHoaDonResponse);
+    }
 }

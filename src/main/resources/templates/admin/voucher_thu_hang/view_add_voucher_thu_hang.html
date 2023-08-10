@@ -1,46 +1,123 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/fragments_layout_admin}"
 >
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .voucher {
+            width: 100%;
+        }
+
+        .form-voucher {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .list-form-voucher {
+            width: calc(100% / 3);
+        }
+
+    </style>
 </head>
 <body>
 <div class="container" layout:fragment="content">
     <div class="row">
-        <div class="col-3"> </div>
-        <div class="col-6">
-            <form action="/admin/psg/thu-hang/add" th:object="${thuHang}" method="post" onsubmit="return  confirm('Bạn có thêm không?')">
-                <div th:if="${errorMessage}" class="error-message">
-                    <span th:text="${errorMessage}" style="color: red"></span>
-                </div><br>
+        <div class="col-3"></div>
+        <div class="voucher">
+            <form action="/admin/psg/voucher-thu-hang/add" th:object="${voucherThuHang}" method="post"
+                  onsubmit="return  confirm('Bạn có thêm không?')">
 
-                <div class="form-group mb-3">
-                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                            type="text" placeholder="Nhập tên thứ hạng" th:field="*{ten}" style="height: 50px">
-                    <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px" th:errors="*{ten}"></span>
-                </div>
+                <div class="form-voucher">
+                    <div class="list-form-voucher">
+                        <div class="form-group mb-3">
+                            <label>Mã Voucher</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="text" placeholder="Nhập voucher" th:field="*{ma}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ma')}" style="color: red; font-size: 13px"
+                                  th:errors="*{ma}"></span>
+                            <th:block th:if="${checkma}">
+                                <div class="alert alert-danger" th:text="${checkma}"></div>
+                            </th:block>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Tên Voucher</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="text" placeholder="Nhập số gia tri" th:field="*{ten}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px"
+                                  th:errors="*{ten}"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Số Tiền Giảm</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="text" placeholder="Nhập số tiền giảm" th:field="*{soTienGiam}"
+                                   style="height: 50px">
+                            <span th:if="${#fields.hasErrors('soTienGiam')}" style="color: red; font-size: 13px"
+                                  th:errors="*{soTienGiam}"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Ngày Bắt Đầu</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="datetime-local" th:field="*{ngayBatDau}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ngayBatDau')}" style="color: red; font-size: 13px"
+                                  th:errors="*{ngayBatDau}"></span>
+                            <th:block th:if="${error}">
+                                <div class="alert alert-danger" th:text="${error}"></div>
+                            </th:block>
+                        </div>
+                    </div>
+                    <div class="list-form-voucher">
 
-                <div class="form-group mb-3">
-                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                            type="text" placeholder="Nhập số tiền tối thiểu" th:field="*{soTienKhachChiToiThieu}" style="height: 50px">
-                    <span th:if="${#fields.hasErrors('soTienKhachChiToiThieu')}" style="color: red; font-size: 13px" th:errors="*{soTienKhachChiToiThieu}"></span>
-                </div>
-                <div class="form-group mb-3">
-                    <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                            type="text" placeholder="Nhập số lượng tối thiểu" th:field="*{soLuongDonHangToiThieu}" style="height: 50px">
-                    <span th:if="${#fields.hasErrors('soLuongDonHangToiThieu')}" style="color: red; font-size: 13px" th:errors="*{soLuongDonHangToiThieu}"></span>
+                        <div class="form-group mb-3">
+                            <label>Ngày Kết Thúc</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="datetime-local" th:field="*{ngayKetThuc}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ngayKetThuc')}" style="color: red; font-size: 13px"
+                                  th:errors="*{ngayKetThuc}"></span>
+                            <th:block th:if="${error}">
+                                <div class="alert alert-danger" th:text="${error}"></div>
+                            </th:block>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Điều Kiện Sử Dụng</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="text" placeholder="Đơn Hàng Từ" th:field="*{dieuKienSuDungVoucher}"
+                                   style="height: 50px">
+                            <span th:if="${#fields.hasErrors('dieuKienSuDungVoucher')}"
+                                  style="color: red; font-size: 13px"
+                                  th:errors="*{dieuKienSuDungVoucher}"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Số Lượng</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="text" placeholder="Số Lượng" th:field="*{soLuong}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('soLuong')}" style="color: red; font-size: 13px"
+                                  th:errors="*{soLuong}"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Mô Tả</label>
+                            <textarea class="form-control custom-shadow custom-radius border-0 bg-white"
+                                      th:field="*{moTa}" placeholder="Mô tả" style="height: 100px"></textarea>
+                            <span th:if="${#fields.hasErrors('moTa')}" style="color: red; font-size: 13px"
+                                  th:errors="*{moTa}"></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group mb-3 text-center">
-                    <a href="/admin/psg/thu-hang/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Trở lại</a>
+                    <a href="/admin/psg/voucher-thu-hang/hien-thi"
+                       class="btn waves-effect waves-light btn-rounded btn-primary">Quay lại</a>
                     <button class="btn btn-rounded btn-primary" type="submit">Thêm</button>
                 </div>
+
             </form>
+
         </div>
-        <div class="col-3"> </div>
-</div>
+        <div class="col-3"></div>
+    </div>
 </div>
 </body>
 </html>

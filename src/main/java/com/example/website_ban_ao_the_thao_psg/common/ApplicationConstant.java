@@ -251,7 +251,7 @@ public class ApplicationConstant {
 
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     public enum TrangThaiVoucher {
-        ACTIVE("ACTIVE", "Hoạt động", "primary"), INACTIVE("INACTIVE", "Không hoạt động", "error");
+        PENDING("PENDING", "Sắp Diễn Ra", "warning") ,ACTIVE("ACTIVE", "Hoạt động", "primary"), INACTIVE("INACTIVE", "Không hoạt động", "error");
 
         private final String ten;
         private final String moTa;

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -33,4 +34,7 @@ public interface HoaDonService {
     Page<HoaDonResponse> searchByAllRange(String name, Integer pageNo, Integer size);
 
     Page<HoaDonResponse> searchByDate(String beginDate, String endDate, Integer pageNo, Integer size) throws ParseException;
+    Page<HoaDonResponse>pageHoaDon(Integer page,Integer size);
+    Page<HoaDonResponse>pageSearchHoaDon(Integer page,Integer size,String tim);
+    Page<HoaDonResponse>pageSearchHoaDonBetweenDates(Integer page, Integer size, LocalDate batdau,LocalDate ketThuc);
 }

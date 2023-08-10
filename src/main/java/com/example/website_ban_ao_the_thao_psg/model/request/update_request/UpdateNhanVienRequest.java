@@ -32,19 +32,38 @@ import java.time.LocalDate;
 public class UpdateNhanVienRequest {
 
     private Integer id;
+
     private VaiTro vaiTro;
+    @NotBlank(message = "Không Được để Trống")
     private String ten;
+
+    private String ma;
+
+    @NotNull(message = "Giới Tính Không Được Để Trống")
     private Boolean gioiTinh;
+
+    @NotNull(message = "Ngày Sinh Không Được Để Trống")
     private LocalDate ngaySinh;
+
+    @NotBlank(message = "Không Được để Trống")
     private String diaChi;
+
+    @NotBlank(message = "Không Được để Trống")
     private String sdt;
+//    @NotBlank(message = "Không Được để Trống")
     private String soCanCuocCongDan;
+
+    @NotBlank(message = "Không Được để Trống")
     private String email;
+//    @NotBlank(message = "Không Được để Trống")
     private String matKhau;
+
     private LocalDate ngayTao;
     private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
     private ApplicationConstant.TrangThaiTaiKhoan trangThai;
+
     @Lob
-    private Blob anh;
+//    @NotNull(message = "Ảnh Không Được Để Trống")
+    private Blob anhNV;
 }
