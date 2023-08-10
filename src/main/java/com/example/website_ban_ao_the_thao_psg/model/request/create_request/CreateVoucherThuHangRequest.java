@@ -16,6 +16,7 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,19 +27,22 @@ import java.time.LocalDate;
 public class CreateVoucherThuHangRequest {
 
     private Integer id;
-
+    @NotBlank(message = "Mã không để trống")
+    @Size(min = 0, max = 50, message = "Tên không vượt quá 50 ký tự")
     private String ma;
 
     @NotBlank(message = "Tên không để trống")
     @Size(min = 0, max = 45, message = "Tên không vượt quá 45 ký tự")
     private String ten;
+    @NotNull(message = "Số tiền giảm không để trống")
+    @Min(value = 1, message = "Số tiền là số nguyên và lớn hơn 0")
     private BigDecimal soTienGiam;
 
     @NotNull(message = "Ngày bắt đầu không để trống")
-    private LocalDate ngayBatDau;
+    private LocalDateTime ngayBatDau;
 
     @NotNull(message = "Ngày kết thúc không để trống")
-    private LocalDate ngayKetThuc;
+    private LocalDateTime ngayKetThuc;
 
     @NotNull(message = "Giá trị đơn hàng tối thiểu không để trống")
     private BigDecimal giaTriDonHangToiThieu;
@@ -47,9 +51,9 @@ public class CreateVoucherThuHangRequest {
     @Size(min = 0, max = 225, message = "Mô tả không vượt quá 225 ký tự")
     private String moTa;
 
-    private LocalDate ngayTao;
+    private LocalDateTime ngayTao;
 
-    private LocalDate ngayCapNhat;
+    private LocalDateTime ngayCapNhat;
 
     @Enumerated(EnumType.STRING)
     private TrangThaiVoucher trangThai;

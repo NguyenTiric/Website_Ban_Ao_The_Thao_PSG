@@ -1,116 +1,99 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/fragments_layout_admin}"
-      xmlns="http://www.w3.org/1999/html">
+>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
-    <link rel="stylesheet" href="/style/style.css">
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .col-md-6 {
+            margin-top: 20px;
+            width: 100%;
+        }
+        .select-container{
+            display: flex;
+            justify-content: space-between;
+            justify-items: center;
+        }
+        .selectt {
+            width: 280px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .selectt label {
+            line-height: 36px;
+        }
+    </style>
+
 </head>
+
+
+
 <body>
+
 <div class="container" layout:fragment="content">
+    <h1 style="text-align: center">VOUCHER THỨ HẠNG</h1>
     <div class="row">
-        <div class="col-8"></div>
-        <div class="col-2">
-            <a href="/admin/psg/thu-hang/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">Thêm thứ
-                hạng</a>
-        </div>
-        <div class="col-2">
-            <a href="/admin/psg/thu-hang/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">Thứ hạng đã xóa</a>
-        </div>
-    </div><br>
-    <div class="row">
-        <br><div class="col-md-4">
+        <div class="col-8">
             <li class="nav-item d-none d-md-block">
-                <a class="nav-link">
+                <a class="nav-link" href="javascript:void(0)">
+
                     <nav class="navbar bg-body">
                         <div class="container-fluid">
-                            &nbsp;&nbsp;Mã hoặc tên:
-                            <br><form class="d-flex" role="search" action="/admin/psg/thu-hang/searchActive/0" method="get">
-                                <input name="searchNameOrMa"
-                                       class="form-control custom-shadow custom-radius border-0 bg-white"
-                                       type="search" placeholder="VD: TH01, Vàng,..." aria-label="Search">&nbsp;
-                                <button class="btn btn-rounded btn-primary" type="submit">Search</button>
+
+                            <form class="d-flex" role="search" action="/admin/psg/voucher-thu-hang/searchActive/0" method="get">
+                                <input name="searchNameOrMa" class="form-control custom-shadow custom-radius border-0 bg-white"
+                                       type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-rounded btn-primary" type="submit">Tìm</button>
                             </form>
                         </div>
                     </nav>
                 </a>
             </li>
-        </div>
-        <div class="col-md-4">
-            <li class="nav-item d-none d-md-block">
-                <a class="nav-link">
-                    <nav class="navbar bg-body">
-                        <div class="container-fluid">
-                            &nbsp;&nbsp;Số tiền hoặc đơn hàng tối thiểu:
-                            <br><form class="d-flex" role="search" action="/admin/psg/thu-hang/searchSoLuongDonHangToiThieuActive/0" method="get">
-                                <input name="searchSoLuongDonHangToiThieu"
-                                       class="form-control custom-shadow custom-radius border-0 bg-white"
-                                       type="search" placeholder="VD: 1000, 20000,..." aria-label="Search">&nbsp;
-                                <button class="btn btn-rounded btn-primary" type="submit">Search</button>
-                            </form>
-                            &nbsp;&nbsp;<div th:if="${errorMessage1}" class="error-message">
-                                <span th:text="${errorMessage1}" style="color: red"></span>
-                            </div>
-                        </div>
-                    </nav>
-                </a>
-            </li>
-        </div>
-        <br>
-    </div></br>
-    <div class="row">
-        <br>&nbsp;&nbsp;<div class="col-2">
-            &nbsp;&nbsp;<a id="mainButton" class="btn waves-effect waves-light btn-rounded btn-primary">
-                Lọc theo khoảng
-            </a>
-        </div>
-        <div class="col-4">
-            <button id="removeButton" class="btn waves-effect waves-light btn-rounded btn-primary hidden">Thoát</button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">
-            <a id="hiddenButton1" class="hidden">
-                <form action="/admin/psg/thu-hang/searchMinMaxSoTien/0" method="get">
-                    <br>&nbsp;&nbsp;Tìm theo khoảng tiền:
-                        <div class="form-group mb-3">
-                            <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="minAmount"
-                                    type="text" placeholder="Nhập số tiền nhỏ nhất">
-                        </div>
-                        <div class="form-group mb-3">
-                            <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="maxAmount"
-                                    type="text" placeholder="Nhập số tiền lớn nhất">
-                        </div>
-                    <button class="btn waves-effect waves-light btn-rounded btn-primary" type="submit">Tìm kiếm</button><br><br>
-                </form>
-            </a>
-        </div>
-        <div class="col-4">
-            <a id="hiddenButton2" class="hidden">
-                <form action="/admin/psg/thu-hang/searchMinMaxDonHang/0" method="get">
-                    <br>&nbsp;&nbsp;Tìm theo số lượng đơn hàng:
-                    <div class="form-group mb-3">
-                        <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="minAmount"
-                                type="text" placeholder="Nhập số lượng nhỏ nhất">
-                    </div>
-                    <div class="form-group mb-3">
-                        <input  class="form-control custom-shadow custom-radius border-0 bg-white" name="maxAmount"
-                                type="text" placeholder="Nhập số lượng lớn nhất">
-                    </div>
-                    <button class="btn waves-effect waves-light btn-rounded btn-primary" type="submit">Tìm kiếm</button><br><br>
-                </form>
-            </a>
         </div>
 
-    </div><br>
+        <div class="col-2">
+            <a href="/admin/psg/voucher-thu-hang/view-add" class="btn waves-effect waves-light btn-rounded btn-primary">Tạo Mã Giảm Giá</a>
+        </div>
+        <div class="col-2">
+            <a href="/admin/psg/voucher-thu-hang/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">Mã Đã Sử Dụng</a>
+        </div>
+        <div class="col-md-6">
+
+                <div class="select-container">
+<!--                    <div class="selectt">-->
+<!--                    <label class="form-label">Thứ Hạng :</label>-->
+<!--                        <select class="form-select custom-shadow custom-radius border-0 bg-white"-->
+<!--                                aria-label="Default select example" style="width: 180px">-->
+<!--                            <option value="">Tất cả</option>-->
+<!--                            <option value="">Kim cương</option>-->
+<!--                            <option value="">Vàng </option>-->
+<!--                            <option value="">Bạc </option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+                    <div class="selectt">
+                    <label class="form-label">Trạng thái :</label>
+                        <select id="selecttTT" name="selecttTT" class="form-select custom-shadow custom-radius border-0 bg-white"
+                                aria-label="Default select example" style="width: 180px">
+                            <option value="1">Tất cả</option>
+                            <option value="4">Sắp Diễn Ra</option>
+                            <option value="2">Đang Diễn Ra</option>
+                            <option value="3" >Đã Kết Thúc</option>
+                        </select>
+                    </div>
+
+                </div>
+
+        </div>
+    </div>
+    <br>
+    <br>
     <div class="card">
         <div class="card-body">
             <h4 class="card-title mb-3">Danh Sách</h4>
-            <div th:if="${errorMessage}" class="error-message">
-                <span th:text="${errorMessage}" style="color: red"></span>
-            </div>
             <div class="tab-content">
                 <div class="tab-pane show active" id="home">
                     <table class="table">
@@ -118,37 +101,33 @@
                         <tr>
                             <th scope="col">STT</th>
                             <th scope="col">Mã</th>
-                            <th scope="col">Tên</th>
-                            <th scope="col">Tiền tối thiểu</th>
-                            <th scope="col">Đơn hàng tối thiểu</th>
+                            <th scope="col">Số Lượng</th>
                             <th scope="col">Trạng Thái</th>
-                            <th scope="col">Hành Động</th>
+                            <th scope="col">Ngày Bắt Đầu</th>
+                            <th scope="col">Ngày Kết Thúc</th>
+                            <th scope="col">Thao Tác</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:each="th, index:${listThuHangActive}">
-                            <td th:text="${index.count} + ${currentPage * size - size} +4"></td>
-                            <td th:text="${th.ma}"></td>
-                            <td th:text="${th.ten}"></td>
-                            <td th:text="${th.soTienKhachChiToiThieu}"></td>
-                            <td th:text="${th.soLuongDonHangToiThieu}"></td>
-                            <td th:text="${th.trangThai.moTa}"  style="color: #00ff22"></td>
+                        <tbody id="tableBody">
+                        <tr th:each="vc,index:${listVoucherThuHangActive}">
+                            <td th:text="${index.count}"></td>
+                            <td th:text="${vc.ma}"></td>
+                            <td th:text="${vc.soLuong}"></td>
+                            <td th:text="${vc.trangThai.moTa}"></td>
+                            <td th:text="${#temporals.format(vc.ngayBatDau, 'dd/MM/yyyy hh:mm')}"></td>
+                            <td th:text="${#temporals.format(vc.ngayKetThuc, 'dd/MM/yyyy hh:mm')}"></td>
                             <td>
                       <span>
-                          <a th:href="@{/admin/psg/thu-hang/view-update/{id}(id=${th.id})}"
-                             th:hidden="${th.ten == 'Thành viên'}"
-                             class="btn waves-effect waves-light btn-rounded btn-warning">
-                              Sửa
-                          </a>
-                        <form th:action="@{/admin/psg/thu-hang/delete/{id}(id=${th.id})}" method="post"
-                              style="display: inline;">
-                        <a th:href="@{/admin/psg/thu-hang/delete/{id}(id=${th.id})}">
-                            <button type="submit"
-                                    class="btn waves-effect waves-light btn-rounded btn-danger" th:hidden="${th.ten == 'Thành viên'}"
-                                    onclick="return confirm('Bạn có muốn xóa không')" >Xóa
-                            </button>
-                        </a>
-                        </form>
+                                      <a th:href="@{/admin/psg/voucher-thu-hang/view-update/{id}(id=${vc.id})}"
+                                         class="btn waves-effect waves-light btn-rounded btn-warning"
+                                      >Cập Nhập</a>
+                                    <form th:action="@{/admin/psg/voucher-thu-hang/delete/{id}(id=${vc.id})}" method="post"  style="display: inline;">
+                                    <a th:href="@{/admin/psg/voucher-thu-hang/delete/{id}(id=${vc.id})}">
+                                        <button type="submit"
+                                                class="btn waves-effect waves-light btn-rounded btn-danger" onclick="return confirm('Bạn có muốn xóa không')">Hủy Kích Hoạt
+                                        </button>
+                                    </a>
+                                </form>
                       </span>
                             </td>
                         </tr>
@@ -156,39 +135,25 @@
                     </table>
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li class="page-item" th:if="${currentPage != 0}">
-                                <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage - 1}}">Previous</a>
+                            <li class="page-item" th:if="${currentPage !=0}">
+                                <a class="page-link" th:href="@{'/admin/psg/voucher-thu-hang/pageActive/'+${currentPage - 1}}">Previous</a>
                             </li>
-                            <li class="page-item" th:if="${currentPage > 1}">
-                                <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/0'}">1</a>
-                            </li>
-                            <li class="page-item" th:if="${currentPage > 1}">
-                                <span class="page-link">...</span>
-                            </li>
-                            <li class="page-item active">
-                                <span class="page-link" th:text="${currentPage + 1}"></span>
-                            </li>
-                            <li class="page-item" th:if="${currentPage + 2 < totalPages}">
-                                <span class="page-link">...</span>
+                            <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
+                                th:classappend="${currentPage == i - 1 ? 'active' : ''}">
+                                <a class="page-link" th:href="@{'/admin/psg/voucher-thu-hang/pageActive/'+${i - 1}}">
+                                    <span th:text="${i}"></span>
+                                </a>
                             </li>
                             <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                                <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${totalPages - 1}}"><b
-                                        th:text="${totalPages}"></b></a>
-                            </li>
-                            <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                                <a class="page-link" th:href="@{'/admin/psg/thu-hang/pageActive/'+${currentPage + 1}}">Next</a>
+                                <a class="page-link" th:href="@{'/admin/psg/voucher-thu-hang/pageActive/'+${currentPage + 1}}">Next</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
             </div>
-        </div>
+        </div> <!-- end card-body-->
     </div>
 </div>
-<script
-        src="https://kit.fontawesome.com/1214a1c935.js"
-        crossorigin="anonymous"
-></script>
-<script src="/style/style.js"></script>
 </body>
+
 </html>

@@ -149,7 +149,7 @@
                                                 aria-expanded="false"><i data-feather="percent"
                                                                          class="feather-icon"></i><span
                             class="hide-menu">Voucher</span></a></li>
-                    <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="/admin/psg/thu-hang/hien-thi"
+                    <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="/admin/psg/thu-hang"
                                                 aria-expanded="false"><i data-feather="award"
                                                                          class="feather-icon"></i><span
                             class="hide-menu">Thứ Hạng</span></a></li>
@@ -269,13 +269,116 @@
 </div>
 <script th:if="${successMessage}" th:inline="javascript">
     /*<![CDATA[*/
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', function () {
         var successMessage = /*[[${successMessage}]]*/ '';
         if (successMessage) {
             alert(successMessage);
         }
     });
     /*]]>*/
+</script>
+
+<script th:inline="javascript" th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"
+        integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:inline="javascript">
+    const host = "https://provinces.open-api.vn/api/";
+
+    const callAPI = (api, select) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data, select);
+            });
+    }
+
+    const renderData = (array, select) => {
+        let row = '<option value="">Chọn</option>';
+        array.forEach(element => {
+            row += `<option value="${element.code}">${element.name}</option>`;
+        });
+        document.querySelector("#" + select).innerHTML = row;
+    }
+
+    const updateDistrictAndWard = () => {
+        const provinceCode = $("#province").val();
+        const districtCode = $("#district").val();
+        const wardCode = $("#ward").val();
+        const provinceName = $("#province option:selected").text();
+        const districtName = $("#district option:selected").text();
+        const wardName = $("#ward option:selected").text();
+        $("#provinceInput").val(provinceName);
+        $("#districtInput").val(districtName);
+        $("#wardInput").val(wardName);
+        $("#provinceCodeInput").val(provinceCode);
+        $("#districtCodeInput").val(districtCode);
+        $("#wardCodeInput").val(wardCode);
+    }
+
+    $("#province").change(() => {
+        const provinceCode = $("#province").val();
+        if (provinceCode) {
+            const api = host + "p/" + provinceCode + "?depth=2";
+            callAPI(api, "district").then(() => {
+                $("#district").val(""); // Reset district when province changes
+                callAPI(host + "p/" + provinceCode + "?depth=2")
+                    .then(() => {
+                        $("#district").val(""); // Reset district and ward when province changes
+                        $("#ward").val("");
+                    });
+            });
+        } else {
+            $("#district").html('<option value="">Chọn quận</option>');
+            $("#ward").html('<option value="">Chọn phường</option>');
+            updateDistrictAndWard();
+        }
+    });
+
+    $("#district").change(() => {
+        const districtCode = $("#district").val();
+        if (districtCode) {
+            const api = host + "d/" + districtCode + "?depth=2";
+            callAPI(api, "ward").then(() => {
+                $("#ward").val(""); // Reset ward when district changes
+                updateDistrictAndWard();
+            });
+        } else {
+            $("#ward").html('<option value="">Chọn phường</option>');
+            updateDistrictAndWard();
+        }
+    });
+
+    $("#ward").change(() => {
+        updateDistrictAndWard();
+    });
+
+
+    document.getElementById("selecttTT").addEventListener("change", function() {
+        var selectedValue = this.value;
+        if (selectedValue === "3") {
+            var url = new URL("/admin/psg/voucher-thu-hang/pageInActive/0", window.location.origin);
+            window.location.href = url.href;
+        }
+    });
+
+    document.getElementById("selecttTT").addEventListener("change", function() {
+        var selectedValue = this.value;
+        if (selectedValue === "2") {
+            var url = new URL("/admin/psg/voucher-thu-hang/hien-thi", window.location.origin);
+            window.location.href = url.href;
+        }
+    });
+    document.getElementById("selecttTT").addEventListener("change", function() {
+        var selectedValue = this.value;
+        if (selectedValue === "4") {
+            var url = new URL("/admin/psg/voucher-thu-hang/hien-thi", window.location.origin);
+            window.location.href = url.href;
+        }
+    });
+
+
+
+
 </script>
 <script th:inline="javascript">
     const maxImages = 5;
@@ -307,23 +410,21 @@
         }
     });
 </script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
 <script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/dist/js/feather.min.js}"></script>
 <script th:src="@{/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"></script>
 <script th:src="@{/dist/js/sidebarmenu.js}"></script>
 <script th:src="@{/dist/js/custom.min.js}"></script>
 <script th:src="@{/assets/extra-libs/c3/d3.min.js}"></script>
-<script th:src="@{/vendors/lodash/lodash.min.js}"></script>
-<script th:src="@{/vendors/dropzone/dropzone.min.js}"></script>
-<script th:src="@{/assets/js/phoenix.js}"></script>
-<script th:src="@{/assets/js/scripts.bundle.js}"></script>
+<script th:src="@{/assets/extra-libs/c3/c3.min.js}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
 
 </body>
-
 </html>

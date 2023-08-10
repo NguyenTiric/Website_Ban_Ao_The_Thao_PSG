@@ -57,10 +57,10 @@ public class VoucherThuHang {
     private String moTa;
 
     @Column(name = "ngay_tao")
-    private LocalDate ngayTao;
+    private LocalDateTime ngayTao;
 
     @Column(name = "ngay_cap_nhat")
-    private LocalDate ngayCapNhat;
+    private LocalDateTime ngayCapNhat;
 
     @Column(name = "trang_thai")
     @Enumerated(EnumType.STRING)
