@@ -134,16 +134,20 @@ public class ThuHangController {
             session.setAttribute("successMessage", "Thêm thành công!");
             return "redirect:/admin/psg/thu-hang/view-add";
         } catch (NullPointerException e) {
+            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             model.addAttribute("errorMessage", "Looxi");
             return "admin/thu_hang/view_add_thu_hang";
         } catch (NumberFormatException ex) {
+            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             model.addAttribute("errorMessage", "Lỗi" + ex.getMessage());
             System.out.println(ex.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
         } catch (CommandLine.DuplicateNameException er) {
+            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             model.addAttribute("errorMessage", er.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
         } catch (RuntimeException rt) {
+            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             model.addAttribute("errorMessage", rt.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
         }

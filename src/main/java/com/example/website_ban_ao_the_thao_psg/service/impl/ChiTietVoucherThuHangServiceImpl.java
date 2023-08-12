@@ -3,6 +3,7 @@ package com.example.website_ban_ao_the_thao_psg.service.impl;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.ChiTietVoucherThuHang;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.ChiTietVoucherThuHangMapper;
@@ -15,6 +16,7 @@ import com.example.website_ban_ao_the_thao_psg.repository.ChiTietVoucherThuHangR
 import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.ThuHangRepository;
 import com.example.website_ban_ao_the_thao_psg.service.ChiTietVoucherThuHangService;
+import groovyjarjarpicocli.CommandLine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -69,21 +71,21 @@ public class ChiTietVoucherThuHangServiceImpl implements ChiTietVoucherThuHangSe
         thuHang.setNgayTao(LocalDate.now());
         thuHang.setMa(GenCode.generateThuHangCode());
         thuHang.setTrangThai(ApplicationConstant.TrangThaiThuHang.ACTIVE);
+
+
+        String tenThuHang = createThuHangRequest.getTen();
+
+        if (this.thuHangRepository.existsByTenAndTrangThai(tenThuHang, ApplicationConstant.TrangThaiThuHang.ACTIVE)){
+            throw new CommandLine.DuplicateNameException("Thứ hạng đã tồn tại, vui lòng đặt thứ hạng khác!");
+        }
+
+        List<KhachHang> allKhachHang = khachHangRepository.findAll();
+        for (KhachHang khachHang : allKhachHang) {
+            if (!khachHang.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
+                throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
+            }
+        }
         ThuHang th = this.thuHangRepository.save(thuHang);
-
-//        String tenThuHang = createThuHangRequest.getTen();
-//
-//        if (this.thuHangRepository.existsByTenAndTrangThai(tenThuHang, ApplicationConstant.TrangThaiThuHang.ACTIVE)){
-//            throw new CommandLine.DuplicateNameException("Thứ hạng đã tồn tại, vui lòng đặt thứ hạng khác!");
-//        }
-//
-//        List<KhachHang> allKhachHang = khachHangRepository.findAll();
-//        for (KhachHang khachHang : allKhachHang) {
-//            if (!khachHang.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
-//                throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
-//            }
-//        }
-
         for (VoucherThuHang vcth : thuHangList) {
             ChiTietVoucherThuHang chiTietVoucherThuHang = chiTietVoucherThuHangMapper.createChiTietVoucherThuHangRequestToChiTietVouCherThuHangEntity(new CreateChiTietVoucherThuHangRequest());
             chiTietVoucherThuHang.setNgayTao(LocalDate.now());
