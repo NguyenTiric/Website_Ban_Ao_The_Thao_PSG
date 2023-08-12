@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -80,6 +81,11 @@ public class KhachHangServiceImpl implements KhachHangService {
             kh.setEmail(updateKhachHangRequest.getEmail());
             khachHangRepository.save(kh);
         }
+    }
+
+    @Override
+    public List<KhachHangResponse> getAllKhachHangActive() {
+        return khachHangMapper.listKhachHangEntityToKhachHangResponse(khachHangRepository.listKhachHangActive());
     }
 
 

@@ -64,6 +64,12 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     }
 
     @Override
+    public List<ChiTietSanPhamResponse> getAllChiTietSanPham() {
+        List<ChiTietSanPham> chiTietSanPhamList = chiTietSanPhamRepository.getAll();
+        return chiTietSanPhamMapper.listchiTietSanPhamEntityTochiTietSanPhamResponse(chiTietSanPhamList);
+    }
+
+    @Override
     public Page<ChiTietSanPhamResponse> pageChiTietSanPhamActive(Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
         Page<ChiTietSanPham> chiTietSanPhamPage = chiTietSanPhamRepository.pageACTIVE(pageable);

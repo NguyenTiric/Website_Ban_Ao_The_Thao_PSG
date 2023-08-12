@@ -31,6 +31,9 @@ public interface KhachHangRepository extends JpaRepository<KhachHang,Integer> {
     @Query(value = "SELECT * FROM khach_hang WHERE trang_thai = 'ACTIVE'", nativeQuery = true)
     Page<KhachHang> pageACTIVEKhachHang(Pageable pageable);
 
+    @Query(value = "SELECT * FROM khach_hang WHERE trang_thai = 'ACTIVE'", nativeQuery = true)
+    List<KhachHang> listKhachHangActive();
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE KhachHang kh SET kh.trangThai = 'INACTIVE', kh.ngayCapNhat = :now WHERE kh.id = :id")

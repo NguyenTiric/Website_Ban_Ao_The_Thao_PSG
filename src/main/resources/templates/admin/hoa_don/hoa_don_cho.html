@@ -13,198 +13,414 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/site-logo.8a953140.png">
     <title>Paris Saint-Germain Boutique | PSG Maillots, PSG Boutique | Official PSG Shop</title>
-    <!-- Custom CSS -->
-    <link th:href="@{/assets/extra-libs/c3/c3.min.css}" rel="stylesheet">
-    <link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
-    <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
     <link th:href="@{/assets/css/plugins.bundle5883.css}" rel="stylesheet">
-    <script th:src="@{/assets/js/config.js}"></script>
+    <link th:href="@{/assets/css/plugins.bundle.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/style.bundle.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/style.bundle5883.css}" rel="stylesheet">
+
 </head>
 <body>
-<div class="row mt-3 mb-3">
-    <div class="col-4">
-        <div class="container-fluid">
-            <form class="d-flex" role="search" action="/admin/psg/hoa-don/search" method="get">
-                <input name="searchNameOrMa"
-                       class="form-control custom-shadow custom-radius border-0 bg-white"
-                       type="search" placeholder="Tìm đơn hàng" aria-label="Search">
-                <button class="btn btn-rounded btn-primary" type="submit" style="margin-left: 7px">
-                    Search
-                </button>
-            </form>
-        </div>
-    </div>
-    <div class="col-8">
-        <div class="inline-block-container">
-            <div th:each="hdc:${listHoaDonCho}" class="inline-block-element d-inline-block" style="margin-right: 20px">
-                <a class="btn btn-outline-primary" th:href="@{/admin/psg/hoa-don/gio-hang/{id}(id=${hdc.id})}"
-                   role="button" th:text="${hdc.ma}"></a>
+
+
+<div class="mt-4">
+
+
+    <div class="inline-block-container">
+        <div class="row">
+            <div class="col-11">
+                <div class="container">
+                    <div th:each="hdc:${listHoaDonCho}" class="inline-block-element d-inline-block"
+                         style="margin-right: 20px">
+                        <a class="btn btn-primary" th:href="@{/admin/psg/hoa-don/detail-hoa-don/{id}(id=${hdc.id})}"
+                           role="button" th:text="${hdc.ma}"></a>
+                    </div>
+                    <form action="/admin/psg/hoa-don/add-hoa-don-cho" method="post" class="d-inline-block">
+                        <button class="btn btn-primary" type="submit">+</button>
+                    </form>
+                </div>
             </div>
-            <form action="/admin/psg/hoa-don/add-hoa-don-cho" method="post" class="d-inline-block">
-                <button class="btn btn-outline-primary" type="submit" style="margin-right: 10px;">+</button>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="card">
-    <div class="card-body">
-        <div class="row h-1000">
-            <div class="col-6">
-                <h4 class="card-title mb-3">Giỏ Hàng</h4>
-                <section layout:fragment="gioHang">
-                </section>
-            </div>
-            <div class="col-6">
-                <div
-                        class="tab-pane fade show active"
-                        id="kt_tab_pane_1"
-                        role="tabpanel"
-                        aria-labelledby="kt_tab_pane_2"
-                >
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title mb-3">Danh Sách Sản Phẩm</h4>
-                            <div class="tab-content">
-                                <div class="tab-pane show active" id="home">
-                                    <table class="table align-middle table-row-dashed fs-6 gy-5">
-                                        <thead>
-                                        <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                            <th scope="col">STT</th>
-                                            <th scope="col">Sản Phẩm</th>
-                                            <th scope="col">Màu Sắc</th>
-                                            <th scope="col">Hành Động</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="text-gray-600 fw-semibold">
-                                        <tr th:each="sp,index:${listSanPhamActive}">
-                                            <td th:text="${index.count}"></td>
-                                            <td class="d-flex align-items-center">
-                                                <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                                    <a href="#" class="d-block border rounded-2">
-                                                        <div class="symbol-label">
-                                                            <img th:src="@{${'/admin/psg/chi-tiet-san-pham/display?id=' + sp.id}}"
-                                                                 alt="Emma Smith"
-                                                                 style="width: 70px; height: 70px;border-radius: 10%;object-fit: cover"
-                                                            />
+            <div class="col-1">
+                <div class=" flex-column flex-root app-root" id="kt_app_root">
+                    <!--begin::Page-->
+                    <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+                        <!--begin::Header-->
+                        <div
+                                id="kt_app_header"
+                                class="app-header"
+                                data-kt-sticky="true"
+                                data-kt-sticky-activate="{default: true, lg: true}"
+                                data-kt-sticky-name="app-header-minimize"
+                                data-kt-sticky-offset="{default: '200px', lg: '0'}"
+                                data-kt-sticky-animation="false"
+                        >
+                            <!--begin::Header container-->
+                            <div
+                                    class="app-container container-fluid  align-items-stretch justify-content-between"
+                                    id="kt_app_header_container"
+                            >
+                                <div
+                                        class=" align-items-stretch justify-content-between flex-lg-grow-1"
+                                        id="kt_app_header_wrapper"
+                                >
+                                    <!--begin::Menu wrapper-->
+                                    <div
+                                            class="app-header-menu app-header-mobile-drawer align-items-stretch"
+                                            data-kt-drawer="true"
+                                            data-kt-drawer-name="app-header-menu"
+                                            data-kt-drawer-activate="{default: true, lg: false}"
+                                            data-kt-drawer-overlay="true"
+                                            data-kt-drawer-width="250px"
+                                            data-kt-drawer-direction="end"
+                                            data-kt-drawer-toggle="#kt_app_header_menu_toggle"
+                                            data-kt-swapper="true"
+                                            data-kt-swapper-mode="{default: 'append', lg: 'prepend'}"
+                                            data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header_wrapper'}"
+                                    >
+                                        <div class="app-navbar flex-shrink-0">
+                                            <div
+                                                    class="app-navbar-item align-items-stretch ms-1 ms-md-4"
+                                            ></div>
+                                            <div
+                                                    class="app-navbar-item ms-1 ms-md-4"
+                                                    id="kt_header_user_menu_toggle"
+                                            >
+                                                <div
+                                                        class="cursor-pointer symbol symbol-35px"
+                                                        data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                                        data-kt-menu-attach="parent"
+                                                        data-kt-menu-placement="bottom-end"
+                                                >
+                                                    <img
+                                                            src="../../../assets/media/avatars/300-3.jpg"
+                                                            class="rounded-3"
+                                                            alt="user"
+                                                    />
+                                                </div>
+
+                                                <!--begin::User account menu-->
+                                                <div
+                                                        class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
+                                                        data-kt-menu="true"
+                                                >
+                                                    <!--begin::Menu item-->
+                                                    <div class="menu-item px-3">
+                                                        <div
+                                                                class="menu-content  align-items-center px-3"
+                                                        >
+                                                            <!--begin::Avatar-->
+                                                            <div class="symbol symbol-50px me-5">
+                                                                <img
+                                                                        alt="Logo"
+                                                                        src="../../../assets/media/avatars/300-3.jpg"
+                                                                />
+                                                            </div>
+                                                            <!--end::Avatar-->
+
+                                                            <!--begin::Username-->
+                                                            <div class=" flex-column">
+                                                                <div class="fw-bold  align-items-center fs-5">
+                                                                    Robert Fox
+                                                                    <span
+                                                                            class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2"
+                                                                    >Pro</span
+                                                                    >
+                                                                </div>
+
+                                                                <a
+                                                                        href="#"
+                                                                        class="fw-semibold text-muted text-hover-primary fs-7"
+                                                                >
+                                                                    robert@kt.com
+                                                                </a>
+                                                            </div>
+                                                            <!--end::Username-->
                                                         </div>
-                                                    </a>
+                                                    </div>
+                                                    <!--end::Menu item-->
+
+                                                    <!--begin::Menu separator-->
+                                                    <div class="separator my-2"></div>
+                                                    <!--end::Menu separator-->
+
+                                                    <!--begin::Menu item-->
+                                                    <div class="menu-item px-5">
+                                                        <a
+                                                                href="../../../account/overview.html"
+                                                                class="menu-link px-5"
+                                                        >
+                                                            My Profile
+                                                        </a>
+                                                    </div>
+                                                    <div class="menu-item px-5">
+                                                        <a
+                                                                href="../../../authentication/layouts/corporate/sign-in.html"
+                                                                class="menu-link px-5"
+                                                        >
+                                                            Sign Out
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                                <div class="d-flex flex-column">
-                                                    <a href="#" class="text-gray-800 text-hover-primary mb-1" th:text="${sp.ten}"></a>
-                                                    <span th:text="${sp.thuongHieu.ten}"></span>
+                                            </div>
+                                            <div
+                                                    class="app-navbar-item d-lg-none ms-2 me-n2"
+                                                    title="Show header menu"
+                                            >
+                                                <div
+                                                        class="btn btn-flex btn-icon btn-active-color-primary w-30px h-30px"
+                                                        id="kt_app_header_menu_toggle"
+                                                >
+                                                    <i class="ki-duotone ki-element-4 fs-1"
+                                                    ><span class="path1"></span><span class="path2"></span
+                                                    ></i>
                                                 </div>
-                                            </td>
-                                            <td th:text="${sp.mauSac.ten}"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div> <!-- end card-body-->
+                        </div>
                     </div>
-                </div>
-                <div
-                        class="tab-pane fade"
-                        id="kt_tab_pane_2"
-                        role="tabpanel"
-                        aria-labelledby="kt_tab_pane_2"
-                >
-
-                </div>
-                <div
-                        class="tab-pane fade"
-                        id="kt_tab_pane_3"
-                        role="tabpanel"
-                        aria-labelledby="kt_tab_pane_3"
-                >
-                    OK
                 </div>
             </div>
         </div>
-        <div class="example-preview">
-            <ul class="nav nav-tabs nav-tabs-line">
-                <li class="nav-item">
-                    <a
-                            class="nav-link active"
-                            data-toggle="tab"
-                            href="#kt_tab_pane_1"
-                    >Sản Phẩm</a
+
+
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <section layout:fragment="gioHang">
+            </section>
+            <hr>
+            <div class="card card-flush">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <div class=" align-items-center position-relative my-1">
+                            <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4"
+                            ><span class="path1"></span><span class="path2"></span
+                            ></i>
+                            <input
+                                    type="text"
+                                    data-kt-ecommerce-product-filter="search"
+                                    class="form-control form-control-solid w-250px ps-12"
+                                    placeholder="Search Product"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <table
+                            class="table align-middle table-row-dashed fs-6 gy-5"
+                            id="kt_ecommerce_products_table"
                     >
-                </li>
-                <li class="nav-item">
-                    <a
-                            class="nav-link"
-                            data-toggle="tab"
-                            href="#kt_tab_pane_2"
-                    >Bán Nhanh</a
-                    >
-                </li>
-                <li class="nav-item">
-                    <a
-                            class="nav-link"
-                            data-toggle="tab"
-                            href="#kt_tab_pane_3"
-                    >Bán Giao Hàng</a
-                    >
-                </li>
-            </ul>
+                        <thead>
+                        <tr
+                                class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"
+                        >
+                            <th class="w-10px pe-2">
+                                <div
+                                        class="form-check form-check-sm form-check-custom form-check-solid me-3"
+                                >
+                                    <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            data-kt-check="true"
+                                            data-kt-check-target="#kt_ecommerce_products_table .form-check-input"
+                                            value="1"
+                                    />
+                                </div>
+                            </th>
+                            <th class="text-center min-w-150px">Sản Phẩm</th>
+                            <th class="text-center min-w-100px">Giá</th>
+                            <th class="text-center min-w-70px">Số Lượng</th>
+                            <th class="text-center min-w-100px">Cầu Thủ</th>
+                            <th class="text-center min-w-100px">Mã Vạch</th>
+                            <th class="text-center min-w-100px">Trạng Thái</th>
+                            <th class="text-center min-w-70px">Hành Động</th>
+                        </tr>
+                        </thead>
+                        <tbody class="fw-semibold text-gray-600">
+                        <tr th:each="ctsp:${listCtsp}">
+                            <td class="text-center">
+                                <div
+                                        class="form-check form-check-sm form-check-custom form-check-solid"
+                                >
+                                    <input class="form-check-input" type="checkbox" value="1"/>
+                                </div>
+                            </td>
+                            <td class="text-center d-flex flex-column align-items-center font-weight-bolder">
+                                <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                                    <a href="#" class="symbol symbol-50px">
+                                        <img th:src="@{'/admin/psg/chi-tiet-san-pham/display?id=' + ${ctsp.sanPham.id}}"
+                                             alt="Image">
+                                    </a>
+                                </div>
+                                <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bold" data-kt-ecommerce-product-filter="product_name">
+                                    <span th:text="${ctsp.sanPham.ten}"></span>
+                                </a>
+                                <span th:text="'Size: ' + ${ctsp.kichThuoc.ten}"></span>
+                            </td>
+                            <td class="text-center pe-0">
+                                <span class="fw-bold" th:text="${ctsp.sanPham.gia}"></span>
+                            </td>
+                            <td class="text-center pe-0" th:text="${ctsp.soLuong}"></td>
+                            <td class="text-center pe-0" th:text="${ctsp.sanPham.cauThu.ten}"></td>
+                            <td class="text-center pe-0" th:text="${ctsp.sanPham.maVach}"></td>
+                            <td class="text-center pe-0">
+                                <div class="badge badge-light-success" th:text="${ctsp.sanPham.trangThai.moTa}"></div>
+                            </td>
+                            <td class="text-center">
+                                <form th:action="@{/admin/psg/hoa-don/add-hoa-don-chi-tiet/{idHd}/{idCtsp}(idHd=${hoaDon.id},idCtsp=${ctsp.id})}"
+                                      method="post">
+                                    <button class="btn btn-primary" type="submit">Thêm</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <!--begin::Example-->
+                    <div class="example">
+                        <div class="example-preview">
+                            <ul class="nav nav-tabs nav-tabs-line">
+                                <li class="nav-item">
+                                    <a
+                                            class="nav-link active"
+                                            data-toggle="tab"
+                                            href="#kt_tab_pane_1"
+                                    >Bán Nhanh</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                            class="nav-link"
+                                            data-toggle="tab"
+                                            href="#kt_tab_pane_2"
+                                    >Bán Giao Hàng</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-content mt-5" id="myTabContent">
+                        <div
+                                class="tab-pane fade show active"
+                                id="kt_tab_pane_1"
+                                role="tabpanel"
+                                aria-labelledby="kt_tab_pane_1"
+                        >
+                            <div class="table-responsive">
+                                <form action="" method="post">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Khách hàng
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <select class="form-control" id="kt_select2_1" name="param">
+                                                <option value="">Chọn khách hàng</option>
+                                                <option th:each="kh : ${listKhachHang}" th:value="${kh.id}" th:text="${kh.sdt}+' '+${kh.ten} "></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Tổng tiền hàng
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="category_name" class="form-control mb-2"
+                                               disabled th:value="${totalAmount}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Giảm giá
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="category_name" class="form-control mb-2"
+                                                   placeholder="%" value=""/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Voucher
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="category_name" class="form-control mb-2"
+                                                   placeholder="Code Voucher" value=""/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Khách cần trả
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="category_name" class="form-control mb-2"
+                                                   placeholder="Thành tiền" value=""/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Phương thức thanh toán
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <select class="form-control" name="param">
+                                                <option value="">Chọn hình thức thanh toán</option>
+                                                <option th:each="pttt : ${phuongThucThanhToan}" th:value="${pttt.ten}" th:text="${pttt.moTa} "></option>
+                                            </select>
+                                        </td>
+                                    </tr>         <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Tiền mặt khách trả
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="category_name" class="form-control mb-2"
+                                                   placeholder="Tiền mặt khách trả" value=""/>
+                                        </td>
+                                    </tr>         <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Tiền thừa
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="category_name" class="form-control mb-2"
+                                                   placeholder="Tiền thừa" value=""/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                    <button class="btn btn-primary w-100" type="submit">Thanh Toán</button>
+                                </form>
+                            </div>
+
+                        </div>
+                        <div
+                                class="tab-pane fade"
+                                id="kt_tab_pane_2"
+                                role="tabpanel"
+                                aria-labelledby="kt_tab_pane_2"
+                        >
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-<script th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-        const quantityInput = document.querySelector(".quantity-input");
-        const unitPriceField = document.getElementById("unitPrice");
-        const totalPriceField = document.getElementById("totalPrice");
-        const decreaseButton = document.querySelector(".decrease-quantity");
-        const increaseButton = document.querySelector(".increase-quantity");
-
-        // Get the initial unit price value from the template
-        const initialUnitPrice = parseFloat(unitPriceField.textContent);
-
-        // Function to update unit price and total price based on the quantity input
-        function updatePrices() {
-            const quantity = parseInt(quantityInput.value, 10);
-            if (!isNaN(quantity)) {
-                const totalPrice = initialUnitPrice * quantity;
-                totalPriceField.textContent = totalPrice.toFixed(2);
-            }
-        }
-
-        // Function to adjust quantity and update prices
-        function adjustQuantity(change) {
-            const currentQuantity = parseInt(quantityInput.value, 10);
-            if (!isNaN(currentQuantity)) {
-                const newQuantity = currentQuantity + change;
-                if (newQuantity >= 1) {
-                    quantityInput.value = newQuantity;
-                    updatePrices();
-                }
-            }
-        }
-
-        // Add event listeners to quantity input and buttons
-        decreaseButton.addEventListener("click", function () {
-            adjustQuantity(-1);
-        });
-
-        increaseButton.addEventListener("click", function () {
-            adjustQuantity(1);
-        });
-
-        // Update prices initially and when input changes
-        updatePrices();
-        quantityInput.addEventListener("input", updatePrices);
-    });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
-<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/assets/js/plugins.bundle5883.js}"></script>
-<script th:src="@{/dist/js/feather.min.js}"></script>
-<script th:src="@{/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"></script>
+<script th:src="@{/assets/js/plugins.bundle.js}"></script>
+<script th:src="@{/assets/js/select25883.js}"></script>
+<script th:src="@{/assets/js/scripts.bundle.js}"></script>
+<script th:src="@{/assets/js/datatables.bundle.js}"></script>
+<script th:src="@{/assets/js/products.js}"></script>
 </body>
 </html>

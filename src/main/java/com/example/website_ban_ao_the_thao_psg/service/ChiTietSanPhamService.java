@@ -24,6 +24,8 @@ public interface ChiTietSanPhamService {
 
     List<ChiTietSanPhamResponse> listChiTietSanPhamBySanPham(Integer idSP);
 
+    List<ChiTietSanPhamResponse> getAllChiTietSanPham();
+
     Page<ChiTietSanPhamResponse> pageChiTietSanPhamActive(Integer pageNo, Integer size);
 
     Page<ChiTietSanPhamResponse> pageChiTietSanPhamInActive(Integer pageNo, Integer size);

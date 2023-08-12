@@ -22,7 +22,7 @@
                                 <th scope="col">STT</th>
                                 <th scope="col"></th>
                                 <th scope="col">Ngày Tạo</th>
-                                <!--            <th scope="col">Người Xác Nhận</th>-->
+                                <th scope="col">Người Xác Nhận</th>
                                 <th scope="col">Ghi Chú</th>
                             </tr>
                             </thead>
@@ -31,7 +31,7 @@
                                 <td th:text="${index.count}"></td>
                                 <td th:text="${ls.loaiLichSuHoaDon.moTa}"></td>
                                 <td th:text="${#temporals.format(ls.ngayTao, 'dd-MM-yyyy HH:mm')}"></td>
-                                <!--            <td th:text="${ls.taiKhoan.ten}"></td>-->
+                                <td th:text="${ls.nhanVien.ten}"></td>
                                 <td th:text="${ls.moTa}"></td>
                             </tr>
                             </tbody>
@@ -45,7 +45,7 @@
                     <button th:if="${hoaDon.trangThai.ten == 'CONFIRMED'}" name="trangThai" value="SHIPPING"
                             class="btn btn-secondary">Giao hàng
                     </button>
-                    <button  name="trangThai" value="CANCELLED"
+                    <button name="trangThai" value="CANCELLED"
                             class="btn btn-danger">Hủy Đơn
                     </button>
                     <button th:if="${hoaDon.trangThai.ten == 'SHIPPING'}" name="trangThai" value="APPROVED"
@@ -89,7 +89,7 @@
                             <div class="col-6">
                                 <p th:text="${hoaDon.tenNguoiNhan}"></p>
                                 <p th:text="${hoaDon.sdtNguoiNhan}"></p>
-                                <p th:text="${hoaDon.taiKhoan.email}"></p>
+                                <p th:text="${hoaDon.khachHang.email}"></p>
                                 <p th:text="${hoaDon.diaChi}"></p>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                             <td th:text="${lsgd.loaiGiaoDich.moTa}"></td>
                             <td th:text="${lsgd.phuongThucThanhToan.moTa}"></td>
                             <td th:text="${lsgd.trangThaiGiaoDich.moTa}"></td>
-                            <td th:text="${lsgd.taiKhoan.ten}"></td>
+                            <td th:text="${lsgd.nhanVien.ten}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -184,8 +184,8 @@
                     </a>
                 </div>
 
-                <form  th:action="@{/admin/psg/hoa-don/update-trang-thai-hoa-don/{id}(id=${hoaDon.id})}" method="post"
-                    >
+                <form th:action="@{/admin/psg/hoa-don/update-trang-thai-hoa-don/{id}(id=${hoaDon.id})}" method="post"
+                >
                     <div class="form-group mb-3">
                         <input class="form-control custom-shadow custom-radius border-0 bg-white"
                                type="text" placeholder="Ghi chú" value="moTa"

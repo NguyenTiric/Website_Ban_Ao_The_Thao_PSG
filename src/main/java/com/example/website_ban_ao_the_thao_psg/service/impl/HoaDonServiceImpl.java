@@ -2,30 +2,38 @@ package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.common.GenCode;
+import com.example.website_ban_ao_the_thao_psg.entity.ChiTietSanPham;
 import com.example.website_ban_ao_the_thao_psg.entity.GiaoDich;
 import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
 import com.example.website_ban_ao_the_thao_psg.entity.HoaDonChiTiet;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.entity.LichSuHoaDon;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.GiaoDichMapper;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.HoaDonChiTietMapper;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.HoaDonMapper;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.LichSuHoaDonMapper;
+import com.example.website_ban_ao_the_thao_psg.model.mapper.ViVoucherMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateHoaDonRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateLichSuHoaDonRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.GiaoDichResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonChiTietResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.LichSuHoaDonResponse;
+import com.example.website_ban_ao_the_thao_psg.model.response.ViVoucherResponse;
+import com.example.website_ban_ao_the_thao_psg.repository.ChiTietSanPhamRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.GiaoDichRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.HoaDonChiTietRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.HoaDonRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.LichSuHoaDonRepository;
+import com.example.website_ban_ao_the_thao_psg.repository.ViVoucherRepository;
+import com.example.website_ban_ao_the_thao_psg.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -38,7 +46,7 @@ import java.util.Optional;
 public class HoaDonServiceImpl implements HoaDonService {
 
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    private static final int NUM_HOA_DON_TO_CREATE = 10;
+    private static final int NUM_HOA_DON_TO_CREATE = 8;
 
     @Autowired
     private HoaDonRepository hoaDonRepository;
@@ -48,6 +56,8 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
+    @Autowired
+    private ChiTietSanPhamRepository chiTietSanPhamRepository;
 
     @Autowired
     private HoaDonChiTietMapper hoaDonChiTietMapper;
@@ -63,6 +73,12 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Autowired
     private GiaoDichRepository giaoDichRepository;
+
+    @Autowired
+    private ViVoucherRepository viVoucherRepository;
+
+    @Autowired
+    private ViVoucherMapper viVoucherMapper;
 
     @Override
     public List<HoaDonResponse> getAllHoaDonCho() {
@@ -86,6 +102,11 @@ public class HoaDonServiceImpl implements HoaDonService {
     public List<HoaDonChiTietResponse> getAllHoaDonChiTiet(Integer idHd) {
         List<HoaDonChiTiet> list = hoaDonChiTietRepository.getHoaDonChiTietByHoaDon(hoaDonRepository.findById(idHd).get());
         return hoaDonChiTietMapper.listHoaDonChiTietEntityToHoaDonChiTietResponse(list);
+    }
+
+    @Override
+    public HoaDonChiTietResponse getOneHdct(Integer id) {
+        return hoaDonChiTietMapper.hoaDonChiTietEntityToHoaDonChiTietResponse(hoaDonChiTietRepository.findById(id).get());
     }
 
 
@@ -145,11 +166,65 @@ public class HoaDonServiceImpl implements HoaDonService {
         hoaDonRepository.updateTrangThai(idHd, trangThaiHoaDon, LocalDate.now());
     }
 
+    @Override
+    public void updateHoaDonWithKhachHang(Integer hoaDonId, Integer customerId) {
+        HoaDon hoaDon = hoaDonRepository.findById(hoaDonId).orElse(null);
+        if (hoaDon != null) {
+            KhachHang khachHang = new KhachHang();
+            khachHang.setId(customerId);
+            hoaDon.setKhachHang(khachHang);
+            hoaDonRepository.save(hoaDon);
+        }
+    }
+
+
+    @Override
+    public void addHoaDonChiTiet(Integer idCtsp, Integer idHd) {
+        HoaDon hd = hoaDonRepository.findById(idHd).get();
+        ChiTietSanPham ctsp = chiTietSanPhamRepository.findById(idCtsp).get();
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietRepository.findHoaDonChiTietByHoaDonAndChiTietSanPham(hd, ctsp);
+        if (hoaDonChiTiet != null) {
+            hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + 1);
+            hoaDonChiTiet.setDonGia(BigDecimal.valueOf(hoaDonChiTiet.getSoLuong()).multiply(ctsp.getSanPham().getGia()));
+            hoaDonChiTietRepository.save(hoaDonChiTiet);
+        } else {
+            HoaDonChiTiet hdct = new HoaDonChiTiet();
+            hdct.setHoaDon(hd);
+            hdct.setChiTietSanPham(ctsp);
+            hdct.setSoLuong(1);
+            hdct.setGiaBan(ctsp.getSanPham().getGia());
+            hdct.setDonGia(BigDecimal.valueOf(hdct.getSoLuong()).multiply(ctsp.getSanPham().getGia()));
+            hdct.setTrangThai(ApplicationConstant.TrangThaiHoaDonChiTiet.APPROVED);
+            hdct.setNgayTao(LocalDate.now());
+            hoaDonChiTietRepository.save(hdct);
+        }
+    }
+
+    @Override
+    public void updateHoaDonChiTietQuantity(Integer idHdct, Integer newQuantity) {
+        HoaDonChiTiet hdct = hoaDonChiTietRepository.findById(idHdct).orElse(null);
+        if (hdct != null) {
+            hdct.setSoLuong(newQuantity);
+            hdct.setDonGia(hdct.getGiaBan().multiply(BigDecimal.valueOf(newQuantity)));
+            hoaDonChiTietRepository.save(hdct);
+        }
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        hoaDonChiTietRepository.deleteById(id);
+    }
+
 
     @Override
     public HoaDonResponse getDetailHoaDon(Integer id) {
         Optional<HoaDon> hoaDonOptional = hoaDonRepository.findById(id);
         return hoaDonMapper.hoaDonEntityToHoaDonResponse(hoaDonOptional.get());
+    }
+
+    @Override
+    public List<ViVoucherResponse> getAllViVoucher(KhachHang khachHang) {
+        return viVoucherMapper.listViVoucherEntityToViVoucherResponse(viVoucherRepository.getViVouchersByKhachHang(khachHang));
     }
 
     @Override
@@ -172,22 +247,22 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public Page<HoaDonResponse> pageHoaDon(Integer page, Integer size) {
-        Pageable pageable=PageRequest.of(page,size);
-        Page<HoaDon>hoaDonResponses=hoaDonRepository.pageHoaDon(pageable);
-        return hoaDonResponses.map(hoaDonMapper ::hoaDonEntityToHoaDonResponse);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> hoaDonResponses = hoaDonRepository.pageHoaDon(pageable);
+        return hoaDonResponses.map(hoaDonMapper::hoaDonEntityToHoaDonResponse);
     }
 
     @Override
     public Page<HoaDonResponse> pageSearchHoaDon(Integer page, Integer size, String tim) {
-        Pageable pageable=PageRequest.of(page,size);
-        Page<HoaDon>hoaDonResponses=hoaDonRepository.pageSearchHoaDon(pageable,tim);
-        return hoaDonResponses.map(hoaDonMapper ::hoaDonEntityToHoaDonResponse);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> hoaDonResponses = hoaDonRepository.pageSearchHoaDon(pageable, tim);
+        return hoaDonResponses.map(hoaDonMapper::hoaDonEntityToHoaDonResponse);
     }
 
     @Override
     public Page<HoaDonResponse> pageSearchHoaDonBetweenDates(Integer page, Integer size, LocalDate batdau, LocalDate ketThuc) {
-        Pageable pageable=PageRequest.of(page,size);
-        Page<HoaDon>hoaDonResponses=hoaDonRepository.pageSearchHoaDonBetweenDates(pageable,batdau,ketThuc);
-        return hoaDonResponses.map(hoaDonMapper ::hoaDonEntityToHoaDonResponse);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> hoaDonResponses = hoaDonRepository.pageSearchHoaDonBetweenDates(pageable, batdau, ketThuc);
+        return hoaDonResponses.map(hoaDonMapper::hoaDonEntityToHoaDonResponse);
     }
 }
