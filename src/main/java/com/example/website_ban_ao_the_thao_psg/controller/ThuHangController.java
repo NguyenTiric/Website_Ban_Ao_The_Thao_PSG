@@ -1,10 +1,15 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
+import com.example.website_ban_ao_the_thao_psg.entity.ChiTietVoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
+import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.ThuHangResponse;
+import com.example.website_ban_ao_the_thao_psg.service.ChiTietSanPhamService;
+import com.example.website_ban_ao_the_thao_psg.service.ChiTietVoucherThuHangService;
 import com.example.website_ban_ao_the_thao_psg.service.ThuHangService;
+import com.example.website_ban_ao_the_thao_psg.service.VoucherThuHangService;
 import groovyjarjarpicocli.CommandLine;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -22,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +36,13 @@ import java.util.regex.Pattern;
 public class ThuHangController {
 
     @Autowired
-    ThuHangService thuHangService;
+    private ThuHangService thuHangService;
+
+    @Autowired
+    private VoucherThuHangService voucherThuHangService;
+
+    @Autowired
+    private ChiTietVoucherThuHangService chiTietVoucherThuHangService;
 
     @GetMapping("/hien-thi")
     public String hienThi(Model model, HttpSession session) {
@@ -68,12 +80,18 @@ public class ThuHangController {
     public String viewUpdate(@PathVariable("id") Integer id, Model model) {
         ThuHangResponse thuHangResponse = thuHangService.getOne(id);
         model.addAttribute("thuHang", thuHangResponse);
+        model.addAttribute("voucherThuHang", new VoucherThuHang());
+        model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
+        model.addAttribute("chiTietVoucher", this.chiTietVoucherThuHangService.getTheoIdThuHang(id));
         return "admin/thu_hang/view_update_thu_hang";
     }
 
     @GetMapping("/view-add")
     public String viewAdd(Model model) {
         model.addAttribute("thuHang", new CreateThuHangRequest());
+        model.addAttribute("voucherThuHang", new VoucherThuHang());
+        model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
+        model.addAttribute("getPending", this.chiTietVoucherThuHangService.getByTrangThaiPending());
         return "admin/thu_hang/view_add_thu_hang";
     }
 
@@ -104,15 +122,17 @@ public class ThuHangController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("thuHang") CreateThuHangRequest createThuHangRequest, BindingResult result, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("thuHang") CreateThuHangRequest createThuHangRequest, BindingResult result, @RequestParam("voucherThuHang")List<VoucherThuHang> listVoucherThuHang, Model model, HttpSession session) {
         if (result.hasErrors()) {
+            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             model.addAttribute("thuHang", createThuHangRequest);
             return "admin/thu_hang/view_add_thu_hang";
         }
         try {
-            thuHangService.add(createThuHangRequest);
+//            thuHangService.add(createThuHangRequest);
+            this.chiTietVoucherThuHangService.addChiTietVoucher(createThuHangRequest,listVoucherThuHang);
             session.setAttribute("successMessage", "Thêm thành công!");
-            return "redirect:/admin/psg/thu-hang/hien-thi";
+            return "redirect:/admin/psg/thu-hang/view-add";
         }catch (NullPointerException e){
             model.addAttribute("errorMessage", "Looxi");
             return "admin/thu_hang/view_add_thu_hang";
@@ -130,6 +150,17 @@ public class ThuHangController {
         }
     }
 
+    @PostMapping("/updateSoLuong")
+    public String updateSoLuong(@RequestParam("ids")List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong){
+        this.chiTietVoucherThuHangService.updateSoLuongVoucherThuHang(id, soLuong);
+        return "redirect:/admin/psg/thu-hang/hien-thi";
+    }
+
+    @PostMapping("/update-so-luong-active")
+    public String updateSoLuongActive(@RequestParam("ids")List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong){
+        this.chiTietVoucherThuHangService.updateSoLuongVoucherThuHang(id, soLuong);
+        return "redirect:/admin/psg/thu-hang/hien-thi";
+    }
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("thuHang") UpdateThuHangRequest updateThuHangRequest, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
@@ -270,5 +301,18 @@ public class ThuHangController {
             model.addAttribute("errorMessage", e.getMessage());
             return pageThuHangInActive(0, model);
         }
+    }
+
+    @GetMapping("delete-one-row-chi-tiet-thu-hang/{id}")
+    public String deleteOneRowChiTietThuHang(@PathVariable("id") Integer id){
+        this.chiTietVoucherThuHangService.delete(id);
+        return "redirect:/admin/psg/thu-hang/view-add";
+    }
+
+    @GetMapping("delete-one-row-chi-tiet-thu-hang-active/{id}")
+    public String deleteOneRowChiTietThuHangActive(@PathVariable("id") Integer id){
+        this.chiTietVoucherThuHangService.delete(id);
+        Integer ids = this.chiTietVoucherThuHangService.getOne(id).getThuHang().getId();
+        return "redirect:/admin/psg/thu-hang/view-update/"+ids ;
     }
 }

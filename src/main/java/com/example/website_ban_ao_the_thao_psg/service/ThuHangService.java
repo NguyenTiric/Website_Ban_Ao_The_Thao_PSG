@@ -16,6 +16,8 @@ import java.util.List;
 @Service
 public interface ThuHangService {
 
+    Integer getMaxId();
+
     List<ThuHang> getAll();
 
     Page<ThuHangResponse> pageThuHangActive(Integer pageNo, Integer size);

@@ -75,6 +75,7 @@ public class ChiTietVoucherThuHangController {
         model.addAttribute("chiTietVoucherThuHang", chiTietVoucherThuHangResponse);
         return "admin/chi_tiet_voucher_thu_hang/view_update_chi_tiet_voucher_thu_hang";
     }
+
     @GetMapping("/view-add")
     public String viewAdd(Model model) {
         model.addAttribute("thuHang", new ThuHang());

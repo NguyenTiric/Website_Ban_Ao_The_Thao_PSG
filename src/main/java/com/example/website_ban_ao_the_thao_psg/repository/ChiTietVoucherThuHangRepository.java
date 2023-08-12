@@ -2,6 +2,7 @@ package com.example.website_ban_ao_the_thao_psg.repository;
 
 import com.example.website_ban_ao_the_thao_psg.entity.ChiTietVoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.ChiTietVoucherThuHang;
+import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,4 +42,23 @@ public interface ChiTietVoucherThuHangRepository extends JpaRepository<ChiTietVo
     @Modifying
     @Query(value = "update ChiTietVoucherThuHang m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
     void revert(@Param("id") Integer id, @Param("now") LocalDate now);
+
+    @Query(value = "select c from ChiTietVoucherThuHang c where c.trangThai = 'PENDING'")
+    List<ChiTietVoucherThuHang> getChiTietVoucherThuHangPending();
+
+    @Query("SELECT ctvth FROM ChiTietVoucherThuHang ctvth " +
+            "JOIN FETCH ctvth.thuHang th " +
+            "WHERE th.id = (SELECT MAX(thh.id) FROM ThuHang thh)")
+    List<ChiTietVoucherThuHang> findLatestChiTietVoucherThuHang();
+
+    @Transactional
+    @Modifying
+    @Query("update ChiTietVoucherThuHang c set c.soLuong =?1, c.trangThai ='ACTIVE' WHERE c.trangThai = 'PENDING'")
+    void updateSoLuongChiTietVoucherThuHang(Integer soLuong);
+
+    @Query("select c from ChiTietVoucherThuHang c join fetch c.thuHang th where th.id = ?1")
+    ChiTietVoucherThuHang getChiTietVoucherThuHangTheoId(Integer id);
+
+    List<ChiTietVoucherThuHang> getChiTietVoucherThuHangByThuHang(ThuHang thuHang);
+
 }

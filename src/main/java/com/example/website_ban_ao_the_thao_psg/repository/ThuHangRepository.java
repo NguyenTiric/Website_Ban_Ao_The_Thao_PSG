@@ -20,6 +20,9 @@ import java.util.List;
 @Repository
 public interface ThuHangRepository extends JpaRepository<ThuHang, Integer> {
 
+    @Query(value = "select max(th.id) from ThuHang th")
+    Integer findMaxId();
+
     @Query(value = "SELECT * FROM thu_hang WHERE (ten LIKE %?1% OR ma LIKE %?1%) AND trang_thai='ACTIVE'", nativeQuery = true)
     Page<ThuHang> pageSearchActive(String searchString, org.springframework.data.domain.Pageable pageable);
 

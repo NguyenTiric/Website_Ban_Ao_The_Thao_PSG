@@ -60,6 +60,33 @@ public class ApplicationConstant {
     }
 
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
+    public enum TrangThaiChiTietVouCherThuHang {
+
+        ACTIVE("ACTIVE", "Hoạt động", "primary"), INACTIVE("INACTIVE", "Không hoạt động", "error"), PENDING("PENDING", "Chưa Kích Hoạt", "warning");
+        private final String ten;
+        private final String moTa;
+        private final String mauSac;
+
+        TrangThaiChiTietVouCherThuHang(String ten, String moTa, String mauSac) {
+            this.ten = ten;
+            this.moTa = moTa;
+            this.mauSac = mauSac;
+        }
+
+        public String getTen() {
+            return ten;
+        }
+
+        public String getMoTa() {
+            return moTa;
+        }
+
+        public String getMauSac() {
+            return mauSac;
+        }
+    }
+
+    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     public enum TrangThaiQuyDinh {
         ACTIVE("ACTIVE", "Hoạt động", "primary"), INACTIVE("INACTIVE", "Không hoạt động", "error");
 
@@ -251,7 +278,7 @@ public class ApplicationConstant {
 
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     public enum TrangThaiVoucher {
-        ACTIVE("ACTIVE", "Hoạt động", "primary"), INACTIVE("INACTIVE", "Không hoạt động", "error");
+        ACTIVE("ACTIVE", "Hoạt động", "primary"), INACTIVE("INACTIVE", "Không hoạt động", "error"), PENDING("PENDING", "Chưa Kích Hoạt", "warning");
 
         private final String ten;
         private final String moTa;

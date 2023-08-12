@@ -54,11 +54,6 @@ public class ScheduledThuHang {
             if (selectedThuHang != null) {
                 khachHang.setThuHang(selectedThuHang);
                 khachHangRepository.save(khachHang);
-//                System.out.println("Đã tự động nâng thứ hạng");
-//                message.setTo(khachHang.getEmail());
-//                message.setSubject("Thông báo thứ hạng đã được nâng");
-//                message.setText("Xin chào " + khachHang.getTen() + ",\n\nChúc mừng bạn đã đạt được nâng lên. Cảm ơn đã ủng hộ và gắn bó với chúng tôi.\n\nTrân trọng,\nWebsite bán áo thể thao PSG");
-//                emailSender.send(message);
             }
         }
     }

@@ -78,11 +78,15 @@
                         </div>
                     </div>
                     <div class="col-10">
-                        <div class="form-group mb-3">
-                            <label class="check" style="margin-right: 15px;margin-top: 15px">
-                                <input type="checkbox" />
-                                <span>hihih</span>
-                            </label>
+                        <div class="scrollable-list">
+                            <ul class="list-group">
+                                <div class="form-group mb-3">
+                                    <label class="check" style="margin-right: 15px;margin-top: 15px" th:each="vc : ${listVoucher}">
+                                        <input type="checkbox" th:name="voucherThuHang" th:value="${vc.id}"/>
+                                        <span th:text="${vc.ten}"></span>
+                                    </label>
+                                </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -90,11 +94,64 @@
         </div>
 
         <div class="form-group mb-3 text-center">
-            <a href="/admin/psg/thu-hang/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Trở lại</a>
             <button class="btn btn-rounded btn-primary" type="submit">Thêm</button>
         </div>
     </form>
+    <form action="/admin/psg/thu-hang/updateSoLuong" method="post" id="updateForm" onsubmit="return confirm('Bạn có thêm không?')">>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Thứ hạng</th>
+                <th scope="col">Voucher</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vcth, index:${getPending}">
+                <th scope="row" th:text="${index.count} +1" >1</th>
+                <td th:text="${vcth.thuHang.ten}"></td>
+                <td th:text="${vcth.voucherThuHang.ten}"></td>
+                <td>
+                    <input type="hidden" name="ids" th:value="${vcth.id}">
+                    <input type="number" name="soLuongs" th:value="1" min="1">
+                </td>
+                <td>
+                    <a th:href="@{/admin/psg/thu-hang/delete-one-row-chi-tiet-thu-hang/{id}(id=${vcth.id})}">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="/admin/psg/thu-hang/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Trở lại</a>
+        <button class="btn waves-effect waves-light btn-rounded btn-primary" type="submit">Thêm</button>
+    </form>
 </div>
 </div>
+<script>
+    function updateSoLuong() {
+        var ids = [];
+        var soLuongs = [];
+        var rows = document.getElementsByTagName("tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var idInput = row.querySelector("input[name='ids']");
+            var soLuongInput = row.querySelector("input[name='soLuongs']");
+
+            if (idInput && soLuongInput) {
+                ids.push(idInput.value);
+                soLuongs.push(soLuongInput.value);
+            }
+        }
+
+        var idsParam = ids.join(",");
+        var soLuongsParam = soLuongs.join(",");
+
+        var form = document.getElementById("updateForm");
+        form.action = "/admin/psg/thu-hang/updateSoLuong?ids=" + idsParam + "&soLuongs=" + soLuongsParam;
+        form.submit();
+    }
+</script>
 </body>
 </html>

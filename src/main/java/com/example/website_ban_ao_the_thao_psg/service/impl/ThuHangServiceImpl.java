@@ -40,6 +40,11 @@ public class ThuHangServiceImpl implements ThuHangService {
     KhachHangRepository khachHangRepository;
 
     @Override
+    public Integer getMaxId() {
+        return this.thuHangRepository.findMaxId();
+    }
+
+    @Override
     public List<ThuHang> getAll() {
         return this.thuHangRepository.findAll();
     }
