@@ -37,10 +37,12 @@ public interface ThuHangService {
     Page<ThuHangResponse> searchSoLuongDonHangToiThieuActive(Integer search, Integer pageNo, Integer size);
 
     Page<ThuHangResponse> searchNameOrMaInActive(String searchName, Integer pageNo, Integer size);
+
     Page<ThuHangResponse> searchSoLuongDonHangOrSoTienInActive(String searchName, Integer pageNo, Integer size);
+
     void deleteThuHang(Integer id, LocalDate now);
 
-    void revertThuHang(Integer id,LocalDate now);
+    void revertThuHang(Integer id, LocalDate now);
 
     void checkDuplicateName(Integer id);
 

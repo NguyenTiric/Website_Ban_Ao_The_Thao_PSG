@@ -122,7 +122,7 @@ public class ThuHangController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("thuHang") CreateThuHangRequest createThuHangRequest, BindingResult result, @RequestParam("voucherThuHang")List<VoucherThuHang> listVoucherThuHang, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("thuHang") CreateThuHangRequest createThuHangRequest, BindingResult result, @RequestParam("voucherThuHang") List<VoucherThuHang> listVoucherThuHang, Model model, HttpSession session) {
         if (result.hasErrors()) {
             model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             model.addAttribute("thuHang", createThuHangRequest);
@@ -130,15 +130,14 @@ public class ThuHangController {
         }
         try {
 //            thuHangService.add(createThuHangRequest);
-            this.chiTietVoucherThuHangService.addChiTietVoucher(createThuHangRequest,listVoucherThuHang);
+            this.chiTietVoucherThuHangService.addChiTietVoucher(createThuHangRequest, listVoucherThuHang);
             session.setAttribute("successMessage", "Thêm thành công!");
             return "redirect:/admin/psg/thu-hang/view-add";
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             model.addAttribute("errorMessage", "Looxi");
             return "admin/thu_hang/view_add_thu_hang";
-        }
-        catch (NumberFormatException ex) {
-            model.addAttribute("errorMessage", "Lỗi"+ex.getMessage());
+        } catch (NumberFormatException ex) {
+            model.addAttribute("errorMessage", "Lỗi" + ex.getMessage());
             System.out.println(ex.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
         } catch (CommandLine.DuplicateNameException er) {
@@ -151,16 +150,17 @@ public class ThuHangController {
     }
 
     @PostMapping("/updateSoLuong")
-    public String updateSoLuong(@RequestParam("ids")List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong){
+    public String updateSoLuong(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong) {
         this.chiTietVoucherThuHangService.updateSoLuongVoucherThuHang(id, soLuong);
         return "redirect:/admin/psg/thu-hang/hien-thi";
     }
 
     @PostMapping("/update-so-luong-active")
-    public String updateSoLuongActive(@RequestParam("ids")List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong){
+    public String updateSoLuongActive(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong) {
         this.chiTietVoucherThuHangService.updateSoLuongVoucherThuHang(id, soLuong);
         return "redirect:/admin/psg/thu-hang/hien-thi";
     }
+
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("thuHang") UpdateThuHangRequest updateThuHangRequest, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
@@ -304,15 +304,15 @@ public class ThuHangController {
     }
 
     @GetMapping("delete-one-row-chi-tiet-thu-hang/{id}")
-    public String deleteOneRowChiTietThuHang(@PathVariable("id") Integer id){
+    public String deleteOneRowChiTietThuHang(@PathVariable("id") Integer id) {
         this.chiTietVoucherThuHangService.delete(id);
         return "redirect:/admin/psg/thu-hang/view-add";
     }
 
     @GetMapping("delete-one-row-chi-tiet-thu-hang-active/{id}")
-    public String deleteOneRowChiTietThuHangActive(@PathVariable("id") Integer id){
+    public String deleteOneRowChiTietThuHangActive(@PathVariable("id") Integer id) {
         this.chiTietVoucherThuHangService.delete(id);
         Integer ids = this.chiTietVoucherThuHangService.getOne(id).getThuHang().getId();
-        return "redirect:/admin/psg/thu-hang/view-update/"+ids ;
+        return "redirect:/admin/psg/thu-hang/view-update/" + ids;
     }
 }

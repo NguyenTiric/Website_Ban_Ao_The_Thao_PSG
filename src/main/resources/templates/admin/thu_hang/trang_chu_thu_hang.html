@@ -18,9 +18,11 @@
                 hạng</a>
         </div>
         <div class="col-2">
-            <a href="/admin/psg/thu-hang/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">Thứ hạng đã xóa</a>
+            <a href="/admin/psg/thu-hang/pageInActive/0" class="btn waves-effect waves-light btn-rounded btn-primary">Thứ
+                hạng đã xóa</a>
         </div>
-    </div><br>
+    </div>
+    <br>
     <div class="card">
         <div class="card-body">
             <h4 class="card-title mb-3">Danh Sách</h4>
@@ -48,7 +50,7 @@
                             <td th:text="${th.ten}"></td>
                             <td th:text="${th.soTienKhachChiToiThieu}"></td>
                             <td th:text="${th.soLuongDonHangToiThieu}"></td>
-                            <td th:text="${th.trangThai.moTa}"  style="color: #00ff22"></td>
+                            <td th:text="${th.trangThai.moTa}" style="color: #00ff22"></td>
                             <td>
                       <span>
                           <a th:href="@{/admin/psg/thu-hang/view-update/{id}(id=${th.id})}"
@@ -60,8 +62,9 @@
                               style="display: inline;">
                         <a th:href="@{/admin/psg/thu-hang/delete/{id}(id=${th.id})}">
                             <button type="submit"
-                                    class="btn waves-effect waves-light btn-rounded btn-danger" th:hidden="${th.ten == 'Thành viên'}"
-                                    onclick="return confirm('Bạn có muốn xóa không')" >Xóa
+                                    class="btn waves-effect waves-light btn-rounded btn-danger"
+                                    th:hidden="${th.ten == 'Thành viên'}"
+                                    onclick="return confirm('Bạn có muốn xóa không')">Xóa
                             </button>
                         </a>
                         </form>

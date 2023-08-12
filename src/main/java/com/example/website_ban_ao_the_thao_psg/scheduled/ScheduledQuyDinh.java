@@ -54,7 +54,7 @@ public class ScheduledQuyDinh {
                 this.quyDinhRepository.updateTrangThaiSauResetThuHang(ngayDatLaiThuHang);
                 System.out.println("Thành công nhé!");
 
-                if (!isEmailSentToday){
+                if (!isEmailSentToday) {
                     for (KhachHang khachHang : khachHangList) {
                         SimpleMailMessage message = new SimpleMailMessage();
                         message.setTo(khachHang.getEmail());
@@ -67,9 +67,9 @@ public class ScheduledQuyDinh {
                     }
                 }
 
-            }else if (ngayThongBao.isEqual(currentDateTime)) {
+            } else if (ngayThongBao.isEqual(currentDateTime)) {
                 List<KhachHang> khachHangList = khachHangRepository.findAll();
-                if (!isEmailSentToday){
+                if (!isEmailSentToday) {
                     for (KhachHang khachHang : khachHangList) {
                         SimpleMailMessage message = new SimpleMailMessage();
                         message.setTo(khachHang.getEmail());
