@@ -4,6 +4,8 @@ import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.model.response.KhachHangResponse;
 import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
+import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
+import com.example.website_ban_ao_the_thao_psg.repository.NhanVienRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.ThuHangRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

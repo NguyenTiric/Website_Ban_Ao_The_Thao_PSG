@@ -24,6 +24,8 @@ public interface ChiTietSanPhamService {
 
     List<ChiTietSanPhamResponse> listChiTietSanPhamBySanPham(Integer idSP);
 
+    List<ChiTietSanPhamResponse> getAllChiTietSanPham();
+
     Page<ChiTietSanPhamResponse> pageChiTietSanPhamActive(Integer pageNo, Integer size);
 
     Page<ChiTietSanPhamResponse> pageChiTietSanPhamInActive(Integer pageNo, Integer size);
@@ -33,6 +35,7 @@ public interface ChiTietSanPhamService {
     void addCtsp(CreateSanPhamRequest createSanPhamRequest, List<KichThuoc> kichThuocList, MultipartFile[] files) throws IOException, SQLException;
 
     void updateSoLuongPending(List<Integer> id, List<Integer> soLuong);
+
     void updateSoLuongActive(List<Integer> id, List<Integer> soLuong);
 
     void updateTrangThai();
@@ -54,6 +57,8 @@ public interface ChiTietSanPhamService {
     Page<SanPhamResponse> pageSanPhamActive(Integer pageNo, Integer size);
 
     Page<SanPhamResponse> pageSanPhamInActive(Integer pageNo, Integer size);
+
+    List<SanPhamResponse> getAllSanPhamActive();
 
     SanPhamResponse addSp(CreateSanPhamRequest createSanPhamRequest);
 

@@ -37,7 +37,6 @@
                         <thead>
                         <tr>
                             <th scope="col">STT</th>
-                            <th scope="col">Vai Trò</th>
                             <th scope="col">Tên</th>
                             <th scope="col">Giới Tính</th>
                             <th scope="col">Ngày Sinh</th>
@@ -50,7 +49,6 @@
                         <tbody>
                         <tr th:each="tk,index:${listKhachHangInActive}">
                             <td th:text="${index.count}"></td>
-                            <td th:text="${tk.vaiTro.ten}"></td>
                             <td th:text="${tk.ten}"></td>
                             <td th:text="${tk.gioiTinh==true ? 'Nam':'Nữ'}"></td>
                             <td th:text="${tk.ngaySinh}"></td>

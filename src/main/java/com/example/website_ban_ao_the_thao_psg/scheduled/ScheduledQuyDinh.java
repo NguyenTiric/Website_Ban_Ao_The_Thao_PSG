@@ -38,8 +38,6 @@ public class ScheduledQuyDinh {
         LocalDate currentDateTime = LocalDate.now();
         List<QuyDinh> listQuyDinh = quyDinhRepository.findByNgayCapNhatByTrangThai();
 
-//        System.out.println("Trạng thái ngày đặt lại: " + listQuyDinh);
-
         for (QuyDinh quyDinh : listQuyDinh) {
             LocalDate ngayDatLaiThuHang = quyDinh.getNgayDatLaiThuHang();
             LocalDate ngayThongBao = ngayDatLaiThuHang.minusDays(30);

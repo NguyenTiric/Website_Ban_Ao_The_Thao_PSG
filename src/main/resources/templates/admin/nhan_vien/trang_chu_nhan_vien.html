@@ -100,7 +100,7 @@
                             </td>
                             <td th:text="${tk.ten}"></td>
                             <td th:text="${tk.gioiTinh==true ? 'Nam':'Nữ'}"></td>
-                            <td th:text="${tk.ngaySinh}"></td>
+                            <td th:text="${#temporals.format(tk.ngaySinh, 'dd/MM/yyyy')}"></td>
                             <!--                            <td th:text="${tk.diaChi}"></td>-->
                             <td th:text="${tk.sdt}"></td>
                             <!--                            <td th:text="${tk.email}"></td>-->

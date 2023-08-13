@@ -3,6 +3,7 @@ package com.example.website_ban_ao_the_thao_psg.model.mapper.impl;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.VoucherThuHangMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateThuongHieuRequest;
+import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateVoucherThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateVoucherThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.VoucherThuHangResponse;
 import jakarta.annotation.Generated;
@@ -36,11 +37,13 @@ public class VoucherThuHangMapperImpl implements VoucherThuHangMapper {
     }
 
     @Override
-    public VoucherThuHang createVoucherThuHangRequestToVoucherThuHangEntity(CreateThuongHieuRequest createThuongHieuRequest) {
+    public VoucherThuHang createVoucherThuHangRequestToVoucherThuHangEntity(CreateVoucherThuHangRequest createVoucherThuHangRequest) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        VoucherThuHang voucherThuHang = modelMapper.map(createThuongHieuRequest, VoucherThuHang.class);
+        VoucherThuHang voucherThuHang = modelMapper.map(createVoucherThuHangRequest, VoucherThuHang.class);
         return voucherThuHang;
     }
+
+
 
     @Override
     public VoucherThuHang updateVoucherThuHangRequestToVoucherThuHangEntity(UpdateVoucherThuHangRequest updateVoucherThuHangRequest) {

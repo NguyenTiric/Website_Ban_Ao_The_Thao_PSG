@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
@@ -41,6 +42,9 @@ public class NhanVien {
     @JoinColumn(name = "vai_tro_id")
     private VaiTro vaiTro;
 
+    @Column(name = "ma")
+    private String ma;
+
     @Column(name = "ten")
     private String ten;
 
@@ -48,6 +52,7 @@ public class NhanVien {
     private Boolean gioiTinh;
 
     @Column(name = "ngay_sinh")
+    @DateTimeFormat(pattern = "dd-MM-YYYY")
     private LocalDate ngaySinh;
 
     @Column(name = "dia_chi")
@@ -76,6 +81,6 @@ public class NhanVien {
     private TrangThaiTaiKhoan trangThai;
 
     @Lob
-    @Column(name = "anh")
-    private Blob anh;
+    @Column(name = "anhNV")
+    private Blob anhNV;
 }
