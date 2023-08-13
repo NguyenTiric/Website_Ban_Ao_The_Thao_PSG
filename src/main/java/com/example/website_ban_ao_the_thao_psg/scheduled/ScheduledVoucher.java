@@ -1,4 +1,4 @@
-package com.example.website_ban_ao_the_thao_psg.schedule;
+package com.example.website_ban_ao_the_thao_psg.scheduled;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
@@ -10,11 +10,10 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 @Component
-public class ScheduleVoucher {
+public class ScheduledVoucher {
 
     @Autowired
     private VoucherThuHangRepository voucherThuHangRepository;

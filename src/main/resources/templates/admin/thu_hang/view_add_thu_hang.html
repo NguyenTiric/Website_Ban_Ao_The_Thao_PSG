@@ -134,7 +134,7 @@
                 <td th:text="${vcth.voucherThuHang.ten}"></td>
                 <td>
                     <input type="hidden" name="ids" th:value="${vcth.id}">
-                    <input type="number" name="soLuongs" th:value="1" min="1">
+                    <input class="form-control" type="number" name="soLuongs" th:value="1" min="1">
                 </td>
                 <td>
                     <a th:href="@{/admin/psg/thu-hang/delete-one-row-chi-tiet-thu-hang/{id}(id=${vcth.id})}">Xóa</a>

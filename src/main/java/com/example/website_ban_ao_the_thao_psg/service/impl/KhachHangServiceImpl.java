@@ -15,10 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -33,7 +36,8 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Autowired
     private KhachHangMapper khachHangMapper;
 
-
+    @Autowired
+    private JavaMailSender sender;
 
     @Override
     public Page<KhachHangResponse> pageTaiKhoanActive(Integer pageNo, Integer size) {
@@ -51,16 +55,33 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     @Override
     public void add(CreateKhachHangRequest createKhachHangRequest, MultipartFile file) throws IOException, SQLException {
+        SimpleMailMessage message = new SimpleMailMessage();
         KhachHang khachHang = khachHangMapper.createKhachHangRequestToTaiKhoanEntity(createKhachHangRequest);
         byte[] bytes = file.getBytes();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
         khachHang.setMa(GenCode.generateKhachHangCode());
+        khachHang.setMatKhau(GenCode.generatePassWordKhachHang());
+        khachHang.setSoLuongDonHangThanhCong(0);
+        khachHang.setSoTienDaChiTieu(BigDecimal.valueOf(0));
         khachHang.setNgayTao(LocalDate.now());
         khachHang.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
         khachHang.setAnh(blob);
 
         khachHangRepository.save(khachHang);
 
+        String subject = "Đăng ký tài khoản thành công";
+        String content = "Chào anh/chị,\n" +
+                "Dưới đây là thông tin tài khoản của bạn:\n" +
+                "Tên đăng nhập (Email): " + khachHang.getEmail() + "\n" +
+                "Mật khẩu: " + khachHang.getMatKhau() + "\n" +
+                "Vui lòng đăng nhập bằng thông tin này để sử dụng tài khoản của bạn.\n" +
+                "\n" +
+                "Trân trọng,\n" +
+                "Cửa hàng bán áo thể thao PSG";
+        message.setTo(khachHang.getEmail());
+        message.setSubject(subject);
+        message.setText(content);
+        this.sender.send(message);
     }
 
     @Override

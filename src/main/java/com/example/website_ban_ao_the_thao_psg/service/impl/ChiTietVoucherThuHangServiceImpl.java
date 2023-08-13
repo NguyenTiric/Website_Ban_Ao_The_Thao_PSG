@@ -24,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -177,7 +178,48 @@ public class ChiTietVoucherThuHangServiceImpl implements ChiTietVoucherThuHangSe
     }
 
     @Override
+    public void updateSoLuongVoucherThuHangActive(List<Integer> id, List<Integer> soLuong){
+        for (int i = 0; i < id.size(); i++){
+            Optional<ChiTietVoucherThuHang> list = this.chiTietVoucherThuHangRepository.findById(id.get(i));
+            if (list.isPresent()){
+                ChiTietVoucherThuHang chiTietVoucherThuHang = list.get();
+                chiTietVoucherThuHang.setSoLuong(soLuong.get(i));
+                chiTietVoucherThuHang.setNgayCapNhat(LocalDate.now());
+                this.chiTietVoucherThuHangRepository.save(chiTietVoucherThuHang);
+            }
+        }
+    }
+
+    @Override
     public void delete(Integer id) {
         this.chiTietVoucherThuHangRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateListVoucherThuHangInUpdateChiTietVoucherThuHang(List<VoucherThuHang> voucherThuHangList, Integer id) {
+        for (VoucherThuHang list : voucherThuHangList) {
+            List<ChiTietVoucherThuHang> chiTietVoucherThuHangList = this.chiTietVoucherThuHangRepository.getChiTietVoucherThuHangByThuHang(this.thuHangRepository.findById(id).get());
+
+            boolean voucherExist = false;
+
+            for (ChiTietVoucherThuHang chiTietVoucherThuHang : chiTietVoucherThuHangList) {
+                if (list.getId().equals(chiTietVoucherThuHang.getId())){
+                    voucherExist = true;
+                    break;
+                }
+            }
+
+            if (voucherExist){
+                continue;
+            }
+
+            ChiTietVoucherThuHang ctvth = chiTietVoucherThuHangMapper.createChiTietVoucherThuHangRequestToChiTietVouCherThuHangEntity(new CreateChiTietVoucherThuHangRequest());
+            ThuHang th = this.thuHangRepository.findById(id).get();
+            ctvth.setThuHang(th);
+            ctvth.setSoLuong(1);
+            ctvth.setNgayTao(LocalDate.now());
+            ctvth.setTrangThai(ApplicationConstant.TrangThaiChiTietVouCherThuHang.ACTIVE);
+            this.chiTietVoucherThuHangMapper.listChiTietVoucherThuHangEntityToChiTietVoucherThuHangResponse(Collections.singletonList(this.chiTietVoucherThuHangRepository.save(ctvth)));
+        }
     }
 }

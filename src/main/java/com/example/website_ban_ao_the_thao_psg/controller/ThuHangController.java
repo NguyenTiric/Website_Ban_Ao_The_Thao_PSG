@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -319,4 +320,17 @@ public class ThuHangController {
         Integer ids = this.chiTietVoucherThuHangService.getOne(id).getThuHang().getId();
         return "redirect:/admin/psg/thu-hang/view-update/" + ids;
     }
+
+    @PostMapping("/update-so-luong-voucher")
+    public String updateSoLuongVoucher(@RequestParam("voucherThuHang1") List<Integer> voucherIds, @RequestParam("id") Integer id){
+        List<VoucherThuHang> voucherThuHangList = new ArrayList<>();
+        for (Integer voucherId : voucherIds) {
+            VoucherThuHang voucherThuHang = voucherThuHangService.findById(voucherId);
+            voucherThuHangList.add(voucherThuHang);
+        }
+
+        this.chiTietVoucherThuHangService.updateListVoucherThuHangInUpdateChiTietVoucherThuHang(voucherThuHangList, id);
+        return "redirect:/admin/psg/thu-hang/view-update/" + id;
+    }
+
 }

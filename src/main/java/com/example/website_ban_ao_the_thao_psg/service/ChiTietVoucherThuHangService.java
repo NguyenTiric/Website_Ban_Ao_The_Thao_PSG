@@ -43,5 +43,9 @@ public interface ChiTietVoucherThuHangService {
 
     void updateSoLuongVoucherThuHang(List<Integer> id, List<Integer> soLuong);
 
+    void updateSoLuongVoucherThuHangActive(List<Integer> id, List<Integer> soLuong);
+
     void delete(Integer id);
+
+    void updateListVoucherThuHangInUpdateChiTietVoucherThuHang(List<VoucherThuHang> voucherThuHangList, Integer id);
 }

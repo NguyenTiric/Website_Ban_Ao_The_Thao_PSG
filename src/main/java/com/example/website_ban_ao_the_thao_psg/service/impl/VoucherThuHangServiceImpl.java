@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -93,7 +94,8 @@ public class VoucherThuHangServiceImpl implements VoucherThuHangService {
         voucherThuHangRepository.revert(id, LocalDateTime.now());
     }
 
-
-
-
+    @Override
+    public VoucherThuHang findById(Integer voucherId) {
+        return this.voucherThuHangRepository.getOne(voucherId);
+    }
 }
