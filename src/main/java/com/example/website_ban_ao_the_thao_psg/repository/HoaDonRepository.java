@@ -46,4 +46,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
             "WHERE DATE(hd.ngay_tao) BETWEEN DATE(:ngayBatDau) AND DATE(:ngayKetThuc)", nativeQuery = true)
     Page<HoaDon> pageSearchHoaDonBetweenDates(Pageable pageable, @Param("ngayBatDau") LocalDate ngayBatDau, @Param("ngayKetThuc") LocalDate ngayKetThuc);
 
+    @Query("SELECT h FROM HoaDon h WHERE h.trangThai = :trangThai")
+    Page<HoaDon> pageComboboxTrangThaiHoaDon(@Param("trangThai") ApplicationConstant.TrangThaiHoaDon trangThai, Pageable pageable);
+
 }
