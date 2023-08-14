@@ -275,4 +275,11 @@ public class HoaDonServiceImpl implements HoaDonService {
         Page<HoaDon> hoaDonResponses = hoaDonRepository.pageSearchHoaDonBetweenDates(pageable, batdau, ketThuc);
         return hoaDonResponses.map(hoaDonMapper::hoaDonEntityToHoaDonResponse);
     }
+
+    @Override
+    public Page<HoaDonResponse> pageComboboxTrangThaiHoaDon(Integer page, Integer size, ApplicationConstant.TrangThaiHoaDon trangThai) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<HoaDon> hoaDonPage = hoaDonRepository.pageComboboxTrangThaiHoaDon(trangThai, pageRequest);
+        return hoaDonPage.map(hoaDonMapper::hoaDonEntityToHoaDonResponse);
+    }
 }

@@ -39,7 +39,7 @@ public class CreateNhanVienRequest {
     @NotNull(message = "Ngày Sinh Không Được Để Trống")
     private LocalDate ngaySinh;
 
-    @NotBlank(message = "Không Được để Trống")
+//    @NotBlank(message = "Không Được để Trống")
     private String diaChi;
 
     @NotBlank(message = "Không Được để Trống")

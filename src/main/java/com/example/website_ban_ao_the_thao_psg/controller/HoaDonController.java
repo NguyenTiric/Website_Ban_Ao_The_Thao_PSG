@@ -2,6 +2,9 @@ package com.example.website_ban_ao_the_thao_psg.controller;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonChiTietResponse;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
+import com.example.website_ban_ao_the_thao_psg.model.response.ChiTietSanPhamResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.SanPhamResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.ViVoucherResponse;
@@ -81,7 +84,30 @@ public class HoaDonController {
             String formattedThanhTien = currencyFormat.format(thanhTien);
             hd.setFormattedThanhTien((formattedThanhTien));
         }
+        model.addAttribute("trangThaiHD", ApplicationConstant.TrangThaiHoaDon.values());
+        model.addAttribute("trangThaiBH", ApplicationConstant.HinhThucBanHang.values());
+        model.addAttribute("size", hoaDonResponsePageActive.getSize());
+        model.addAttribute("totalPages", hoaDonResponsePageActive.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listHoaDon", hoaDonResponsePageActive);
 
+        return "admin/hoa_don/hoa_don";
+    }
+
+    @GetMapping("/loadTrangThaiHd/{pageNo}")
+    public String pageLoadTrangThaiHoaDon(@PathVariable("pageNo") Integer pageNo, @RequestParam(name = "selectedTrangThai", required = false) ApplicationConstant.TrangThaiHoaDon selectedTrangThai, Model model) {
+        Page<HoaDonResponse> hoaDonResponsePageActive = hoaDonService.pageComboboxTrangThaiHoaDon(pageNo, 10,selectedTrangThai);
+
+        // Định dạng tiền tệ Việt Nam
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+
+        for (HoaDonResponse hd : hoaDonResponsePageActive) {
+            BigDecimal thanhTien = hd.getThanhTien();
+            String formattedThanhTien = currencyFormat.format(thanhTien);
+            hd.setFormattedThanhTien((formattedThanhTien));
+        }
+        model.addAttribute("trangThaiHD", ApplicationConstant.TrangThaiHoaDon.values());
+        model.addAttribute("trangThaiBH", ApplicationConstant.HinhThucBanHang.values());
         model.addAttribute("size", hoaDonResponsePageActive.getSize());
         model.addAttribute("totalPages", hoaDonResponsePageActive.getTotalPages());
         model.addAttribute("currentPage", pageNo);
@@ -185,7 +211,8 @@ public class HoaDonController {
     }
 
     @GetMapping("/searchDate/{pageNo}")
-    public String searchDate(@PathVariable("pageNo") Integer pageNo, Model model, @RequestParam(value = "beginDate", required = false) LocalDate beginDate, @RequestParam(value = "endDate", required = false) LocalDate endDate) {
+    public String searchDate(@PathVariable("pageNo") Integer pageNo, Model model, @RequestParam(value = "beginDate", required = false) LocalDate beginDate
+            , @RequestParam(value = "endDate", required = false) LocalDate endDate) {
         Page<HoaDonResponse> hoaDonResponsePageActive = hoaDonService.pageSearchHoaDonBetweenDates(pageNo, 10, beginDate, endDate);
 
         // Định dạng tiền tệ Việt Nam

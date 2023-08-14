@@ -4,6 +4,8 @@ import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.model.response.GiaoDichResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonChiTietResponse;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateHoaDonRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.LichSuHoaDonResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.ViVoucherResponse;
@@ -47,6 +49,7 @@ public interface HoaDonService {
     Page<HoaDonResponse> searchByAllRange(String name, Integer pageNo, Integer size);
 
     Page<HoaDonResponse> searchByDate(String beginDate, String endDate, Integer pageNo, Integer size) throws ParseException;
+    Page<HoaDonResponse>pageComboboxTrangThaiHoaDon(Integer page, Integer size, ApplicationConstant.TrangThaiHoaDon trangThai);
 
     Page<HoaDonResponse> pageHoaDon(Integer page, Integer size);
 
