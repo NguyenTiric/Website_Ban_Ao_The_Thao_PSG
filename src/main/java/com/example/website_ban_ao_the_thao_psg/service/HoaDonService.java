@@ -18,12 +18,16 @@ import java.util.List;
 public interface HoaDonService {
     List<HoaDonResponse> getAllHoaDonCho();
 
+    Integer idhoaDonIndex();
+
     List<LichSuHoaDonResponse> getAllLichSuHoaDon(Integer idHd);
 
     List<GiaoDichResponse> getAllGiaoDich(Integer idHd);
 
     List<HoaDonChiTietResponse> getAllHoaDonChiTiet(Integer idHd);
+
     void updateHoaDonWithKhachHang(Integer hoaDonId, Integer customerId);
+
     HoaDonChiTietResponse getOneHdct(Integer id);
 
     HoaDonResponse addHoaDon();

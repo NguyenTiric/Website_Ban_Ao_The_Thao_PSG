@@ -145,7 +145,7 @@
                                                     <!--begin::Menu item-->
                                                     <div class="menu-item px-5">
                                                         <a
-                                                                href="../../../account/overview.html"
+                                                                href="#"
                                                                 class="menu-link px-5"
                                                         >
                                                             My Profile
@@ -153,7 +153,7 @@
                                                     </div>
                                                     <div class="menu-item px-5">
                                                         <a
-                                                                href="../../../authentication/layouts/corporate/sign-in.html"
+                                                                href="#"
                                                                 class="menu-link px-5"
                                                         >
                                                             Sign Out
@@ -183,239 +183,169 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-    <div class="row">
-        <div class="col-8">
-            <section layout:fragment="gioHang">
-            </section>
-            <hr>
-            <div class="card card-flush">
-                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                    <div class="card-title">
-                        <div class=" align-items-center position-relative my-1">
-                            <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4"
-                            ><span class="path1"></span><span class="path2"></span
-                            ></i>
+    <section layout:fragment="gioHang">
+    </section>
+    <hr>
+    <div class="card card-flush">
+        <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+            <div class="card-title">
+                <div class=" align-items-center position-relative my-1">
+                    <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4"
+                    ><span class="path1"></span><span class="path2"></span
+                    ></i>
+                    <input
+                            type="text"
+                            data-kt-ecommerce-product-filter="search"
+                            class="form-control form-control-solid w-250px ps-12"
+                            placeholder="Search Product"
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="card-body pt-0">
+            <table
+                    class="table align-middle table-row-dashed fs-6 gy-5"
+                    id="kt_ecommerce_products_table"
+            >
+                <thead>
+                <tr
+                        class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"
+                >
+                    <th class="w-10px pe-2">
+                        <div
+                                class="form-check form-check-sm form-check-custom form-check-solid me-3"
+                        >
                             <input
-                                    type="text"
-                                    data-kt-ecommerce-product-filter="search"
-                                    class="form-control form-control-solid w-250px ps-12"
-                                    placeholder="Search Product"
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    data-kt-check="true"
+                                    data-kt-check-target="#kt_ecommerce_products_table .form-check-input"
+                                    value="1"
                             />
                         </div>
-                    </div>
-                </div>
-                <div class="card-body pt-0">
-                    <table
-                            class="table align-middle table-row-dashed fs-6 gy-5"
-                            id="kt_ecommerce_products_table"
-                    >
-                        <thead>
-                        <tr
-                                class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"
-                        >
-                            <th class="w-10px pe-2">
-                                <div
-                                        class="form-check form-check-sm form-check-custom form-check-solid me-3"
-                                >
-                                    <input
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            data-kt-check="true"
-                                            data-kt-check-target="#kt_ecommerce_products_table .form-check-input"
-                                            value="1"
-                                    />
-                                </div>
-                            </th>
-                            <th class="text-center min-w-150px">Sản Phẩm</th>
-                            <th class="text-center min-w-100px">Giá</th>
-                            <th class="text-center min-w-70px">Số Lượng</th>
-                            <th class="text-center min-w-100px">Cầu Thủ</th>
-                            <th class="text-center min-w-100px">Mã Vạch</th>
-                            <th class="text-center min-w-100px">Trạng Thái</th>
-                            <th class="text-center min-w-70px">Hành Động</th>
-                        </tr>
-                        </thead>
-                        <tbody class="fw-semibold text-gray-600">
-                        <tr th:each="ctsp:${listCtsp}">
-                            <td class="text-center">
-                                <div
-                                        class="form-check form-check-sm form-check-custom form-check-solid"
-                                >
-                                    <input class="form-check-input" type="checkbox" value="1"/>
-                                </div>
-                            </td>
-                            <td class="text-center d-flex flex-column align-items-center font-weight-bolder">
-                                <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
-                                    <a href="#" class="symbol symbol-50px">
-                                        <img th:src="@{'/admin/psg/chi-tiet-san-pham/display?id=' + ${ctsp.sanPham.id}}"
-                                             alt="Image">
-                                    </a>
-                                </div>
-                                <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bold" data-kt-ecommerce-product-filter="product_name">
-                                    <span th:text="${ctsp.sanPham.ten}"></span>
-                                </a>
-                                <span th:text="'Size: ' + ${ctsp.kichThuoc.ten}"></span>
-                            </td>
-                            <td class="text-center pe-0">
-                                <span class="fw-bold" th:text="${ctsp.sanPham.gia}"></span>
-                            </td>
-                            <td class="text-center pe-0" th:text="${ctsp.soLuong}"></td>
-                            <td class="text-center pe-0" th:text="${ctsp.sanPham.cauThu.ten}"></td>
-                            <td class="text-center pe-0" th:text="${ctsp.sanPham.maVach}"></td>
-                            <td class="text-center pe-0">
-                                <div class="badge badge-light-success" th:text="${ctsp.sanPham.trangThai.moTa}"></div>
-                            </td>
-                            <td class="text-center">
-                                <form th:action="@{/admin/psg/hoa-don/add-hoa-don-chi-tiet/{idHd}/{idCtsp}(idHd=${hoaDon.id},idCtsp=${ctsp.id})}"
-                                      method="post">
-                                    <button class="btn btn-primary" type="submit">Thêm</button>
-                                </form>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card card-custom gutter-b">
-                <div class="card-body">
-                    <!--begin::Example-->
-                    <div class="example">
-                        <div class="example-preview">
-                            <ul class="nav nav-tabs nav-tabs-line">
-                                <li class="nav-item">
-                                    <a
-                                            class="nav-link active"
-                                            data-toggle="tab"
-                                            href="#kt_tab_pane_1"
-                                    >Bán Nhanh</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a
-                                            class="nav-link"
-                                            data-toggle="tab"
-                                            href="#kt_tab_pane_2"
-                                    >Bán Giao Hàng</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="tab-content mt-5" id="myTabContent">
+                    </th>
+                    <th class="text-center min-w-150px">Sản Phẩm</th>
+                    <th class="text-center min-w-100px">Giá</th>
+                    <th class="text-center min-w-70px">Số Lượng</th>
+                    <th class="text-center min-w-100px">Cầu Thủ</th>
+                    <th class="text-center min-w-100px">Mã Vạch</th>
+                    <th class="text-center min-w-100px">Trạng Thái</th>
+                    <th class="text-center min-w-70px">Hành Động</th>
+                </tr>
+                </thead>
+                <tbody class="fw-semibold text-gray-600">
+                <tr th:each="ctsp:${listCtsp}">
+                    <td class="text-center">
                         <div
-                                class="tab-pane fade show active"
-                                id="kt_tab_pane_1"
-                                role="tabpanel"
-                                aria-labelledby="kt_tab_pane_1"
+                                class="form-check form-check-sm form-check-custom form-check-solid"
                         >
-                            <div class="table-responsive">
-                                <form action="" method="post">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td class="d-flex align-items-center font-weight-bolder">
-                                            Khách hàng
-                                        </td>
-                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <select class="form-control" id="kt_select2_1" name="param">
-                                                <option value="">Chọn khách hàng</option>
-                                                <option th:each="kh : ${listKhachHang}" th:value="${kh.id}" th:text="${kh.sdt}+' '+${kh.ten} "></option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center font-weight-bolder">
-                                            Tổng tiền hàng
-                                        </td>
-                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="category_name" class="form-control mb-2"
-                                               disabled th:value="${totalAmount}"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center font-weight-bolder">
-                                            Giảm giá
-                                        </td>
-                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="category_name" class="form-control mb-2"
-                                                   placeholder="%" value=""/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center font-weight-bolder">
-                                            Voucher
-                                        </td>
-                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="category_name" class="form-control mb-2"
-                                                   placeholder="Code Voucher" value=""/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center font-weight-bolder">
-                                            Khách cần trả
-                                        </td>
-                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="category_name" class="form-control mb-2"
-                                                   placeholder="Thành tiền" value=""/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center font-weight-bolder">
-                                            Phương thức thanh toán
-                                        </td>
-                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <select class="form-control" name="param">
-                                                <option value="">Chọn hình thức thanh toán</option>
-                                                <option th:each="pttt : ${phuongThucThanhToan}" th:value="${pttt.ten}" th:text="${pttt.moTa} "></option>
-                                            </select>
-                                        </td>
-                                    </tr>         <tr>
-                                        <td class="d-flex align-items-center font-weight-bolder">
-                                            Tiền mặt khách trả
-                                        </td>
-                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="category_name" class="form-control mb-2"
-                                                   placeholder="Tiền mặt khách trả" value=""/>
-                                        </td>
-                                    </tr>         <tr>
-                                        <td class="d-flex align-items-center font-weight-bolder">
-                                            Tiền thừa
-                                        </td>
-                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="category_name" class="form-control mb-2"
-                                                   placeholder="Tiền thừa" value=""/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                    <button class="btn btn-primary w-100" type="submit">Thanh Toán</button>
-                                </form>
-                            </div>
-
+                            <input class="form-check-input" type="checkbox" value="1"/>
                         </div>
-                        <div
-                                class="tab-pane fade"
-                                id="kt_tab_pane_2"
-                                role="tabpanel"
-                                aria-labelledby="kt_tab_pane_2"
-                        >
-
+                    </td>
+                    <td class="text-center d-flex flex-column align-items-center font-weight-bolder">
+                        <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                            <a href="#" class="symbol symbol-50px">
+                                <img th:src="@{'/admin/psg/chi-tiet-san-pham/display?id=' + ${ctsp.sanPham.id}}"
+                                     alt="Image">
+                            </a>
                         </div>
-                    </div>
-                </div>
-            </div>
+                        <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bold"
+                           data-kt-ecommerce-product-filter="product_name">
+                            <span th:text="${ctsp.sanPham.ten}"></span>
+                        </a>
+                        <span th:text="'Size: ' + ${ctsp.kichThuoc.ten}"></span>
+                    </td>
+                    <td class="text-center pe-0">
+                        <span class="fw-bold" th:text="${ctsp.sanPham.gia}"></span>
+                    </td>
+                    <td class="text-center pe-0" th:text="${ctsp.soLuong}"></td>
+                    <td class="text-center pe-0" th:text="${ctsp.sanPham.cauThu.ten}"></td>
+                    <td class="text-center pe-0" th:text="${ctsp.sanPham.maVach}"></td>
+                    <td class="text-center pe-0">
+                        <div class="badge badge-light-success" th:text="${ctsp.sanPham.trangThai.moTa}"></div>
+                    </td>
+                    <td class="text-center">
+                        <form th:action="@{/admin/psg/hoa-don/add-hoa-don-chi-tiet/{idHd}/{idCtsp}(idHd=${hoaDon.id},idCtsp=${ctsp.id})}"
+                              method="post">
+                            <button class="btn btn-primary" type="submit">Thêm</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+
 </div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function updateHoaDonKhachHang() {
+        var selectedCustomerId = document.getElementById("kt_select2_1").value;
+        var hoaDonId = [[${hoaDon.id}]];
+        $.ajax({
+            url: '/admin/psg/hoa-don/update-hoa-don/khach-hang/' + hoaDonId + '?customerId=' + selectedCustomerId,
+            type: 'POST',
+            success: function (data) {
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi nếu có
+            }
+        });
+    }
+
+    /*]]>*/
+</script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function reloadVoucher() {
+        var hoaDonId = [[${hoaDon.id}]];
+        $.ajax({
+            url: '/admin/psg/hoa-don/admin/psg/hoa-don/detail-hoa-don/' + hoaDonId,
+            type: 'GET',
+            success: function (data) {
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi nếu có
+            }
+        });
+    }
+    /*]]>*/
+</script>
+<script th:inline="javascript">
+    const discountInput = document.getElementById('discountInput');
+    const totalAmountInput = document.getElementById('totalAmount');
+    const voucherSelect = document.getElementById('kt_select2_7');
+    const customerPaymentInput = document.getElementById('customerPayment');
+
+    // Bắt sự kiện khi người dùng nhập phần trăm giảm giá
+    discountInput.addEventListener('input', updateCustomerPayment);
+
+    function updateCustomerPayment() {
+        let discount = parseFloat(discountInput.value);
+        const totalAmount = parseFloat(totalAmountInput.value);
+        const voucherSelectValue = parseFloat(voucherSelect.value);
+
+        // Hạn chế giá trị phần trăm giảm giá trong khoảng từ 0 đến 100
+        if (isNaN(discount) || discount < 0) {
+            discount = 0;
+        } else if (discount > 100) {
+            discount = 100;
+        }
+
+        // Cập nhật giá trị trong ô input phần trăm giảm giá
+        discountInput.value = discount.toFixed(2);
+
+        // Thực hiện tính toán và cập nhật giá trị trong ô input "Tiền khách hàng trả"
+        const discountAmount = (discount / 100) * totalAmount;
+        const customerPayment = totalAmount - discountAmount - voucherSelectValue;
+
+        // Đảm bảo số tiền khách trả không âm
+        const finalCustomerPayment = Math.max(0, customerPayment);
+
+        customerPaymentInput.value = finalCustomerPayment.toFixed(2);
+    }
+</script>
 <script th:src="@{/assets/js/plugins.bundle5883.js}"></script>
 <script th:src="@{/assets/js/plugins.bundle.js}"></script>
 <script th:src="@{/assets/js/select25883.js}"></script>

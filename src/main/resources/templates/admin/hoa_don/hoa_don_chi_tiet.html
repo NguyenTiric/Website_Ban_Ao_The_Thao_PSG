@@ -11,79 +11,243 @@
 <div class="" layout:fragment="gioHang">
     <div class="flex-row-fluid ml-lg-8">
         <div class="card card-custom gutter-b">
-            <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                <h3 class="card-title align-items-start flex-column">
+            <div class="row">
+                <div class="col-7">
+
+                    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                        <h3 class="card-title align-items-start flex-column">
             <span class="card-label font-weight-bolder font-size-h3 text-dark"
-            >My Shopping Cart</span
+            >Giỏ hàng</span
             >
-                </h3>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Sản Phẩm</th>
-                            <th class="text-center">Kích Cỡ</th>
-                            <th class="text-center">Số Lượng</th>
-                            <th class="text-right">Giá</th>
-                            <th class="text-right">Đơn Giá</th>
-                            <th class="text-right">Hành Động</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="hdct:${listGioHang}">
-                            <td class="d-flex align-items-center font-weight-bolder">
-                                <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
-                                    <a href="#" class="symbol symbol-50px">
-                                        <img th:src="@{'/admin/psg/chi-tiet-san-pham/display?id=' + ${hdct.chiTietSanPham.sanPham.id}}" alt="Image">
-                                    </a>
-                                </div>
-                                <a href="#" class="text-dark text-hover-primary"
-                                th:text="${hdct.chiTietSanPham.sanPham.ten}"></a
-                                >
-                            </td>
-                            <td
-                                    class="text-center align-middle font-weight-bolder font-size-h5"
-                                    th:text="${hdct.chiTietSanPham.kichThuoc.ten}">
-                            </td>
-                            <td class="text-center">
-                                <a th:href="@{/admin/psg/hoa-don/update-quantity/{idHdct}/{newQuantity}(idHdct=${hdct.id},newQuantity=${hdct.soLuong - 1})}"
-                                   class="btn btn-xs btn-light-success btn-icon mr-2" th:if="${hdct.soLuong > 1}">-</a>
-                                <span class="mr-2 font-weight-bolder" th:text="${hdct.soLuong}"></span>
-                                <a th:href="@{/admin/psg/hoa-don/update-quantity/{idHdct}/{newQuantity}(idHdct=${hdct.id},newQuantity=${hdct.soLuong + 1})}"
-                                   class="btn btn-xs btn-light-success btn-icon" th:if="${hdct.soLuong > 0}">+</a>
-                            </td>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Sản Phẩm</th>
+                                    <th class="text-center">Kích Cỡ</th>
+                                    <th class="text-center">Số Lượng</th>
+                                    <th class="text-right">Giá</th>
+                                    <th class="text-right">Đơn Giá</th>
+                                    <th class="text-right">Hành Động</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="hdct:${listGioHang}">
+                                    <td class="d-flex align-items-center font-weight-bolder">
+                                        <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                                            <a href="#" class="symbol symbol-50px">
+                                                <img th:src="@{'/admin/psg/chi-tiet-san-pham/display?id=' + ${hdct.chiTietSanPham.sanPham.id}}"
+                                                     alt="Image">
+                                            </a>
+                                        </div>
+                                        <a href="#" class="text-dark text-hover-primary"
+                                           th:text="${hdct.chiTietSanPham.sanPham.ten}"></a
+                                        >
+                                    </td>
+                                    <td
+                                            class="text-center align-middle font-weight-bolder font-size-h5"
+                                            th:text="${hdct.chiTietSanPham.kichThuoc.ten}">
+                                    </td>
+                                    <td class="text-center">
+                                        <a th:href="@{/admin/psg/hoa-don/update-quantity/{idHdct}/{newQuantity}(idHdct=${hdct.id},newQuantity=${hdct.soLuong - 1})}"
+                                           class="btn btn-xs btn-light-success btn-icon mr-2"
+                                           th:if="${hdct.soLuong > 1}">-</a>
+                                        <span class="mr-2 font-weight-bolder" th:text="${hdct.soLuong}"></span>
+                                        <a th:href="@{/admin/psg/hoa-don/update-quantity/{idHdct}/{newQuantity}(idHdct=${hdct.id},newQuantity=${hdct.soLuong + 1})}"
+                                           class="btn btn-xs btn-light-success btn-icon"
+                                           th:if="${hdct.soLuong > 0}">+</a>
+                                    </td>
 
-                            <td
-                                    class="text-right align-middle font-weight-bolder font-size-h5"
-                            th:text="${hdct.giaBan}">
-                            </td>
-                            <td
-                                    class="text-right align-middle font-weight-bolder font-size-h5"
-                            th:text="${hdct.donGia}">
-                            </td>
-                            <td class="text-right align-middle">
-                                <a
-                                        th:href="@{/admin/psg/hoa-don/delete-san-pham/{id}(id=${hdct.id})}"
-                                        class="btn btn-danger font-weight-bolder font-size-sm"
-                                >
-                                    Remove
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td colspan="1"></td>
-                            <td class="font-weight-bolder font-size-h4 text-right">
-                                Tổng Tiền
-                            </td>
-                            <td class="font-weight-bolder font-size-h4 text-right" th:text="${totalAmount}">
+                                    <td
+                                            class="text-right align-middle font-weight-bolder font-size-h5"
+                                            th:text="${hdct.giaBan}">
+                                    </td>
+                                    <td
+                                            class="text-right align-middle font-weight-bolder font-size-h5"
+                                            th:text="${hdct.donGia}">
+                                    </td>
+                                    <td class="text-right align-middle">
+                                        <a
+                                                th:href="@{/admin/psg/hoa-don/delete-san-pham/{id}(id=${hdct.id})}"
+                                                class="btn btn-danger font-weight-bolder font-size-sm"
+                                        >
+                                            Remove
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="1"></td>
+                                    <td class="font-weight-bolder font-size-h4 text-right">
+                                        Tổng Tiền
+                                    </td>
+                                    <td class="font-weight-bolder font-size-h4 text-right" th:text="${totalAmount}">
 
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+
+                    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                        <h3 class="card-title align-items-start flex-column">
+            <span class="card-label font-weight-bolder font-size-h3 text-dark"
+            >Thanh Toán</span
+            >
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <form action="" method="post" th:object="${hoaDon}">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Khách hàng
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <form th:action="@{/admin/psg/hoa-don/update-hoa-don/khach-hang/{hoaDonId}(hoaDonId=${hoaDon.id})}"
+                                                  method="post">
+                                                <select class="form-control" id="kt_select2_1" name="customerId"
+                                                        onchange="updateHoaDonKhachHang()">
+                                                    <option value="">Chọn khách hàng</option>
+                                                    <option th:each="kh : ${listKhachHang}" th:value="${kh.id}"
+                                                            th:text="${kh.sdt}+' '+${kh.ten} "></option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Tổng tiền hàng
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="category_name" class="form-control mb-2"
+                                                   disabled th:value="${totalAmount}" id="totalAmount"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Giảm giá
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="number" name="category_name" class="form-control mb-2"
+                                                   placeholder="%" id="discountInput"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Voucher
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                                <select class="form-control" id="kt_select2_7" name="param" onchange="reloadVoucher()">
+                                                    <option th:each="vc : ${listVoucher}" th:value="${vc.soTienGiam}">
+                                                        <span th:text="${vc.ma}"></span>
+                                                        -
+                                                        <span th:text="${vc.soTienGiam}"></span>
+                                                        -
+                                                        <span th:text="${vc.giaTriDonHangToiThieu}"></span>
+                                                    </option>
+                                                </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Khách cần trả
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="number" name="category_name" class="form-control mb-2"
+                                                   disabled placeholder="Thành tiền" id="customerPayment"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Phương thức thanh toán
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <select class="form-control" name="param">
+                                                <option value="">Chọn hình thức thanh toán</option>
+                                                <option th:each="pttt : ${phuongThucThanhToan}"
+                                                        th:value="${pttt.ten}" th:text="${pttt.moTa} "></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Hình Thúc Bán Hàng
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <div class="radio-inline">
+                                                <label class="radio radio-primary">
+                                                    <input type="radio" name="radios11"  checked="checked" value="ACTIVE"  id="taiQuayRadio"/>
+                                                    <span></span>
+                                                    Tại quầy
+                                                </label>
+                                                <label class="radio radio-primary">
+                                                    <input type="radio" name="radios11" value="INACTIVE" id="giaoHangRadio"/>
+                                                    <span></span>
+                                                    Giao hàng
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+<!--                                    <tr id="diaChiSection">-->
+<!--                                        <td class="d-flex align-items-center font-weight-bolder">-->
+<!--                                            Địa chỉ:-->
+<!--                                        </td>-->
+<!--                                        <td class="text-right align-middle font-weight-bolder font-size-h5">-->
+<!--                                                <div class="form-group row">-->
+<!--                                                    <div class="col-lg-12">-->
+<!--                                                        <label>Address 2:</label>-->
+<!--                                                        <input type="text" name="billing_address_2" class="form-control" placeholder="" value=""/>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <div class="form-group row">-->
+<!--                                                    <div class="col-lg-5">-->
+<!--                                                        <label>* City:</label>-->
+<!--                                                        <input type="text" class="form-control" name="billing_city" placeholder="" value=""/>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-lg-5">-->
+<!--                                                        <label>* State:</label>-->
+<!--                                                        <input type="text" class="form-control" name="billing_state" placeholder="" value=""/>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-lg-2">-->
+<!--                                                        <label>* ZIP:</label>-->
+<!--                                                        <input type="text" class="form-control" name="billing_zip" placeholder="" value=""/>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Tiền mặt khách trả
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="category_name" class="form-control mb-2"
+                                                   placeholder="Tiền mặt khách trả" value=""/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Tiền thừa
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="category_name" class="form-control mb-2"
+                                                   placeholder="Tiền thừa" value=""/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-primary w-100 mb-5" type="submit">Thanh Toán</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
