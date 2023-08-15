@@ -53,7 +53,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
-import static sun.font.CreatedFontTracker.MAX_FILE_SIZE;
 
 @Controller
 @RequestMapping("/admin/psg/chi-tiet-san-pham")
