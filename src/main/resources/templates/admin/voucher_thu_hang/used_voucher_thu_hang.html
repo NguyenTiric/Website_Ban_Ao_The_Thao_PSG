@@ -9,24 +9,24 @@
 </head>
 <body>
 <div class="container" layout:fragment="content">
-    <h1 style="text-align: center">VOUCHER ĐÃ HỦY</h1>
+    <h1 style="text-align: center">VOUCHER SẮP DIỄN RA</h1>
     <div class="row">
         <div class="col-11"> <li class="nav-item d-none d-md-block">
             <a class="nav-link" href="javascript:void(0)">
                 <nav class="navbar bg-body">
-                    <div class="container-fluid">
-                        <form class="d-flex" role="search" action="/admin/psg/voucher-thu-hang/searchInActive/0" method="get">
-                            <input name="searchNameOrMa" class="form-control custom-shadow custom-radius border-0 bg-white"
-                                   type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-rounded btn-primary" type="submit">Search</button>
-                        </form>
-                    </div>
+<!--                    <div class="container-fluid">-->
+<!--                        <form class="d-flex" role="search" action="/admin/psg/voucher-thu-hang/searchInActive/0" method="get">-->
+<!--                            <input name="searchNameOrMa" class="form-control custom-shadow custom-radius border-0 bg-white"-->
+<!--                                   type="search" placeholder="Search" aria-label="Search">-->
+<!--                            <button class="btn btn-rounded btn-primary" type="submit">Search</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
                 </nav>
             </a>
         </li>
         </div>
         <div class="col-1">
-            <a href="/admin/psg/voucher-thu-hang/pageActive/0" class="btn waves-effect waves-light btn-rounded btn-primary"
+            <a href="/admin/psg/voucher-thu-hang/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary"
             >Back</a>
         </div></div>
     <div class="card">
@@ -44,20 +44,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="vc,index:${listVoucherThuHangInActive}">
+                <tr th:each="vc,index:${listVoucherThuHangPending}">
                     <td th:text="${index.count}"></td>
                     <td th:text="${vc.ma}"></td>
                     <td th:text="${vc.trangThai.moTa}"></td>
                     <td th:text="${vc.ngayBatDau}"></td>
                     <td th:text="${vc.ngayKetThuc}"></td>
                     <td>
-                      <span>
-                         <form th:action="@{/admin/psg/voucher-thu-hang/revert/{id}(id=${vc.id})}" method="post">
+                           <span>
+                                      <a th:href="@{/admin/psg/voucher-thu-hang/view-update/{id}(id=${vc.id})}"
+                                         class="btn waves-effect waves-light btn-rounded btn-warning"
+                                      >Cập Nhập</a>
+                                    <form th:action="@{/admin/psg/voucher-thu-hang/delete/{id}(id=${vc.id})}" method="post"  style="display: inline;">
+                                    <a th:href="@{/admin/psg/voucher-thu-hang/delete/{id}(id=${vc.id})}">
                                         <button type="submit"
-                                                class="btn waves-effect waves-light btn-rounded btn-danger"
-                                                onclick="return confirm('Bạn có muốn khôi phục không')">
-                                            Khôi Phục
+                                                class="btn waves-effect waves-light btn-rounded btn-danger" onclick="return confirm('Bạn có muốn xóa không')">Hủy Kích Hoạt
                                         </button>
+                                    </a>
                                 </form>
                       </span>
                     </td>
@@ -68,16 +71,16 @@
                 <ul class="pagination">
                     <li class="page-item" th:if="${currentPage !=0}">
                         <a class="page-link"
-                           th:href="@{'/admin/psg/voucher-thu-hang/pageInActive/'+${ currentPage - 1}}">Previous</a>
+                           th:href="@{'/admin/psg/voucher-thu-hang/pagePending/'+${ currentPage - 1}}">Previous</a>
                     </li>
                     <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
-                        th:classappend="${currentPage == i - 1 ? 'active' : ''}">
-                        <a class="page-link" th:href="@{'/admin/psg/voucher-thu-hang/pageInActive/'+${i - 1}}">
+                        th:classappend="${currentPage == i - 1 ? 'pending' : ''}">
+                        <a class="page-link" th:href="@{'/admin/psg/voucher-thu-hang/pagePending/'+${i - 1}}">
                             <span th:text="${i}"></span>
                         </a>
                     </li>
                     <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                        <a class="page-link" th:href="@{'/admin/psg/voucher-thu-hang/pageInActive/'+${currentPage + 1}}">Next</a>
+                        <a class="page-link" th:href="@{'/admin/psg/voucher-thu-hang/pagePending/'+${currentPage + 1}}">Next</a>
                     </li>
                 </ul>
             </nav>

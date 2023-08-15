@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.VoucherThuHangMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateVoucherThuHangRequest;
@@ -42,18 +43,43 @@ public class VoucherThuHangServiceImpl implements VoucherThuHangService {
     }
 
     @Override
+    public Page<VoucherThuHangResponse> pageVouCherThuHangPending(Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        Page<VoucherThuHang> voucherThuHangs = voucherThuHangRepository.pagePENDING(pageable);
+        return voucherThuHangs.map(voucherThuHangMapper::voucherThuHangEntityToVoucherThuHangResponse);
+    }
+
+    @Override
     public VoucherThuHangResponse add(CreateVoucherThuHangRequest createVoucherThuHangRequest) {
         VoucherThuHang voucherThuHang = voucherThuHangMapper.createVoucherThuHangRequestToVoucherThuHangEntity(createVoucherThuHangRequest);
+        voucherThuHang.setMa(GenCode.generateVoucher());
         voucherThuHang.setNgayTao(LocalDateTime.now());
-        voucherThuHang.setTrangThai(ApplicationConstant.TrangThaiVoucher.ACTIVE);
+
+        LocalDateTime ngayBatDau = createVoucherThuHangRequest.getNgayBatDau();
+        if (ngayBatDau.isAfter(LocalDateTime.now())) {
+            voucherThuHang.setTrangThai(ApplicationConstant.TrangThaiVoucher.PENDING);
+        } else {
+            voucherThuHang.setTrangThai(ApplicationConstant.TrangThaiVoucher.ACTIVE);
+        }
+
         return voucherThuHangMapper.voucherThuHangEntityToVoucherThuHangResponse(voucherThuHangRepository.save(voucherThuHang));
     }
+
+
 
     @Override
     public VoucherThuHangResponse update(UpdateVoucherThuHangRequest updateVouCherThuHangRequest) {
         VoucherThuHang voucherThuHang = voucherThuHangMapper.updateVoucherThuHangRequestToVoucherThuHangEntity(updateVouCherThuHangRequest);
         voucherThuHang.setNgayCapNhat(LocalDateTime.now());
-        voucherThuHang.setTrangThai(ApplicationConstant.TrangThaiVoucher.ACTIVE);
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime startTime = voucherThuHang.getNgayBatDau();
+        if (currentTime.isBefore(startTime)){
+            voucherThuHang.setTrangThai(ApplicationConstant.TrangThaiVoucher.PENDING);
+        }else {
+            voucherThuHang.setTrangThai(ApplicationConstant.TrangThaiVoucher.ACTIVE);
+        }
+
+        voucherThuHang.setNgayCapNhat(LocalDateTime.now());
         return voucherThuHangMapper.voucherThuHangEntityToVoucherThuHangResponse(voucherThuHangRepository.save(voucherThuHang));
     }
 

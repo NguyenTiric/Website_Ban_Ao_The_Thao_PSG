@@ -1,5 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateVoucherThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateVoucherThuHangRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/psg/voucher-thu-hang")
@@ -49,6 +51,16 @@ public class VoucherThuHangController {
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("listVoucherThuHangActive", voucherThuHangResponsePageActive);
         return "admin/voucher_thu_hang/trang_chu_voucher_thu_hang";
+    }
+    @GetMapping("/pagePending/{pageNo}")
+    public String pageVouCherThuHangPending(@PathVariable("pageNo") Integer pageNo, Model model) {
+        model.addAttribute("voucherThuHang", new VoucherThuHang());
+        Page<VoucherThuHangResponse> voucherThuHangResponsePagePending = voucherThuHangService.pageVouCherThuHangPending(pageNo, 3);
+        model.addAttribute("size", voucherThuHangResponsePagePending.getSize());
+        model.addAttribute("totalPages", voucherThuHangResponsePagePending.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listVoucherThuHangPending", voucherThuHangResponsePagePending);
+        return "admin/voucher_thu_hang/used_voucher_thu_hang";
     }
 
     @GetMapping("/pageInActive/{pageNo}")
@@ -99,7 +111,6 @@ public class VoucherThuHangController {
             model.addAttribute("error", "Ngày bắt đầu hoặc ngày kết thúc không được để trống!");
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
-
         LocalDate batDauDate = ngayBatDau.toLocalDate();
         LocalDate ketThucDate = ngayKetThuc.toLocalDate();
 
@@ -117,10 +128,17 @@ public class VoucherThuHangController {
             model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
-        if (voucherThuHangService.existsByMa(createVoucherThuHangRequest.getMa())) {
-            model.addAttribute("checkma", "Mã voucher đã tồn tại, vui lòng chọn mã khác!");
-            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
+//        if (ngayBatDau.isAfter(now)) {
+//            model.addAttribute("error", "Ngày bắt đầu không được đặt trong tương lai!");
+//            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
+//        }
+        if (ngayBatDau.isAfter(now)) {
+            createVoucherThuHangRequest.setTrangThai(ApplicationConstant.TrangThaiVoucher.PENDING);
+        } else if (ngayBatDau.isEqual(now) || ngayBatDau.isBefore(now)) {
+            createVoucherThuHangRequest.setTrangThai(ApplicationConstant.TrangThaiVoucher.ACTIVE);
         }
+
+
         if (result.hasErrors()) {
             model.addAttribute("voucherThuHang", createVoucherThuHangRequest);
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
@@ -130,6 +148,7 @@ public class VoucherThuHangController {
 
         return "redirect:/admin/psg/voucher-thu-hang/hien-thi";
     }
+
 
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("voucherThuHang") UpdateVoucherThuHangRequest updateVoucherThuHangRequest, BindingResult result, Model model, HttpSession session) {
@@ -158,10 +177,6 @@ public class VoucherThuHangController {
 
         if (ngayKetThuc.isBefore(ngayBatDau)) {
             model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
-            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
-        }
-        if (voucherThuHangService.existsByMa(updateVoucherThuHangRequest.getMa())) {
-            model.addAttribute("checkma", "Mã voucher đã tồn tại, vui lòng chọn mã khác!");
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
 
@@ -195,6 +210,9 @@ public class VoucherThuHangController {
         model.addAttribute("listVoucherThuHangInActive", voucherThuHangResponses);
         return "admin/voucher_thu_hang/revert_voucher_thu_hang";
     }
+
+
+
 
 
 }

@@ -16,9 +16,9 @@ import java.time.LocalDate;
 
 @Repository
 public interface DiaChiRepository extends JpaRepository<DiaChi,Integer> {
-    @Query(value = "SELECT * FROM dia_chi WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
+    @Query(value = "SELECT * FROM dia_chi WHERE ho_ten LIKE %?1% OR dia_chi_chi_tiet LIKE %?1% and trang_thai='ACTIVE' ", nativeQuery = true)
     Page<DiaChi> pageSearchActive(String searchString, Pageable pageable);
-    @Query(value = "SELECT * FROM dia_chi WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
+    @Query(value = "SELECT * FROM dia_chi WHERE ho_ten LIKE %?1% OR dia_chi_chi_tiet LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
     Page<DiaChi> pageSearchIvActive(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM dia_chi WHERE trang_thai='INACTIVE' ", nativeQuery = true)

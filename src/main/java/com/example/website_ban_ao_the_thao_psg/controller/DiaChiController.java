@@ -96,7 +96,6 @@ public class DiaChiController {
         System.out.println("loi");
         return "redirect:/admin/psg/dia-chi/hien-thi";
     }
-
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("diaChi") UpdateDiaChiRequest updateDiaChiRequest, BindingResult result, Model model, HttpSession session) {
         if(result.hasErrors()){

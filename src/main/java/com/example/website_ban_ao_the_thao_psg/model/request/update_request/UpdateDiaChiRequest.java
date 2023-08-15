@@ -27,8 +27,12 @@ public class UpdateDiaChiRequest {
 
     private Integer id;
     private KhachHang khachHang;
+    @NotBlank(message = "Tên không để trống")
     private String hoTen;
+    @NotBlank(message = "Số điện thoại không để trống")
+    @Size(min = 0, max = 10, message = "Số điện thoại không vượt quá 10 số")
     private String sdt;
+    @NotBlank(message = "Địa chỉ chi tiết không để trống")
     private String diaChiChiTiet;
     private String maTinh;
     private String tenTinh;

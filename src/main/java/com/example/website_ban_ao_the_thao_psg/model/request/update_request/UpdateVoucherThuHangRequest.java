@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,6 +38,7 @@ public class UpdateVoucherThuHangRequest {
     private String ten;
     @NotNull(message = "Số tiền giảm không để trống")
     @Min(value = 1, message = "Số tiền giảm là số nguyên và lớn hơn 0")
+    @NumberFormat(style = NumberFormat.Style.CURRENCY, pattern = "#,###.## VND")
     private BigDecimal soTienGiam;
 
     @NotNull(message = "Ngày bắt đầu không để trống")
@@ -46,6 +48,7 @@ public class UpdateVoucherThuHangRequest {
     private LocalDateTime ngayKetThuc;
 
     @NotNull(message = "Giá trị đơn hàng tối thiểu không để trống")
+    @NumberFormat(style = NumberFormat.Style.CURRENCY, pattern = "#,###.## VND")
     private BigDecimal giaTriDonHangToiThieu;
 
     @NotBlank(message = "Mô tả không để trống")
