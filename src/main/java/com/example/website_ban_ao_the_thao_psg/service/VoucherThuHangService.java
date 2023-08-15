@@ -27,7 +27,7 @@ public interface VoucherThuHangService {
 
     Page<VoucherThuHangResponse> pageVouCherThuHangInActive(Integer pageNo, Integer size);
 
-//    Page<VoucherThuHangResponse> pageVouCherThuHangPending(Integer pageNo, Integer size);
+    Page<VoucherThuHangResponse> pageVouCherThuHangPending(Integer pageNo, Integer size);
 
     VoucherThuHangResponse add(CreateVoucherThuHangRequest createVouCherThuHangRequest);
 

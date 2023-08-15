@@ -24,6 +24,7 @@ import com.example.website_ban_ao_the_thao_psg.repository.ChiTietSanPhamReposito
 import com.example.website_ban_ao_the_thao_psg.repository.GiaoDichRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.HoaDonChiTietRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.HoaDonRepository;
+import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.LichSuHoaDonRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.ViVoucherRepository;
 import com.example.website_ban_ao_the_thao_psg.service.HoaDonService;
@@ -78,12 +79,26 @@ public class HoaDonServiceImpl implements HoaDonService {
     private ViVoucherRepository viVoucherRepository;
 
     @Autowired
+    private KhachHangRepository khachHangRepository;
+
+    @Autowired
     private ViVoucherMapper viVoucherMapper;
 
     @Override
     public List<HoaDonResponse> getAllHoaDonCho() {
         List<HoaDon> hoaDonList = hoaDonRepository.getHoaDonByTrangThai(ApplicationConstant.TrangThaiHoaDon.PENDING);
+        // list hoa don cho nho hon or = 1 thì tự động add thêm 1 hoa don cho
+        if (hoaDonList.size() <= 1) {
+            addHoaDon();
+        }
+
         return hoaDonMapper.listHoaDonEntityToHoaDonResponse(hoaDonList);
+    }
+
+    @Override
+    public Integer idhoaDonIndex() {
+        List<HoaDonResponse> hoaDonList = getAllHoaDonCho();
+        return hoaDonList.get(0).getId();
     }
 
     @Override
@@ -108,7 +123,6 @@ public class HoaDonServiceImpl implements HoaDonService {
     public HoaDonChiTietResponse getOneHdct(Integer id) {
         return hoaDonChiTietMapper.hoaDonChiTietEntityToHoaDonChiTietResponse(hoaDonChiTietRepository.findById(id).get());
     }
-
 
     @Override
     public HoaDonResponse addHoaDon() {
@@ -170,13 +184,10 @@ public class HoaDonServiceImpl implements HoaDonService {
     public void updateHoaDonWithKhachHang(Integer hoaDonId, Integer customerId) {
         HoaDon hoaDon = hoaDonRepository.findById(hoaDonId).orElse(null);
         if (hoaDon != null) {
-            KhachHang khachHang = new KhachHang();
-            khachHang.setId(customerId);
-            hoaDon.setKhachHang(khachHang);
+            hoaDon.setKhachHang(khachHangRepository.findById(customerId).get());
             hoaDonRepository.save(hoaDon);
         }
     }
-
 
     @Override
     public void addHoaDonChiTiet(Integer idCtsp, Integer idHd) {
@@ -214,7 +225,6 @@ public class HoaDonServiceImpl implements HoaDonService {
     public void deleteById(Integer id) {
         hoaDonChiTietRepository.deleteById(id);
     }
-
 
     @Override
     public HoaDonResponse getDetailHoaDon(Integer id) {
@@ -264,5 +274,12 @@ public class HoaDonServiceImpl implements HoaDonService {
         Pageable pageable = PageRequest.of(page, size);
         Page<HoaDon> hoaDonResponses = hoaDonRepository.pageSearchHoaDonBetweenDates(pageable, batdau, ketThuc);
         return hoaDonResponses.map(hoaDonMapper::hoaDonEntityToHoaDonResponse);
+    }
+
+    @Override
+    public Page<HoaDonResponse> pageComboboxTrangThaiHoaDon(Integer page, Integer size, ApplicationConstant.TrangThaiHoaDon trangThai) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<HoaDon> hoaDonPage = hoaDonRepository.pageComboboxTrangThaiHoaDon(trangThai, pageRequest);
+        return hoaDonPage.map(hoaDonMapper::hoaDonEntityToHoaDonResponse);
     }
 }

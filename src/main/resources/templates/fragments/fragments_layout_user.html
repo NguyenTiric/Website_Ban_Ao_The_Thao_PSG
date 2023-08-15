@@ -3,8 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <link rel="icon" href="/content/assets/Paris_Saint-Germain_Online_Store_EU-favicon-1591756696310.ico"
-          type="image/icon"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/site-logo.8a953140.png">
     <!-- <link rel="apple-touch-icon" /> -->
     <title>Paris Saint-Germain Online Store | PSG Kits, PSG Clothing &amp; Merchandise | Official PSG Shop</title>
     <meta charSet="UTF-8"/>
@@ -12,36 +11,16 @@
     <meta content="Browse the official Paris Saint-Germain online store for the latest PSG kits, PSG apparel and clothing. The Paris Saint-Germain shop has the best PSG merchandise available."
           name="description"/>
     <meta content="PSG Shop" name="keywords"/>
-    <script>
-    </script>
-    <style type="text/css">
-        @font-face {
-            font-family: 'Open Sans';
-            font-style: normal;
-            font-weight: 400;
-        }
 
-        @font-face {
-            font-family: 'Open Sans';
-            font-style: normal;
-            font-weight: 600;
-        }
+    <link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/base-theme.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/sec-3-10.css}" rel="stylesheet">
 
-        @font-face {
-            font-family: 'Open Sans';
-            font-style: normal;
-            font-weight: 700;
-        }
-    </style>
-    <script>
-    </script>
-
-    <link href="/static/1.1.0-rc-20230809.71617/css/base-theme.css" rel="stylesheet"/>
-    <link href="https://store.psg.fr/en/" rel="canonical"/>
-
-
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
         .button.primary {
             background-color: #000;
             color: #fff
@@ -313,73 +292,131 @@
             color: #fff
         }
     </style>
+
 </head>
 
-<body data-trk-id="HP">
+<body>
 <div class="layout-row" data-trk-id="r1">
-    <div class="layout-column" data-trk-id="c1">
-        <div class="layout-row universal-header" data-trk-id="universal-header">
-            <header><a href="#main-content" data-trk-id="skip-to-Main Content" class="skip-link">Skip to Main
-                Content</a><a href="#global-footer" data-trk-id="skip-to-Footer" class="skip-link">Skip to Footer</a>
-                <div class="top-bar show-for-large">
-                    <div class="sign-up-and-save">
-                        <button class="button large sign-up-and-save-link none false" data-trk-id="sas-header"><span
-                                class="balance l"></span><span>SIGN UP &amp; SAVE 10%</span><span
-                                class="balance r"></span></button>
-                        <div class="sign-up-container">
-                            <div class="sign-up-modal"></div>
+    <div class="layout-row universal-header" data-trk-id="universal-header">
+        <header>
+            <a href="#" data-trk-id="skip-to-Main Content" class="skip-link">Skip to Main
+                Content</a><a href="#" data-trk-id="skip-to-Footer" class="skip-link">Skip to Footer</a>
+            <div class="top-bar show-for-large">
+                <div class="sign-up-and-save">
+                    <button class="button large sign-up-and-save-link none false" data-trk-id="sas-header"><span
+                            class="balance l"></span><span>SIGN UP &amp; SAVE 10%</span><span
+                            class="balance r"></span></button>
+                    <div class="sign-up-container">
+                        <div class="sign-up-modal"></div>
+                    </div>
+                </div>
+                <ul class="top-bar-list flex-grow-list" role="navigation">
+
+                    <li class="top-bar-item"><a href="#" data-trk-id="top-bar-link-my-orders"
+                                                class="">My Orders</a></li>
+                    <li class="top-bar-item">
+                        <div class="simple-dd" id="simple-dd" data-talos="linkMyAccount" tabindex="0" role="button"
+                             aria-haspopup="true" aria-expanded="false">Hi Tung Anh<span
+                                class="simple-dd-caret-down"></span>
+                            <ul class="dd-content" role="menu">
+                                <li class="dd-item" role="none"><a href="#" data-trk-id="account-home"
+                                                                   data-talos="linkAccountHome" class="/account"
+                                                                   role="menuitem" tabindex="-1">Account Home</a>
+                                </li>
+                                <li class="dd-item" role="none"><a href="#" data-trk-id="profile"
+                                                                   data-talos="linkProfile" class="/account/update"
+                                                                   role="menuitem" tabindex="-1">Profile</a></li>
+                                <li class="dd-item" role="none"><a href="#" data-trk-id="order-history"
+                                                                   data-talos="linkOrderHistory"
+                                                                   class="/account/orders" role="menuitem"
+                                                                   tabindex="-1">Order History</a></li>
+                                <li class="dd-item" role="none"><a href="#" data-trk-id="address-book"
+                                                                   data-talos="linkAddressBook"
+                                                                   class="/account/address-book" role="menuitem"
+                                                                   tabindex="-1">Address Book</a></li>
+                                <li class="dd-item" role="none"><a href="#" data-trk-id="payment-methods"
+                                                                   data-talos="linkPaymentMethods"
+                                                                   class="/account/payment-methods" role="menuitem"
+                                                                   tabindex="-1">Payment Methods</a></li>
+                                <li class="dd-item" role="none"><a href="#" data-trk-id="sign-out"
+                                                                   data-talos="linkSignOut"
+                                                                   class="/api/account/logout" role="menuitem"
+                                                                   tabindex="-1">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <div class="top-bar-cart" role="complementary"><a href="#" data-trk-id="cart-icon"
+                                                                  data-talos="linkCartIcon" class="cart-icon"
+                                                                  aria-label="You have 0 items in cart. The total is US$0.00"><i
+                        class="icon icon-cart" role="presentation"></i></a></div>
+            </div>
+            <div class="main-bar show-for-large" role="banner">
+                <div class="logo no-fancash-logo" role="presentation"><a href="#" aria-label="PSG Online Store"><img
+                        loading="lazy" th:src="@{/assets/images/__0-136652413036.96703.svg}" alt="PSG Online Store"
+                        role="presentation"/></a></div>
+                <div class="search-container">
+                    <div class="typeahead-container">
+                        <div class="typeahead-input-container">
+                            <form action="" class="typeahead-input-form" role="search"><input type="text"
+                                                                                              id="typeahead-input-desktop"
+                                                                                              class="typeahead-input"
+                                                                                              autoComplete="off"
+                                                                                              value=""
+                                                                                              placeholder="Search"
+                                                                                              data-talos="navSearchInput"
+                                                                                              aria-label="Search"/><input
+                                    type="hidden" aria-hidden="true" class="typeahead-input-hint"
+                                    disabled="" value=""/></form>
+                        </div>
+                        <button aria-label="Search Product" class="typeahead-go" data-talos="navSearchIcon"
+                                data-trk-id="search-typeahead"><i class="icon icon-search" role="presentation"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mobile-toolbar"><a href="#" data-trk-id="account"><i title="Account"
+                                                                                 data-talos="linkMyAccount"
+                                                                                 class="icon icon-user"
+                                                                                 role="presentation"></i></a><a
+                        href="/cart" data-trk-id="cart-icon" data-talos="linkCartIcon" class="cart-icon"
+                        aria-label="You have 0 items in cart. The total is US$0.00"><i class="icon icon-cart"
+                                                                                       role="presentation"></i></a>
+                </div>
+            </div>
+            <div class="hamburger-menu-mode" role="banner">
+                <div class="main-section">
+                    <div class="left-container">
+                        <div class="hamburger-menu-container hamburger-menu-nav">
+                            <div class="hamburger-menu-button" data-talos="hamburgerMenuToggle">
+                                <svg width="25" height="21" class="svg-icon-hamburger" version="1.1"
+                                     viewBox="0 0 25 21" xmlns="http://www.w3.org/2000/svg">
+                                    <g fill-rule="evenodd">
+                                        <rect x=".75" y=".5" width="23" height="1.5" rx=".75"></rect>
+                                        <rect x=".75" y="9.5" width="23" height="1.5" rx=".75"></rect>
+                                        <rect x=".75" y="18.5" width="23" height="1.5" rx=".75"></rect>
+                                    </g>
+                                </svg>
+                            </div>
                         </div>
                     </div>
-                    <ul class="top-bar-list flex-grow-list" role="navigation">
-
-                        <li class="top-bar-item"><a href="/account/orders" data-trk-id="top-bar-link-my-orders"
-                                                    class="">My Orders</a></li>
-                        <li class="top-bar-item">
-                            <div class="simple-dd" id="simple-dd" data-talos="linkMyAccount" tabindex="0" role="button"
-                                 aria-haspopup="true" aria-expanded="false">Hi Tung Anh<span
-                                    class="simple-dd-caret-down"></span>
-                                <ul class="dd-content" role="menu">
-                                    <li class="dd-item" role="none"><a href="#" data-trk-id="account-home"
-                                                                       data-talos="linkAccountHome" class="/account"
-                                                                       role="menuitem" tabindex="-1">Account Home</a>
-                                    </li>
-                                    <li class="dd-item" role="none"><a href="#" data-trk-id="profile"
-                                                                       data-talos="linkProfile" class="/account/update"
-                                                                       role="menuitem" tabindex="-1">Profile</a></li>
-                                    <li class="dd-item" role="none"><a href="#" data-trk-id="order-history"
-                                                                       data-talos="linkOrderHistory"
-                                                                       class="/account/orders" role="menuitem"
-                                                                       tabindex="-1">Order History</a></li>
-                                    <li class="dd-item" role="none"><a href="#" data-trk-id="address-book"
-                                                                       data-talos="linkAddressBook"
-                                                                       class="/account/address-book" role="menuitem"
-                                                                       tabindex="-1">Address Book</a></li>
-                                    <li class="dd-item" role="none"><a href="#" data-trk-id="payment-methods"
-                                                                       data-talos="linkPaymentMethods"
-                                                                       class="/account/payment-methods" role="menuitem"
-                                                                       tabindex="-1">Payment Methods</a></li>
-                                    <li class="dd-item" role="none"><a href="#" data-trk-id="sign-out"
-                                                                       data-talos="linkSignOut"
-                                                                       class="/api/account/logout" role="menuitem"
-                                                                       tabindex="-1">Sign out</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="top-bar-cart" role="complementary"><a href="#" data-trk-id="cart-icon"
-                                                                      data-talos="linkCartIcon" class="cart-icon"
-                                                                      aria-label="You have 0 items in cart. The total is US$0.00"><i
-                            class="icon icon-cart" role="presentation"></i></a></div>
+                    <div class="right-container"><a href="#" data-trk-id="search"><i title="search"
+                                                                                     data-talos="navSearchIcon"
+                                                                                     class="icon icon-search top-nav-search"
+                                                                                     role="presentation"></i></a><a
+                            href="#" data-trk-id="account"><i title="Account" data-talos="linkMyAccount"
+                                                              class="icon icon-user" role="presentation"></i></a>
+                        <a
+                                href="#" data-trk-id="cart-icon" data-talos="linkCartIcon" class="cart-icon"
+                                aria-label="You have 0 items in cart. The total is US$0.00"><i
+                                class="icon icon-cart" role="presentation"></i></a>
+                    </div>
                 </div>
-                <div class="main-bar show-for-large" role="banner">
-                    <div class="logo no-fancash-logo" role="presentation"><a href="#" aria-label="PSG Online Store"><img
-                            loading="lazy" src="/content/assets/__0-136652413036.96703.svg" alt="PSG Online Store"
-                            role="presentation"/></a></div>
-                    <div class="search-container">
+                <div class="typeahead hide">
+                    <div class="mobile-typeahead version-V3">
                         <div class="typeahead-container">
                             <div class="typeahead-input-container">
                                 <form action="" class="typeahead-input-form" role="search"><input type="text"
-                                                                                                  id="typeahead-input-desktop"
+                                                                                                  id="typeahead-input-mobile"
                                                                                                   class="typeahead-input"
                                                                                                   autoComplete="off"
                                                                                                   value=""
@@ -389,731 +426,288 @@
                                         type="hidden" aria-hidden="true" class="typeahead-input-hint"
                                         disabled="" value=""/></form>
                             </div>
-                            <button aria-label="Search Product" class="typeahead-go" data-talos="navSearchIcon"
-                                    data-trk-id="search-typeahead"><i class="icon icon-search" role="presentation"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="mobile-toolbar"><a href="#" data-trk-id="account"><i title="Account"
-                                                                                     data-talos="linkMyAccount"
-                                                                                     class="icon icon-user"
-                                                                                     role="presentation"></i></a><a
-                            href="/cart" data-trk-id="cart-icon" data-talos="linkCartIcon" class="cart-icon"
-                            aria-label="You have 0 items in cart. The total is US$0.00"><i class="icon icon-cart"
-                                                                                           role="presentation"></i></a>
-                    </div>
-                </div>
-                <div class="hamburger-menu-mode" role="banner">
-                    <div class="main-section">
-                        <div class="left-container">
-                            <div class="hamburger-menu-container hamburger-menu-nav">
-                                <div class="hamburger-menu-button" data-talos="hamburgerMenuToggle">
-                                    <svg width="25" height="21" class="svg-icon-hamburger" version="1.1"
-                                         viewBox="0 0 25 21" xmlns="http://www.w3.org/2000/svg">
-                                        <g fill-rule="evenodd">
-                                            <rect x=".75" y=".5" width="23" height="1.5" rx=".75"></rect>
-                                            <rect x=".75" y="9.5" width="23" height="1.5" rx=".75"></rect>
-                                            <rect x=".75" y="18.5" width="23" height="1.5" rx=".75"></rect>
-                                        </g>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="logo"><a href="#" aria-label="PSG Online Store"><img loading="lazy"
-                                                                                             src="/content/assets/__0-136652413036.96703.svg"
-                                                                                             alt="PSG Online Store"
-                                                                                             role="presentation"/></a>
-                            </div>
-                        </div>
-                        <div class="right-container"><a href="#" data-trk-id="search"><i title="search"
-                                                                                         data-talos="navSearchIcon"
-                                                                                         class="icon icon-search top-nav-search"
-                                                                                         role="presentation"></i></a><a
-                                href="#" data-trk-id="account"><i title="Account" data-talos="linkMyAccount"
-                                                                  class="icon icon-user" role="presentation"></i></a>
-                            <a
-                                    href="/cart" data-trk-id="cart-icon" data-talos="linkCartIcon" class="cart-icon"
-                                    aria-label="You have 0 items in cart. The total is US$0.00"><i
-                                    class="icon icon-cart" role="presentation"></i></a>
-                        </div>
-                    </div>
-                    <div class="typeahead hide">
-                        <div class="mobile-typeahead version-V3">
-                            <div class="typeahead-container">
-                                <div class="typeahead-input-container">
-                                    <form action="" class="typeahead-input-form" role="search"><input type="text"
-                                                                                                      id="typeahead-input-mobile"
-                                                                                                      class="typeahead-input"
-                                                                                                      autoComplete="off"
-                                                                                                      value=""
-                                                                                                      placeholder="Search"
-                                                                                                      data-talos="navSearchInput"
-                                                                                                      aria-label="Search"/><input
-                                            type="hidden" aria-hidden="true" class="typeahead-input-hint"
-                                            disabled="" value=""/></form>
-                                </div>
-                                <div class="dropdown-touch-header touch">
-                                    <button class="button large close-btn unstyled false"
-                                            data-trk-id="close-search-box"><span
-                                            class="balance l"></span><span>close</span><span class="balance r"></span>
-                                    </button>
-                                </div>
+                            <div class="dropdown-touch-header touch">
+                                <button class="button large close-btn unstyled false"
+                                        data-trk-id="close-search-box"><span
+                                        class="balance l"></span><span>close</span><span class="balance r"></span>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
                 <div>
-                    <div>
-                        <nav class="top-nav-light-container show-for-large hover"
-                             aria-label="Navigation across the content site: teams, leagues, departments, genders and so forth">
-                            <ul class="top-nav-component add-space-right" role="menu">
-                                <li class="top-nav-item small-up" data-trk-id="topnav-group-br-219"><a href="#"
-                                                                                                       data-trk-id="topnav-group-br-219"
-                                                                                                       class="top-nav-item-link"
-                                                                                                       aria-label="jordan"
-                                                                                                       aria-haspopup="true"
-                                                                                                       aria-expanded="false"
-                                                                                                       role="menuitem">jordan</a>
-                                </li>
-                                <li class="top-nav-item small-up" data-trk-id="topnav-group-br-219"><a href="#"
-                                                                                                       data-trk-id="topnav-group-br-219"
-                                                                                                       class="top-nav-item-link"
-                                                                                                       aria-label="jordan"
-                                                                                                       aria-haspopup="true"
-                                                                                                       aria-expanded="false"
-                                                                                                       role="menuitem">jordan</a>
-                                </li>
-                                <li class="top-nav-item small-up" data-trk-id="topnav-group-br-219"><a href="#"
-                                                                                                       data-trk-id="topnav-group-br-219"
-                                                                                                       class="top-nav-item-link"
-                                                                                                       aria-label="jordan"
-                                                                                                       aria-haspopup="true"
-                                                                                                       aria-expanded="false"
-                                                                                                       role="menuitem">jordan</a>
-                                </li>
-                                <li class="top-nav-item small-up" data-trk-id="topnav-group-br-219"><a href="#"
-                                                                                                       data-trk-id="topnav-group-br-219"
-                                                                                                       class="top-nav-item-link"
-                                                                                                       aria-label="jordan"
-                                                                                                       aria-haspopup="true"
-                                                                                                       aria-expanded="false"
-                                                                                                       role="menuitem">jordan</a>
-                                </li>
-                                <li class="top-nav-item small-up" data-trk-id="topnav-group-br-219"><a href="#"
-                                                                                                       data-trk-id="topnav-group-br-219"
-                                                                                                       class="top-nav-item-link"
-                                                                                                       aria-label="jordan"
-                                                                                                       aria-haspopup="true"
-                                                                                                       aria-expanded="false"
-                                                                                                       role="menuitem">jordan</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <div class="sign-up-and-save hide-for-large">
-                    <div class="sign-up-and-save-link">SIGN UP &amp; SAVE 10%</div>
-                    <div class="sign-up-container">
-                        <div class="sign-up-modal"></div>
-                    </div>
-                </div>
-                <div id="main-content"></div>
-            </header>
-        </div>
-        <div class="layout-row" data-trk-id="PSG_HM_SPOT">
-            <div class="pl-clickable-image">
-                <a href="/en/?query=dembele&amp;_ref=p-HP:m-SEARCH" data-trk-id="">
-                    <div class="responsive-image"><img loading="lazy" src="/content/ws/541075/dt_en.png"
-                                                       alt="NEW 23/24 DEMBÉLÉ KIT - SHOP NOW"/></div>
-                </a>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="PSG_SBP_HEADER">
-            <div class="pl-clickable-image">
-                <div class="responsive-image"><img loading="lazy"
-                                                   src="/content/ws/all/2dbfb5a9-781b-40a0-a69b-90f7c83898c5__1600X70.png"
-                                                   alt="SHOP BY PLAYER" width="1600" height="70"/></div>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="r7">
-            <div class="layout-column large-2 medium-2 small-6" data-trk-id="PSG_SBP_1">
-                <div class="pl-clickable-image">
-                    <a href="/en/?query=goncalo%20ramos&amp;_ref=p-SRP:m-SEARCH" data-trk-id="">
-                        <div class="responsive-image"><img loading="lazy"
-                                                           src="/content/ws/539391/desktop_ramos_away.png"
-                                                           alt="Shop Ramos Merchandise"/></div>
-                    </a>
+                    <nav class="top-nav-light-container show-for-large hover"
+                         aria-label="Navigation across the content site: teams, leagues, departments, genders and so forth">
+                        <ul class="top-nav-component add-space-right" role="menu">
+                            <li class="top-nav-item small-up" data-trk-id="topnav-group-br-219"><a href="#"
+                                                                                                   data-trk-id="topnav-group-br-219"
+                                                                                                   class="top-nav-item-link"
+                                                                                                   aria-label="jordan"
+                                                                                                   aria-haspopup="true"
+                                                                                                   aria-expanded="false"
+                                                                                                   role="menuitem">jordan</a>
+                            </li>
+                            <li class="top-nav-item small-up" data-trk-id="topnav-group-br-219"><a href="#"
+                                                                                                   data-trk-id="topnav-group-br-219"
+                                                                                                   class="top-nav-item-link"
+                                                                                                   aria-label="jordan"
+                                                                                                   aria-haspopup="true"
+                                                                                                   aria-expanded="false"
+                                                                                                   role="menuitem">jordan</a>
+                            </li>
+                            <li class="top-nav-item small-up" data-trk-id="topnav-group-br-219"><a href="#"
+                                                                                                   data-trk-id="topnav-group-br-219"
+                                                                                                   class="top-nav-item-link"
+                                                                                                   aria-label="jordan"
+                                                                                                   aria-haspopup="true"
+                                                                                                   aria-expanded="false"
+                                                                                                   role="menuitem">jordan</a>
+                            </li>
+                            <li class="top-nav-item small-up" data-trk-id="topnav-group-br-219"><a href="#"
+                                                                                                   data-trk-id="topnav-group-br-219"
+                                                                                                   class="top-nav-item-link"
+                                                                                                   aria-label="jordan"
+                                                                                                   aria-haspopup="true"
+                                                                                                   aria-expanded="false"
+                                                                                                   role="menuitem">jordan</a>
+                            </li>
+                            <li class="top-nav-item small-up" data-trk-id="topnav-group-br-219"><a href="#"
+                                                                                                   data-trk-id="topnav-group-br-219"
+                                                                                                   class="top-nav-item-link"
+                                                                                                   aria-label="jordan"
+                                                                                                   aria-haspopup="true"
+                                                                                                   aria-expanded="false"
+                                                                                                   role="menuitem">jordan</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
-            <div class="layout-column large-2 medium-2 small-6" data-trk-id="PSG_SBP_2">
-                <div class="pl-clickable-image">
-                    <a href="/en/paris-saint-germain-neymar-jr/t-25313604+a-06500113+z-985-1638497552" data-trk-id="">
-                        <div class="responsive-image"><img loading="lazy"
-                                                           src="/content/ws/530310/desktop_neymar_away.png"
-                                                           alt="Shop Neymar Jr. Merchandise"/></div>
-                    </a>
+            <div class="sign-up-and-save hide-for-large">
+                <div class="sign-up-and-save-link">SIGN UP &amp; SAVE 10%</div>
+                <div class="sign-up-container">
+                    <div class="sign-up-modal"></div>
                 </div>
             </div>
-            <div class="layout-column large-2 medium-2 small-6" data-trk-id="PSG_SBP_3">
-                <div class="pl-clickable-image">
-                    <a href="/en/paris-saint-germain-kylian-mbappe/t-36200371+a-6735576413+z-99-3381033309"
-                       data-trk-id="">
-                        <div class="responsive-image"><img loading="lazy"
-                                                           src="/content/ws/530310/desktop_mbappe_away.png"
-                                                           alt="Shop Mbappe Merchandise"/></div>
-                    </a>
-                </div>
-            </div>
-            <div class="layout-column large-2 medium-2 small-6" data-trk-id="PSG_SBP_4">
-                <div class="pl-clickable-image">
-                    <a href="/en/?query=kang&amp;_ref=p-HP:m-SEARCH" data-trk-id="">
-                        <div class="responsive-image"><img loading="lazy" src="/content/ws/532363/desktop_kang_away.png"
-                                                           alt="Shop Lee Kang In Merchandise"/></div>
-                    </a>
-                </div>
-            </div>
-            <div class="layout-column large-2 medium-2 small-6" data-trk-id="PSG_SBP_5">
-                <div class="pl-clickable-image">
-                    <a href="/en/paris-saint-germain-marco-verratti/t-58204726+a-5657120517+z-8-3921671075"
-                       data-trk-id="">
-                        <div class="responsive-image"><img loading="lazy"
-                                                           src="/content/ws/530310/desktop_verratti_away.png"
-                                                           alt="Shop Verratti Merchandise"/></div>
-                    </a>
-                </div>
-            </div>
-            <div class="layout-column large-2 medium-2 small-6" data-trk-id="PSG_SBP_6">
-                <div class="pl-clickable-image">
-                    <a href="/en/?query=dembele&amp;_ref=p-HP:m-SEARCH" data-trk-id="">
-                        <div class="responsive-image"><img loading="lazy"
-                                                           src="/content/ws/541075/desktop_dembele_away.png"
-                                                           alt="Shop Dembele Merchandise"/></div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="PSG_HP_DSPOT">
-            <div class="pl-clickable-image">
-                <a href="/en/paris-saint-germain-1st-recyclable-and-socio-eco-designed-football/p-242266707413924691+z-99-3284225089?_ref=p-SRP%3Am-GRID%3Ai-r0c0%3Apo-0"
-                   data-trk-id="">
-                    <div class="responsive-image"><img loading="lazy" src="/content/ws/537632/dt_en.png"
-                                                       alt="NEW PSG X Rebond by Docteur Paper LIMITED EDITION"/></div>
-                </a>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="r9">
-            <div class="layout-column large-6 medium-6 small-12" data-trk-id="PSG_BSPOT_2">
-                <div class="pl-clickable-image"><a
-                        href="/en/paris-saint-germain-training/t-36973626+d-0161651750+z-90-3805635117?pageSize=72&amp;sortOption=NewestArrivals"
-                        data-trk-id=""><img loading="lazy" src="/content/ws/539269/b_spot_ht_en.png"
-                                            alt="23/24 Home Training kits - Shop now"/></a></div>
-            </div>
-            <div class="layout-column large-6 medium-6 small-12" data-trk-id="PSG_BSPOT_1">
-                <div class="pl-clickable-image"><a
-                        href="/en/paris-saint-germain-training-away/t-36973626+d-0161651750+z-90-4293223591?cs=14&amp;_ref=p-DLP:m-SIDE_NAV"
-                        data-trk-id=""><img loading="lazy" src="/content/ws/539269/b_spot_at_en.png"
-                                            alt="23/24 Away Training kits - Shop now"/></a></div>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="AB_Carousel_1">
-            <div class="pl-dynamic-carousel">
-                <div class="carousel">
-                    <div class="carousel-header-black-strip">
-                        <h4 class="carousel-title">Men&#x27;s Best Sellers</h4><a
-                            href="/en/paris-saint-germain-men/t-25643682+ga-89+z-905835-176479248?_ref=p-HP:m-MBSVA:pi-AB_Carousel_1"
-                            data-trk-id="MBS-view-all" class="carousel-view-all-button default">View All</a></div>
-                    <div class="carousel-list-container">
-                        <div class="base-carousel-container show-arrows-desktop">
-                            <div class="base-carousel">
-                                <div class="carousel-list">
-                                    <div class="carousel-item">
-                                        <div class="product-card row carousel-product-card">
-                                            <div class="carousel-product-image">
-                                                <div class="card-image-container">
-                                                    <div class="product-image-container"><a
-                                                            href="/en/maillot-psg-nike-domicile-stadium-23/24-avec-flocage-lee-kang-in-19/p-245544810841256920+z-90-2816786834?_ref=p-HP:m-MBS:pi-AB_Carousel_1:i-r0c0:po-0"
-                                                            data-trk-id="p-200387338" class="color-black"
-                                                            tabindex="-1" aria-hidden="true"><img loading="lazy"
-                                                                                                  src="//images.footballfanatics.com/paris-saint-germain/paris-saint-germain-nike-home-stadium-shirt-2023-24-with-lee-kang-in-19-printing_ss5_p-200387338+u-ftgegvr69ivbwi56xbje+v-pvu6rjhpbabk9ec6kogj.jpg?_hv=2&amp;w=340"
-                                                                                                  alt="Paris Saint-Germain Nike Home Stadium Shirt 2023-24 with Lee Kang In 19 printing"
-                                                                                                  class="product-image"
-                                                                                                  width="340"
-                                                                                                  height="340"/></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-card-colors hide-for-small-only"></div>
-                                            </div>
-                                            <div class="carousel-product-info">
-                                                <div class="">
-                                                    <div class="price-card" tabindex="0" data-talos="srpProductPrice">
-                                                        <div class="superscript">
-                                                            <div class="price-row"><span class="lowest"><span
-                                                                    class="price"><span class="money-value"><span
-                                                                    class="sr-only">US$124.00</span><span
-                                                                    aria-hidden="true"><sup>US$</sup><span>124</span><sup>00</sup></span>
-                                                            </span><span
-                                                                    class="suffix nodiscountpricetext"></span></span>
-                                                            </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-card-title"><a
-                                                        href="/en/maillot-psg-nike-domicile-stadium-23/24-avec-flocage-lee-kang-in-19/p-245544810841256920+z-90-2816786834?_ref=p-HP:m-MBS:pi-AB_Carousel_1:i-r0c0:po-0"
-                                                        data-trk-id="p-200387338" data-talos="linkSearchResult"
-                                                        class="color-black"
-                                                        title="Paris Saint-Germain Nike Home Stadium Shirt 2023-24 with Lee Kang In 19 printing">Paris
-                                                    Saint-Germain Nike Home Stadium Shirt 2023-24 with Lee Kang In 19
-                                                    printing</a></div>
-                                                <div
-                                                        class="product-card-colors show-for-small-only"></div>
-                                                <div class="product-vibrancy-container">
-                                                    <div class="product-vibrancy new-arrivals-vibrancy">
-                                                        <svg class="vibrancy-icon new-arrivals-comet-vibrancy-icon svg-new-arrivals-comet">
-                                                            <title id=></title>
-                                                            <use xlink:href='#new-arrivals-comet'></use>
-                                                        </svg>
-                                                        <span class="new-arrivals-vibrancy-message">New Arrival</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="PSG_HMSPOT_A">
-            <div class="pl-clickable-image">
-                <a href="/en/?pageSize=72&amp;sortOption=NewestArrivals&amp;query=champions" data-trk-id="">
-                    <div class="responsive-image"><img loading="lazy" src="/content/ws/521197/aspot_champs_en.png"
-                                                       alt="CHAMPIONS RANGE! SHOP NOW"/></div>
-                </a>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="PSG_ASPOT">
-            <div class="pl-clickable-image">
-                <a href="/en/paris-saint-germain-retro/t-14420304+d-1250322908+z-93-1486497686?pageSize=72&amp;sortOption=NewestArrivals"
-                   data-trk-id="">
-                    <div class="responsive-image"><img loading="lazy" src="/content/ws/506144/aspot_en.png"
-                                                       alt="NEW RETRO - SHOP NOW"/></div>
-                </a>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="AB_CAROUSEL_3">
-            <div class="pl-dynamic-carousel">
-                <div class="carousel">
-                    <div class="carousel-header-black-strip">
-                        <h4 class="carousel-title">Kids&#x27; Best Sellers</h4><a
-                            href="/en/paris-saint-germain-kids/t-47198137+ga-25+z-916303-2807001426?_ref=p-HP:m-KBSVA:pi-AB_CAROUSEL_3"
-                            data-trk-id="KBS-view-all" class="carousel-view-all-button default">View All</a></div>
-                    <div class="carousel-list-container">
-                        <div class="base-carousel-container show-arrows-desktop">
-                            <div class="base-carousel">
-                                <div class="carousel-list">
-                                    <div class="carousel-item">
-                                        <div class="product-card row carousel-product-card">
-                                            <div class="carousel-product-image">
-                                                <div class="card-image-container">
-                                                    <div class="product-image-container"><a
-                                                            href="/en/maillot-psg-nike-domicile-stadium-23/24-enfant-avec-flocage-mbappé-7/p-4515048833096081+z-938-915495922?_ref=p-HP:m-KBS:pi-AB_CAROUSEL_3:i-r0c0:po-0"
-                                                            data-trk-id="p-14400943" class="color-black"
-                                                            tabindex="-1" aria-hidden="true"><img loading="lazy"
-                                                                                                  src="//images.footballfanatics.com/paris-saint-germain/paris-saint-germain-nike-home-stadium-shirt-2023-24-kids-with-mbappé-7-printing_ss4_p-14400943+u-4ygvzaig0ymwqfjhi232+v-3fe48e280bb54f3eaf8ea9966568d8c3.jpg?_hv=2&amp;w=340"
-                                                                                                  alt="Paris Saint-Germain Nike Home Stadium Shirt 2023-24 - Kids with Mbappé 7 printing"
-                                                                                                  class="product-image"
-                                                                                                  width="340"
-                                                                                                  height="340"/></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-card-colors hide-for-small-only"></div>
-                                            </div>
-                                            <div class="carousel-product-info">
-                                                <div class="">
-                                                    <div class="price-card" tabindex="0" data-talos="srpProductPrice">
-                                                        <div class="superscript">
-                                                            <div class="price-row"><span class="lowest"><span
-                                                                    class="price"><span class="money-value"><span
-                                                                    class="sr-only">US$102.00</span><span
-                                                                    aria-hidden="true"><sup>US$</sup><span>102</span><sup>00</sup></span>
-                                                            </span><span
-                                                                    class="suffix nodiscountpricetext"></span></span>
-                                                            </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-card-title"><a
-                                                        href="/en/maillot-psg-nike-domicile-stadium-23/24-enfant-avec-flocage-mbappé-7/p-4515048833096081+z-938-915495922?_ref=p-HP:m-KBS:pi-AB_CAROUSEL_3:i-r0c0:po-0"
-                                                        data-trk-id="p-14400943" data-talos="linkSearchResult"
-                                                        class="color-black"
-                                                        title="Paris Saint-Germain Nike Home Stadium Shirt 2023-24 - Kids with Mbappé 7 printing">Paris
-                                                    Saint-Germain Nike Home Stadium Shirt 2023-24 - Kids with Mbappé 7
-                                                    printing</a></div>
-                                                <div
-                                                        class="product-card-colors show-for-small-only"></div>
-                                                <div class="product-vibrancy-container">
-                                                    <div class="product-vibrancy new-arrivals-vibrancy">
-                                                        <svg class="vibrancy-icon new-arrivals-comet-vibrancy-icon svg-new-arrivals-comet">
-                                                            <title id=></title>
-                                                            <use xlink:href='#new-arrivals-comet'></use>
-                                                        </svg>
-                                                        <span class="new-arrivals-vibrancy-message">New Arrival</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="r15">
-            <div class="layout-column large-6" data-trk-id="PSG_BSPOT_3">
-                <div class="pl-clickable-image"><a
-                        href="/en/paris-saint-germain-nike-pegasus-40-navy/white-mens/p-4525697552298436+z-989-4048948024?_ref=p-HP:m-MBS:pi-AB_Carousel_1:i-r0c1:po-1"
-                        data-trk-id=""><img loading="lazy" src="/content/ws/539269/b_spot_peg_en.png"
-                                            alt="PSG NIKE PEGASUS 40 - Shop now"/></a></div>
-            </div>
-            <div class="layout-column large-6" data-trk-id="PSG_BSPOT_4">
-                <div class="pl-clickable-image"><a
-                        href="/en/paris-saint-germain-football-kits/t-92646982+d-565009383+z-7-3911137895?pageSize=72&amp;sortOption=NewestArrivals"
-                        data-trk-id=""><img loading="lazy" src="/content/ws/539269/bspot_pers_en.png"
-                                            alt="Personalise your jersey! "/></a></div>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="AB_CAROUSEL_2">
-            <div class="pl-dynamic-carousel">
-                <div class="carousel">
-                    <div class="carousel-header-black-strip">
-                        <h4 class="carousel-title">Women&#x27;s Best Sellers</h4><a
-                            href="/en/paris-saint-germain-women/t-14318148+ga-02+z-930202-303312072?_ref=p-HP:m-WBSVA:pi-AB_CAROUSEL_2"
-                            data-trk-id="WBS-view-all" class="carousel-view-all-button default">View All</a></div>
-                    <div
-                            class="carousel-list-container">
-                        <div class="base-carousel-container show-arrows-desktop">
-                            <div class="base-carousel">
-                                <div class="carousel-list">
-                                    <div class="carousel-item">
-                                        <div class="product-card row carousel-product-card">
-                                            <div class="carousel-product-image">
-                                                <div class="card-image-container">
-                                                    <div class="product-image-container"><a
-                                                            href="/en/maillot-psg-nike-domicile-stadium-23/24-femme-avec-flocage-lee-kang-in-19/p-463355141974586098+z-8-2323189793?_ref=p-HP:m-WBS:pi-AB_CAROUSEL_2:i-r0c0:po-0"
-                                                            data-trk-id="p-200387349" class="color-black"
-                                                            tabindex="-1" aria-hidden="true"><img loading="lazy"
-                                                                                                  src="//images.footballfanatics.com/paris-saint-germain/paris-saint-germain-nike-home-stadium-shirt-2023-24-womens-with-lee-kang-in-19-printing_ss5_p-200387349+u-3zk4lbgupvvuywcstfa1+v-gw9ema6mifphq92gcm3w.jpg?_hv=2&amp;w=340"
-                                                                                                  alt="Paris Saint-Germain Nike Home Stadium Shirt 2023-24 - Womens with Lee Kang In 19 printing"
-                                                                                                  class="product-image"
-                                                                                                  width="340"
-                                                                                                  height="340"/></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-card-colors hide-for-small-only"></div>
-                                            </div>
-                                            <div class="carousel-product-info">
-                                                <div class="">
-                                                    <div class="price-card" tabindex="0" data-talos="srpProductPrice">
-                                                        <div class="superscript">
-                                                            <div class="price-row"><span class="lowest"><span
-                                                                    class="price"><span class="money-value"><span
-                                                                    class="sr-only">US$124.00</span><span
-                                                                    aria-hidden="true"><sup>US$</sup><span>124</span><sup>00</sup></span>
-                                                            </span><span
-                                                                    class="suffix nodiscountpricetext"></span></span>
-                                                            </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-card-title"><a
-                                                        href="/en/maillot-psg-nike-domicile-stadium-23/24-femme-avec-flocage-lee-kang-in-19/p-463355141974586098+z-8-2323189793?_ref=p-HP:m-WBS:pi-AB_CAROUSEL_2:i-r0c0:po-0"
-                                                        data-trk-id="p-200387349" data-talos="linkSearchResult"
-                                                        class="color-black"
-                                                        title="Paris Saint-Germain Nike Home Stadium Shirt 2023-24 - Womens with Lee Kang In 19 printing">Paris
-                                                    Saint-Germain Nike Home Stadium Shirt 2023-24 - Womens with Lee Kang
-                                                    In 19 printing</a></div>
-                                                <div
-                                                        class="product-card-colors show-for-small-only"></div>
-                                                <div class="product-vibrancy-container">
-                                                    <div class="product-vibrancy new-arrivals-vibrancy">
-                                                        <svg class="vibrancy-icon new-arrivals-comet-vibrancy-icon svg-new-arrivals-comet">
-                                                            <title id=></title>
-                                                            <use xlink:href='#new-arrivals-comet'></use>
-                                                        </svg>
-                                                        <span class="new-arrivals-vibrancy-message">New Arrival</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="EXPANDABLE_TEXT">
-            <div class="pl-scrollable-text">
-                <div class="scrollable-text-container">
-                    <div class="scrollable-text">
-                        <p>The official Paris Saint-Germain online store lists all the official items developed for
-                            PSG's biggest supporters. Whether you are looking for authentic Paris Saint-Germain match
-                            kits for the whole family or souvenirs for your fan
-                            collection, you will find exactly what you are looking for here! Buy your 2023/24 Paris
-                            Saint-Germain shirts, as well as third, fourth and goalkeeper kits for men, women and
-                            children. The great Lionel Messi has officially joined
-                            PSG, and we have all styles of <a
-                                    href="/en/paris-saint-germain-lionel-messi/t-14209260+a-27058074+z-906-958790968">Lionel
-                                Messi Paris Saint-Germain kits</a> to choose from. He will wear # 30 for Paris, and you
-                            can find the Messi
-                            Paris jerseys here in the PSG store. Support your favorite players with the official PSG
-                            Neymar Jr and Kylian Mbappé shirts, or customize a jersey with your own name and number for
-                            your next outing at the stadium. Train like the
-                            pros with Nike training gear, shoes and all our PSG football gear! While you're here, don't
-                            forget to grab some official Paris Saint-Germain accessories for your home or office,
-                            available exclusively in the PSG online store. The
-                            customer service team at the official Paris Saint-Germain online store is dedicated to
-                            providing you, as a fan, the ultimate experience. For answers to frequently asked questions
-                            or for customer service, view our easy-to-use menu
-                            for worry-free shopping.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="layout-row" data-trk-id="PSG_PARTNERS">
-            <div class="pl-clickable-image">
-                <div class="responsive-image"><img loading="lazy" src="/content/ws/535758/desktop_footer.png"
-                                                   alt="Sponsors PSG"/></div>
-            </div>
-        </div>
-        <div class="layout-row global-footer" data-trk-id="global-footer">
-            <div class="global-footer-container hide-ticketmaster" id="global-footer" role="presentation">
-                <div class="global-footer-main">
-                    <div class="row">
-                        <div class="columns small-12 medium-12 large-9">
-                            <div class="global-footer-main-links m-b-xl">
-                                <div class="global-footer-section footer-sections-small-1 footer-sections-medium-3 footer-sections-large-3">
-                                    <div class="global-footer-section-column  footer-section-for-medium footer-section-for-large">
-                                        <div class="global-footer-session-title">Customer Service</div>
-                                        <ul class="global-footer-links">
-                                            <li><a href="/customer-help-desk" data-trk-id="help" class="" title="Help"
-                                                   aria-label="Help">Help</a></li>
-                                            <li><a href="/tracking-information/ch-1368" data-trk-id="track-order"
-                                                   class="" title="Track Order" aria-label="Track Order">Track Order</a>
-                                            </li>
-                                            <li><a href="/sizing-guidelines/ch-1365" data-trk-id="size-chart" class=""
-                                                   title="Size Chart" aria-label="Size Chart">Size Chart</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="global-footer-section-column  footer-section-for-medium footer-section-for-large">
-                                        <div class="global-footer-session-title">Worry Free Shopping</div>
-                                        <ul class="global-footer-links">
-                                            <li><a href="/psg-your-security/ch-1383" data-trk-id="safe-shopping"
-                                                   class="" title="Safe Shopping" aria-label="Safe Shopping">Safe
-                                                Shopping</a></li>
-                                            <li><a href="/delivery-and-shipping/ch-1364" data-trk-id="delivery-shipping"
-                                                   class="" title="Delivery &amp; Shipping"
-                                                   aria-label="Delivery &amp; Shipping">Delivery &amp; Shipping</a></li>
-                                            <li><a href="/psg-return-information/ch-1380" data-trk-id="90-day-returns"
-                                                   class="" title="90-Day Returns" aria-label="90-Day Returns">90-Day
-                                                Returns</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="global-footer-section-column  footer-section-for-medium footer-section-for-large">
-                                        <div class="global-footer-session-title">Information</div>
-                                        <ul class="global-footer-links">
-                                            <li><a href="/psg-your-account/ch-1362" data-trk-id="my-account" class=""
-                                                   title="My Account" aria-label="My Account">My Account</a></li>
-                                            <li><a href="/psg-about-us/ch-1389" data-trk-id="contact-us" class=""
-                                                   title="Contact Us" aria-label="Contact Us">Contact Us</a></li>
-                                            <li><a href="/affiliates/x-3067" data-trk-id="affiliate-program" class=""
-                                                   title="Affiliate Program" aria-label="Affiliate Program">Affiliate
-                                                Program</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="global-footer-section-column footer-section-for-small  ">
-                                        <ul class="global-footer-links">
-                                            <li><a href="/customer-help-desk" data-trk-id="help" class="" title="Help"
-                                                   aria-label="Help">Help</a></li>
-                                            <li><a href="/psg-return-information/ch-1380" data-trk-id="90-day-returns"
-                                                   class="" title="90-Day Returns" aria-label="90-Day Returns">90-Day
-                                                Returns</a></li>
-                                            <li><a href="/tracking-information/ch-1368" data-trk-id="track-my-order"
-                                                   class="" title="Track My Order" aria-label="Track My Order">Track My
-                                                Order</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="columns small-12 medium-12 large-3">
-                            <div class="global-footer-right-content">
-                                <div class="global-footer-mobile-app columns small-12 medium-6 large-12"></div>
-                                <div class="global-footer-right-content-first">
-                                    <div class="sign-up-and-save columns medium-6 large-12 hide-for-small-only">
-                                        <div class="sign-up-cta m-b-md footnote">Stay updated on sales, new items and
-                                            more
-                                        </div>
-                                        <button class="button large sign-up-and-save-link none false"
-                                                data-trk-id="sas-footer"><span class="balance l"></span><span>SIGN UP &amp; SAVE 10%</span><span
-                                                class="balance r"></span></button>
-                                        <div
-                                                class="sign-up-container">
-                                            <div class="sign-up-modal"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="global-footer-right-content-second">
-                                    <div class="global-footer-social-links columns small-12 medium-6 large-12">
-                                        <div class="global-footer-section footer-sections-small-1 footer-sections-medium-1 footer-sections-large-1">
-                                            <div class="global-footer-section-column footer-section-for-small footer-section-for-medium footer-section-for-large">
-                                                <div class="global-footer-session-title">Follow Us</div>
-                                                <ul class="global-footer-links">
-                                                    <li><a href="//www.facebook.com/psg" data-trk-id="facebook"
-                                                           target="_blank" class="icon-fa-facebook" title="Facebook"
-                                                           aria-label="Facebook"></a></li>
-                                                    <li><a href="//twitter.com/PSG_inside" data-trk-id="twitter"
-                                                           target="_blank" class="icon-fa-twitter" title="Twitter"
-                                                           aria-label="Twitter"></a></li>
-                                                    <li><a href="//www.instagram.com/psg" data-trk-id="instagram"
-                                                           target="_blank" class="icon-fa-instagram" title="Instagram"
-                                                           aria-label="Instagram"></a></li>
-                                                    <li><a href="//www.youtube.com/user/PSGofficiel"
-                                                           data-trk-id="you-tube" target="_blank"
-                                                           class="icon-fa-youtube-play" title="YouTube"
-                                                           aria-label="YouTube"></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row m-t-xxl m-b-sm">
-                    <div class="columns small-12">
-                        <div class="global-footer-extra-row m-b-sm"></div>
-                    </div>
-                </div>
-                <div class="row m-t-lg m-b-sm">
-                    <div class="columns">
-                        <div class="global-footer-rights-links">
-                            <div class="global-footer-section footer-sections-small-1 footer-sections-medium-1 footer-sections-large-1">
-                                <div class="global-footer-section-column footer-section-for-small footer-section-for-medium footer-section-for-large">
-                                    <ul class="global-footer-links">
-                                        <li><a href="/psg-privacy-policy/x-1378" data-trk-id="privacy-policy" class=""
-                                               title="Privacy Policy" aria-label="Privacy Policy">Privacy Policy</a>
-                                        </li>
-                                        <li><a href="/psg-terms-and-conditions/ch-1384" data-trk-id="terms-of-use"
-                                               class="" title="Terms of Use" aria-label="Terms of Use">Terms of Use</a>
-                                        </li>
-                                        <li><a href="//www.fanaticsinc.com/ca-transparency-uk-modern-slavery-act"
-                                               data-trk-id="ca-supply-chains-act-uk-modern-slavery-act" target="_blank"
-                                               class="" title="CA Supply Chains Act/UK Modern Slavery Act"
-                                               aria-label="CA Supply Chains Act/UK Modern Slavery Act">CA Supply Chains
-                                            Act/UK Modern Slavery Act</a></li>
-                                        <li><a href="/psg-sitemap/x-1359" data-trk-id="site-map" class=""
-                                               title="Site Map" aria-label="Site Map">Site Map</a></li>
-                                        <li><a href="/user-prefs/cookies" data-trk-id="cookie-policy-management"
-                                               class="" title="Cookie Policy &amp; Management"
-                                               aria-label="Cookie Policy &amp; Management">Cookie Policy &amp;
-                                            Management</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row m-b-xl">
-                    <div class="columns">
-                        <div class="global-footer-rights-message">
-                            <div class="global-footer-section footer-sections-small-1 footer-sections-medium-1 footer-sections-large-1">
-                                <div class="global-footer-section-column footer-section-for-small footer-section-for-medium footer-section-for-large">
-                                    © 2023, Fanatics, Inc. and/or its affiliated entities. All Rights Reserved. No
-                                    portion of this site may be reproduced or duplicated without the express permission
-                                    of Fanatics.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row m-b-lg">
-                    <div class="columns small-12 medium-6 large-4">
-                        <div class="global-footer-secure-shopping"></div>
-                    </div>
-                    <div class="columns hide-for-mobile-only">
-                        <div class="global-footer-payment">
-                            <div class="global-footer-section  footer-sections-medium-1 footer-sections-large-1">
+            <div id="main-content"></div>
+        </header>
+    </div>
+    <div class="container-fluid">
+        <section layout:fragment="content_user">
+            <p>This is filled by the content template.</p>
+        </section>
+    </div>
+    <div class="layout-row global-footer" data-trk-id="global-footer">
+        <div class="global-footer-container hide-ticketmaster" id="global-footer" role="presentation">
+            <div class="global-footer-main">
+                <div class="row">
+                    <div class="col-9">
+                        <div class="global-footer-main-links m-b-xl">
+                            <div class="global-footer-section footer-sections-small-1 footer-sections-medium-3 footer-sections-large-3">
                                 <div class="global-footer-section-column  footer-section-for-medium footer-section-for-large">
+                                    <div class="global-footer-session-title">Customer Service</div>
                                     <ul class="global-footer-links">
-                                        <li>
-                                            <svg class="svg-visa" aria-label="Visa" role="img"><title id=Visa>
-                                                Visa</title>
-                                                <use xlink:href='#visa'></use>
-                                            </svg>
+                                        <li><a href="#" data-trk-id="help" class="" title="Help"
+                                               aria-label="Help">Help</a></li>
+                                        <li><a href="#" data-trk-id="track-order"
+                                               class="" title="Track Order" aria-label="Track Order">Track Order</a>
                                         </li>
-                                        <li>
-                                            <svg class="svg-mastercard" aria-label="Master Card" role="img"><title
-                                                    id=Master Card>Master Card</title>
-                                                <use xlink:href='#mastercard'></use>
-                                            </svg>
-                                        </li>
-                                        <li>
-                                            <svg class="svg-amex" aria-label="Amex" role="img"><title id=Amex>
-                                                Amex</title>
-                                                <use xlink:href='#amex'></use>
-                                            </svg>
-                                        </li>
-                                        <li>
-                                            <svg class="svg-paypal" aria-label="PayPal" role="img"><title id=PayPal>
-                                                PayPal</title>
-                                                <use xlink:href='#paypal'></use>
-                                            </svg>
-                                        </li>
-                                        <li>
-                                            <svg class="svg-jcb" aria-label="JCB" role="img"><title id=JCB>JCB</title>
-                                                <use xlink:href='#jcb'></use>
-                                            </svg>
-                                        </li>
-                                        <li>
-                                            <svg class="svg-maestro" aria-label="Maestro" role="img"><title id=Maestro>
-                                                Maestro</title>
-                                                <use xlink:href='#maestro'></use>
-                                            </svg>
-                                        </li>
+                                        <li><a href="#" data-trk-id="size-chart" class=""
+                                               title="Size Chart" aria-label="Size Chart">Size Chart</a></li>
+                                    </ul>
+                                </div>
+                                <div class="global-footer-section-column  footer-section-for-medium footer-section-for-large">
+                                    <div class="global-footer-session-title">Worry Free Shopping</div>
+                                    <ul class="global-footer-links">
+                                        <li><a href="#" data-trk-id="safe-shopping"
+                                               class="" title="Safe Shopping" aria-label="Safe Shopping">Safe
+                                            Shopping</a></li>
+                                        <li><a href="#" data-trk-id="delivery-shipping"
+                                               class="" title="Delivery &amp; Shipping"
+                                               aria-label="Delivery &amp; Shipping">Delivery &amp; Shipping</a></li>
+                                        <li><a href="#" data-trk-id="90-day-returns"
+                                               class="" title="90-Day Returns" aria-label="90-Day Returns">90-Day
+                                            Returns</a></li>
+                                    </ul>
+                                </div>
+                                <div class="global-footer-section-column  footer-section-for-medium footer-section-for-large">
+                                    <div class="global-footer-session-title">Information</div>
+                                    <ul class="global-footer-links">
+                                        <li><a href="#" data-trk-id="my-account" class=""
+                                               title="My Account" aria-label="My Account">My Account</a></li>
+                                        <li><a href="#" data-trk-id="contact-us" class=""
+                                               title="Contact Us" aria-label="Contact Us">Contact Us</a></li>
+                                        <li><a href="#" data-trk-id="affiliate-program" class=""
+                                               title="Affiliate Program" aria-label="Affiliate Program">Affiliate
+                                            Program</a></li>
+                                    </ul>
+                                </div>
+                                <div class="global-footer-section-column footer-section-for-small  ">
+                                    <ul class="global-footer-links">
+                                        <li><a href="#" data-trk-id="help" class="" title="Help"
+                                               aria-label="Help">Help</a></li>
+                                        <li><a href="#" data-trk-id="90-day-returns"
+                                               class="" title="90-Day Returns" aria-label="90-Day Returns">90-Day
+                                            Returns</a></li>
+                                        <li><a href="#" data-trk-id="track-my-order"
+                                               class="" title="Track My Order" aria-label="Track My Order">Track My
+                                            Order</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="debug-info hide">
-                    <div>rc: 0c6b4eeb676adf98</div>
-                    <div>vid: c40d7b70-037c-11ee-8936-196a94f78be3</div>
-                    <div>version: 1.1.0-rc-20230809.71617</div>
-                    <div>+</div>
-                    <div style="display:none">
-                        <div>Qualified Experiments #:</div>
+                    <div class="col-3">
+                        <div class="global-footer-right-content">
+                            <div class="global-footer-mobile-app columns small-12 medium-6 large-12"></div>
+                            <div class="global-footer-right-content-first">
+                                <div class="sign-up-and-save columns medium-6 large-12 hide-for-small-only">
+                                    <div class="sign-up-cta m-b-md footnote">Stay updated on sales, new items and
+                                        more
+                                    </div>
+                                    <button class="button large sign-up-and-save-link none false"
+                                            data-trk-id="sas-footer"><span class="balance l"></span><span>SIGN UP &amp; SAVE 10%</span><span
+                                            class="balance r"></span></button>
+                                    <div
+                                            class="sign-up-container">
+                                        <div class="sign-up-modal"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="global-footer-right-content-second">
+                                <div class="global-footer-social-links columns small-12 medium-6 large-12">
+                                    <div class="global-footer-section footer-sections-small-1 footer-sections-medium-1 footer-sections-large-1">
+                                        <div class="global-footer-section-column footer-section-for-small footer-section-for-medium footer-section-for-large">
+                                            <div class="global-footer-session-title">Follow Us</div>
+                                            <ul class="global-footer-links">
+                                                <li><a href="//www.facebook.com/psg" data-trk-id="facebook"
+                                                       target="_blank" class="icon-fa-facebook" title="Facebook"
+                                                       aria-label="Facebook"></a></li>
+                                                <li><a href="//twitter.com/PSG_inside" data-trk-id="twitter"
+                                                       target="_blank" class="icon-fa-twitter" title="Twitter"
+                                                       aria-label="Twitter"></a></li>
+                                                <li><a href="//www.instagram.com/psg" data-trk-id="instagram"
+                                                       target="_blank" class="icon-fa-instagram" title="Instagram"
+                                                       aria-label="Instagram"></a></li>
+                                                <li><a href="//www.youtube.com/user/PSGofficiel"
+                                                       data-trk-id="you-tube" target="_blank"
+                                                       class="icon-fa-youtube-play" title="YouTube"
+                                                       aria-label="YouTube"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="row m-t-lg m-b-sm mt-5">
+                <div class="columns">
+                    <div class="global-footer-rights-links">
+                        <div class="global-footer-section footer-sections-small-1 footer-sections-medium-1 footer-sections-large-1">
+                            <div class="global-footer-section-column footer-section-for-small footer-section-for-medium footer-section-for-large">
+                                <ul class="global-footer-links">
+                                    <li><a href="#" data-trk-id="privacy-policy" class=""
+                                           title="Privacy Policy" aria-label="Privacy Policy">Privacy Policy</a>
+                                    </li>
+                                    <li><a href="#" data-trk-id="terms-of-use"
+                                           class="" title="Terms of Use" aria-label="Terms of Use">Terms of Use</a>
+                                    </li>
+                                    <li><a href="#"
+                                           data-trk-id="ca-supply-chains-act-uk-modern-slavery-act" target="_blank"
+                                           class="" title="CA Supply Chains Act/UK Modern Slavery Act"
+                                           aria-label="CA Supply Chains Act/UK Modern Slavery Act">CA Supply Chains
+                                        Act/UK Modern Slavery Act</a></li>
+                                    <li><a href="#" data-trk-id="site-map" class=""
+                                           title="Site Map" aria-label="Site Map">Site Map</a></li>
+                                    <li><a href="#" data-trk-id="cookie-policy-management"
+                                           class="" title="Cookie Policy &amp; Management"
+                                           aria-label="Cookie Policy &amp; Management">Cookie Policy &amp;
+                                        Management</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-b-xl">
+                <div class="columns">
+                    <div class="global-footer-rights-message">
+                        <div class="global-footer-section footer-sections-small-1 footer-sections-medium-1 footer-sections-large-1">
+                            <div class="global-footer-section-column footer-section-for-small footer-section-for-medium footer-section-for-large">
+                                © 2023, Fanatics, Inc. and/or its affiliated entities. All Rights Reserved. No
+                                portion of this site may be reproduced or duplicated without the express permission
+                                of Fanatics.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-b-lg">
+                <div class="columns small-12 medium-6 large-4">
+                    <div class="global-footer-secure-shopping"></div>
+                </div>
+                <div class="columns hide-for-mobile-only">
+                    <div class="global-footer-payment">
+                        <div class="global-footer-section  footer-sections-medium-1 footer-sections-large-1">
+                            <div class="global-footer-section-column  footer-section-for-medium footer-section-for-large">
+                                <ul class="global-footer-links">
+                                    <li>
+                                        <svg class="svg-visa" aria-label="Visa" role="img"><title id=Visa>
+                                            Visa</title>
+                                            <use xlink:href='#'></use>
+                                        </svg>
+                                    </li>
+                                    <li>
+                                        <svg class="svg-mastercard" aria-label="Master Card" role="img"><title
+                                                id=Master Card>Master Card</title>
+                                            <use xlink:href='#'></use>
+                                        </svg>
+                                    </li>
+                                    <li>
+                                        <svg class="svg-amex" aria-label="Amex" role="img"><title id=Amex>
+                                            Amex</title>
+                                            <use xlink:href='#'></use>
+                                        </svg>
+                                    </li>
+                                    <li>
+                                        <svg class="svg-paypal" aria-label="PayPal" role="img"><title id=PayPal>
+                                            PayPal</title>
+                                            <use xlink:href='#'></use>
+                                        </svg>
+                                    </li>
+                                    <li>
+                                        <svg class="svg-jcb" aria-label="JCB" role="img"><title id=JCB>JCB</title>
+                                            <use xlink:href='#'></use>
+                                        </svg>
+                                    </li>
+                                    <li>
+                                        <svg class="svg-maestro" aria-label="Maestro" role="img"><title id=Maestro>
+                                            Maestro</title>
+                                            <use xlink:href='#'></use>
+                                        </svg>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="debug-info hide">
+                <div>rc: 0c6b4eeb676adf98</div>
+                <div>vid: c40d7b70-037c-11ee-8936-196a94f78be3</div>
+                <div>version: 1.1.0-rc-20230809.71617</div>
+                <div>+</div>
+                <div style="display:none">
+                    <div>Qualified Experiments #:</div>
+                </div>
+            </div>
         </div>
-        <div class="layout-row fanflow-tracking" data-trk-id="fanflow-tracking"></div>
-        <div class="layout-row hp-omniture" data-trk-id="hp-omniture"></div>
-        <div class="layout-row exit-intent" data-trk-id="exit-intent"></div>
-        <div class="layout-row offer-tray" data-trk-id="offer-tray"></div>
     </div>
 </div>
-
+<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
 </body>
-
 </html>

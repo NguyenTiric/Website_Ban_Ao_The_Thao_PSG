@@ -2,8 +2,12 @@ package com.example.website_ban_ao_the_thao_psg.controller;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonChiTietResponse;
+import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
+import com.example.website_ban_ao_the_thao_psg.model.response.ChiTietSanPhamResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.SanPhamResponse;
+import com.example.website_ban_ao_the_thao_psg.model.response.ViVoucherResponse;
 import com.example.website_ban_ao_the_thao_psg.service.ChiTietSanPhamService;
 import com.example.website_ban_ao_the_thao_psg.service.HoaDonService;
 import com.example.website_ban_ao_the_thao_psg.service.KhachHangService;
@@ -37,17 +41,15 @@ public class HoaDonController {
     @Autowired
     private KhachHangService khachHangService;
 
-    // view hoa don cho
     @GetMapping("/hoa-don-cho")
-    public String getAllHoaDonCho(Model model) {
+    public String hoaDonCho(Model model){
         model.addAttribute("listHoaDonCho", hoaDonService.getAllHoaDonCho());
-        model.addAttribute("trangThaiList", ApplicationConstant.TrangThaiSanPham.values());
         model.addAttribute("listCtsp", chiTietSanPhamService.getAllChiTietSanPham());
         model.addAttribute("listKhachHang", khachHangService.getAllKhachHangActive());
         model.addAttribute("phuongThucThanhToan", ApplicationConstant.HinhThucThanhToan.values());
-
         return "admin/hoa_don/hoa_don_cho";
     }
+
 
     // lich su hoa don
     @GetMapping("/lich-su-hoa-don/{id}")
@@ -82,7 +84,30 @@ public class HoaDonController {
             String formattedThanhTien = currencyFormat.format(thanhTien);
             hd.setFormattedThanhTien((formattedThanhTien));
         }
+        model.addAttribute("trangThaiHD", ApplicationConstant.TrangThaiHoaDon.values());
+        model.addAttribute("trangThaiBH", ApplicationConstant.HinhThucBanHang.values());
+        model.addAttribute("size", hoaDonResponsePageActive.getSize());
+        model.addAttribute("totalPages", hoaDonResponsePageActive.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listHoaDon", hoaDonResponsePageActive);
 
+        return "admin/hoa_don/hoa_don";
+    }
+
+    @GetMapping("/loadTrangThaiHd/{pageNo}")
+    public String pageLoadTrangThaiHoaDon(@PathVariable("pageNo") Integer pageNo, @RequestParam(name = "selectedTrangThai", required = false) ApplicationConstant.TrangThaiHoaDon selectedTrangThai, Model model) {
+        Page<HoaDonResponse> hoaDonResponsePageActive = hoaDonService.pageComboboxTrangThaiHoaDon(pageNo, 10,selectedTrangThai);
+
+        // Định dạng tiền tệ Việt Nam
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+
+        for (HoaDonResponse hd : hoaDonResponsePageActive) {
+            BigDecimal thanhTien = hd.getThanhTien();
+            String formattedThanhTien = currencyFormat.format(thanhTien);
+            hd.setFormattedThanhTien((formattedThanhTien));
+        }
+        model.addAttribute("trangThaiHD", ApplicationConstant.TrangThaiHoaDon.values());
+        model.addAttribute("trangThaiBH", ApplicationConstant.HinhThucBanHang.values());
         model.addAttribute("size", hoaDonResponsePageActive.getSize());
         model.addAttribute("totalPages", hoaDonResponsePageActive.getTotalPages());
         model.addAttribute("currentPage", pageNo);
@@ -93,10 +118,11 @@ public class HoaDonController {
 
     // hoa don cho
     @GetMapping("/detail-hoa-don/{id}")
-    public String hoaDonCho(@PathVariable("id") Integer id, Model model) {
+    public String hoaDonChiTiet(@PathVariable("id") Integer id, Model model) {
 
         List<HoaDonChiTietResponse> hoaDonChiTietList = hoaDonService.getAllHoaDonChiTiet(id);
         HoaDonResponse hoaDonResponse = hoaDonService.getDetailHoaDon(id);
+
         // tinh tong tien
         BigDecimal totalAmount = hoaDonChiTietList.stream().map(HoaDonChiTietResponse::getDonGia).reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -108,9 +134,7 @@ public class HoaDonController {
         model.addAttribute("listCtsp", chiTietSanPhamService.getAllChiTietSanPham());
         model.addAttribute("listKhachHang", khachHangService.getAllKhachHangActive());
         model.addAttribute("phuongThucThanhToan", ApplicationConstant.HinhThucThanhToan.values());
-        model.addAttribute("voucher", hoaDonService.getAllViVoucher(hoaDonResponse.getKhachHang()));
-
-
+        model.addAttribute("listVoucher", hoaDonService.getAllViVoucher(hoaDonResponse.getKhachHang()));
         return "admin/hoa_don/hoa_don_chi_tiet";
     }
 
@@ -136,8 +160,7 @@ public class HoaDonController {
     // tao hoa don cho
     @PostMapping("/add-hoa-don-cho")
     public String addHoaDonCho() {
-        hoaDonService.addHoaDon();
-        return "redirect:/admin/psg/hoa-don/hoa-don-cho";
+        return "redirect:/admin/psg/hoa-don/detail-hoa-don/"+hoaDonService.addHoaDon().getId();
     }
 
     // them san pham vao hoa do chi tiet
@@ -160,12 +183,11 @@ public class HoaDonController {
     }
 
     // update khach hang cho hoa don
-    @PostMapping("/update-hoa-don/{hoaDonId}/khach-hang/{customerId}")
-    public String updateHoaDonWithKhachHang(@PathVariable Integer hoaDonId, @PathVariable Integer customerId) {
+    @PostMapping("/update-hoa-don/khach-hang/{hoaDonId}")
+    public String updateHoaDonWithKhachHang(@PathVariable("hoaDonId") Integer hoaDonId, @RequestParam("customerId") Integer customerId) {
         hoaDonService.updateHoaDonWithKhachHang(hoaDonId, customerId);
         return "redirect:/admin/psg/hoa-don/detail-hoa-don/" + hoaDonId;
     }
-
 
     @GetMapping("/searchHoaDon/{pageNo}")
     public String searchHoaDon(@PathVariable("pageNo") Integer pageNo, Model model, @RequestParam("pathSearch") String search) {
@@ -189,7 +211,8 @@ public class HoaDonController {
     }
 
     @GetMapping("/searchDate/{pageNo}")
-    public String searchDate(@PathVariable("pageNo") Integer pageNo, Model model, @RequestParam(value = "beginDate", required = false) LocalDate beginDate, @RequestParam(value = "endDate", required = false) LocalDate endDate) {
+    public String searchDate(@PathVariable("pageNo") Integer pageNo, Model model, @RequestParam(value = "beginDate", required = false) LocalDate beginDate
+            , @RequestParam(value = "endDate", required = false) LocalDate endDate) {
         Page<HoaDonResponse> hoaDonResponsePageActive = hoaDonService.pageSearchHoaDonBetweenDates(pageNo, 10, beginDate, endDate);
 
         // Định dạng tiền tệ Việt Nam

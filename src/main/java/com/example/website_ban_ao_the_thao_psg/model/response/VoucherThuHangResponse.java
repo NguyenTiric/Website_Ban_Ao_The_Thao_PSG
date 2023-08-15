@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,9 +26,15 @@ public class VoucherThuHangResponse {
     private Integer id;
     private String ma;
     private String ten;
+    @NumberFormat(style = NumberFormat.Style.CURRENCY, pattern = "#,###.## VND")
     private BigDecimal soTienGiam;
-    private LocalDate ngayBatDau;
-    private LocalDate ngayKetThuc;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime ngayBatDau;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime ngayKetThuc;
+    @NumberFormat(style = NumberFormat.Style.CURRENCY, pattern = "#,###.## VND")
     private BigDecimal giaTriDonHangToiThieu;
     private String moTa;
     private LocalDate ngayTao;

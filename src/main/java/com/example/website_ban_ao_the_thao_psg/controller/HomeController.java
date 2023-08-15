@@ -8,18 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin/psg")
 public class HomeController {
 
-    @GetMapping("/hoa-don")
+    @GetMapping("/layout")
     public String hoaDon(){
-        return "admin/hoa_don/hoa_don_detail";
-    }
-
-    @GetMapping("/san-pham")
-    public String sanPham() {
-        return "admin/san_pham/trang_chu_san_pham";
-    }
-
-    @GetMapping("/viewadd")
-    public String viewAdd(){
-        return "admin/san_pham/view_add_san_pham";
+        return "user/san_pham";
     }
 }

@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
     .badge-light-success {
         color: #d9b115;
@@ -14,6 +15,11 @@
 </style>
 </head>
 <body>
+<script>
+    function onsubmit() {
+        document.getElementById("myForm").submit();
+    }
+</script>
 <div class="container" layout:fragment="content">
     <div class="row">
         <div class="col-4">
@@ -64,16 +70,16 @@
                     <div class="col-4">
                         <label style="margin-top: 7px;">Trạng thái</label>
                     </div>
-                    <div class="col-8">
-                        <select name="trangThai" class="form-select custom-shadow custom-radius border-0 bg-white">
-                            <option value="ALL">Tất cả</option>
-                            <option value="PENDING">Đang chờ xác nhận</option>
-                            <option value="CONFIRMED">Đã xác nhận</option>
-                            <option value="SHIPPING">Đang vận chuyển</option>
-                            <option value="CANCELLED">Đã hủy</option>
-                            <option value="APPROVED">Đã hoàn thành</option>
-                            <option value="REVERSE">Đã trả hàng</option>
-                        </select>
+                    <div class="col-8" >
+                        <form action="/admin/psg/hoa-don/loadTrangThaiHd/0" method="get"   >
+                            <select class="form-select custom-shadow custom-radius border-0 bg-white" name="selectedTrangThai" onchange="onsubmit()" >
+                                <option th:each="enumValue : ${trangThaiHD}"
+                                        th:value="${enumValue}"
+                                        th:text="${enumValue.getMoTa()}">
+                                </option>
+                            </select>
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -86,10 +92,11 @@
                         <label style="margin-top: 7px;">Loại đơn</label>
                     </div>
                     <div class="col-7">
-                        <select name="trangThai" class="form-select custom-shadow custom-radius border-0 bg-white">
-                            <option value="ALL">Tất cả</option>
-                            <option value="CONFIRMED">Tại quầy</option>
-                            <option value="SHIPPING">Trên web</option>
+                        <select class="form-select custom-shadow custom-radius border-0 bg-white">
+                            <option th:each="enumValue : ${trangThaiBH}"
+                                    th:value="${enumValue}"
+                                    th:text="${enumValue.getMoTa()}">
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -125,13 +132,13 @@
                         <tr>
                             <th scope="col">STT</th>
                             <th scope="col" class="th-sm">Mã Đơn Hàng</th>
-                            <th scope="col">Tổng Tiền</th>
+                            <th scope="col">Loại Đơn</th>
                             <th scope="col">Khách Hàng</th>
                             <th scope="col">Số Điện Thoại</th>
                             <th scope="col">Ngày Tạo</th>
-                            <th scope="col">Loại Đơn</th>
+                            <th scope="col">Tổng Tiền</th>
                             <th scope="col">Trạng Thái</th>
-                            <th scope="col">Hành Động</th>
+<!--                            <th scope="col">Hành Động</th>-->
 
                         </tr>
                         </thead>
@@ -139,11 +146,12 @@
                         <tr th:each="hd,index:${listHoaDon}">
                             <td th:text="${index.count}"></td>
                             <td th:text="${hd.ma}"></td>
-                            <td th:text="${hd.formattedThanhTien}"></td>
+                            <td th:text="${hd.getHinhThucBanHang().getMoTa()}"></td>
+
                             <td th:text="${hd.getKhachHang().getTen()}"></td>
                             <td th:text="${hd.getSdtNguoiNhan()}"></td>
                             <td th:text="${#temporals.format(hd.getNgayTao, 'dd/MM/yyyy')}"></td>
-                            <td th:text="${hd.getHinhThucBanHang().getMoTa()}"></td>
+                            <td th:text="${hd.formattedThanhTien}"></td>
                             <td>
                                 <div class="badge badge-light-success fw-bold">
                                     <span th:text="${hd.getTrangThai().getMoTa()}"></span>
@@ -151,13 +159,13 @@
                             </td>
 
 
-                            <td>
-                                <span>
-                                      <a th:href="@{/admin/psg/hoa-don/detail/{id}(id=${hd.id})}"
-                                         class="btn waves-effect waves-light btn-rounded btn-warning"
-                                      >Detail</a>
-                      </span>
-                            </td>
+<!--                            <td>-->
+<!--                                <span>-->
+<!--                                      <a th:href="@{/admin/psg/hoa-don/detail/{id}(id=${hd.id})}"-->
+<!--                                         class="btn waves-effect waves-light btn-rounded btn-warning"-->
+<!--                                      >Detail</a>-->
+<!--                      </span>-->
+<!--                            </td>-->
                         </tr>
                         </tbody>
                     </table>

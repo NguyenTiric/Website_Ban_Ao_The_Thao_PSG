@@ -21,8 +21,8 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
 
     List<ChiTietSanPham> getChiTietSanPhamBySanPham(SanPham sanPham);
 
-    @Query(value = "SELECT ctsp.*, sp.ten AS sanPhamTen FROM chi_tiet_san_pham ctsp JOIN san_pham sp ON tk.vai_tro_id = vt.id WHERE ctsp.trang_thai = 'ACTIVE' AND sp.ten like %?1% ", nativeQuery = true)
-    Page<ChiTietSanPham> pageSearchActive(String searchString, Pageable pageable);
+//    @Query(value = "SELECT ctsp.*, sp.ten AS sanPhamTen FROM chi_tiet_san_pham ctsp JOIN san_pham sp ON tk.vai_tro_id = vt.id WHERE ctsp.trang_thai = 'ACTIVE' AND sp.ten like %?1% ", nativeQuery = true)
+//    Page<ChiTietSanPham> pageSearchActive(String searchString, Pageable pageable);
 
 
     @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE trang_thai='ACTIVE'", nativeQuery = true)

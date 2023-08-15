@@ -2,7 +2,6 @@ package com.example.website_ban_ao_the_thao_psg.repository;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
-import com.example.website_ban_ao_the_thao_psg.entity.HoaDonChiTiet;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,5 +44,8 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
             "JOIN khach_hang kh ON hd.khach_hang_id = kh.id " +
             "WHERE DATE(hd.ngay_tao) BETWEEN DATE(:ngayBatDau) AND DATE(:ngayKetThuc)", nativeQuery = true)
     Page<HoaDon> pageSearchHoaDonBetweenDates(Pageable pageable, @Param("ngayBatDau") LocalDate ngayBatDau, @Param("ngayKetThuc") LocalDate ngayKetThuc);
+
+    @Query("SELECT h FROM HoaDon h WHERE h.trangThai = :trangThai")
+    Page<HoaDon> pageComboboxTrangThaiHoaDon(@Param("trangThai") ApplicationConstant.TrangThaiHoaDon trangThai, Pageable pageable);
 
 }

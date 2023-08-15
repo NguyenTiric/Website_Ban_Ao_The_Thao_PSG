@@ -27,8 +27,8 @@ import java.time.LocalDateTime;
 public class CreateVoucherThuHangRequest {
 
     private Integer id;
-    @NotBlank(message = "Mã không để trống")
-    @Size(min = 0, max = 50, message = "Tên không vượt quá 50 ký tự")
+//    @NotBlank(message = "Mã không để trống")
+//    @Size(min = 0, max = 50, message = "Tên không vượt quá 50 ký tự")
     private String ma;
 
     @NotBlank(message = "Tên không để trống")
