@@ -48,8 +48,8 @@
                     <td th:text="${index.count}"></td>
                     <td th:text="${vc.ma}"></td>
                     <td th:text="${vc.trangThai.moTa}"></td>
-                    <td th:text="${vc.ngayBatDau}"></td>
-                    <td th:text="${vc.ngayKetThuc}"></td>
+                    <td th:text="${#temporals.format(vc.ngayBatDau, 'dd/MM/yyyy hh:mm')}"></td>
+                    <td th:text="${#temporals.format(vc.ngayKetThuc, 'dd/MM/yyyy hh:mm')}"></td>
                     <td>
                       <span>
                          <form th:action="@{/admin/psg/voucher-thu-hang/revert/{id}(id=${vc.id})}" method="post">

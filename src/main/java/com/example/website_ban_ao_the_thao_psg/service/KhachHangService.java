@@ -45,4 +45,6 @@ public interface KhachHangService {
     Boolean existsBySdtKhachHangWithDifferentId(String sdt, Integer id);
 
     Boolean existsByEmailKhachHangWithDifferentId(String sdt, Integer id);
+
+
 }

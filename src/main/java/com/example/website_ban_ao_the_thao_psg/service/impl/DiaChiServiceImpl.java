@@ -2,11 +2,15 @@ package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.DiaChi;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.DiaChiMapper;
+import com.example.website_ban_ao_the_thao_psg.model.mapper.KhachHangMapper;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateDiaChiRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateDiaChiRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.DiaChiResponse;
+import com.example.website_ban_ao_the_thao_psg.model.response.KhachHangResponse;
 import com.example.website_ban_ao_the_thao_psg.repository.DiaChiRepository;
+import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
 import com.example.website_ban_ao_the_thao_psg.service.DiaChiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -25,6 +30,11 @@ public class DiaChiServiceImpl implements DiaChiService {
     @Autowired
     DiaChiMapper diaChiMapper;
 
+    @Autowired
+    private KhachHangRepository khachHangRepository;
+
+    @Autowired
+    private KhachHangMapper khachHangMapper;
 
     @Override
     public Page<DiaChiResponse> pageDiaChiActive(Integer pageNo, Integer size) {
@@ -87,4 +97,11 @@ public class DiaChiServiceImpl implements DiaChiService {
 
         diaChiRepository.revert(id, LocalDate.now());
     }
+
+    @Override
+    public List<KhachHangResponse> getAllKhachHangActive() {
+        return khachHangMapper.listKhachHangEntityToKhachHangResponse(khachHangRepository.listKhachHangActive());
+    }
+
+
 }
