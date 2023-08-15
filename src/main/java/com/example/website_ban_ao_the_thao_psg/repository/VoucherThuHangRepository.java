@@ -20,19 +20,22 @@ import java.util.List;
 public interface VoucherThuHangRepository extends JpaRepository<VoucherThuHang,Integer> {
     @Query(value = "SELECT * FROM voucher_thu_hang WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE'  ", nativeQuery = true)
     Page<VoucherThuHang> pageSearchActive(String searchString, Pageable pageable);
+
     @Query(value = "SELECT * FROM voucher_thu_hang WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='INACTIVE' ", nativeQuery = true)
     Page<VoucherThuHang> pageSearchIvActive(String searchString, Pageable pageable);
 
     @Query(value = "SELECT * FROM voucher_thu_hang WHERE trang_thai='INACTIVE' ", nativeQuery = true)
     Page<VoucherThuHang> pageINACTIVE(Pageable pageable);
 
-    @Query(value = "SELECT * FROM voucher_thu_hang WHERE trang_thai='ACTIVE'  ", nativeQuery = true)
+    @Query(value = "SELECT * FROM voucher_thu_hang WHERE trang_thai='PENDING' ", nativeQuery = true)
+    Page<VoucherThuHang> pagePENDING(Pageable pageable);
+
+    @Query(value = "SELECT * FROM voucher_thu_hang WHERE trang_thai='ACTIVE'   ", nativeQuery = true)
     Page<VoucherThuHang> pageACTIVE(Pageable pageable);
-
-
 
     List<VoucherThuHang> findByNgayKetThucBeforeAndTrangThaiNot(LocalDateTime ngayKetThuc, ApplicationConstant.TrangThaiVoucher trangThai);
 
+    List<VoucherThuHang> findByNgayBatDauIsBeforeAndTrangThai(LocalDateTime currentDateTime, ApplicationConstant.TrangThaiVoucher trangThai);
 
     @Transactional
     @Modifying

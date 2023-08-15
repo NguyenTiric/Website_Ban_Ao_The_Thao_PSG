@@ -36,6 +36,7 @@
 
 <div class="container" layout:fragment="content">
     <h1 style="text-align: center">VOUCHER THỨ HẠNG</h1>
+
     <div class="row">
         <div class="col-8">
             <li class="nav-item d-none d-md-block">
@@ -64,27 +65,16 @@
         <div class="col-md-6">
 
                 <div class="select-container">
-<!--                    <div class="selectt">-->
-<!--                    <label class="form-label">Thứ Hạng :</label>-->
-<!--                        <select class="form-select custom-shadow custom-radius border-0 bg-white"-->
-<!--                                aria-label="Default select example" style="width: 180px">-->
-<!--                            <option value="">Tất cả</option>-->
-<!--                            <option value="">Kim cương</option>-->
-<!--                            <option value="">Vàng </option>-->
-<!--                            <option value="">Bạc </option>-->
-<!--                        </select>-->
-<!--                    </div>-->
                     <div class="selectt">
                     <label class="form-label">Trạng thái :</label>
                         <select id="selecttTT" name="selecttTT" class="form-select custom-shadow custom-radius border-0 bg-white"
                                 aria-label="Default select example" style="width: 180px">
                             <option value="1">Tất cả</option>
-                            <option value="4">Sắp Diễn Ra</option>
                             <option value="2">Đang Diễn Ra</option>
                             <option value="3" >Đã Kết Thúc</option>
+                            <option value="4" >Sắp Diễn Ra</option>
                         </select>
                     </div>
-
                 </div>
 
         </div>
@@ -101,7 +91,6 @@
                         <tr>
                             <th scope="col">STT</th>
                             <th scope="col">Mã</th>
-                            <th scope="col">Số Lượng</th>
                             <th scope="col">Trạng Thái</th>
                             <th scope="col">Ngày Bắt Đầu</th>
                             <th scope="col">Ngày Kết Thúc</th>
@@ -112,7 +101,6 @@
                         <tr th:each="vc,index:${listVoucherThuHangActive}">
                             <td th:text="${index.count}"></td>
                             <td th:text="${vc.ma}"></td>
-                            <td th:text="${vc.soLuong}"></td>
                             <td th:text="${vc.trangThai.moTa}"></td>
                             <td th:text="${#temporals.format(vc.ngayBatDau, 'dd/MM/yyyy hh:mm')}"></td>
                             <td th:text="${#temporals.format(vc.ngayKetThuc, 'dd/MM/yyyy hh:mm')}"></td>

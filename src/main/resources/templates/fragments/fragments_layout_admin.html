@@ -17,6 +17,9 @@
     <link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
     <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
     <script th:src="@{/assets/js/config.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
 <div class="preloader">
@@ -283,30 +286,60 @@
         integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script th:inline="javascript">
-    const host = "https://provinces.open-api.vn/api/";
 
-    const callAPI = (api, select) => {
+    const host = "https://provinces.open-api.vn/api/";
+    var callAPI = (api) => {
         return axios.get(api)
             .then((response) => {
-                renderData(response.data, select);
+                renderData(response.data, "province");
             });
     }
-
-    const renderData = (array, select) => {
-        let row = '<option value="">Chọn</option>';
+    callAPI('https://provinces.open-api.vn/api/?depth=1');
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.districts, "district");
+            });
+    }
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.wards, "ward");
+            });
+    }
+    var renderData = (array, select) => {
+        let row = '';
         array.forEach(element => {
             row += `<option value="${element.code}">${element.name}</option>`;
         });
         document.querySelector("#" + select).innerHTML = row;
     }
-
-    const updateDistrictAndWard = () => {
-        const provinceCode = $("#province").val();
-        const districtCode = $("#district").val();
-        const wardCode = $("#ward").val();
-        const provinceName = $("#province option:selected").text();
-        const districtName = $("#district option:selected").text();
-        const wardName = $("#ward option:selected").text();
+    $("#province").change(() => {
+        callApiDistrict(host + "p/" + $("#province").val() + "?depth=2");
+        printResult();
+    });
+    $("#district").change(() => {
+        callApiWard(host + "d/" + $("#district").val() + "?depth=2");
+        printResult();
+    });
+    $("#ward").change(() => {
+        printResult();
+    })
+    var printResult = () => {
+        var provinceCode = $("#province").val();
+        var districtCode = $("#district").val();
+        var wardCode = $("#ward").val();
+        var provinceName = $("#province option:selected").text();
+        var districtName = $("#district option:selected").text();
+        var wardName = $("#ward option:selected").text();
+        callApiDistrict(host + "p/" + provinceCode + "?depth=2")
+            .then(() => {
+                $("#district").val(districtCode);
+            });
+        callApiWard(host + "d/" + districtCode + "?depth=2")
+            .then(() => {
+                $("#ward").val(wardCode);
+            });
         $("#provinceInput").val(provinceName);
         $("#districtInput").val(districtName);
         $("#wardInput").val(wardName);
@@ -315,51 +348,20 @@
         $("#wardCodeInput").val(wardCode);
     }
 
-    $("#province").change(() => {
-        const provinceCode = $("#province").val();
-        if (provinceCode) {
-            const api = host + "p/" + provinceCode + "?depth=2";
-            callAPI(api, "district").then(() => {
-                $("#district").val(""); // Reset district when province changes
-                callAPI(host + "p/" + provinceCode + "?depth=2")
-                    .then(() => {
-                        $("#district").val(""); // Reset district and ward when province changes
-                        $("#ward").val("");
-                    });
-            });
-        } else {
-            $("#district").html('<option value="">Chọn quận</option>');
-            $("#ward").html('<option value="">Chọn phường</option>');
-            updateDistrictAndWard();
-        }
-    });
-
-    $("#district").change(() => {
-        const districtCode = $("#district").val();
-        if (districtCode) {
-            const api = host + "d/" + districtCode + "?depth=2";
-            callAPI(api, "ward").then(() => {
-                $("#ward").val(""); // Reset ward when district changes
-                updateDistrictAndWard();
-            });
-        } else {
-            $("#ward").html('<option value="">Chọn phường</option>');
-            updateDistrictAndWard();
-        }
-    });
-
-    $("#ward").change(() => {
-        updateDistrictAndWard();
-    });
-
-
-    document.getElementById("selecttTT").addEventListener("change", function() {
-        var selectedValue = this.value;
-        if (selectedValue === "3") {
-            var url = new URL("/admin/psg/voucher-thu-hang/pageInActive/0", window.location.origin);
-            window.location.href = url.href;
-        }
-    });
+    $("#printRes").click(() => {
+        var provinceCode = $("#province").val();
+        var districtCode = $("#district").val();
+        var wardCode = $("#ward").val();
+        var provinceName = $("#province option:selected").text();
+        var districtName = $("#district option:selected").text();
+        var wardName = $("#ward option:selected").text();
+        $("#provinceInput2").val(provinceName);
+        $("#districtInput2").val(districtName);
+        $("#wardInput2").val(wardName);
+        $("#provinceCodeInput2").val(provinceCode);
+        $("#districtCodeInput2").val(districtCode);
+        $("#wardCodeInput2").val(wardCode);
+    })
 
     document.getElementById("selecttTT").addEventListener("change", function() {
         var selectedValue = this.value;
@@ -370,8 +372,15 @@
     });
     document.getElementById("selecttTT").addEventListener("change", function() {
         var selectedValue = this.value;
+        if (selectedValue === "3") {
+            var url = new URL("/admin/psg/voucher-thu-hang/pageInActive/0", window.location.origin);
+            window.location.href = url.href;
+        }
+    });
+    document.getElementById("selecttTT").addEventListener("change", function() {
+        var selectedValue = this.value;
         if (selectedValue === "4") {
-            var url = new URL("/admin/psg/voucher-thu-hang/hien-thi", window.location.origin);
+            var url = new URL("admin/psg/voucher-thu-hang/pagePending/0", window.location.origin);
             window.location.href = url.href;
         }
     });

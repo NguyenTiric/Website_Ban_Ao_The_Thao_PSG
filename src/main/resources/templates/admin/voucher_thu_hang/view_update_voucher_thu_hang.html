@@ -11,6 +11,7 @@
         .voucher {
             width: 100%;
         }
+
         .form-voucher {
             width: 100%;
             display: flex;
@@ -26,94 +27,92 @@
 </head>
 <body>
 <div class="container" layout:fragment="content">
+    <h1 style="text-align: center">CẬP NHẬP VOUCHER </h1>
+    <br>
+    <br>
     <div class="row">
-        <div class="col-3"> </div>
-<!--        <div class="col-6">-->
-          <div class="voucher">
-              <form action="/admin/psg/voucher-thu-hang/update"  th:object="${voucherThuHang}" method="post" onsubmit="return  confirm('Bạn có cập nhât không?')">
-                  <input type="hidden" th:field="*{id}">
-                 <div class="form-voucher">
-                     <div class="list-form-voucher">
-                         <div class="form-group mb-3">
-                             <label>Mã Voucher</label>
-                             <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                                     type="text" placeholder="Nhập voucher" th:field="*{ma}" style="height: 50px">
-                             <span th:if="${#fields.hasErrors('ma')}" style="color: red; font-size: 13px" th:errors="*{ma}"></span>
-                         </div>
-                         <div class="form-group mb-3">
-                             <label>Tên Voucher</label>
-                             <input   class="form-control custom-shadow custom-radius border-0 bg-white"
-                                     type="text" placeholder="Nhập số gia tri" th:field="*{ten}" style="height: 50px">
-                             <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px" th:errors="*{ten}"></span>
-                         </div>
-                         <div class="form-group mb-3">
-                             <label>Số Tiền Giảm</label>
-                             <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                                    type="text" placeholder="Nhập số tiền giảm" th:field="*{soTienGiam}" style="height: 50px">
-                             <span th:if="${#fields.hasErrors('soTienGiam')}" style="color: red; font-size: 13px">
+        <div class="col-3"></div>
+        <!--        <div class="col-6">-->
+        <div class="voucher">
+            <form action="/admin/psg/voucher-thu-hang/update" th:object="${voucherThuHang}" method="post"
+                  onsubmit="return  confirm('Bạn có cập nhât không?')">
+                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{ma}">
+                <div class="form-voucher">
+                    <div class="list-form-voucher">
+                        <div class="form-group mb-3">
+                            <label>Tên Voucher</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="text" placeholder="Nhập số gia tri" th:field="*{ten}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ten')}" style="color: red; font-size: 13px"
+                                  th:errors="*{ten}"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Số Tiền Giảm</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="text" placeholder="Nhập số tiền giảm" th:field="*{soTienGiam}"
+                                   style="height: 50px">
+                            <span th:if="${#fields.hasErrors('soTienGiam')}" style="color: red; font-size: 13px">
                                    </span>
-                         </div>
-                         <div class="form-group mb-3">
-                             <label>Ngày Bắt Đầu</label>
-                             <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                                     type="datetime-local"  th:field="*{ngayBatDau}" style="height: 50px" >
-                             <span th:if="${#fields.hasErrors('ngayBatDau')}" style="color: red; font-size: 13px" th:errors="*{ngayBatDau}"></span>
-                             <th:block th:if="${error}">
-                                 <div class="alert alert-danger" th:text="${error}"></div>
-                             </th:block>
-                         </div>
-                         <div class="form-group mb-3">
-                             <label>Ngày Kết Thúc</label>
-                             <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                                    type="datetime-local" th:field="*{ngayKetThuc}" pattern="dd-MM-yyyy hh:mm a" style="height: 50px">
-                             <span th:if="${#fields.hasErrors('ngayKetThuc')}" style="color: red; font-size: 13px" th:errors="*{ngayKetThuc}"></span>
-                             <th:block th:if="${error}">
-                                 <div class="alert alert-danger" th:text="${error}"></div>
-                             </th:block>
-                         </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Ngày Bắt Đầu</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="datetime-local" th:field="*{ngayBatDau}" style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ngayBatDau')}" style="color: red; font-size: 13px"
+                                  th:errors="*{ngayBatDau}"></span>
+                            <th:block th:if="${error}">
+                                <div class="alert alert-danger" th:text="${error}"></div>
+                            </th:block>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Ngày Kết Thúc</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="datetime-local" th:field="*{ngayKetThuc}" pattern="dd-MM-yyyy hh:mm a"
+                                   style="height: 50px">
+                            <span th:if="${#fields.hasErrors('ngayKetThuc')}" style="color: red; font-size: 13px"
+                                  th:errors="*{ngayKetThuc}"></span>
+                            <th:block th:if="${error}">
+                                <div class="alert alert-danger" th:text="${error}"></div>
+                            </th:block>
+                        </div>
 
-                         <br>
-                     </div>
-                     <div class="list-form-voucher">
+                        <br>
+                    </div>
+                    <div class="list-form-voucher">
 
-                         <div class="form-group mb-3">
-                             <label>Điều Kiện Sử Dụng</label>
-                             <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                                     type="text" placeholder="Đơn Hàng Từ" th:field="*{dieuKienSuDungVoucher}" style="height: 50px">
-                             <span th:if="${#fields.hasErrors('dieuKienSuDungVoucher')}" style="color: red; font-size: 13px" th:errors="*{dieuKienSuDungVoucher}"></span>
-                         </div>
-                         <div class="form-group mb-3">
-                             <label>Số Lượng</label>
-                             <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                                     type="text" placeholder="Số Lượng" th:field="*{soLuong}" style="height: 50px">
-                             <span th:if="${#fields.hasErrors('soLuong')}" style="color: red; font-size: 13px" th:errors="*{soLuong}"></span>
-                         </div>
-                         <div class="form-group mb-3">
-                             <label>Mô Tả</label>
-                             <textarea  class="form-control custom-shadow custom-radius border-0 bg-white"
-                                     type="text" placeholder="Số Lượng" th:field="*{moTa}" style="height: 100px"/>
-                             <span th:if="${#fields.hasErrors('moTa')}" style="color: red; font-size: 13px" th:errors="*{moTa}"></span>
-                         </div>
-                     </div>
-
-
+                        <div class="form-group mb-3">
+                            <label>Giá Trị Đơn Hàng Tối Thiểu</label>
+                            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   type="text" placeholder="Đơn Hàng Từ" th:field="*{giaTriDonHangToiThieu}"
+                                   style="height: 50px">
+                            <span th:if="${#fields.hasErrors('giaTriDonHangToiThieu')}"
+                                  style="color: red; font-size: 13px" th:errors="*{giaTriDonHangToiThieu}"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Mô Tả</label>
+                            <textarea class="form-control custom-shadow custom-radius border-0 bg-white"
+                                      type="text" placeholder="Mô tả" th:field="*{moTa}" style="height: 100px"/>
+                            <span th:if="${#fields.hasErrors('moTa')}" style="color: red; font-size: 13px"
+                                  th:errors="*{moTa}"></span>
+                        </div>
+                    </div>
 
 
-
-                 </div>
-
+                </div>
 
 
-                  <div class="form-group mb-3 text-center">
-                      <a href="/admin/psg/voucher-thu-hang/hien-thi" class="btn waves-effect waves-light btn-rounded btn-primary">Quay lại</a>
-                      <button class="btn btn-rounded btn-primary" type="submit">Update</button>
-                  </div>
+                <div class="form-group mb-3 text-center">
+                    <a href="/admin/psg/voucher-thu-hang/hien-thi"
+                       class="btn waves-effect waves-light btn-rounded btn-primary">Quay lại</a>
+                    <button class="btn btn-rounded btn-primary" type="submit">Update</button>
+                </div>
 
-              </form>
-          </div>
+            </form>
+        </div>
 
-<!--        </div>-->
-        <div class="col-3"> </div>
+        <!--        </div>-->
+        <div class="col-3"></div>
     </div>
 </div>
 </body>

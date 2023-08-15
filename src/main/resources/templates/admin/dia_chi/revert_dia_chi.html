@@ -9,6 +9,9 @@
 </head>
 <body>
 <div class="container" layout:fragment="content">
+    <h1 style="text-align: center">ĐỊA CHỈ ĐÃ XÓA </h1>
+    <br>
+    <br>
     <div class="row">
         <div class="col-11"> <li class="nav-item d-none d-md-block">
         <a class="nav-link" href="javascript:void(0)">
@@ -38,8 +41,6 @@
                             <th scope="col">Tên</th>
                             <th scope="col">SDT</th>
                             <th scope="col">Địa Chỉ Chi Tiết</th>
-                            <th scope="col">Ngày Tạo</th>
-                            <th scope="col">Ngày Cập Nhật</th>
                             <th scope="col">Trạng Thái</th>
                             <th scope="col">Hành Động</th>
                         </tr>
@@ -50,8 +51,6 @@
                             <td th:text="${dc.hoTen}"></td>
                             <td th:text="${dc.sdt}"></td>
                             <td th:text="${dc.diaChiChiTiet}"></td>
-                            <td th:text="${dc.ngayTao}"></td>
-                            <td th:text="${dc.ngayCapNhap}"></td>
                             <td th:text="${dc.trangThai.moTa}"></td>
                             <td>
                                 <form th:action="@{/admin/psg/dia-chi/revert/{id}(id=${dc.id})}" method="post">
