@@ -20,9 +20,9 @@ import java.util.List;
 public interface NhanVienRepository extends JpaRepository<NhanVien,Integer> {
 
     @Query(value = "SELECT * " +
-            "FROM nhan_vien tk " +
-            "WHERE (tk.ten LIKE %?1% OR tk.sdt LIKE %?1% OR tk.email LIKE %?1% OR tk.dia_chi LIKE %?1%) " +
-            "AND tk.trang_thai = 'ACTIVE'", nativeQuery = true)
+            "FROM nhan_vien nv " +
+            "WHERE (nv.ten LIKE %?1% OR nv.ma LIKE %?1% OR nv.sdt LIKE %?1% OR nv.email LIKE %?1% OR nv.dia_chi LIKE %?1%) " +
+            "AND nv.trang_thai = 'ACTIVE'", nativeQuery = true)
     Page<NhanVien> pageSearchACTIVENhanVien(@Param("search") String search, Pageable pageable);
 
 

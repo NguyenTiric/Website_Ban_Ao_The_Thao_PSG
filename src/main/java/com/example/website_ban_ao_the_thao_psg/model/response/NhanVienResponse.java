@@ -28,6 +28,7 @@ public class NhanVienResponse {
     private Integer id;
     private VaiTro vaiTro;
     private String ten;
+    private String ma;
     private Boolean gioiTinh;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

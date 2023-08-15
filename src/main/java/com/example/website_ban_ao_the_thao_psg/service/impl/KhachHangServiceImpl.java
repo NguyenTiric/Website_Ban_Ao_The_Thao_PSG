@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.service.impl;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.entity.VaiTro;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.KhachHangMapper;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -52,6 +54,7 @@ public class KhachHangServiceImpl implements KhachHangService {
         KhachHang khachHang = khachHangMapper.createKhachHangRequestToTaiKhoanEntity(createKhachHangRequest);
         byte[] bytes = file.getBytes();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+        khachHang.setMa(GenCode.generateKhachHangCode());
         khachHang.setNgayTao(LocalDate.now());
         khachHang.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
         khachHang.setAnh(blob);
@@ -62,22 +65,27 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     @Override
     public void update(Integer id, MultipartFile file, UpdateKhachHangRequest updateKhachHangRequest) throws IOException, SQLException {
-        KhachHang tk = khachHangRepository.findById(id).orElse(null);
-        if (tk != null) {
+        KhachHang kh = khachHangRepository.findById(id).orElse(null);
+        if (kh != null) {
             if (!file.isEmpty()) {
                 byte[] bytes = file.getBytes();
                 Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-                tk.setAnh(blob);
+                kh.setAnh(blob);
 
             }
-            tk.setSdt(updateKhachHangRequest.getSdt());
-            tk.setTen(updateKhachHangRequest.getTen());
-            tk.setNgaySinh(updateKhachHangRequest.getNgaySinh());
-            tk.setGioiTinh(updateKhachHangRequest.getGioiTinh());
-            tk.setDiaChi(updateKhachHangRequest.getDiaChi());
-            tk.setEmail(updateKhachHangRequest.getEmail());
-            khachHangRepository.save(tk);
+            kh.setSdt(updateKhachHangRequest.getSdt());
+            kh.setTen(updateKhachHangRequest.getTen());
+            kh.setNgaySinh(updateKhachHangRequest.getNgaySinh());
+            kh.setGioiTinh(updateKhachHangRequest.getGioiTinh());
+            kh.setDiaChi(updateKhachHangRequest.getDiaChi());
+            kh.setEmail(updateKhachHangRequest.getEmail());
+            khachHangRepository.save(kh);
         }
+    }
+
+    @Override
+    public List<KhachHangResponse> getAllKhachHangActive() {
+        return khachHangMapper.listKhachHangEntityToKhachHangResponse(khachHangRepository.listKhachHangActive());
     }
 
 

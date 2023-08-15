@@ -385,7 +385,13 @@ public class ApplicationConstant {
 
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     public enum TrangThaiHoaDon {
-        PENDING("PENDING", "Đang chờ xác nhận", "warning"), CONFIRMED("CONFIRMED", "Đã xác nhận", "success"), SHIPPING("SHIPPING", "Đang vận chuyển", "secondary"), CANCELLED("CANCELLED", "Đã hủy", "error"), APPROVED("APPROVED", "Đã hoàn thành", "primary"), REVERSE("REVERSE", "Đã trả hàng", "info");
+
+        PENDING("PENDING", "Đang chờ xác nhận", "warning"),
+        CONFIRMED("CONFIRMED", "Đã xác nhận", "success"),
+        SHIPPING("SHIPPING", "Đang vận chuyển", "secondary"),
+        CANCELLED("CANCELLED", "Đã hủy", "error"),
+        APPROVED("APPROVED", "Đã hoàn thành", "primary"),
+        REVERSE("REVERSE", "Đã trả hàng", "info");
 
         private final String ten;
         private final String moTa;
@@ -412,7 +418,13 @@ public class ApplicationConstant {
 
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     public enum LoaiLichSuHoaDon {
-        CREATED("CREATED", "Tạo Đơn Hàng", "#2dc258"), CONFIRMED("CONFIRMED", "Đã Xác Nhận Thông Tin Thanh Toán", "#2dc258"), SHIPPING("SHIPPING", "Đã Giao Cho Đơn Vị Vận Chuyển", "#2dc258"), APPROVED("APPROVED", "Đã Nhận Được Hàng", "#2dc258"), CANCELLED("CANCELLED", "Đơn Hàng Đã Hủy", "#9c2919"), EDITED("EDITED", "Chỉnh Sửa Đơn Hàng", "#ffc107"), REVERSED("REVERSED", "Hoàn Trả", "#9c2919");
+        CREATED("CREATED", "Tạo Đơn Hàng", "#2dc258"),
+        CONFIRMED("CONFIRMED", "Đã Xác Nhận Thông Tin Thanh Toán", "#2dc258"),
+        SHIPPING("SHIPPING", "Đã Giao Cho Đơn Vị Vận Chuyển", "#2dc258"),
+        APPROVED("APPROVED", "Đã Nhận Được Hàng", "#2dc258"),
+        CANCELLED("CANCELLED", "Đơn Hàng Đã Hủy", "#9c2919"),
+        EDITED("EDITED", "Chỉnh Sửa Đơn Hàng", "#ffc107"),
+        REVERSED("REVERSED", "Hoàn Trả", "#9c2919");
 
         private final String ten;
         private final String moTa;

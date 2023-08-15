@@ -37,6 +37,8 @@ public class CreateKhachHangRequest {
     @NotBlank(message = "Không Được để Trống")
     private String ten;
 
+    private String ma;
+
     @NotNull(message = "Không Được để Trống")
     private Boolean gioiTinh;
 

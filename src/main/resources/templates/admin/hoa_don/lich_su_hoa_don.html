@@ -4,43 +4,202 @@
       layout:decorate="~{fragments/fragments_layout_admin}"
 >
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <div class="container" layout:fragment="content">
-  <div class="card-body">
-    <h4 class="card-title mb-3">Danh Sách Hóa Đơn</h4>
-    <div class="tab-content">
-      <div class="tab-pane show active" id="home-b1">
-        <table class="table table-striped" id="table-alert">
-          <thead>
-          <tr>
-            <th scope="col">STT</th>
-            <th scope="col"></th>
-            <th scope="col">Ngày Tạo</th>
-            <th scope="col">Người Xác Nhận</th>
-            <th scope="col">Ghi Chú</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each="ls,index:${listHoaDonCho}">
-            <td th:text="${index.count}"></td>
-            <td th:text="${dhc.ma}"></td>
-            <td th:text="${dhc.ngayTao}"></td>
-            <td th:text="${dhc.trangThai.moTa}"></td>
-            <td>
-              <a th:href="@{/admin/psg/hoa-don/detail-hoa-don/{id}(id=${dhc.id})}"
-                 class="btn waves-effect waves-light btn-rounded btn-warning"
-              >Update</a>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
 
-  </div>
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-body">
+                <h4 class="card-title mb-3">Lịch Sử Hóa Đơn</h4>
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="home">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">STT</th>
+                                <th scope="col"></th>
+                                <th scope="col">Ngày Tạo</th>
+                                <th scope="col">Người Xác Nhận</th>
+                                <th scope="col">Ghi Chú</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="ls,index:${listLichSuHoaDon}">
+                                <td th:text="${index.count}"></td>
+                                <td th:text="${ls.loaiLichSuHoaDon.moTa}"></td>
+                                <td th:text="${#temporals.format(ls.ngayTao, 'dd-MM-yyyy HH:mm')}"></td>
+                                <td th:text="${ls.nhanVien.ten}"></td>
+                                <td th:text="${ls.moTa}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <form th:action="@{/admin/psg/hoa-don/update-trang-thai-hoa-don/{id}(id=${hoaDon.id})}" method="post">
+                    <button th:if="${hoaDon.trangThai.ten== 'PENDING'}" name="trangThai" value="CONFIRMED"
+                            class="btn btn-success">Xác nhận
+                    </button>
+                    <button th:if="${hoaDon.trangThai.ten == 'CONFIRMED'}" name="trangThai" value="SHIPPING"
+                            class="btn btn-secondary">Giao hàng
+                    </button>
+                    <button name="trangThai" value="CANCELLED"
+                            class="btn btn-danger">Hủy Đơn
+                    </button>
+                    <button th:if="${hoaDon.trangThai.ten == 'SHIPPING'}" name="trangThai" value="APPROVED"
+                            class="btn btn-primary">Hoàn Thành Đơn
+                    </button>
+                    <button th:if="${hoaDon.trangThai.ten == 'REVERSE'}" name="trangThai" value="REVERSE"
+                            class="btn btn-info">Đã trả hàng
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="card-body">
+                <h4 class="card-title mb-3">Thông Tin Đơn Hàng</h4>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-6">
+                                <p>Trạng Thái</p>
+                                <p>Loại</p>
+                                <p>Mã Đơn Hàng</p>
+                            </div>
+                            <div class="col-6">
+                                <p th:text="${hoaDon.trangThai.moTa}"></p>
+                                <p th:text="${hoaDon.hinhThucBanHang.moTa}"></p>
+                                <p th:text="${hoaDon.ma}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-6">
+                                <p>Họ Và Tên</p>
+                                <p>Số Điện Thoại</p>
+                                <p>Email</p>
+                                <p>Địa Chỉ</p>
+                            </div>
+                            <div class="col-6">
+                                <p th:text="${hoaDon.tenNguoiNhan}"></p>
+                                <p th:text="${hoaDon.sdtNguoiNhan}"></p>
+                                <p th:text="${hoaDon.khachHang.email}"></p>
+                                <p th:text="${hoaDon.diaChi}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <h4 class="card-title mb-3">Lịch Sử Thanh Toán</h4>
+            <hr>
+            <div class="tab-content">
+                <div class="tab-pane show active">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Số Tiền</th>
+                            <th scope="col">Thời Gian</th>
+                            <th scope="col">Loại Giao Dịch</th>
+                            <th scope="col">Phương Thức Thanh Toán</th>
+                            <th scope="col">Trạng Thái</th>
+                            <th scope="col">Nhân Viên Xác Nhận</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="lsgd,index:${listGiaoDich}">
+                            <td th:text="${index.count}"></td>
+                            <td th:text="${lsgd.hoaDon.thanhTien}"></td>
+                            <td th:text="${lsgd.ngayTao}"></td>
+                            <td th:text="${lsgd.loaiGiaoDich.moTa}"></td>
+                            <td th:text="${lsgd.phuongThucThanhToan.moTa}"></td>
+                            <td th:text="${lsgd.trangThaiGiaoDich.moTa}"></td>
+                            <td th:text="${lsgd.nhanVien.ten}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-custom">
+        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+            <div class="tab-content">
+                <div class="tab-pane show active">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="hdct,index:${listHoaDonChiTiet}">
+                            <td class="d-flex align-items-center">
+                                <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+
+                                    <div class="symbol-label">
+                                        <img th:src="@{${'/admin/psg/chi-tiet-san-pham/display?id=' + hdct.chiTietSanPham.sanPham.id}}"
+                                             alt="Emma Smith"
+                                             style="width: 150px; height: 120px;border-radius: 10%;object-fit: cover"
+                                        />
+                                    </div>
+
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <span th:text="${hdct.chiTietSanPham.sanPham.ten}"></span>
+                                    <span th:text="${hdct.giaBan}"></span>
+                                    <span th:text="${hdct.soLuong}"></span>
+                                </div>
+                            </td>
+                            <td th:text="${hdct.donGia}"></td>
+                            <td>Trả Hàng</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<div id="mo-ta" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-4">
+                    <a href="#" class="text-success">
+                                                        <span><img class="me-2" th:src="@{/assets/images/image1.png}"
+                                                                   alt="" height="80"></span>
+                    </a>
+                </div>
+
+                <form th:action="@{/admin/psg/hoa-don/update-trang-thai-hoa-don/{id}(id=${hoaDon.id})}" method="post"
+                >
+                    <div class="form-group mb-3">
+                        <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                               type="text" placeholder="Ghi chú" value="moTa"
+                               style="height: 50px">
+                    </div>
+                    <div class="form-group mb-3 text-center">
+                        <button class="btn btn-rounded btn-primary" type="submit">Xác Nhân</button>
+                    </div>
+                </form>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 </body>
 </html>

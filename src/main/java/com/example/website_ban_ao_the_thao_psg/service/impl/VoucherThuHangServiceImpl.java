@@ -52,7 +52,7 @@ public class VoucherThuHangServiceImpl implements VoucherThuHangService {
     @Override
     public VoucherThuHangResponse add(CreateVoucherThuHangRequest createVoucherThuHangRequest) {
         VoucherThuHang voucherThuHang = voucherThuHangMapper.createVoucherThuHangRequestToVoucherThuHangEntity(createVoucherThuHangRequest);
-        voucherThuHang.setMa(GenCode.generateVoucher());
+        voucherThuHang.setMa(GenCode.generateVoucherCode());
         voucherThuHang.setNgayTao(LocalDateTime.now());
 
         LocalDateTime ngayBatDau = createVoucherThuHangRequest.getNgayBatDau();

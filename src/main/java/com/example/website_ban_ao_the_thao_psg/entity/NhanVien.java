@@ -42,6 +42,9 @@ public class NhanVien {
     @JoinColumn(name = "vai_tro_id")
     private VaiTro vaiTro;
 
+    @Column(name = "ma")
+    private String ma;
+
     @Column(name = "ten")
     private String ten;
 

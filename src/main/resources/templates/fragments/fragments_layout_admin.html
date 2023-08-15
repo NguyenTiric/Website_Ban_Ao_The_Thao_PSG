@@ -152,7 +152,7 @@
                                                 aria-expanded="false"><i data-feather="percent"
                                                                          class="feather-icon"></i><span
                             class="hide-menu">Voucher</span></a></li>
-                    <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="/admin/psg/thu-hang"
+                    <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="/admin/psg/thu-hang/hien-thi"
                                                 aria-expanded="false"><i data-feather="award"
                                                                          class="feather-icon"></i><span
                             class="hide-menu">Thứ Hạng</span></a></li>
@@ -272,7 +272,7 @@
 </div>
 <script th:if="${successMessage}" th:inline="javascript">
     /*<![CDATA[*/
-    window.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('DOMContentLoaded', function() {
         var successMessage = /*[[${successMessage}]]*/ '';
         if (successMessage) {
             alert(successMessage);
@@ -384,17 +384,24 @@
             window.location.href = url.href;
         }
     });
+
+
+
+
 </script>
 <script th:inline="javascript">
     const maxImages = 5;
+
     document.getElementById('filesAnhSanPham').addEventListener('change', function () {
         const previewImagesContainer = document.getElementById('previewImages');
         previewImagesContainer.innerHTML = '';
+
         if (this.files.length > maxImages) {
             alert('You can only upload ' + maxImages + ' images at a time.');
             this.value = '';
             return;
         }
+
         for (let i = 0; i < this.files.length; i++) {
             const reader = new FileReader();
             reader.onloadend = function () {
@@ -412,24 +419,21 @@
         }
     });
 </script>
-<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/dist/js/feather.min.js}"></script>
-<script th:src="@{/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"></script>
 
-<script th:src="@{/dist/js/sidebarmenu.js}"></script>
-<script th:src="@{/dist/js/custom.min.js}"></script>
-<script th:src="@{/assets/extra-libs/c3/d3.min.js}"></script>
-<script th:src="@{/assets/extra-libs/c3/c3.min.js}"></script>
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>-->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
-
+<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/dist/js/feather.min.js}"></script>
+<script th:src="@{/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"></script>
+<script th:src="@{/dist/js/sidebarmenu.js}"></script>
+<script th:src="@{/dist/js/custom.min.js}"></script>
+<script th:src="@{/assets/extra-libs/c3/d3.min.js}"></script>
+<script th:src="@{/vendors/lodash/lodash.min.js}"></script>
+<script th:src="@{/assets/js/phoenix.js}"></script>
+<script th:src="@{/assets/js/scripts.bundle.js}"></script>
 
 </body>
 </html>

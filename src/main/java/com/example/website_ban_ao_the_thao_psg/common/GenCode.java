@@ -18,7 +18,8 @@ public class GenCode {
     private static final String hoaDon = "HD0";
     private static final String vaiTro = "VT0";
     private static final String thuHang = "TH0";
-    private static  final String taiKhoan="TK0";
+    private static  final String nhanVien="NV0";
+    private static  final String khachHang="KH0";
     private static final int NUMBER_LENGTH = 5;
     private static final int NUMBER_HOADON_LENGTH = 10;
 
@@ -28,11 +29,23 @@ public class GenCode {
         String formattedNumber = String.format("%0" + NUMBER_LENGTH + "d", randomNumber);
         return chatLieu + formattedNumber;
     }
-    public static String generateVoucher() {
+    public static String generateVoucherCode() {
         Random random = new Random();
         int randomNumber = random.nextInt((int) Math.pow(10, NUMBER_LENGTH));
         String formattedNumber = String.format("%0" + NUMBER_LENGTH + "d", randomNumber);
         return voucher + formattedNumber;
+    }
+    public static String generateNhanVienCode() {
+        Random random = new Random();
+        int randomNumber = random.nextInt((int) Math.pow(10, NUMBER_LENGTH));
+        String formattedNumber = String.format("%0" + NUMBER_LENGTH + "d", randomNumber);
+        return nhanVien + formattedNumber;
+    }
+    public static String generateKhachHangCode() {
+        Random random = new Random();
+        int randomNumber = random.nextInt((int) Math.pow(10, NUMBER_LENGTH));
+        String formattedNumber = String.format("%0" + NUMBER_LENGTH + "d", randomNumber);
+        return khachHang + formattedNumber;
     }
 
     public static String generateSanPhamCode() {
