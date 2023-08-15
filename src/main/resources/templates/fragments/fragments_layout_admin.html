@@ -410,6 +410,24 @@
         }
     });
 </script>
+<script th:inline="javascript">
+    function validateBeforeSubmit() {
+        var checkboxes = document.querySelectorAll('#kichThuocContainer input[type="checkbox"]');
+        var checked = false;
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                checked = true;
+                break;
+            }
+        }
+
+        if (!checked) {
+            alert("Vui lòng chọn ít nhất một kích thước trước khi thêm sản phẩm.");
+            return false; // Ngăn form submit
+        }
+    }
+</script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -427,5 +445,4 @@
 <script th:src="@{/assets/js/scripts.bundle.js}"></script>
 
 </body>
-
 </html>

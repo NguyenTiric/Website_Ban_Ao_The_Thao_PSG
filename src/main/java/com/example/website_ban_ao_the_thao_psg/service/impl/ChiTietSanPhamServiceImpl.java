@@ -88,6 +88,8 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
         return chiTietSanPhamMapper.listchiTietSanPhamEntityTochiTietSanPhamResponse(chiTietSanPhamRepository.getAllPending());
     }
 
+
+
     @Override
     public void addCtsp(CreateSanPhamRequest createSanPhamRequest, List<KichThuoc> kichThuocList, MultipartFile[] files) throws IOException, SQLException {
         SanPham sanPham = sanPhamMapper.createSanPhamRequestToSanPhamEntity(createSanPhamRequest);
@@ -95,16 +97,24 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
         sanPham.setNgayTao(LocalDate.now());
         sanPham.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
         SanPham sp = sanPhamRepository.save(sanPham);
-        for (MultipartFile file : files) {
-            byte[] bytes = file.getBytes();
-            Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-            AnhSanPham anhSanPham = anhSanPhamMapper.createAnhSanPhamRequestToAnhSanPhamEntity(new CreateAnhSanPhamRequest());
-            anhSanPham.setSanPham(sp);
-            anhSanPham.setTen(blob);
-            anhSanPham.setNgayTao(LocalDate.now());
-            anhSanPham.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
-            anhSanPhamRepository.save(anhSanPham);
+
+            for (MultipartFile file : files) {
+                byte[] bytes = file.getBytes();
+                Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+                AnhSanPham anhSanPham = anhSanPhamMapper.createAnhSanPhamRequestToAnhSanPhamEntity(new CreateAnhSanPhamRequest());
+                anhSanPham.setSanPham(sp);
+                anhSanPham.setTen(blob);
+                anhSanPham.setNgayTao(LocalDate.now());
+                anhSanPham.setTrangThai(ApplicationConstant.TrangThaiSanPham.ACTIVE);
+                anhSanPhamRepository.save(anhSanPham);
         }
+
+
+            if(kichThuocList == null){
+                System.out.println("bbbb");
+                return;
+            }
+
         for (KichThuoc ktId : kichThuocList) {
             ChiTietSanPham chiTietSanPham = chiTietSanPhamMapper.createChiTietSanPhamRequestToChiTietSanPhamEntity(new CreateChiTietSanPhamRequest());
             chiTietSanPham.setSanPham(sp);

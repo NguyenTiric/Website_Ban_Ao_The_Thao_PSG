@@ -37,6 +37,8 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
     @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE trang_thai='PENDING' ", nativeQuery = true)
     List<ChiTietSanPham> getAllPending();
 
+
+
     @Query(value = "SELECT * FROM chi_tiet_san_pham WHERE trang_thai='ACTIVE' ", nativeQuery = true)
     Page<ChiTietSanPham> pageACTIVE(Pageable pageable);
 
