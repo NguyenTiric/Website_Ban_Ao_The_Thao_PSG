@@ -58,7 +58,7 @@
                         <div class="form-group mb-3">
                             <label>Ngày Bắt Đầu</label>
                             <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                                   type="datetime-local" th:field="*{ngayBatDau}" style="height: 50px">
+                                   type="datetime-local" th:field="*{ngayBatDau}" style="height: 50px" readonly>
                             <span th:if="${#fields.hasErrors('ngayBatDau')}" style="color: red; font-size: 13px"
                                   th:errors="*{ngayBatDau}"></span>
                             <th:block th:if="${error}">

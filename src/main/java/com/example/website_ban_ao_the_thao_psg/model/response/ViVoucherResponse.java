@@ -14,6 +14,7 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +27,8 @@ public class ViVoucherResponse {
     private KhachHang khachHang;
     private ChiTietVoucherThuHang chiTietVoucherThuHang;
     private String ma;
+    private LocalDateTime ngayBatDau;
+    private LocalDateTime ngayKetThuc;
     private BigDecimal soTienGiam;
     private BigDecimal giaTriDonHangToiThieu;
     private LocalDate ngayTao;

@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,10 +26,12 @@ import java.time.LocalDate;
 public class CreateDiaChiRequest {
     private Integer id;
     private KhachHang khachHang;
-    @NotBlank(message = "Tên không để trống")
+//    @NotBlank(message = "Tên không để trống")
     private String hoTen;
-    @NotBlank(message = "Số điện thoại không để trống")
-    @Size(min = 0, max = 10, message = "Số điện thoại không vượt quá 10 số")
+//    @NotBlank(message = "Số điện thoại không để trống")
+//    @Size(max = 10,  message = "Số điện thoại không vượt quá 10 số")
+//    @Size(min = 10,  message = "Số điện thoại không được nhỏ hơn 10 số")
+//    @Pattern(regexp = "^[0-9]+$", message = "Số điện thoại chỉ được nhập chữ số")
     private String sdt;
     @NotBlank(message = "Địa chỉ chi tiết không để trống")
     private String diaChiChiTiet;

@@ -53,6 +53,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @Controller
 @RequestMapping("/admin/psg/chi-tiet-san-pham")
 public class  ChiTietSanPhamController {
@@ -96,7 +97,10 @@ public class  ChiTietSanPhamController {
     @Autowired
     CongNgheService congNgheService;
 
-    private void newView(Model model) {
+
+
+    @GetMapping("/view-add")
+    public String viewAdd(Model model) {
         model.addAttribute("sanPham", new CreateSanPhamRequest());
         model.addAttribute("congNghe", new CreateCongNgheRequest());
         model.addAttribute("cauThu", new CreateCauThuRequest());
@@ -124,11 +128,6 @@ public class  ChiTietSanPhamController {
         model.addAttribute("listKichThuoc", kichThuocService.getALl());
         model.addAttribute("listCoAo", coAoService.getAll());
         model.addAttribute("listCtspPending", chiTietSanPhamService.getAllPending());
-    }
-
-    @GetMapping("/view-add")
-    public String viewAdd(Model model) {
-        newView(model);
         return "admin/san_pham/view_add_san_pham";
     }
 
@@ -205,11 +204,45 @@ public class  ChiTietSanPhamController {
     }
 
     @PostMapping("/addSanPham")
-    public String addSanPham(@Valid @ModelAttribute("sanPham") CreateSanPhamRequest createSanPhamRequest, BindingResult result, Model model, @RequestParam("kichThuoc") List<KichThuoc> kichThuocList, @RequestParam("image") MultipartFile[] files) throws IOException, SQLException {
-        if (result.hasErrors()) {
-            newView(model);
+    public String addSanPham(@Valid @ModelAttribute("sanPham") CreateSanPhamRequest createSanPhamRequest, BindingResult result , @RequestParam("kichThuocs") List<KichThuoc> kichThuocList, Model model, @RequestParam("image") MultipartFile[] files) throws IOException, SQLException {
+
+        if(kichThuocList.isEmpty() || kichThuocList==null){
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaa");
+//            model.addAttribute("Vui Lòng Chọn KT","checkKt");
             return "admin/san_pham/view_add_san_pham";
         }
+        if (result.hasErrors()) {
+//            model.addAttribute("sanPham", new CreateSanPhamRequest());
+            model.addAttribute("congNghe", new CreateCongNgheRequest());
+            model.addAttribute("cauThu", new CreateCauThuRequest());
+            model.addAttribute("coAo", new CreateCoAoRequest());
+            model.addAttribute("mauSac", new CreateMauSacRequest());
+            model.addAttribute("chatLieu", new CreateChatLieuRequest());
+            model.addAttribute("thuongHieu", new CreateThuongHieuRequest());
+            model.addAttribute("dongSanPham", new CreateDongSanPhamRequest());
+            model.addAttribute("loaiSanPham", new CreateLoaiSanPhamRequest());
+            model.addAttribute("nhaSanXuat", new CreateNhaSanXuatRequest());
+            model.addAttribute("nuocSanXuat", new CreateNuocSanXuatRequest());
+            model.addAttribute("kichThuoc", new CreateKichThuocRequest());
+            model.addAttribute("anhSanPham", new CreateAnhSanPhamRequest());
+            model.addAttribute("chiTietSanPham", new CreateChiTietSanPhamRequest());
+
+            model.addAttribute("listMauSac", mauSacService.getAll());
+            model.addAttribute("listLoaiSanPham", loaiSanPhamService.getAll());
+            model.addAttribute("listChatLieu", chatLieuService.getAll());
+            model.addAttribute("listThuongHieu", thuongHieuService.getAll());
+            model.addAttribute("listDongSanPham", dongSanPhamService.getAll());
+            model.addAttribute("listCauThu", cauThuService.getAll());
+            model.addAttribute("listNhaSanXuat", nhaSanXuatService.getAll());
+            model.addAttribute("listNuocSanXuat", nuocSanXuatService.getAll());
+            model.addAttribute("listCongNghe", congNgheService.getAll());
+            model.addAttribute("listKichThuoc", kichThuocService.getALl());
+            model.addAttribute("listCoAo", coAoService.getAll());
+            model.addAttribute("listCtspPending", chiTietSanPhamService.getAllPending());
+            return "admin/san_pham/view_add_san_pham";
+        }
+
+
         chiTietSanPhamService.addCtsp(createSanPhamRequest, kichThuocList, files);
         return "redirect:/admin/psg/chi-tiet-san-pham/view-add";
     }
@@ -255,6 +288,38 @@ public class  ChiTietSanPhamController {
 
     @PostMapping("/update-san-pham")
     public String updateSanPham(@Valid @ModelAttribute("sanPham") UpdateSanPhamRequest updateSanPhamRequest, BindingResult result, Model model, @RequestParam("image") MultipartFile[] files, HttpSession session) throws IOException, SQLException {
+        if(result.hasErrors()){
+//            model.addAttribute("sanPham", new updateSanPhamRequest());
+            model.addAttribute("congNghe", new CreateCongNgheRequest());
+            model.addAttribute("cauThu", new CreateCauThuRequest());
+            model.addAttribute("coAo", new CreateCoAoRequest());
+            model.addAttribute("mauSac", new CreateMauSacRequest());
+            model.addAttribute("chatLieu", new CreateChatLieuRequest());
+            model.addAttribute("thuongHieu", new CreateThuongHieuRequest());
+            model.addAttribute("dongSanPham", new CreateDongSanPhamRequest());
+            model.addAttribute("loaiSanPham", new CreateLoaiSanPhamRequest());
+            model.addAttribute("nhaSanXuat", new CreateNhaSanXuatRequest());
+            model.addAttribute("nuocSanXuat", new CreateNuocSanXuatRequest());
+            model.addAttribute("kichThuoc", new CreateKichThuocRequest());
+            model.addAttribute("anhSanPham", new CreateAnhSanPhamRequest());
+            model.addAttribute("chiTietSanPham", new CreateChiTietSanPhamRequest());
+
+            model.addAttribute("listMauSac", mauSacService.getAll());
+            model.addAttribute("listLoaiSanPham", loaiSanPhamService.getAll());
+            model.addAttribute("listChatLieu", chatLieuService.getAll());
+            model.addAttribute("listThuongHieu", thuongHieuService.getAll());
+            model.addAttribute("listDongSanPham", dongSanPhamService.getAll());
+            model.addAttribute("listCauThu", cauThuService.getAll());
+            model.addAttribute("listNhaSanXuat", nhaSanXuatService.getAll());
+            model.addAttribute("listNuocSanXuat", nuocSanXuatService.getAll());
+            model.addAttribute("listCongNghe", congNgheService.getAll());
+            model.addAttribute("listKichThuoc", kichThuocService.getALl());
+            model.addAttribute("listCoAo", coAoService.getAll());
+            model.addAttribute("listAnhSanPham", anhSanPhamService.anhSanPhamResponseList(updateSanPhamRequest.getId()));
+            model.addAttribute("listCtspActive", chiTietSanPhamService.listChiTietSanPhamBySanPham(updateSanPhamRequest.getId()));
+
+            return "admin/san_pham/view_update_san_pham";
+        }
         chiTietSanPhamService.updateSp(updateSanPhamRequest, files);
         session.setAttribute("successMessage", "Cập nhập thành công!");
         return "redirect:/admin/psg/chi-tiet-san-pham/hien-thi";

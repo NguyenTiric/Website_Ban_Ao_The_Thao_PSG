@@ -1,12 +1,16 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
 import com.example.website_ban_ao_the_thao_psg.entity.DiaChi;
+import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateDiaChiRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateDiaChiRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.DiaChiResponse;
+import com.example.website_ban_ao_the_thao_psg.model.response.KhachHangResponse;
 import com.example.website_ban_ao_the_thao_psg.service.DiaChiService;
+import com.example.website_ban_ao_the_thao_psg.service.KhachHangService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.codehaus.groovy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -18,8 +22,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.util.StringUtils;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/admin/psg/dia-chi")
@@ -27,6 +34,9 @@ public class DiaChiController {
 
     @Autowired
     DiaChiService diaChiService;
+
+    @Autowired
+    KhachHangService khachHangService;
 
     @GetMapping("/hien-thi")
     public String hienThi(Model model, HttpSession session) {
@@ -62,24 +72,31 @@ public class DiaChiController {
 
     @GetMapping("/view-update/{id}")
     public String viewUpdate(@PathVariable("id") Integer id, Model model) {
+        List<KhachHangResponse> khachHangList = khachHangService.getAllKhachHangActive();
+        model.addAttribute("khachHangList", khachHangList);
+
         DiaChiResponse diaChiResponse = diaChiService.getOne(id);
         model.addAttribute("diaChi", diaChiResponse);
         return "admin/dia_chi/view_update_dia_chi";
     }
+
     @GetMapping("/view-add")
     public String viewAdd(Model model) {
+        List<KhachHangResponse> khachHangList = khachHangService.getAllKhachHangActive();
+        model.addAttribute("khachHangList", khachHangList);
         model.addAttribute("diaChi", new CreateDiaChiRequest());
         return "admin/dia_chi/view_add_dia_chi";
     }
+
     @PostMapping("/delete/{id}")
-    public String deleteDiaChi(@PathVariable("id") Integer id,HttpSession session) {
+    public String deleteDiaChi(@PathVariable("id") Integer id, HttpSession session) {
         diaChiService.deleteDiaChi(id, LocalDate.now());
         session.setAttribute("successMessage", "Xóa thành công!");
         return "redirect:/admin/psg/dia-chi/hien-thi";
     }
 
     @PostMapping("/revert/{id}")
-    public String revertDiaChi(@PathVariable("id") Integer id,HttpSession session) {
+    public String revertDiaChi(@PathVariable("id") Integer id, HttpSession session) {
         diaChiService.revertDiaChi(id, LocalDate.now());
         session.setAttribute("successMessage", "Khôi phục thành công!");
         return "redirect:/admin/psg/dia-chi/hien-thi";
@@ -87,8 +104,14 @@ public class DiaChiController {
 
     @PostMapping("/add")
     public String add(@Valid @ModelAttribute("diaChi") CreateDiaChiRequest createDiaChiRequest, BindingResult result, Model model, HttpSession session) {
-        if(result.hasErrors()){
-            model.addAttribute("diaChi", createDiaChiRequest);
+        if (StringUtils.isEmpty(createDiaChiRequest.getSdt())) {
+            result.rejectValue("sdt", "field.empty", "Số điện thoại không được để trống");
+        } else if (!Pattern.matches("\\d{10}", createDiaChiRequest.getSdt())) {
+            result.rejectValue("sdt", "field.invalid", "Số điện thoại phải đúng 10 kí tự");
+        }
+        if (result.hasErrors()) {
+            List<KhachHangResponse> khachHangList = khachHangService.getAllKhachHangActive();
+            model.addAttribute("khachHangList", khachHangList);
             return "admin/dia_chi/view_add_dia_chi";
         }
         diaChiService.add(createDiaChiRequest);
@@ -96,9 +119,17 @@ public class DiaChiController {
         System.out.println("loi");
         return "redirect:/admin/psg/dia-chi/hien-thi";
     }
+
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("diaChi") UpdateDiaChiRequest updateDiaChiRequest, BindingResult result, Model model, HttpSession session) {
-        if(result.hasErrors()){
+        if (StringUtils.isEmpty(updateDiaChiRequest.getSdt())) {
+            result.rejectValue("sdt", "field.empty", "Số điện thoại không được để trống");
+        } else if (!Pattern.matches("\\d{10}", updateDiaChiRequest.getSdt())) {
+            result.rejectValue("sdt", "field.invalid", "Số điện thoại phải đúng 10 kí tự");
+        }
+        if (result.hasErrors()) {
+            List<KhachHangResponse> khachHangList = khachHangService.getAllKhachHangActive();
+            model.addAttribute("khachHangList", khachHangList);
             model.addAttribute("diaChi", updateDiaChiRequest);
             return "admin/dia_chi/view_update_dia_chi";
         }
@@ -107,18 +138,19 @@ public class DiaChiController {
         return "redirect:/admin/psg/dia-chi/hien-thi";
     }
 
-        @GetMapping("/searchActive/{pageNo}")
-        public String searchActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchNameOrMa") String searchNameOrMa){
-            model.addAttribute("diaChi", new DiaChi());
-            Page<DiaChiResponse> diaChiResponsePage = diaChiService.searchNameOrMaActive(searchNameOrMa, pageNo, 3);
-            model.addAttribute("size", diaChiResponsePage.getSize());
-            model.addAttribute("totalPages", diaChiResponsePage.getTotalPages());
-            model.addAttribute("currentPage", pageNo);
-            model.addAttribute("listDiaChiActive", diaChiResponsePage);
-            return "admin/dia_chi/trang_chu_dia_chi";
-        }
+    @GetMapping("/searchActive/{pageNo}")
+    public String searchActive(Model model, @PathVariable("pageNo") Integer pageNo, @RequestParam("searchNameOrMa") String searchNameOrMa) {
+        model.addAttribute("diaChi", new DiaChi());
+        Page<DiaChiResponse> diaChiResponsePage = diaChiService.searchNameOrMaActive(searchNameOrMa, pageNo, 3);
+        model.addAttribute("size", diaChiResponsePage.getSize());
+        model.addAttribute("totalPages", diaChiResponsePage.getTotalPages());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("listDiaChiActive", diaChiResponsePage);
+        return "admin/dia_chi/trang_chu_dia_chi";
+    }
+
     @GetMapping("/searchInActive/{pageNo}")
-    public String searchInActive(Model model, @PathVariable("pageNo") Integer pageNo,  @RequestParam("searchNameOrMa") String searchNameOrMa){
+    public String searchInActive(Model model, @PathVariable("pageNo") Integer pageNo, @RequestParam("searchNameOrMa") String searchNameOrMa) {
         model.addAttribute("diaChi", new DiaChi());
         Page<DiaChiResponse> diaChiResponsePage = diaChiService.searchNameOrMaInActive(searchNameOrMa, pageNo, 3);
         model.addAttribute("size", diaChiResponsePage.getSize());

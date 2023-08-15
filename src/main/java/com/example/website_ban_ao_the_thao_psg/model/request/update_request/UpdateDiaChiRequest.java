@@ -27,10 +27,11 @@ public class UpdateDiaChiRequest {
 
     private Integer id;
     private KhachHang khachHang;
-    @NotBlank(message = "Tên không để trống")
+//    @NotBlank(message = "Tên không để trống")
     private String hoTen;
-    @NotBlank(message = "Số điện thoại không để trống")
-    @Size(min = 0, max = 10, message = "Số điện thoại không vượt quá 10 số")
+//    @NotBlank(message = "Số điện thoại không để trống")
+//    @Size(max = 10,  message = "Số điện thoại không vượt quá 10 số")
+//    @Size(min = 10,  message = "Số điện thoại không được nhỏ hơn 10 số")
     private String sdt;
     @NotBlank(message = "Địa chỉ chi tiết không để trống")
     private String diaChiChiTiet;
@@ -42,6 +43,7 @@ public class UpdateDiaChiRequest {
     private String tenPhuongXa;
     private LocalDate ngayTao;
     private LocalDate ngayCapNhap;
+
     @Enumerated(EnumType.STRING)
     private TrangThaiDiaChi trangThai;
 }

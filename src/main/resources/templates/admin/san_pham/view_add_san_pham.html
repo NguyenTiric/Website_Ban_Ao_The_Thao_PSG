@@ -13,7 +13,7 @@
 
     <h2 class="text-center mb-4">Thêm Sản Phẩm</h2>
     <form action="/admin/psg/chi-tiet-san-pham/addSanPham" method="post" th:object="${sanPham}"
-          onsubmit="return confirm('Bạn có thêm không?')" enctype="multipart/form-data">
+           onsubmit="return validateBeforeSubmit()"  enctype="multipart/form-data">
         <div class="card card-custom">
             <div class="card-header flex-wrap border-0 pt-6 pb-0">
                 <div class="row">
@@ -259,13 +259,14 @@
                         </div>
                     </div>
                     <div class="col-9">
-                        <div class="form-group mb-3">
+                        <div id="kichThuocContainer" class="form-group mb-3">
                             <label class="check" th:each="kt:${listKichThuoc}"
                                    style="margin-right: 15px;margin-top: 15px">
-                                <input type="checkbox" th:name="kichThuoc" th:value="${kt.id}"/>
+                                <input type="checkbox" th:name="kichThuocs" th:value="${kt.id}"/>
                                 <span th:text="${kt.ten}"></span>
                             </label>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -279,6 +280,9 @@
                                aria-describedby="inputGroupFileAddon04"
                                aria-label="Upload" required="required" multiple>
                     </div>
+
+
+
                     <div id="previewImages" class="d-flex w-150px h-150px">
                     </div>
                 </div>
@@ -653,6 +657,9 @@
     </div>
 
 </div>
+
+
+
 <script th:inline="javascript">
     function updateSoLuong() {
         var ids = [];

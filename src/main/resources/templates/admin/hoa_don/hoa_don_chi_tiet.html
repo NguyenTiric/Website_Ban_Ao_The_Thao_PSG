@@ -13,7 +13,6 @@
         <div class="card card-custom gutter-b">
             <div class="row">
                 <div class="col-7">
-
                     <div class="card-header flex-wrap border-0 pt-6 pb-0">
                         <h3 class="card-title align-items-start flex-column">
             <span class="card-label font-weight-bolder font-size-h3 text-dark"
@@ -128,17 +127,17 @@
                                             Tổng tiền hàng
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="category_name" class="form-control mb-2"
+                                            <input type="text" name="" class="form-control mb-2"
                                                    disabled th:value="${totalAmount}" id="totalAmount"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="d-flex align-items-center font-weight-bolder">
-                                            Giảm giá
+                                            Giảm giá (%)
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="number" name="category_name" class="form-control mb-2"
-                                                   placeholder="%" id="discountInput"/>
+                                            <input type="text" name="" class="form-control mb-2"
+                                                   placeholder="%" id="discountInput" value="0"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -146,36 +145,47 @@
                                             Voucher
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                                <select class="form-control" id="kt_select2_7" name="param" onchange="reloadVoucher()">
-                                                    <option th:each="vc : ${listVoucher}" th:value="${vc.soTienGiam}">
-                                                        <span th:text="${vc.ma}"></span>
-                                                        -
-                                                        <span th:text="${vc.soTienGiam}"></span>
-                                                        -
-                                                        <span th:text="${vc.giaTriDonHangToiThieu}"></span>
-                                                    </option>
-                                                </select>
+                                            <select class="form-control" name="param" id="kt_select2_7">
+                                                <option value="0" selected>Chọn voucher</option>
+                                                <option th:each="vc : ${listVoucher}" th:value="${vc.soTienGiam}">
+                                                    <span th:text="${vc.ma}"></span>
+                                                    -
+                                                    <span th:text="${vc.soTienGiam}"></span>
+                                                    -
+                                                    <span th:text="${vc.giaTriDonHangToiThieu}"></span>
+                                                </option>
+                                            </select>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center font-weight-bolder">
-                                            Khách cần trả
-                                        </td>
-                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="number" name="category_name" class="form-control mb-2"
-                                                   disabled placeholder="Thành tiền" id="customerPayment"/>
-                                        </td>
-                                    </tr>
+
                                     <tr>
                                         <td class="d-flex align-items-center font-weight-bolder">
                                             Phương thức thanh toán
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <select class="form-control" name="param">
+                                            <select class="form-control" name="param" id="phuongThucThanhToan">
                                                 <option value="">Chọn hình thức thanh toán</option>
                                                 <option th:each="pttt : ${phuongThucThanhToan}"
                                                         th:value="${pttt.ten}" th:text="${pttt.moTa} "></option>
                                             </select>
+                                        </td>
+                                    </tr>
+                                    <tr id="tienChuyenKhoanSection">
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Tiền chuyển khoản:
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="" class="form-control"
+                                                   placeholder="Tiền chuyển khoản" value=""/>
+                                        </td>
+                                    </tr>
+                                    <tr id="maGiaDichSection">
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Mã giao dịch:
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="" class="form-control"
+                                                   placeholder="Mã giao dịch" value=""/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -185,52 +195,81 @@
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
                                             <div class="radio-inline">
                                                 <label class="radio radio-primary">
-                                                    <input type="radio" name="radios11"  checked="checked" value="ACTIVE"  id="taiQuayRadio"/>
+                                                    <input type="radio" name="radios11" checked="checked" value="ACTIVE"
+                                                           id="taiQuayRadio"/>
                                                     <span></span>
                                                     Tại quầy
                                                 </label>
                                                 <label class="radio radio-primary">
-                                                    <input type="radio" name="radios11" value="INACTIVE" id="giaoHangRadio"/>
+                                                    <input type="radio" name="radios11" value="INACTIVE"
+                                                           id="giaoHangRadio"/>
                                                     <span></span>
                                                     Giao hàng
                                                 </label>
                                             </div>
                                         </td>
                                     </tr>
-<!--                                    <tr id="diaChiSection">-->
-<!--                                        <td class="d-flex align-items-center font-weight-bolder">-->
-<!--                                            Địa chỉ:-->
-<!--                                        </td>-->
-<!--                                        <td class="text-right align-middle font-weight-bolder font-size-h5">-->
-<!--                                                <div class="form-group row">-->
-<!--                                                    <div class="col-lg-12">-->
-<!--                                                        <label>Address 2:</label>-->
-<!--                                                        <input type="text" name="billing_address_2" class="form-control" placeholder="" value=""/>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="form-group row">-->
-<!--                                                    <div class="col-lg-5">-->
-<!--                                                        <label>* City:</label>-->
-<!--                                                        <input type="text" class="form-control" name="billing_city" placeholder="" value=""/>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="col-lg-5">-->
-<!--                                                        <label>* State:</label>-->
-<!--                                                        <input type="text" class="form-control" name="billing_state" placeholder="" value=""/>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="col-lg-2">-->
-<!--                                                        <label>* ZIP:</label>-->
-<!--                                                        <input type="text" class="form-control" name="billing_zip" placeholder="" value=""/>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
+                                    <tr id="diaChiSection">
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Địa chỉ:
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="" class="form-control"
+                                                   placeholder="địa chỉ" value=""/>
+                                        </td>
+                                    </tr>
+                                    <tr id="tienShipSection">
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Tiền ship:
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="" id="tienShip" class="form-control"
+                                                   placeholder="Tiền ship" value="0"/>
+                                        </td>
+                                    </tr>
+                                    <tr id="tenNguoiNhanSection">
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Tên người nhận:
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="" class="form-control"
+                                                   placeholder="Tên người nhận" value=""/>
+                                        </td>
+                                    </tr>
+                                    <tr id="sdtNguoiNhanSection">
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Số điện thoại người nhận:
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="text" name="" class="form-control"
+                                                   placeholder="Số điện thoại người nhận" value=""/>
+                                        </td>
+                                    </tr>
+                                    <tr id="ngayMuonNhanSection">
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Ngày muốn nhận hàng:
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="date" name="" class="form-control"
+                                                   placeholder="Ngày muốn nhận hàng" value=""/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center font-weight-bolder">
+                                            Khách cần trả
+                                        </td>
+                                        <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                            <input type="number" name="" class="form-control mb-2"
+                                                   disabled placeholder="Thành tiền" id="customerPayment"/>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td class="d-flex align-items-center font-weight-bolder">
                                             Tiền mặt khách trả
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="category_name" class="form-control mb-2"
-                                                   placeholder="Tiền mặt khách trả" value=""/>
+                                            <input type="text" name="" id="tienMatKhachTra" class="form-control mb-2"
+                                                   placeholder="Tiền mặt khách trả" value="0"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -238,13 +277,13 @@
                                             Tiền thừa
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="category_name" class="form-control mb-2"
-                                                   placeholder="Tiền thừa" value=""/>
+                                            <input type="text" name="" id="tienThua" class="form-control mb-2"
+                                                   placeholder="Tiền thừa" value="0"/>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-primary w-100 mb-5" type="submit">Thanh Toán</button>
+                                <button class="btn btn-primary mb-5" type="submit">Thanh Toán</button>
                             </form>
                         </div>
                     </div>
