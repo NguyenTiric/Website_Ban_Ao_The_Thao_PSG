@@ -19,11 +19,10 @@
             <form action="/admin/psg/dia-chi/add" th:object="${diaChi}" method="post"
                   onsubmit="return  confirm('Bạn có thêm không?')">
                 <div class="form-group mb-3">
-                    <label class="form-label" style="margin-left: 10px;font-size: 14px">Nhập Tên</label>
-                    <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                           type="text" placeholder="Nhập tên" th:field="*{hoTen}" style="height: 50px">
-                    <span th:if="${#fields.hasErrors('hoTen')}" style="color: red; font-size: 13px"
-                          th:errors="*{hoTen}"></span>
+                    <label class="form-label" style="margin-left: 10px;font-size: 14px">Chọn Khách Hàng</label>
+                        <select class="form-control custom-shadow custom-radius border-0 bg-white"  th:field="*{khachHang}" style="height: 50px">
+                            <option th:each="kh : ${khachHangList}" th:value="${kh.id}" th:text="${kh.ten}"></option>
+                        </select>
                 </div>
                 <div class="form-group mb-3">
                     <label class="form-label" style="margin-left: 10px;font-size: 14px">Nhập Số Điện Thoại</label>

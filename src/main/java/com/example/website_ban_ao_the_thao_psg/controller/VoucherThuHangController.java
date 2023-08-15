@@ -128,10 +128,6 @@ public class VoucherThuHangController {
             model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
             return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
         }
-//        if (ngayBatDau.isAfter(now)) {
-//            model.addAttribute("error", "Ngày bắt đầu không được đặt trong tương lai!");
-//            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
-//        }
         if (ngayBatDau.isAfter(now)) {
             createVoucherThuHangRequest.setTrangThai(ApplicationConstant.TrangThaiVoucher.PENDING);
         } else if (ngayBatDau.isEqual(now) || ngayBatDau.isBefore(now)) {
@@ -155,34 +151,26 @@ public class VoucherThuHangController {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime ngayKetThuc = updateVoucherThuHangRequest.getNgayKetThuc();
         LocalDateTime ngayBatDau = updateVoucherThuHangRequest.getNgayBatDau();
-        LocalDate localDateTimecz = now.toLocalDate();
 
         if (ngayBatDau == null || ngayKetThuc == null) {
             model.addAttribute("error", "Ngày bắt đầu hoặc ngày kết thúc không được để trống!");
-            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
+            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
         }
-
-        LocalDate batDauDate = ngayBatDau.toLocalDate();
-        LocalDate ketThucDate = ngayKetThuc.toLocalDate();
-
-        if (batDauDate.isBefore(localDateTimecz) || ketThucDate.isBefore(localDateTimecz)) {
-            model.addAttribute("error", "Ngày bắt đầu hoặc ngày kết thúc không được là ngày trong quá khứ!");
-            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
-        }
-
-        if (ngayKetThuc.isBefore(now)) {
-            model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày hiện tại!");
-            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
-        }
-
+//        if (ngayKetThuc.isBefore(now)) {
+//            model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày hiện tại!");
+//            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
+//        }
         if (ngayKetThuc.isBefore(ngayBatDau)) {
             model.addAttribute("error", "Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
-            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
+            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
         }
-
+//        if (ngayBatDau.isBefore(now) ) {
+//            model.addAttribute("error", "Ngày bắt đầu không được là ngày trong quá khứ!");
+//            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
+//        }
         if (result.hasErrors()) {
             model.addAttribute("voucherThuHang", updateVoucherThuHangRequest);
-            return "admin/voucher_thu_hang/view_add_voucher_thu_hang";
+            return "admin/voucher_thu_hang/view_update_voucher_thu_hang";
         }
         voucherThuHangService.update(updateVoucherThuHangRequest);
         session.setAttribute("successMessage", "Cập nhập thành công!");
