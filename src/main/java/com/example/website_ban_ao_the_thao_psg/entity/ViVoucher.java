@@ -21,6 +21,7 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,6 +47,12 @@ public class ViVoucher {
 
     @Column(name = "ma")
     private String ma;
+
+    @Column(name = "ngay_bat_dau")
+    private LocalDateTime ngayBatDau;
+
+    @Column(name = "ngay_ket_thuc")
+    private LocalDateTime ngayKetThuc;
 
     @Column(name = "so_tien_giam")
     private BigDecimal soTienGiam;

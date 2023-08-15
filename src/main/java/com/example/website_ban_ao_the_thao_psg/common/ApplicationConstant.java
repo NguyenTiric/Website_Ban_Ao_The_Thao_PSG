@@ -278,7 +278,12 @@ public class ApplicationConstant {
 
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     public enum HinhThucThanhToan {
-        CASH("CASH", "Tiền mặt", "success"), BANKING("BANKING", "Chuyển khoản", "primary");
+
+        CASH("CASH", "Tiền mặt", "success"),
+
+        BANKING("BANKING", "Chuyển khoản", "primary"),
+
+        COD("COD", "Thanh toán khi nhận hàng", "primary");
 
         private final String ten;
         private final String moTa;

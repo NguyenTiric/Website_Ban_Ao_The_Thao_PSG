@@ -17,14 +17,20 @@
     <link th:href="@{/assets/css/plugins.bundle.css}" rel="stylesheet">
     <link th:href="@{/assets/css/style.bundle.css}" rel="stylesheet">
     <link th:href="@{/assets/css/style.bundle5883.css}" rel="stylesheet">
-
+    <style>
+        #diaChiSection,
+        #tienShipSection,
+        #tienChuyenKhoanSection,
+        #tenNguoiNhanSection,
+        #sdtNguoiNhanSection,
+        #ngayMuonNhanSection,
+        #maGiaDichSection {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-
-
 <div class="mt-4">
-
-
     <div class="inline-block-container">
         <div class="row">
             <div class="col-11">
@@ -278,6 +284,8 @@
     </div>
 
 </div>
+
+
 <script th:inline="javascript">
     /*<![CDATA[*/
     function updateHoaDonKhachHang() {
@@ -296,56 +304,131 @@
 
     /*]]>*/
 </script>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    function reloadVoucher() {
-        var hoaDonId = [[${hoaDon.id}]];
-        $.ajax({
-            url: '/admin/psg/hoa-don/admin/psg/hoa-don/detail-hoa-don/' + hoaDonId,
-            type: 'GET',
-            success: function (data) {
-            },
-            error: function (xhr, status, error) {
-                // Xử lý lỗi nếu có
-            }
-        });
-    }
-    /*]]>*/
-</script>
-<script th:inline="javascript">
-    const discountInput = document.getElementById('discountInput');
-    const totalAmountInput = document.getElementById('totalAmount');
-    const voucherSelect = document.getElementById('kt_select2_7');
-    const customerPaymentInput = document.getElementById('customerPayment');
 
-    // Bắt sự kiện khi người dùng nhập phần trăm giảm giá
-    discountInput.addEventListener('input', updateCustomerPayment);
+<script th:inline="javascript">
+    const totalAmount = /*[[${totalAmount}]]*/;
 
-    function updateCustomerPayment() {
-        let discount = parseFloat(discountInput.value);
-        const totalAmount = parseFloat(totalAmountInput.value);
+    function calculateCustomerPayment() {
+        const discountInput = document.getElementById("discountInput");
+        const discount = parseFloat(discountInput.value);
+
+        const tienShipInput = document.getElementById("tienShip");
+        const tienShip = parseFloat(tienShipInput.value);
+
+        const voucherSelect = document.getElementById("kt_select2_7");
         const voucherSelectValue = parseFloat(voucherSelect.value);
 
         // Hạn chế giá trị phần trăm giảm giá trong khoảng từ 0 đến 100
-        if (isNaN(discount) || discount < 0) {
-            discount = 0;
+        if (discount < 0) {
+            discountInput.value = "0";
         } else if (discount > 100) {
-            discount = 100;
+            discountInput.value = "100";
+        } else {
+            discountInput.value = discount.toFixed(2);
         }
 
-        // Cập nhật giá trị trong ô input phần trăm giảm giá
-        discountInput.value = discount.toFixed(2);
+        if (isNaN(tienShip) || tienShip < 0) {
+            tienShipInput.value = "0";
+        } else {
+            tienShipInput.value  = tienShip.toFixed(2);
+        }
 
-        // Thực hiện tính toán và cập nhật giá trị trong ô input "Tiền khách hàng trả"
+        // Thực hiện tính toán và cập nhật giá trị trong ô input "Khách cần trả"
         const discountAmount = (discount / 100) * totalAmount;
-        const customerPayment = totalAmount - discountAmount - voucherSelectValue;
+        const customerPayment = totalAmount - discountAmount - tienShip - voucherSelectValue;
 
         // Đảm bảo số tiền khách trả không âm
         const finalCustomerPayment = Math.max(0, customerPayment);
 
+        const customerPaymentInput = document.getElementById("customerPayment");
         customerPaymentInput.value = finalCustomerPayment.toFixed(2);
     }
+
+    // Gắn sự kiện lắng nghe vào các phần tử
+    const discountInput = document.getElementById("discountInput");
+    discountInput.addEventListener("input", calculateCustomerPayment);
+
+    const tienShip = document.getElementById("tienShip");
+    tienShip.addEventListener("input", calculateCustomerPayment);
+
+    const voucherSelect = document.getElementById("kt_select2_7");
+    voucherSelect.addEventListener("change", calculateCustomerPayment);
+    // Gọi hàm tính toán lần đầu khi trang được tải
+    calculateCustomerPayment();
 </script>
+
+<script th:inline="javascript">
+    const taiQuayRadio = document.getElementById("taiQuayRadio");
+    const giaoHangRadio = document.getElementById("giaoHangRadio");
+    const diaChiSection = document.getElementById("diaChiSection");
+    const tienShipSection = document.getElementById("tienShipSection");
+    const tenNguoiNhanSection = document.getElementById("tenNguoiNhanSection");
+    const sdtNguoiNhanSection = document.getElementById("sdtNguoiNhanSection");
+    const ngayMuonNhanSection = document.getElementById("ngayMuonNhanSection");
+    const phuongThucThanhToan = document.getElementById("phuongThucThanhToan");
+    const tienChuyenKhoanSection = document.getElementById("tienChuyenKhoanSection");
+    const maGiaDichSection = document.getElementById("maGiaDichSection");
+    const tienMatKhachTra = document.getElementById("tienMatKhachTra");
+    const tienThua = document.getElementById("tienThua");
+
+    taiQuayRadio.addEventListener("change", function () {
+        diaChiSection.style.display = "none";
+        tienShipSection.style.display = "none";
+        tenNguoiNhanSection.style.display = "none";
+        ngayMuonNhanSection.style.display = "none";
+        sdtNguoiNhanSection.style.display = "none";
+    });
+
+    giaoHangRadio.addEventListener("change", function () {
+        diaChiSection.style.display = "table-row";
+        tienShipSection.style.display = "table-row";
+        tenNguoiNhanSection.style.display = "table-row";
+        ngayMuonNhanSection.style.display = "table-row";
+        sdtNguoiNhanSection.style.display = "table-row";
+    });
+
+    phuongThucThanhToan.addEventListener("change", function () {
+        const selectedValue = phuongThucThanhToan.value;
+        const isBanking = selectedValue === "BANKING";
+        const isCOD = selectedValue === "COD";
+        const isCASH = selectedValue === "CASH";
+
+        tienChuyenKhoanSection.style.display = isBanking ? "table-row" : "none";
+        maGiaDichSection.style.display = isBanking ? "table-row" : "none";
+
+        if (isCOD) {
+            giaoHangRadio.checked = true;
+            giaoHangRadio.disabled = false;
+            diaChiSection.style.display = "table-row";
+            tienShipSection.style.display = "table-row";
+            tenNguoiNhanSection.style.display = "table-row";
+            ngayMuonNhanSection.style.display = "table-row";
+            sdtNguoiNhanSection.style.display = "table-row";
+            tienThua.disabled = true;
+            tienMatKhachTra.disabled = true;
+            taiQuayRadio.disabled = true;
+        } else if (isCASH) {
+            giaoHangRadio.checked = false;
+            giaoHangRadio.disabled = true;
+            diaChiSection.style.display = "none";
+            tienShipSection.style.display = "none";
+            tenNguoiNhanSection.style.display = "none";
+            ngayMuonNhanSection.style.display = "none";
+            sdtNguoiNhanSection.style.display = "none";
+            tienThua.disabled = false;
+            tienMatKhachTra.disabled = false;
+            taiQuayRadio.disabled = true;
+            taiQuayRadio.checked = true;
+        } else {
+            giaoHangRadio.disabled = false;
+            taiQuayRadio.disabled = false;
+            tienThua.disabled = false;
+            tienMatKhachTra.disabled = false;
+        }
+    });
+</script>
+
+
 <script th:src="@{/assets/js/plugins.bundle5883.js}"></script>
 <script th:src="@{/assets/js/plugins.bundle.js}"></script>
 <script th:src="@{/assets/js/select25883.js}"></script>
