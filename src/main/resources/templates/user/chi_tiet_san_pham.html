@@ -4,8 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .size-selector-button:active .size-text {
+            color: black; /* Đổi màu văn bản thành đen khi được nhấn */
+        }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.size-selector-button').on('click', function() {
+                // Xóa lớp 'selected' khỏi tất cả các nút
+                $('.size-selector-button').removeClass('selected');
+
+                // Thêm lớp 'selected' vào nút được nhấn
+                $(this).addClass('selected');
+
+                // Cập nhật thuộc tính aria-checked để phù hợp với trạng thái nút đã chọn
+                $('.size-selector-button').attr('aria-checked', 'false');
+                $(this).attr('aria-checked', 'true');
+
+                // Cập nhật nội dung của legend với kích thước được chọn
+                var selectedSize = $(this).find('.size-text').text();
+                $('#selectedSizeLabel').text('Size :' + selectedSize);
+            });
+        });
+
+    </script>
 </head>
 <body>
+
 <div class="layout-column" data-trk-id="c1" layout:fragment="content_user">
     <div class="layout-row pdp-style-breadcrumbs pdp-breadcrumbs" data-trk-id="pdp-breadcrumbs">
         <div class="breadcrumb-promo-container">
@@ -78,12 +106,13 @@
                 </div>
             </div>
         </div>
-        <div class="layout-column large-4 medium-6 small-12" data-trk-id="c2">
+        <div  class="layout-column large-4 medium-6 small-12" data-trk-id="c2">
             <div class="layout-row">
                 <div class="product-title-container">
                     <h1 style="color: black">
-                        Paris Saint-Germain Nike Home Stadium Shirt 2023-24 - Womens
-                        with Neymar Jr 10 printing
+                        <span ></span>
+                        <!--                        Paris Saint-Germain Nike Home Stadium Shirt 2023-24 - Womens-->
+                        <!--                        with Neymar Jr 10 printing-->
                     </h1>
                 </div>
             </div>
@@ -93,150 +122,70 @@
                         <div class="price-row">
                     <span class="lowest"
                     ><span class="price"
-                    >Your Price:
+                    >Giá:
                         <span class="money-value"
-                        ><span class="sr-only">€112.99</span
-                        ><span aria-hidden="true"
-                        ><sup>€</sup><span>112</span><sup>99</sup></span
-                        > </span
-                        ><span class="suffix nodiscountpricetext"></span
+                        ><span class="sr-only"></span
+                        >
+                            <span></span>
+                         </span
+                         ><span class="suffix nodiscountpricetext"></span
                         ></span>
                     </span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="layout-row pdp-buy-box" data-trk-id="pdp-buy-box">
+            <div  class="layout-row pdp-buy-box" data-trk-id="pdp-buy-box">
                 <div>
-                    <div class="pdp-buy-box-container">
+                    <div class="pdp-buy-box-container" >
                         <div class="buy-box-size-selector">
                             <div class="size-selector-container" role="radiogroup">
                                 <div class="size-selector-header">
-                                    <legend class="size-selector-label">Size</legend>
+                                    <legend class="size-selector-label" id="selectedSizeLabel">Size:</legend>
+
                                 </div>
-                                <div class="size-selector-list" id="size-selector-list">
-                                    <a
-                                            href="#"
-                                            data-trk-id="size-m"
-                                            data-talos="buttonSize"
-                                            class="size-selector-button available"
-                                            aria-label="Size M"
-                                            role="radio"
-                                    >
-                                        <div class="size-text">M</div>
-                                    </a>
-                                    <a
-                                            href="#"
-                                            data-trk-id="size-s"
-                                            data-talos="buttonSize"
-                                            class="size-selector-button available"
-                                            aria-label="Size S"
-                                            role="radio"
-                                    >
-                                        <div class="size-text">S</div>
-                                    </a>
-                                    <a
-                                            href="#"
-                                            data-trk-id="size-l"
-                                            data-talos="buttonSize"
-                                            class="size-selector-button available"
-                                            aria-label="Size L"
-                                            role="radio"
-                                    >
-                                        <div class="size-text">L</div>
-                                    </a>
-                                    <a
-                                            href="#"
-                                            data-trk-id="size-xl"
-                                            data-talos="buttonSize"
-                                            class="size-selector-button available"
-                                            aria-label="Size XL"
-                                            role="radio"
-                                    >
-                                        <div class="size-text">XL</div>
-                                    </a>
-                                </div>
+<!--                                <div th:each="ctsp:${listChiTietSanPham}">-->
+                                    <div class="size-selector-list" id="size-selector-list">
+                                        <div th:each="kt:${listChiTietSanPham}"  class="size-selector-button available" data-trk-id="size-m" data-talos="buttonSize" role="radio" aria-checked="false">
+                                            <div class="size-text" th:text="${kt.kichThuoc.ten}"></div>
+                                        </div>
+                                    </div>
+<!--                                </div>-->
+
+
+
                             </div>
                         </div>
                         <div class="buy-box-add-to-cart-container">
                             <div class="buy-box-quantity-buttons-container">
                                 <div class="buy-box-quantity">
                                     <div class="product-quantity-container">
-                                        <span class="quantity-title">Quantity</span>
-                                        <div
-                                                class="field-wrapper drop-down qty-dropdown more-item-separator"
-                                        >
-                                            <div
-                                                    tabindex="0"
-                                                    aria-label="Quantity"
-                                                    role="button"
-                                                    aria-haspopup="listbox"
-                                                    aria-expanded="false"
-                                                    data-talos="ddItemQty"
-                                                    class="field-wrapper-item label-up"
-                                            >
+                                        <label for="quantityInput" class="quantity-title">Quantity</label>
+                                        <div class="field-wrapper drop-down qty-dropdown more-item-separator">
+                                            <div tabindex="0" aria-label="Quantity" role="button" aria-haspopup="listbox" aria-expanded="false" data-talos="ddItemQty" class="field-wrapper-item label-up">
                                                 <div class="field-wrapper-children">
-                                                    <input
-                                                            type="hidden"
-                                                            name="Quantity"
-                                                            value="1"
-                                                    />
-                                                    <div
-                                                            class="drop-down-selected"
-                                                            data-talos="ddItemQty"
-                                                            aria-hidden="true"
-                                                    >
-                                                        1<i
-                                                            class="icon icon-drop-down"
-                                                            role="presentation"
-                                                    ></i>
-                                                    </div>
-                                                    <span></span>
-                                                    <div class="select-wrapper">
-                                                        <label class="label-Quantity" for="Quantity"
-                                                        >Quantity</label
-                                                        ><select
-                                                            name="Quantity"
-                                                            id="Quantity"
-                                                            class="hidden"
-                                                            tabindex="-1"
-                                                    >
-                                                        <option selected="" value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                        <option value="9">9</option>
-                                                        <option value="10">10+</option>
-                                                    </select>
-                                                    </div>
+                                                    <input type="number" id="quantityInput" name="Quantity" value="1" style="height: 40px;" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="buy-box-actions">
+                                <div class="buy-box-actions" style="display: none;">
                                     <div class="buy-box-add-to-cart">
-                                        <div>
-                                            <div class="add-to-cart-container">
-                                                <button
-                                                        class="button large primary false"
-                                                        data-talos="buttonAddToCart"
-                                                        data-trk-id="add-to-cart"
-                                                >
-                                <span class="balance l"></span
-                                ><span>Add to Cart</span
-                                                ><span class="balance r"></span>
-                                                </button>
-                                            </div>
+                                        <div class="add-to-cart-container">
+                                            <button class="button large primary false" data-talos="buttonAddToCart" data-trk-id="add-to-cart">
+                                                <span class="balance l"></span>
+                                                <span>Add to Cart</span>
+                                                <span class="balance r"></span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>

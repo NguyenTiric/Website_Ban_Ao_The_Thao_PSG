@@ -1,7 +1,6 @@
 package com.example.website_ban_ao_the_thao_psg.model.response;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
-import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.TrangThaiSanPham;
 import com.example.website_ban_ao_the_thao_psg.entity.KichThuoc;
 import com.example.website_ban_ao_the_thao_psg.entity.SanPham;
 import jakarta.persistence.EnumType;

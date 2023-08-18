@@ -14,6 +14,8 @@ import lombok.ToString;
 
 import java.sql.Blob;
 import java.time.LocalDate;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -25,6 +27,7 @@ public class AnhSanPhamResponse {
     private SanPham sanPham;
     @Lob
     private Blob ten;
+
     private LocalDate ngayTao;
     private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
