@@ -120,9 +120,6 @@
                                                                         src="../../../assets/media/avatars/300-3.jpg"
                                                                 />
                                                             </div>
-                                                            <!--end::Avatar-->
-
-                                                            <!--begin::Username-->
                                                             <div class=" flex-column">
                                                                 <div class="fw-bold  align-items-center fs-5">
                                                                     Robert Fox
@@ -131,7 +128,6 @@
                                                                     >Pro</span
                                                                     >
                                                                 </div>
-
                                                                 <a
                                                                         href="#"
                                                                         class="fw-semibold text-muted text-hover-primary fs-7"
@@ -139,16 +135,9 @@
                                                                     robert@kt.com
                                                                 </a>
                                                             </div>
-                                                            <!--end::Username-->
                                                         </div>
                                                     </div>
-                                                    <!--end::Menu item-->
-
-                                                    <!--begin::Menu separator-->
                                                     <div class="separator my-2"></div>
-                                                    <!--end::Menu separator-->
-
-                                                    <!--begin::Menu item-->
                                                     <div class="menu-item px-5">
                                                         <a
                                                                 href="#"
@@ -319,18 +308,18 @@
         const voucherSelectValue = parseFloat(voucherSelect.value);
 
         // Hạn chế giá trị phần trăm giảm giá trong khoảng từ 0 đến 100
-        if (discount < 0) {
+        if (isNaN(discount) || discount < 0) {
             discountInput.value = "0";
         } else if (discount > 100) {
             discountInput.value = "100";
         } else {
-            discountInput.value = discount.toFixed(2);
+            // discountInput.value = discount.toFixed(2);
         }
 
         if (isNaN(tienShip) || tienShip < 0) {
             tienShipInput.value = "0";
         } else {
-            tienShipInput.value  = tienShip.toFixed(2);
+            // tienShipInput.value = tienShip.toFixed(2);
         }
 
         // Thực hiện tính toán và cập nhật giá trị trong ô input "Khách cần trả"
@@ -397,28 +386,29 @@
         maGiaDichSection.style.display = isBanking ? "table-row" : "none";
 
         if (isCOD) {
-            giaoHangRadio.checked = true;
-            giaoHangRadio.disabled = false;
+            // giaoHangRadio.value = "INACTIVE";
+            // giaoHangRadio.checked = true;
+            // giaoHangRadio.disabled = false;
             diaChiSection.style.display = "table-row";
             tienShipSection.style.display = "table-row";
             tenNguoiNhanSection.style.display = "table-row";
             ngayMuonNhanSection.style.display = "table-row";
             sdtNguoiNhanSection.style.display = "table-row";
-            tienThua.disabled = true;
-            tienMatKhachTra.disabled = true;
-            taiQuayRadio.disabled = true;
+            // tienThua.disabled = true;
+            // tienMatKhachTra.disabled = true;
+            // taiQuayRadio.disabled = true;
         } else if (isCASH) {
-            giaoHangRadio.checked = false;
-            giaoHangRadio.disabled = true;
+            // giaoHangRadio.checked = false;
+            // giaoHangRadio.disabled = true;
             diaChiSection.style.display = "none";
             tienShipSection.style.display = "none";
             tenNguoiNhanSection.style.display = "none";
             ngayMuonNhanSection.style.display = "none";
             sdtNguoiNhanSection.style.display = "none";
-            tienThua.disabled = false;
-            tienMatKhachTra.disabled = false;
-            taiQuayRadio.disabled = true;
-            taiQuayRadio.checked = true;
+            // tienThua.disabled = false;
+            // tienMatKhachTra.disabled = false;
+            // taiQuayRadio.disabled = true;
+            // taiQuayRadio.checked = true;
         } else {
             giaoHangRadio.disabled = false;
             taiQuayRadio.disabled = false;
@@ -427,8 +417,57 @@
         }
     });
 </script>
+<script th:inline="javascript" th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"
+        integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:inline="javascript">
 
-
+    const host = "https://provinces.open-api.vn/api/";
+    var callAPI = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data, "province");
+            });
+    }
+    callAPI('https://provinces.open-api.vn/api/?depth=1');
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.districts, "district");
+            });
+    }
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.wards, "ward");
+            });
+    }
+    var renderData = (array, select) => {
+        let row = '';
+        array.forEach(element => {
+            row += `<option value="${element.code}">${element.name}</option>`;
+        });
+        document.querySelector("#" + select).innerHTML = row;
+    }
+    $("#province").change(() => {
+        callApiDistrict(host + "p/" + $("#province").val() + "?depth=2");
+        printResult();
+    });
+    $("#district").change(() => {
+        callApiWard(host + "d/" + $("#district").val() + "?depth=2");
+        printResult();
+    });
+    $("#ward").change(() => {
+        printResult();
+    })
+    var printResult = () => {
+        var provinceName = $("#province option:selected").text();
+        var districtName = $("#district option:selected").text();
+        var wardName = $("#ward option:selected").text();
+        $("#diaChiInput").val(wardName+', '+districtName+', '+provinceName)
+    }
+</script>
 <script th:src="@{/assets/js/plugins.bundle5883.js}"></script>
 <script th:src="@{/assets/js/plugins.bundle.js}"></script>
 <script th:src="@{/assets/js/select25883.js}"></script>

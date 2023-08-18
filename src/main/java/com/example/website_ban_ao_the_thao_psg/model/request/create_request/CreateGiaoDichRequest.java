@@ -35,7 +35,8 @@ public class CreateGiaoDichRequest {
     @Enumerated(EnumType.STRING)
     private HinhThucThanhToan phuongThucThanhToan;
     private LocalDate ngayTao;
-    private BigDecimal soTien;
+    private BigDecimal soTienChuyenKhoan;
+    private BigDecimal soTienMat;
     private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
     private LoaiGiaoDich loaiGiaoDich;

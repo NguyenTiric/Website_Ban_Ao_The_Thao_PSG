@@ -6,8 +6,11 @@ import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant.HinhTh
 import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
 import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.entity.NhanVien;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +37,8 @@ public class GiaoDichResponse {
     @Enumerated(EnumType.STRING)
     private HinhThucThanhToan phuongThucThanhToan;
     private LocalDate ngayTao;
-    private BigDecimal soTien;
+    private BigDecimal soTienChuyenKhoan;
+    private BigDecimal soTienMat;
     private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
     private LoaiGiaoDich loaiGiaoDich;

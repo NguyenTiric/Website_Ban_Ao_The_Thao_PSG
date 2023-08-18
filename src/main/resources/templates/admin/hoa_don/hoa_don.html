@@ -7,12 +7,12 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-    .badge-light-success {
-        color: #d9b115;
-        background-color: #e8fff3;
-    }
-</style>
+    <style>
+        .badge-light-success {
+            color: #d9b115;
+            background-color: #e8fff3;
+        }
+    </style>
 </head>
 <body>
 <script>
@@ -30,7 +30,8 @@
                             <form class="d-flex" role="search" action="/admin/psg/hoa-don/searchHoaDon/0" method="get">
                                 <input name="pathSearch"
                                        class="form-control custom-shadow custom-radius border-0 bg-white"
-                                       type="search"  placeholder="Tìm Theo Tên và Số Điện Thoại" aria-label="Search">
+                                       type="search" placeholder="Tìm Theo Tên và Số Điện Thoại"
+                                       aria-label="Search">
                                 <button class="btn btn-rounded btn-primary" type="submit" style="margin-left: 7px">
                                     Search
                                 </button>
@@ -70,9 +71,10 @@
                     <div class="col-4">
                         <label style="margin-top: 7px;">Trạng thái</label>
                     </div>
-                    <div class="col-8" >
-                        <form action="/admin/psg/hoa-don/loadTrangThaiHd/0" method="get"   >
-                            <select class="form-select custom-shadow custom-radius border-0 bg-white" name="selectedTrangThai" onchange="onsubmit()" >
+                    <div class="col-8">
+                        <form action="/admin/psg/hoa-don/loadTrangThaiHd/0" method="get">
+                            <select class="form-select custom-shadow custom-radius border-0 bg-white"
+                                    name="selectedTrangThai" onchange="onsubmit()">
                                 <option th:each="enumValue : ${trangThaiHD}"
                                         th:value="${enumValue}"
                                         th:text="${enumValue.getMoTa()}">
@@ -138,7 +140,7 @@
                             <th scope="col">Ngày Tạo</th>
                             <th scope="col">Tổng Tiền</th>
                             <th scope="col">Trạng Thái</th>
-<!--                            <th scope="col">Hành Động</th>-->
+                                                        <th scope="col">Hành Động</th>
 
                         </tr>
                         </thead>
@@ -157,31 +159,29 @@
                                     <span th:text="${hd.getTrangThai().getMoTa()}"></span>
                                 </div>
                             </td>
-
-
-<!--                            <td>-->
-<!--                                <span>-->
-<!--                                      <a th:href="@{/admin/psg/hoa-don/detail/{id}(id=${hd.id})}"-->
-<!--                                         class="btn waves-effect waves-light btn-rounded btn-warning"-->
-<!--                                      >Detail</a>-->
-<!--                      </span>-->
-<!--                            </td>-->
+                            <td>
+                                <span>
+                                      <a th:href="@{/admin/psg/hoa-don/lich-su-hoa-don/{idHd}(idHd=${hd.id})}"
+                                         class="btn waves-effect waves-light btn-rounded btn-warning"
+                                      >Detail</a>
+                      </span>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item" th:if="${currentPage !=0}">
-                                <a class="page-link" th:href="@{'/admin/psg/hoa-don/page/'+${ currentPage - 1}}">Previous</a>
+                                <a class="page-link" th:href="@{'/admin/psg/hoa-don/pageActive/'+${ currentPage - 1}}">Previous</a>
                             </li>
                             <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}"
                                 th:classappend="${currentPage == i - 1 ? 'active' : ''}">
-                                <a class="page-link" th:href="@{'/admin/psg/hoa-don/page/'+${i - 1}}">
+                                <a class="page-link" th:href="@{'/admin/psg/hoa-don/pageActive/'+${i - 1}}">
                                     <span th:text="${i}"></span>
                                 </a>
                             </li>
                             <li class="page-item" th:if="${currentPage + 1 != totalPages}">
-                                <a class="page-link" th:href="@{'/admin/psg/hoa-don/page/'+${currentPage + 1}}">Next</a>
+                                <a class="page-link" th:href="@{'/admin/psg/hoa-don/pageActive/'+${currentPage + 1}}">Next</a>
                             </li>
                         </ul>
                     </nav>

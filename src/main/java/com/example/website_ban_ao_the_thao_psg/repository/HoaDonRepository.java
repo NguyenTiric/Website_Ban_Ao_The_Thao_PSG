@@ -22,8 +22,8 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update HoaDon m set m.trangThai = :trangThai, m.ngayCapNhat= :now where m.id = :id")
-    void updateTrangThai(@Param("id") Integer id, @Param("trangThai") ApplicationConstant.TrangThaiHoaDon trangThaiHoaDon, @Param("now") LocalDate now);
+    @Query(value = "update HoaDon m set m.trangThai = :trangThai where m.id = :id")
+    void updateTrangThai(@Param("id") Integer id, @Param("trangThai") ApplicationConstant.TrangThaiHoaDon trangThaiHoaDon);
 
     @Query(value = "select * from hoa_don where sdt_nguoi_nhan = ?1 or ma = ?1 or tai_khoan_id = (SELECT id FROM tai_khoan WHERE ten = ?1) ", nativeQuery = true)
     Page<HoaDon> listSearch(String path, Pageable pageable);

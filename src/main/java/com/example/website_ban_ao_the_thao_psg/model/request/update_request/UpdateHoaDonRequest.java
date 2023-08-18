@@ -29,9 +29,7 @@ public class UpdateHoaDonRequest {
     private NhanVien nhanVien;
     private String ma;
     private LocalDate ngayTao;
-    private LocalDate ngayThanhToan;
-    private LocalDate ngayShip;
-    private LocalDate ngayNhan;
+    private LocalDate ngayMuonNhan;
     private BigDecimal tienMatKhachTra;
     private BigDecimal tienKhachChuyenKhoan;
     private BigDecimal tienShip;
@@ -40,10 +38,9 @@ public class UpdateHoaDonRequest {
     private String diaChi;
     private String sdtNguoiNhan;
     private String sdtNguoiShip;
-    private String maVoucherThuHang;
+    private BigDecimal phieu_giam_gia;
     private Integer phanTramGiamGia;
     private String maGiaoDich;
-    private LocalDate ngayCapNhat;
     @Enumerated(EnumType.STRING)
     private HinhThucBanHang hinhThucBanHang;
     @Enumerated(EnumType.STRING)

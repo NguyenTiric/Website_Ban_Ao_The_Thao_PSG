@@ -29,13 +29,13 @@ public class UpdateGiaoDichRequest {
 
     private Integer id;
 
-    @NotNull(message = "Hóa đơn không để trống")
+//    @NotNull(message = "Hóa đơn không để trống")
     private HoaDon hoaDon;
 
-    @NotNull(message = "Khách hàng không để trống")
+//    @NotNull(message = "Khách hàng không để trống")
     private KhachHang khachHang;
 
-    @NotNull(message = "Nhân viên không để trống")
+//    @NotNull(message = "Nhân viên không để trống")
     private NhanVien nhanVien;
 
     @Enumerated(EnumType.STRING)
@@ -43,7 +43,11 @@ public class UpdateGiaoDichRequest {
 
     @Enumerated(EnumType.STRING)
     private HinhThucThanhToan phuongThucThanhToan;
-    private BigDecimal soTien;
+
+    private BigDecimal soTienChuyenKhoan;
+
+    private BigDecimal soTienMat;
+
     private LocalDate ngayTao;
 
     private LocalDate ngayCapNhat;
