@@ -61,4 +61,7 @@ public interface ChiTietVoucherThuHangRepository extends JpaRepository<ChiTietVo
 
     List<ChiTietVoucherThuHang> getChiTietVoucherThuHangByThuHang(ThuHang thuHang);
 
+    @Query("SELECT c FROM ChiTietVoucherThuHang c JOIN FETCH c.voucherThuHang")
+    List<ChiTietVoucherThuHang> findAllWithVoucher();
+
 }

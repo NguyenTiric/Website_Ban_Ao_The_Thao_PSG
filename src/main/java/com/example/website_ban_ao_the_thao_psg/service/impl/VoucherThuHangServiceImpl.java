@@ -37,7 +37,7 @@ public class VoucherThuHangServiceImpl implements VoucherThuHangService {
 
     @Override
     public List<VoucherThuHang> getAll() {
-        return this.voucherThuHangRepository.findAll();
+        return this.voucherThuHangRepository.findByTrangThaiActive();
     }
 
     @Override

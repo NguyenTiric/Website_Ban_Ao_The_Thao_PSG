@@ -1,12 +1,11 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
-import com.example.website_ban_ao_the_thao_psg.entity.ChiTietVoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateThuHangRequest;
+import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateVoucherThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.ThuHangResponse;
-import com.example.website_ban_ao_the_thao_psg.service.ChiTietSanPhamService;
 import com.example.website_ban_ao_the_thao_psg.service.ChiTietVoucherThuHangService;
 import com.example.website_ban_ao_the_thao_psg.service.ThuHangService;
 import com.example.website_ban_ao_the_thao_psg.service.VoucherThuHangService;
@@ -18,19 +17,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/admin/psg/thu-hang")
@@ -82,6 +74,7 @@ public class ThuHangController {
         ThuHangResponse thuHangResponse = thuHangService.getOne(id);
         model.addAttribute("thuHang", thuHangResponse);
         model.addAttribute("voucherThuHang", new VoucherThuHang());
+        model.addAttribute("voucherThuHang1", new CreateVoucherThuHangRequest());
         model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
         model.addAttribute("chiTietVoucher", this.chiTietVoucherThuHangService.getTheoIdThuHang(id));
         return "admin/thu_hang/view_update_thu_hang";
@@ -123,39 +116,47 @@ public class ThuHangController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute("thuHang") CreateThuHangRequest createThuHangRequest, BindingResult result, @RequestParam("voucherThuHang") List<VoucherThuHang> listVoucherThuHang, Model model, HttpSession session) {
+    public String add(@Valid @ModelAttribute("thuHang") CreateThuHangRequest createThuHangRequest,
+                      BindingResult result,
+//                      @RequestParam(value = "voucherThuHang") List<VoucherThuHang> listVoucherThuHang,
+                      Model model,
+                      HttpSession session) {
         if (result.hasErrors()) {
             model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             model.addAttribute("thuHang", createThuHangRequest);
             return "admin/thu_hang/view_add_thu_hang";
         }
         try {
-//            thuHangService.add(createThuHangRequest);
-            this.chiTietVoucherThuHangService.addChiTietVoucher(createThuHangRequest, listVoucherThuHang);
+//            this.chiTietVoucherThuHangService.addChiTietVoucher(createThuHangRequest, listVoucherThuHang);
+            this.thuHangService.add(createThuHangRequest);
             session.setAttribute("successMessage", "Thêm thành công!");
-            return "redirect:/admin/psg/thu-hang/view-add";
+            return "redirect:/admin/psg/thu-hang/hien-thi";
         } catch (NullPointerException e) {
-            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             model.addAttribute("errorMessage", "Looxi");
             return "admin/thu_hang/view_add_thu_hang";
         } catch (NumberFormatException ex) {
-            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             model.addAttribute("errorMessage", "Lỗi" + ex.getMessage());
             System.out.println(ex.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
         } catch (CommandLine.DuplicateNameException er) {
-            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             model.addAttribute("errorMessage", er.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
         } catch (RuntimeException rt) {
-            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             model.addAttribute("errorMessage", rt.getMessage());
             return "admin/thu_hang/view_add_thu_hang";
         }
     }
 
     @PostMapping("/updateSoLuong")
-    public String updateSoLuong(@RequestParam("ids") List<Integer> id, @RequestParam("soLuongs") List<Integer> soLuong) {
+    public String updateSoLuong(@Valid
+                                @RequestParam("ids") List<Integer> id,
+                                @RequestParam("soLuongs") List<Integer> soLuong,
+                                BindingResult result,
+                                Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
+            return "admin/thu_hang/view_update_thu_hang";
+        }
         this.chiTietVoucherThuHangService.updateSoLuongVoucherThuHang(id, soLuong);
         return "redirect:/admin/psg/thu-hang/hien-thi";
     }
@@ -170,6 +171,7 @@ public class ThuHangController {
     public String update(@Valid @ModelAttribute("thuHang") UpdateThuHangRequest updateThuHangRequest, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             model.addAttribute("thuHang", updateThuHangRequest);
+            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             return "admin/thu_hang/view_update_thu_hang";
         }
         try {
@@ -178,6 +180,7 @@ public class ThuHangController {
             return "redirect:/admin/psg/thu-hang/hien-thi";
         } catch (RuntimeException rt) {
             model.addAttribute("errorMessage", rt.getMessage());
+            model.addAttribute("listVoucher", this.voucherThuHangService.getAll());
             return "admin/thu_hang/view_add_thu_hang";
         }
     }
@@ -322,15 +325,14 @@ public class ThuHangController {
     }
 
     @PostMapping("/update-so-luong-voucher")
-    public String updateSoLuongVoucher(@RequestParam("voucherThuHang1") List<Integer> voucherIds, @RequestParam("id") Integer id){
+    public String updateSoLuongVoucher(@RequestParam("voucherThuHang1") List<Integer> voucherIds, @RequestParam("id") Integer id, Model model) {
+
         List<VoucherThuHang> voucherThuHangList = new ArrayList<>();
         for (Integer voucherId : voucherIds) {
             VoucherThuHang voucherThuHang = voucherThuHangService.findById(voucherId);
             voucherThuHangList.add(voucherThuHang);
         }
-
         this.chiTietVoucherThuHangService.updateListVoucherThuHangInUpdateChiTietVoucherThuHang(voucherThuHangList, id);
         return "redirect:/admin/psg/thu-hang/view-update/" + id;
     }
-
 }

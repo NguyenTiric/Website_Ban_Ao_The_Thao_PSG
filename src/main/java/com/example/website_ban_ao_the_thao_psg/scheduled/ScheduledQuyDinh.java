@@ -28,11 +28,6 @@ public class ScheduledQuyDinh {
     private boolean isEmailSentToday = false;
 
     @Scheduled(fixedRate = 6000)
-    public void resetEmailFlag() {
-        isEmailSentToday = false;
-    }
-
-    @Scheduled(fixedRate = 6000)
     public void thongBaoReset() {
 
         LocalDate currentDateTime = LocalDate.now();
@@ -52,7 +47,6 @@ public class ScheduledQuyDinh {
                 this.quyDinhRepository.updateTrangThaiSauResetThuHang(ngayDatLaiThuHang);
                 System.out.println("Thành công nhé!");
 
-                if (!isEmailSentToday) {
                     for (KhachHang khachHang : khachHangList) {
                         SimpleMailMessage message = new SimpleMailMessage();
                         message.setTo(khachHang.getEmail());
@@ -61,13 +55,10 @@ public class ScheduledQuyDinh {
                         emailSender.send(message);
 
                         System.out.println("Ngon!");
-                        isEmailSentToday = true;
                     }
-                }
 
             } else if (ngayThongBao.isEqual(currentDateTime)) {
                 List<KhachHang> khachHangList = khachHangRepository.findAll();
-                if (!isEmailSentToday) {
                     for (KhachHang khachHang : khachHangList) {
                         SimpleMailMessage message = new SimpleMailMessage();
                         message.setTo(khachHang.getEmail());
@@ -77,8 +68,6 @@ public class ScheduledQuyDinh {
                         System.out.println("Ngon2!");
                         isEmailSentToday = true;
                     }
-                }
-
             } else {
                 System.out.println("Ngu, chết rồi\n");
             }

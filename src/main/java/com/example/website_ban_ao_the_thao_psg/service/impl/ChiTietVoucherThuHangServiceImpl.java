@@ -67,38 +67,6 @@ public class ChiTietVoucherThuHangServiceImpl implements ChiTietVoucherThuHangSe
     }
 
     @Override
-    public void addChiTietVoucher(CreateThuHangRequest createThuHangRequest, List<VoucherThuHang> thuHangList) {
-        ThuHang thuHang = thuHangMapper.createThuHangRequestToThuHangEntity(createThuHangRequest);
-        thuHang.setNgayTao(LocalDate.now());
-        thuHang.setMa(GenCode.generateThuHangCode());
-        thuHang.setTrangThai(ApplicationConstant.TrangThaiThuHang.ACTIVE);
-
-
-        String tenThuHang = createThuHangRequest.getTen();
-
-        if (this.thuHangRepository.existsByTenAndTrangThai(tenThuHang, ApplicationConstant.TrangThaiThuHang.ACTIVE)){
-            throw new CommandLine.DuplicateNameException("Thứ hạng đã tồn tại, vui lòng đặt thứ hạng khác!");
-        }
-
-        List<KhachHang> allKhachHang = khachHangRepository.findAll();
-        for (KhachHang khachHang : allKhachHang) {
-            if (!khachHang.getThuHang().getTen().equalsIgnoreCase("Thành viên")) {
-                throw new RuntimeException("Vẫn còn tài khoản chưa về mặc định, hãy kiểm tra lại!");
-            }
-        }
-        ThuHang th = this.thuHangRepository.save(thuHang);
-        for (VoucherThuHang vcth : thuHangList) {
-            ChiTietVoucherThuHang chiTietVoucherThuHang = chiTietVoucherThuHangMapper.createChiTietVoucherThuHangRequestToChiTietVouCherThuHangEntity(new CreateChiTietVoucherThuHangRequest());
-            chiTietVoucherThuHang.setNgayTao(LocalDate.now());
-            chiTietVoucherThuHang.setThuHang(th);
-            chiTietVoucherThuHang.setVoucherThuHang(vcth);
-            chiTietVoucherThuHang.setSoLuong(1);
-            chiTietVoucherThuHang.setTrangThai(ApplicationConstant.TrangThaiChiTietVouCherThuHang.PENDING);
-            chiTietVoucherThuHangMapper.chiTietVoucherThuHangEntityToChiTietVoucherThuHangResponse(chiTietVoucherThuHangRepository.save(chiTietVoucherThuHang));
-        }
-    }
-
-    @Override
     public ChiTietVoucherThuHangResponse add(CreateChiTietVoucherThuHangRequest createChiTietVoucherThuHangRequest) {
         ChiTietVoucherThuHang chiTietVoucherThuHang = chiTietVoucherThuHangMapper.createChiTietVoucherThuHangRequestToChiTietVouCherThuHangEntity(createChiTietVoucherThuHangRequest);
         chiTietVoucherThuHang.setNgayTao(LocalDate.now());
@@ -116,8 +84,8 @@ public class ChiTietVoucherThuHangServiceImpl implements ChiTietVoucherThuHangSe
 
     @Override
     public List<ChiTietVoucherThuHangResponse> getTheoIdThuHang(Integer id) {
-        List<ChiTietVoucherThuHang> list = this.chiTietVoucherThuHangRepository.getChiTietVoucherThuHangByThuHang(this.thuHangRepository.findById(id).get());
-        return this.chiTietVoucherThuHangMapper.listChiTietVoucherThuHangEntityToChiTietVoucherThuHangResponse(list);
+        List<ChiTietVoucherThuHang> list = chiTietVoucherThuHangRepository.getChiTietVoucherThuHangByThuHang(thuHangRepository.findById(id).get());
+        return chiTietVoucherThuHangMapper.listChiTietVoucherThuHangEntityToChiTietVoucherThuHangResponse(list);
     }
 
     @Override
@@ -153,12 +121,12 @@ public class ChiTietVoucherThuHangServiceImpl implements ChiTietVoucherThuHangSe
 
     @Override
     public List<ChiTietVoucherThuHang> getByTrangThaiPending() {
-        return this.chiTietVoucherThuHangRepository.getChiTietVoucherThuHangPending();
+        return chiTietVoucherThuHangRepository.getChiTietVoucherThuHangPending();
     }
 
     @Override
     public List<ChiTietVoucherThuHang> getMaxidThuHang() {
-        return this.chiTietVoucherThuHangRepository.findLatestChiTietVoucherThuHang();
+        return chiTietVoucherThuHangRepository.findLatestChiTietVoucherThuHang();
     }
 
     @Override
@@ -166,13 +134,13 @@ public class ChiTietVoucherThuHangServiceImpl implements ChiTietVoucherThuHangSe
         for (int i = 0; i < id.size(); i++){
             Integer ids = id.get(i);
             Integer soLuongs = soLuong.get(i);
-            Optional<ChiTietVoucherThuHang> list = this.chiTietVoucherThuHangRepository.findById(ids);
-            if (list.isPresent()){
-                ChiTietVoucherThuHang chiTietVoucherThuHang = list.get();
+            Optional<ChiTietVoucherThuHang> optionalChiTietVoucherThuHang = chiTietVoucherThuHangRepository.findById(ids);
+            if (optionalChiTietVoucherThuHang.isPresent()){
+                ChiTietVoucherThuHang chiTietVoucherThuHang = optionalChiTietVoucherThuHang.get();
                 chiTietVoucherThuHang.setSoLuong(soLuongs);
                 chiTietVoucherThuHang.setNgayTao(LocalDate.now());
                 chiTietVoucherThuHang.setTrangThai(ApplicationConstant.TrangThaiChiTietVouCherThuHang.ACTIVE);
-                this.chiTietVoucherThuHangRepository.save(chiTietVoucherThuHang);
+                chiTietVoucherThuHangMapper.chiTietVoucherThuHangEntityToChiTietVoucherThuHangResponse(chiTietVoucherThuHangRepository.save(chiTietVoucherThuHang));
             }
         }
     }
@@ -180,32 +148,34 @@ public class ChiTietVoucherThuHangServiceImpl implements ChiTietVoucherThuHangSe
     @Override
     public void updateSoLuongVoucherThuHangActive(List<Integer> id, List<Integer> soLuong){
         for (int i = 0; i < id.size(); i++){
-            Optional<ChiTietVoucherThuHang> list = this.chiTietVoucherThuHangRepository.findById(id.get(i));
+            Optional<ChiTietVoucherThuHang> list = chiTietVoucherThuHangRepository.findById(id.get(i));
             if (list.isPresent()){
                 ChiTietVoucherThuHang chiTietVoucherThuHang = list.get();
                 chiTietVoucherThuHang.setSoLuong(soLuong.get(i));
                 chiTietVoucherThuHang.setNgayCapNhat(LocalDate.now());
-                this.chiTietVoucherThuHangRepository.save(chiTietVoucherThuHang);
+                chiTietVoucherThuHangRepository.save(chiTietVoucherThuHang);
             }
         }
     }
 
     @Override
     public void delete(Integer id) {
-        this.chiTietVoucherThuHangRepository.deleteById(id);
+        chiTietVoucherThuHangRepository.deleteById(id);
     }
 
     @Override
     public void updateListVoucherThuHangInUpdateChiTietVoucherThuHang(List<VoucherThuHang> voucherThuHangList, Integer id) {
         for (VoucherThuHang list : voucherThuHangList) {
-            List<ChiTietVoucherThuHang> chiTietVoucherThuHangList = this.chiTietVoucherThuHangRepository.getChiTietVoucherThuHangByThuHang(this.thuHangRepository.findById(id).get());
+            List<ChiTietVoucherThuHang> chiTietVoucherThuHangList = chiTietVoucherThuHangRepository.getChiTietVoucherThuHangByThuHang(thuHangRepository.findById(id).get());
 
             boolean voucherExist = false;
 
             for (ChiTietVoucherThuHang chiTietVoucherThuHang : chiTietVoucherThuHangList) {
-                if (list.getId().equals(chiTietVoucherThuHang.getId())){
+                if (list.getId().equals(chiTietVoucherThuHang.getVoucherThuHang().getId())){
                     voucherExist = true;
                     break;
+                }else {
+                    continue;
                 }
             }
 
@@ -213,13 +183,17 @@ public class ChiTietVoucherThuHangServiceImpl implements ChiTietVoucherThuHangSe
                 continue;
             }
 
-            ChiTietVoucherThuHang ctvth = chiTietVoucherThuHangMapper.createChiTietVoucherThuHangRequestToChiTietVouCherThuHangEntity(new CreateChiTietVoucherThuHangRequest());
-            ThuHang th = this.thuHangRepository.findById(id).get();
-            ctvth.setThuHang(th);
-            ctvth.setSoLuong(1);
-            ctvth.setNgayTao(LocalDate.now());
-            ctvth.setTrangThai(ApplicationConstant.TrangThaiChiTietVouCherThuHang.ACTIVE);
-            this.chiTietVoucherThuHangMapper.listChiTietVoucherThuHangEntityToChiTietVoucherThuHangResponse(Collections.singletonList(this.chiTietVoucherThuHangRepository.save(ctvth)));
+            for (VoucherThuHang vcth : voucherThuHangList
+                 ) {
+                ChiTietVoucherThuHang ctvth = chiTietVoucherThuHangMapper.createChiTietVoucherThuHangRequestToChiTietVouCherThuHangEntity(new CreateChiTietVoucherThuHangRequest());
+                ThuHang th = thuHangRepository.findById(id).get();
+                ctvth.setThuHang(th);
+                ctvth.setVoucherThuHang(vcth);
+                ctvth.setSoLuong(1);
+                ctvth.setNgayTao(LocalDate.now());
+                ctvth.setTrangThai(ApplicationConstant.TrangThaiChiTietVouCherThuHang.ACTIVE);
+                chiTietVoucherThuHangMapper.listChiTietVoucherThuHangEntityToChiTietVoucherThuHangResponse(Collections.singletonList(chiTietVoucherThuHangRepository.save(ctvth)));
+            }
         }
     }
 }

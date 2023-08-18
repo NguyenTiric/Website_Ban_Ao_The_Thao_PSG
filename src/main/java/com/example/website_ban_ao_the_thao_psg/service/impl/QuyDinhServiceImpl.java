@@ -53,7 +53,6 @@ public class QuyDinhServiceImpl implements QuyDinhService {
     @Override
     public QuyDinhResponse add(CreateQuyDinhRequest createQuyDinhRequest) {
         QuyDinh quyDinh = quyDinhMapper.createQuyDinhRequestToQuyDinhEntity(createQuyDinhRequest);
-//        quyDinh.setId(GenCode.);
         quyDinh.setNgayTao(LocalDate.now());
         quyDinh.setTrangThai(ApplicationConstant.TrangThaiQuyDinh.ACTIVE);
         return quyDinhMapper.quyDinhEntityToQuyDinhResponse(quyDinhRepository.save(quyDinh));
