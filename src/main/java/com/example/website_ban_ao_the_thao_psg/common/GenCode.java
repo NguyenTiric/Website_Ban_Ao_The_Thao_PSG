@@ -20,6 +20,10 @@ public class GenCode {
     private static final String thuHang = "TH0";
     private static  final String nhanVien="NV0";
     private static  final String khachHang="KH0";
+    private static  final String quyDinh="QD0";
+    private static  final String passWordKhachHang="PWKH";
+    private static  final String passWordNhanVien="PWNV";
+    private static final int NUMBER_LENGTH_Khach_Hang_And_NhanVien = 8;
     private static final int NUMBER_LENGTH = 5;
     private static final int NUMBER_HOADON_LENGTH = 10;
 
@@ -28,6 +32,12 @@ public class GenCode {
         int randomNumber = random.nextInt((int) Math.pow(10, NUMBER_LENGTH));
         String formattedNumber = String.format("%0" + NUMBER_LENGTH + "d", randomNumber);
         return chatLieu + formattedNumber;
+    }
+    public static String generateQuyDinhCode() {
+        Random random = new Random();
+        int randomNumber = random.nextInt((int) Math.pow(10, NUMBER_LENGTH));
+        String formattedNumber = String.format("%0" + NUMBER_LENGTH + "d", randomNumber);
+        return quyDinh + formattedNumber;
     }
     public static String generateVoucherCode() {
         Random random = new Random();
@@ -130,6 +140,20 @@ public class GenCode {
         int randomNumber = random.nextInt((int) Math.pow(10, NUMBER_LENGTH));
         String formattedNumber = String.format("%0" + NUMBER_LENGTH + "d", randomNumber);
         return thuHang + formattedNumber;
+    }
+
+    public static String generatePassWordKhachHang() {
+        Random random = new Random();
+        int randomNumber = random.nextInt((int) Math.pow(10, NUMBER_LENGTH_Khach_Hang_And_NhanVien));
+        String formattedNumber = String.format("%0" + NUMBER_LENGTH_Khach_Hang_And_NhanVien + "d", randomNumber);
+        return passWordKhachHang + formattedNumber;
+    }
+
+    public static String generatePassWordNhanVien() {
+        Random random = new Random();
+        int randomNumber = random.nextInt((int) Math.pow(10, NUMBER_LENGTH_Khach_Hang_And_NhanVien));
+        String formattedNumber = String.format("%0" + NUMBER_LENGTH_Khach_Hang_And_NhanVien + "d", randomNumber);
+        return passWordNhanVien + formattedNumber;
     }
 
     public static String generateHoaDonCode() {

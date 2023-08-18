@@ -13,6 +13,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,5 +34,5 @@ public class UpdateQuyDinhRequest {
 
     @Future(message = "Không được chọn ngày quá khứ")
     @NotNull(message = "Ngày đặt lại không để trống")
-    private LocalDate ngayDatLaiThuHang;
+    private LocalDateTime ngayDatLaiThuHang;
 }

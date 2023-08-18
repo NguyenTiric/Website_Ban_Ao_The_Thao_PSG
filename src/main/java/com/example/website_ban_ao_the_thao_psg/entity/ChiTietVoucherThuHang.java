@@ -54,7 +54,7 @@ public class ChiTietVoucherThuHang {
 
     @Column(name = "trang_thai")
     @Enumerated(EnumType.STRING)
-    private ApplicationConstant.TrangThaiVoucher trangThai;
+    private ApplicationConstant.TrangThaiChiTietVouCherThuHang trangThai;
 
 
 }

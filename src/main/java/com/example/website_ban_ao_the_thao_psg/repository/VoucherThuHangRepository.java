@@ -3,6 +3,7 @@ package com.example.website_ban_ao_the_thao_psg.repository;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.DiaChi;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
+import com.example.website_ban_ao_the_thao_psg.model.response.VoucherThuHangResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,9 @@ import java.util.List;
 
 @Repository
 public interface VoucherThuHangRepository extends JpaRepository<VoucherThuHang,Integer> {
+
+    @Query(value = "SELECT c from VoucherThuHang  c WHERE c.trangThai = 'ACTIVE'")
+    List<VoucherThuHang> findByTrangThaiActive();
     @Query(value = "SELECT * FROM voucher_thu_hang WHERE ten LIKE %?1% OR ma LIKE %?1% and trang_thai='ACTIVE'  ", nativeQuery = true)
     Page<VoucherThuHang> pageSearchActive(String searchString, Pageable pageable);
 

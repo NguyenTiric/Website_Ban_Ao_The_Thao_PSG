@@ -13,6 +13,8 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -31,5 +33,5 @@ public class QuyDinhResponse {
     private LocalDate ngayCapNhat;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate ngayDatLaiThuHang;
+    private LocalDateTime ngayDatLaiThuHang;
 }

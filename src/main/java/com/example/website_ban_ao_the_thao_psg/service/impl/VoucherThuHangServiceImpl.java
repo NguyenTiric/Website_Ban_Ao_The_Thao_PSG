@@ -4,6 +4,7 @@ import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.common.GenCode;
 import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.VoucherThuHangMapper;
+import com.example.website_ban_ao_the_thao_psg.entity.VoucherThuHang;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateVoucherThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateVoucherThuHangRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.VoucherThuHangResponse;
@@ -13,13 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
-@Service
+@Component
 public class VoucherThuHangServiceImpl implements VoucherThuHangService {
     @Autowired
     private VoucherThuHangRepository voucherThuHangRepository;
@@ -34,6 +35,10 @@ public class VoucherThuHangServiceImpl implements VoucherThuHangService {
         return voucherThuHangs.map(voucherThuHangMapper::voucherThuHangEntityToVoucherThuHangResponse);
     }
 
+    @Override
+    public List<VoucherThuHang> getAll() {
+        return this.voucherThuHangRepository.findByTrangThaiActive();
+    }
 
     @Override
     public Page<VoucherThuHangResponse> pageVouCherThuHangInActive(Integer pageNo, Integer size) {
@@ -113,7 +118,8 @@ public class VoucherThuHangServiceImpl implements VoucherThuHangService {
         voucherThuHangRepository.revert(id, LocalDateTime.now());
     }
 
-
-
-
+    @Override
+    public VoucherThuHang findById(Integer voucherId) {
+        return this.voucherThuHangRepository.getOne(voucherId);
+    }
 }

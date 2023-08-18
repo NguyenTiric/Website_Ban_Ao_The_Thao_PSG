@@ -57,4 +57,9 @@ public interface KhachHangRepository extends JpaRepository<KhachHang,Integer> {
 
     @Query("SELECT CASE WHEN COUNT(kh) > 0 THEN true ELSE false END FROM KhachHang kh WHERE kh.email = :email AND kh.id <> :id")
     boolean existsByEmailKhachHangWithDifferentId(String email, Integer id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update KhachHang kh set kh.soTienDaChiTieu = 0, kh.soLuongDonHangThanhCong = 0")
+    void resetSoLuongDonHangThanhCongAndSoTienDaChiTieuVeKhong();
 }

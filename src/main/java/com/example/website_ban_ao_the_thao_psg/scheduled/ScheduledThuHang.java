@@ -1,6 +1,8 @@
 package com.example.website_ban_ao_the_thao_psg.scheduled;
 
 import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
+import com.example.website_ban_ao_the_thao_psg.model.response.KhachHangResponse;
+import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
 import com.example.website_ban_ao_the_thao_psg.entity.ThuHang;
 import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.NhanVienRepository;
@@ -14,14 +16,10 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Random;
 
 @EnableScheduling
 @Component
 public class ScheduledThuHang {
-
-    @Autowired
-    private NhanVienRepository nhanVienRepository;
 
     @Autowired
     private KhachHangRepository khachHangRepository;
@@ -32,43 +30,12 @@ public class ScheduledThuHang {
     @Autowired
     public JavaMailSender emailSender;
 
-    Random random = new Random();
-    int rd = random.nextInt(1000000);
-    public void sendEmail(){
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setTo("tunganh.devj@gmail.com");
-        message.setSubject("Random number:" + rd);
-        message.setText("Chào bạn,\n" +
-                "\n" +
-                "Chúc mừng bạn đã đạt được mức rank mới là: \" + mucThuHang + \" trong cuộc hành trình thể thao của bạn! Đó là một thành tựu tuyệt vời mà bạn đã đạt được và chúng tôi rất tự hào vì được đồng hành cùng bạn trong suốt thời gian qua.\n" +
-                "\n" +
-                "Với tinh thần chiến đấu không ngừng, bạn đã chinh phục mọi khó khăn, vượt qua mọi thử thách và tiến bước vững chắc trên con đường thành công. Chúng tôi hiểu rằng, như cầu thủ trong câu lạc bộ PSG, bạn không chỉ đang theo đuổi đam mê bóng đá mà còn đại diện cho một phong cách sống thể thao và khích lệ hàng triệu người hâm mộ trên khắp thế giới.\n" +
-                "\n" +
-                "Và để giúp bạn tiếp tục tỏa sáng trên sân cỏ và ngoài đời, chúng tôi đã chọn lựa những bộ trang phục thể thao của PSG tối ưu nhất, từ chất liệu, thiết kế cho đến xu hướng mới nhất. Chúng tôi luôn đặt chất lượng và sự thoải mái lên hàng đầu để bạn cảm nhận niềm tự hào khi mặc áo PSG.\n" +
-                "\n" +
-                "Không chỉ là một cửa hàng bán quần áo thể thao, chúng tôi còn là người bạn đồng hành, người cổ vũ và luôn sẵn lòng hỗ trợ bạn trong mọi hoạt động thể thao và cuộc sống hàng ngày. Chúng tôi tin tưởng rằng, bên cạnh những bộ trang phục chất lượng, tinh thần PSG cũng sẽ truyền cảm hứng và năng lượng tích cực cho bạn vươn tới những đỉnh cao mới.\n" +
-                "\n" +
-                "Hãy luôn kiên nhẫn, rèn luyện và không ngừng phấn đấu, bởi chúng tôi tin rằng thành công không đến từ sự may mắn mà là do sự cống hiến và đam mê của bạn. Và chúng tôi sẽ luôn ở đây, sát cánh bên bạn, để cùng nhau viết tiếp những trang sử vinh quang cho đội bóng PSG và cho chính bạn.\n" +
-                "\n" +
-                "Cảm ơn bạn đã là một phần quan trọng của cộng đồng PSG Sportswear. Hãy tiếp tục gắn bó với chúng tôi và chúng tôi hứa sẽ không ngừng nâng cao chất lượng dịch vụ để đáp ứng mọi nhu cầu và mong muốn của bạn.\n" +
-                "\n" +
-                "Chúc mừng và thành công rực rỡ!\n" +
-                "\n" +
-                "Trân trọng,\n" +
-                "PSG Sportswear Team");
-        System.out.println("Sent");
-        // Send Message!
-        this.emailSender.send(message);
-    }
-
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 6000)
     public void updateThuHang() {
         SimpleMailMessage message = new SimpleMailMessage();
 
         List<KhachHang> khachHangs = this.khachHangRepository.findAll();
         List<ThuHang> activeThuHangList = this.thuHangRepository.findAllByActive();
-
         for (KhachHang khachHang : khachHangs) {
             BigDecimal soTienDaChiTieu = khachHang.getSoTienDaChiTieu();
             Integer soLuongDonHangThanhCong = khachHang.getSoLuongDonHangThanhCong();
@@ -89,6 +56,31 @@ public class ScheduledThuHang {
             if (selectedThuHang != null) {
                 khachHang.setThuHang(selectedThuHang);
                 khachHangRepository.save(khachHang);
+                message.setTo(khachHang.getEmail());
+                message.setSubject("Chúc mừng! Bạn đã thăng hạng trong Hội viên Ưu đãi PSG Fashion");
+                message.setText("Chào bạn "+khachHang.getTen()+" thân mến,\n" +
+                        "\n" +
+                        "Chúc mừng bạn đã chính thức thăng hạng lên "+khachHang.getThuHang().getTen()+" trong Hội viên Ưu đãi PSG Fashion! Đây là một thành quả đáng tự hào mà bạn đã đạt được và chúng tôi xin gửi lời chúc mừng chân thành nhất đến bạn.\n" +
+                        "\n" +
+                        "Chúng tôi biết rằng bạn đã luôn ủng hộ chúng tôi trong suốt thời gian qua và chúng tôi xin cảm ơn bạn vô cùng. Thăng hạng của bạn không chỉ là một sự công nhận về sự hỗ trợ của bạn, mà còn là sự thể hiện về sự kiên nhẫn và sự cam kết của bạn đối với thương hiệu PSG Fashion.\n" +
+                        "\n" +
+                        "Với thăng hạng này, bạn sẽ được hưởng nhiều ưu đãi độc quyền hơn, bao gồm:\n" +
+                        "\n" +
+                        "Giảm giá đặc biệt cho các sản phẩm mới nhất của PSG Fashion.\n" +
+                        "Quyền truy cập trước vào các sự kiện và chương trình khuyến mãi sắp tới.\n" +
+                        "Đặc quyền tham gia vào các buổi triển lãm thời trang và hậu trường.\n" +
+                        "Quà tặng độc đáo và các ưu đãi đặc biệt khác dành riêng cho Hội viên Ưu đãi.\n" +
+                        "Chúng tôi rất mong muốn tiếp tục chia sẻ những trải nghiệm thú vị và mới mẻ với bạn trong tương lai. Hãy tiếp tục ủng hộ PSG Fashion và chúng tôi cam kết sẽ không ngừng phấn đấu để mang đến cho bạn những sản phẩm thời trang tốt nhất và những trải nghiệm mua sắm đáng nhớ.\n" +
+                        "\n" +
+                        "Nếu bạn có bất kỳ câu hỏi hoặc góp ý nào, xin vui lòng liên hệ với chúng tôi qua số điện thoại [số điện thoại] hoặc email [địa chỉ email]. Chúng tôi luôn sẵn sàng hỗ trợ bạn.\n" +
+                        "\n" +
+                        "Một lần nữa, chúc mừng bạn với sự thăng hạng đầy ý nghĩa này. Cảm ơn bạn vì đã là một phần quan trọng của cộng đồng PSG Fashion.\n" +
+                        "\n" +
+                        "Trân trọng,\n" +
+                        "Nguyễn Trọng Tùng Anh\n" +
+                        "Giám đốc\n" +
+                        "PSG Fashion");
+                emailSender.send(message);
             }
         }
     }

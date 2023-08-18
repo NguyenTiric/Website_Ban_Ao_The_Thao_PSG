@@ -15,7 +15,7 @@
             <form action="/admin/psg/quy-dinh/add" th:object="${quyDinh}" method="get" onsubmit="return confirm('Bạn có thêm không?')">
                 <div class="form-group mb-3">
                     <input  class="form-control custom-shadow custom-radius border-0 bg-white"
-                           type="date" th:field="*{ngayDatLaiThuHang}" style="height: 50px">
+                           type="datetime-local" th:field="*{ngayDatLaiThuHang}" style="height: 50px">
                     <span th:if="${#fields.hasErrors('ngayDatLaiThuHang')}" style="color: red; font-size: 13px" th:errors="*{ngayDatLaiThuHang}"></span>
                 </div>
                 <div class="form-group mb-3 text-center">
