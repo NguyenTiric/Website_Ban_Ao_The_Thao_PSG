@@ -2,6 +2,7 @@ package com.example.website_ban_ao_the_thao_psg.service;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
+import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateHoaDonRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.GiaoDichResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonChiTietResponse;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
@@ -36,7 +37,9 @@ public interface HoaDonService {
 
     void updateTrangThaiHoaDon(ApplicationConstant.TrangThaiHoaDon trangThaiHoaDon, Integer idHd, String moTa);
 
-    void addHoaDonChiTiet(Integer idCtsp,Integer idHd);
+    void thanhToanHoaDon(UpdateHoaDonRequest updateHoaDonRequest, ApplicationConstant.TrangThaiHoaDon trangThaiHoaDon, ApplicationConstant.HinhThucThanhToan hinhThucThanhToan);
+
+    void addHoaDonChiTiet(Integer idCtsp, Integer idHd);
 
     void updateHoaDonChiTietQuantity(Integer idHdct, Integer newQuantity);
 
@@ -49,7 +52,8 @@ public interface HoaDonService {
     Page<HoaDonResponse> searchByAllRange(String name, Integer pageNo, Integer size);
 
     Page<HoaDonResponse> searchByDate(String beginDate, String endDate, Integer pageNo, Integer size) throws ParseException;
-    Page<HoaDonResponse>pageComboboxTrangThaiHoaDon(Integer page, Integer size, ApplicationConstant.TrangThaiHoaDon trangThai);
+
+    Page<HoaDonResponse> pageComboboxTrangThaiHoaDon(Integer page, Integer size, ApplicationConstant.TrangThaiHoaDon trangThai);
 
     Page<HoaDonResponse> pageHoaDon(Integer page, Integer size);
 

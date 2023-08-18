@@ -8,17 +8,21 @@ import com.example.website_ban_ao_the_thao_psg.entity.HoaDon;
 import com.example.website_ban_ao_the_thao_psg.entity.HoaDonChiTiet;
 import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
 import com.example.website_ban_ao_the_thao_psg.entity.LichSuHoaDon;
+import com.example.website_ban_ao_the_thao_psg.entity.SanPham;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.GiaoDichMapper;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.HoaDonChiTietMapper;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.HoaDonMapper;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.LichSuHoaDonMapper;
 import com.example.website_ban_ao_the_thao_psg.model.mapper.ViVoucherMapper;
+import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateGiaoDichRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateHoaDonRequest;
 import com.example.website_ban_ao_the_thao_psg.model.request.create_request.CreateLichSuHoaDonRequest;
+import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateHoaDonRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.GiaoDichResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonChiTietResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.LichSuHoaDonResponse;
+import com.example.website_ban_ao_the_thao_psg.model.response.SanPhamResponse;
 import com.example.website_ban_ao_the_thao_psg.model.response.ViVoucherResponse;
 import com.example.website_ban_ao_the_thao_psg.repository.ChiTietSanPhamRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.GiaoDichRepository;
@@ -26,6 +30,8 @@ import com.example.website_ban_ao_the_thao_psg.repository.HoaDonChiTietRepositor
 import com.example.website_ban_ao_the_thao_psg.repository.HoaDonRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.KhachHangRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.LichSuHoaDonRepository;
+import com.example.website_ban_ao_the_thao_psg.repository.NhanVienRepository;
+import com.example.website_ban_ao_the_thao_psg.repository.SanPhamRepository;
 import com.example.website_ban_ao_the_thao_psg.repository.ViVoucherRepository;
 import com.example.website_ban_ao_the_thao_psg.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +63,10 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
+
+    @Autowired
+    private SanPhamRepository sanPhamRepository;
+
     @Autowired
     private ChiTietSanPhamRepository chiTietSanPhamRepository;
 
@@ -82,16 +92,14 @@ public class HoaDonServiceImpl implements HoaDonService {
     private KhachHangRepository khachHangRepository;
 
     @Autowired
+    private NhanVienRepository nhanVienRepository;
+
+    @Autowired
     private ViVoucherMapper viVoucherMapper;
 
     @Override
     public List<HoaDonResponse> getAllHoaDonCho() {
         List<HoaDon> hoaDonList = hoaDonRepository.getHoaDonByTrangThai(ApplicationConstant.TrangThaiHoaDon.PENDING);
-        // list hoa don cho nho hon or = 1 thì tự động add thêm 1 hoa don cho
-        if (hoaDonList.size() <= 1) {
-            addHoaDon();
-        }
-
         return hoaDonMapper.listHoaDonEntityToHoaDonResponse(hoaDonList);
     }
 
@@ -132,6 +140,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         }
 
         HoaDon hoaDon = hoaDonMapper.createHoaDonRequestToHoaDonEntity(new CreateHoaDonRequest());
+        hoaDon.setNhanVien(null);
         hoaDon.setMa(GenCode.generateHoaDonCode());
         hoaDon.setNgayTao(LocalDate.now());
         hoaDon.setTrangThai(ApplicationConstant.TrangThaiHoaDon.PENDING);
@@ -140,6 +149,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         LichSuHoaDon lichSuHoaDon = lichSuHoaDonMapper.createLichSuHoaDonRequestToLichSuHoaDonEntity(new CreateLichSuHoaDonRequest());
         lichSuHoaDon.setHoaDon(hd);
         lichSuHoaDon.setMoTa("Tạo Hóa Đơn Cho Khách");
+        lichSuHoaDon.setNhanVien(null);
         lichSuHoaDon.setNgayTao(LocalDateTime.now());
         lichSuHoaDon.setLoaiLichSuHoaDon(ApplicationConstant.LoaiLichSuHoaDon.CREATED);
         lichSuHoaDonRepository.save(lichSuHoaDon);
@@ -150,6 +160,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public void updateTrangThaiHoaDon(ApplicationConstant.TrangThaiHoaDon trangThaiHoaDon, Integer idHd, String moTa) {
         HoaDon hoaDon = hoaDonRepository.findById(idHd).get();
+//        GiaoDich giaoDich = giaoDichRepository.
         LichSuHoaDon lichSuHoaDon = lichSuHoaDonMapper.createLichSuHoaDonRequestToLichSuHoaDonEntity(new CreateLichSuHoaDonRequest());
         lichSuHoaDon.setHoaDon(hoaDon);
         lichSuHoaDon.setNgayTao(LocalDateTime.now());
@@ -159,25 +170,103 @@ public class HoaDonServiceImpl implements HoaDonService {
         switch (trangThaiHoaDon) {
             case APPROVED:
                 lichSuHoaDon.setLoaiLichSuHoaDon(ApplicationConstant.LoaiLichSuHoaDon.APPROVED);
+                lichSuHoaDon.setMoTa("Đơn hàng thành công");
+//                giaoDich.setLoaiGiaoDich(ApplicationConstant.LoaiGiaoDich.PAYMENT);
+//                giaoDich.setTrangThaiGiaoDich(ApplicationConstant.TrangThaiGiaoDich.APPROVED);
                 break;
             case SHIPPING:
                 lichSuHoaDon.setLoaiLichSuHoaDon(ApplicationConstant.LoaiLichSuHoaDon.SHIPPING);
+                lichSuHoaDon.setMoTa("Đã giao cho đơn vị vận chuyển");
                 break;
             case CANCELLED:
                 lichSuHoaDon.setLoaiLichSuHoaDon(ApplicationConstant.LoaiLichSuHoaDon.CANCELLED);
+                lichSuHoaDon.setMoTa("Đơn hàng đã hủy");
                 break;
             case CONFIRMED:
                 lichSuHoaDon.setLoaiLichSuHoaDon(ApplicationConstant.LoaiLichSuHoaDon.CONFIRMED);
+                lichSuHoaDon.setMoTa("Đã xác nhận thông tin thanh toán");
                 break;
             case REVERSE:
                 lichSuHoaDon.setLoaiLichSuHoaDon(ApplicationConstant.LoaiLichSuHoaDon.REVERSED);
+                lichSuHoaDon.setMoTa("Đẫ trả hàng");
                 break;
             default:
                 break;
         }
         lichSuHoaDonRepository.save(lichSuHoaDon);
+//        giaoDichRepository.save(giaoDich);
+        hoaDonRepository.updateTrangThai(idHd, trangThaiHoaDon);
+    }
 
-        hoaDonRepository.updateTrangThai(idHd, trangThaiHoaDon, LocalDate.now());
+    @Override
+    public void thanhToanHoaDon(UpdateHoaDonRequest updateHoaDonRequest, ApplicationConstant.TrangThaiHoaDon trangThaiHoaDon, ApplicationConstant.HinhThucThanhToan hinhThucThanhToan) {
+        HoaDon hoaDon = hoaDonMapper.updateHoaDonRequestToHoaDonEntity(updateHoaDonRequest);
+        GiaoDich giaoDich = giaoDichMapper.createGiaoDichRequestToGiaoDichEntity(new CreateGiaoDichRequest());
+        giaoDich.setHoaDon(hoaDon);
+        giaoDich.setNhanVien(null);
+        giaoDich.setKhachHang(hoaDon.getKhachHang());
+        giaoDich.setNgayTao(LocalDate.now());
+        giaoDich.setSoTienChuyenKhoan(hoaDon.getTienKhachChuyenKhoan());
+        giaoDich.setSoTienMat(hoaDon.getTienMatKhachTra());
+        giaoDich.setPhuongThucThanhToan(hinhThucThanhToan);
+
+
+        LichSuHoaDon lichSuHoaDon = lichSuHoaDonMapper.createLichSuHoaDonRequestToLichSuHoaDonEntity(new CreateLichSuHoaDonRequest());
+        lichSuHoaDon.setHoaDon(hoaDon);
+        lichSuHoaDon.setNgayTao(LocalDateTime.now());
+        lichSuHoaDon.setNhanVien(null);
+
+        switch (trangThaiHoaDon) {
+            case APPROVED:
+                lichSuHoaDon.setLoaiLichSuHoaDon(ApplicationConstant.LoaiLichSuHoaDon.APPROVED);
+                lichSuHoaDon.setMoTa("Đơn hàng thành công");
+                giaoDich.setTrangThaiGiaoDich(ApplicationConstant.TrangThaiGiaoDich.APPROVED);
+                giaoDich.setLoaiGiaoDich(ApplicationConstant.LoaiGiaoDich.PAYMENT);
+                // update so luong cho chi tiet san pham
+                List<HoaDonChiTiet> hoaDonChiTietList = hoaDonChiTietRepository.getHoaDonChiTietByHoaDon(hoaDon);
+                for (HoaDonChiTiet hdct : hoaDonChiTietList) {
+                    ChiTietSanPham ctsp = chiTietSanPhamRepository.findById(hdct.getChiTietSanPham().getId()).get();
+                    ctsp.setSoLuong(ctsp.getSoLuong() - hdct.getSoLuong());
+                    chiTietSanPhamRepository.save(ctsp);
+                }
+                break;
+            case SHIPPING:
+                lichSuHoaDon.setLoaiLichSuHoaDon(ApplicationConstant.LoaiLichSuHoaDon.SHIPPING);
+                lichSuHoaDon.setMoTa("Đã giao cho đơn vị vận chuyển");
+                break;
+            case CANCELLED:
+                lichSuHoaDon.setLoaiLichSuHoaDon(ApplicationConstant.LoaiLichSuHoaDon.CANCELLED);
+                lichSuHoaDon.setMoTa("Đơn hàng đã hủy");
+                break;
+            case CONFIRMED:
+                lichSuHoaDon.setLoaiLichSuHoaDon(ApplicationConstant.LoaiLichSuHoaDon.CONFIRMED);
+                lichSuHoaDon.setMoTa("Đã xác nhận thông tin thanh toán");
+
+                if(hinhThucThanhToan == ApplicationConstant.HinhThucThanhToan.BANKING){
+                    giaoDich.setTrangThaiGiaoDich(ApplicationConstant.TrangThaiGiaoDich.APPROVED);
+                }else {
+                    giaoDich.setTrangThaiGiaoDich(ApplicationConstant.TrangThaiGiaoDich.PENDING);
+                }
+                giaoDich.setLoaiGiaoDich(ApplicationConstant.LoaiGiaoDich.PAYMENT);
+                // update so luong cho chi tiet san pham
+                List<HoaDonChiTiet> hoaDonChiTiets = hoaDonChiTietRepository.getHoaDonChiTietByHoaDon(hoaDon);
+                for (HoaDonChiTiet hdct : hoaDonChiTiets) {
+                    ChiTietSanPham ctsp = chiTietSanPhamRepository.findById(hdct.getChiTietSanPham().getId()).get();
+                    ctsp.setSoLuong(ctsp.getSoLuong() - hdct.getSoLuong());
+                    chiTietSanPhamRepository.save(ctsp);
+                }
+                break;
+            case REVERSE:
+                lichSuHoaDon.setLoaiLichSuHoaDon(ApplicationConstant.LoaiLichSuHoaDon.REVERSED);
+                lichSuHoaDon.setMoTa("Đẫ trả hàng");
+                break;
+            default:
+                break;
+        }
+        lichSuHoaDonRepository.save(lichSuHoaDon);
+        hoaDon.setTrangThai(trangThaiHoaDon);
+        hoaDonRepository.save(hoaDon);
+        giaoDichRepository.save(giaoDich);
     }
 
     @Override

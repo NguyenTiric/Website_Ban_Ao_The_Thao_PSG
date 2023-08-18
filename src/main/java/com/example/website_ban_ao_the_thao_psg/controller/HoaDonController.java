@@ -1,6 +1,7 @@
 package com.example.website_ban_ao_the_thao_psg.controller;
 
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
+import com.example.website_ban_ao_the_thao_psg.model.request.update_request.UpdateHoaDonRequest;
 import com.example.website_ban_ao_the_thao_psg.model.response.HoaDonChiTietResponse;
 import com.example.website_ban_ao_the_thao_psg.common.ApplicationConstant;
 import com.example.website_ban_ao_the_thao_psg.entity.KhachHang;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,18 +50,6 @@ public class HoaDonController {
         model.addAttribute("listKhachHang", khachHangService.getAllKhachHangActive());
         model.addAttribute("phuongThucThanhToan", ApplicationConstant.HinhThucThanhToan.values());
         return "admin/hoa_don/hoa_don_cho";
-    }
-
-
-    // lich su hoa don
-    @GetMapping("/lich-su-hoa-don/{id}")
-    public String hoaDonDetail(@PathVariable("id") Integer id, Model model) {
-        HoaDonResponse hoaDonResponse = hoaDonService.getDetailHoaDon(id);
-        List<SanPhamResponse> sanPhamResponseList = chiTietSanPhamService.getAllSP();
-        model.addAttribute("hoaDon", hoaDonResponse);
-        model.addAttribute("listSanPham", sanPhamResponseList);
-        model.addAttribute("listCtsp", chiTietSanPhamService.getAllChiTietSanPham());
-        return "admin/hoa_don/lich_su_hoa_don";
     }
 
     @GetMapping("/hien-thi")
@@ -145,11 +135,25 @@ public class HoaDonController {
         return "redirect:/admin/psg/hoa-don/detail-hoa-don/" + idHd;
     }
 
+    // lich su hoa don
     @GetMapping("/lich-su-hoa-don/{idHd}")
     public String lichSuHoaDon(@PathVariable("idHd") Integer idHd, Model model) {
         HoaDonResponse hoaDonResponse = hoaDonService.getDetailHoaDon(idHd);
-        hoaDonResponse.setTrangThai(ApplicationConstant.TrangThaiHoaDon.PENDING);
         model.addAttribute("hoaDon", hoaDonResponse);
+        System.out.println(hoaDonResponse.getTrangThai());
+        switch (hoaDonResponse.getTrangThai()) {
+            case PENDING:
+                model.addAttribute("showConfirmButton", true);
+                break;
+            case CONFIRMED:
+                model.addAttribute("showShippingButton", true);
+                break;
+            case SHIPPING:
+                model.addAttribute("showCompleteButton", true);
+                break;
+            // và cứ thế cho các trạng thái khác
+        }
+
         model.addAttribute("listLichSuHoaDon", hoaDonService.getAllLichSuHoaDon(idHd));
         model.addAttribute("listGiaoDich", hoaDonService.getAllGiaoDich(idHd));
         model.addAttribute("listHoaDonChiTiet", hoaDonService.getAllHoaDonChiTiet(idHd));
@@ -232,10 +236,19 @@ public class HoaDonController {
         return "admin/hoa_don/hoa_don";
     }
 
-    @PostMapping("/update-trang-thai-hoa-don/{id}")
-    public String updateTrangThaiHoaDon(@PathVariable("id") Integer idhd, @RequestParam("trangThai") ApplicationConstant.TrangThaiHoaDon trangThaiHoaDon) {
+    @GetMapping("/update-trang-thai-hoa-don/{id}/{trangThaiHoaDon}")
+    public String updateTrangThaiHoaDon(@PathVariable("id") Integer idhd, @PathVariable("trangThaiHoaDon") ApplicationConstant.TrangThaiHoaDon trangThaiHoaDon) {
         hoaDonService.updateTrangThaiHoaDon(trangThaiHoaDon, idhd, "OK");
         return "redirect:/admin/psg/hoa-don/lich-su-hoa-don/" + idhd;
     }
 
+    @PostMapping("/thanh-toan-hoa-don-tai-quay")
+    public String thanhToanHoaDon(@ModelAttribute("hoaDon")UpdateHoaDonRequest updateHoaDonRequest,@RequestParam("hinhThucThanhToan")ApplicationConstant.HinhThucThanhToan hinhThucThanhToan) {
+        if(updateHoaDonRequest.getHinhThucBanHang() == ApplicationConstant.HinhThucBanHang.INACTIVE){
+            hoaDonService.thanhToanHoaDon(updateHoaDonRequest, ApplicationConstant.TrangThaiHoaDon.CONFIRMED,hinhThucThanhToan);
+        }else {
+            hoaDonService.thanhToanHoaDon(updateHoaDonRequest, ApplicationConstant.TrangThaiHoaDon.APPROVED,hinhThucThanhToan);
+        }
+        return "redirect:/admin/psg/hoa-don/lich-su-hoa-don/"+updateHoaDonRequest.getId();
+    }
 }

@@ -103,7 +103,11 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form action="" method="post" th:object="${hoaDon}">
+                            <form action="/admin/psg/hoa-don/thanh-toan-hoa-don-tai-quay" method="post"
+                                  th:object="${hoaDon}">
+                                <input type="hidden" th:field="*{id}">
+                                <input type="hidden" th:field="*{ma}">
+                                <input type="hidden" th:field="*{ngayTao}">
                                 <table class="table">
                                     <tbody>
                                     <tr>
@@ -114,7 +118,7 @@
                                             <form th:action="@{/admin/psg/hoa-don/update-hoa-don/khach-hang/{hoaDonId}(hoaDonId=${hoaDon.id})}"
                                                   method="post">
                                                 <select class="form-control" id="kt_select2_1" name="customerId"
-                                                        onchange="updateHoaDonKhachHang()">
+                                                        th:field="*{khachHang}" onchange="updateHoaDonKhachHang()">
                                                     <option value="">Chọn khách hàng</option>
                                                     <option th:each="kh : ${listKhachHang}" th:value="${kh.id}"
                                                             th:text="${kh.sdt}+' '+${kh.ten} "></option>
@@ -127,8 +131,9 @@
                                             Tổng tiền hàng
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="" class="form-control mb-2"
-                                                   disabled th:value="${totalAmount}" id="totalAmount"/>
+                                            <input type="number" name="" class="form-control mb-2"
+                                                   disabled th:value="${totalAmount}"
+                                                   id="totalAmount"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -136,8 +141,9 @@
                                             Giảm giá (%)
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="" class="form-control mb-2"
-                                                   placeholder="%" id="discountInput" value="0"/>
+                                            <input type="number" name="" class="form-control mb-2"
+                                                   th:field="*{phanTramGiamGia}" placeholder="%" id="discountInput"
+                                                   value="0"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -145,7 +151,8 @@
                                             Voucher
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <select class="form-control" name="param" id="kt_select2_7">
+                                            <select class="form-control" name="param" id="kt_select2_7"
+                                                    th:field="*{phieu_giam_gia}">
                                                 <option value="0" selected>Chọn voucher</option>
                                                 <option th:each="vc : ${listVoucher}" th:value="${vc.soTienGiam}">
                                                     <span th:text="${vc.ma}"></span>
@@ -163,7 +170,7 @@
                                             Phương thức thanh toán
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <select class="form-control" name="param" id="phuongThucThanhToan">
+                                            <select class="form-control" name="hinhThucThanhToan" id="phuongThucThanhToan">
                                                 <option value="">Chọn hình thức thanh toán</option>
                                                 <option th:each="pttt : ${phuongThucThanhToan}"
                                                         th:value="${pttt.ten}" th:text="${pttt.moTa} "></option>
@@ -175,8 +182,9 @@
                                             Tiền chuyển khoản:
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="" class="form-control"
-                                                   placeholder="Tiền chuyển khoản" value=""/>
+                                            <input type="number" name="" class="form-control"
+                                                   th:field="*{tienKhachChuyenKhoan}" placeholder="Tiền chuyển khoản"
+                                                   value=""/>
                                         </td>
                                     </tr>
                                     <tr id="maGiaDichSection">
@@ -185,7 +193,7 @@
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
                                             <input type="text" name="" class="form-control"
-                                                   placeholder="Mã giao dịch" value=""/>
+                                                   th:field="*{maGiaoDich}" placeholder="Mã giao dịch" value=""/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -196,13 +204,13 @@
                                             <div class="radio-inline">
                                                 <label class="radio radio-primary">
                                                     <input type="radio" name="radios11" checked="checked" value="ACTIVE"
-                                                           id="taiQuayRadio"/>
+                                                           th:field="*{hinhThucBanHang}" id="taiQuayRadio"/>
                                                     <span></span>
                                                     Tại quầy
                                                 </label>
                                                 <label class="radio radio-primary">
                                                     <input type="radio" name="radios11" value="INACTIVE"
-                                                           id="giaoHangRadio"/>
+                                                           th:field="*{hinhThucBanHang}" id="giaoHangRadio"/>
                                                     <span></span>
                                                     Giao hàng
                                                 </label>
@@ -214,8 +222,24 @@
                                             Địa chỉ:
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="" class="form-control"
-                                                   placeholder="địa chỉ" value=""/>
+                                            <select class="form-control mt-2"
+                                                    style="height: 45px"
+                                                    name="province" id="province">
+                                                <option value="">Chọn tỉnh</option>
+                                            </select>
+                                            <select class="form-control mt-2"
+                                                    style="height: 45px"
+                                                    name="district" id="district">
+                                                <option value="">Chọn quận</option>
+                                            </select>
+                                            <select class="form-control mt-2"
+                                                    style="height: 45px"
+                                                    name="ward" id="ward">
+                                                <option value="">Chọn phường</option>
+                                            </select>
+
+                                            <input type="hidden" class="form-control" th:field="*{diaChi}"
+                                                   id="diaChiInput">
                                         </td>
                                     </tr>
                                     <tr id="tienShipSection">
@@ -223,8 +247,8 @@
                                             Tiền ship:
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="" id="tienShip" class="form-control"
-                                                   placeholder="Tiền ship" value="0"/>
+                                            <input type="number" name="" id="tienShip" class="form-control"
+                                                   th:field="*{tienShip}" placeholder="Tiền ship" value="0"/>
                                         </td>
                                     </tr>
                                     <tr id="tenNguoiNhanSection">
@@ -233,7 +257,7 @@
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
                                             <input type="text" name="" class="form-control"
-                                                   placeholder="Tên người nhận" value=""/>
+                                                   th:field="*{tenNguoiNhan}" placeholder="Tên người nhận" value=""/>
                                         </td>
                                     </tr>
                                     <tr id="sdtNguoiNhanSection">
@@ -242,7 +266,8 @@
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
                                             <input type="text" name="" class="form-control"
-                                                   placeholder="Số điện thoại người nhận" value=""/>
+                                                   th:field="*{sdtNguoiNhan}" placeholder="Số điện thoại người nhận"
+                                                   value=""/>
                                         </td>
                                     </tr>
                                     <tr id="ngayMuonNhanSection">
@@ -251,7 +276,8 @@
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
                                             <input type="date" name="" class="form-control"
-                                                   placeholder="Ngày muốn nhận hàng" value=""/>
+                                                   th:field="*{ngayMuonNhan}" placeholder="Ngày muốn nhận hàng"
+                                                   value=""/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -260,7 +286,8 @@
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
                                             <input type="number" name="" class="form-control mb-2"
-                                                   disabled placeholder="Thành tiền" id="customerPayment"/>
+                                                   th:field="*{thanhTien}" disabled placeholder="Thành tiền"
+                                                   id="customerPayment"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -268,8 +295,9 @@
                                             Tiền mặt khách trả
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="" id="tienMatKhachTra" class="form-control mb-2"
-                                                   placeholder="Tiền mặt khách trả" value="0"/>
+                                            <input type="number" name="" id="tienMatKhachTra" class="form-control mb-2"
+                                                   th:field="*{tienMatKhachTra}" placeholder="Tiền mặt khách trả"
+                                                   value="0"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -277,7 +305,7 @@
                                             Tiền thừa
                                         </td>
                                         <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                            <input type="text" name="" id="tienThua" class="form-control mb-2"
+                                            <input type="number" name="" id="tienThua" class="form-control mb-2"
                                                    placeholder="Tiền thừa" value="0"/>
                                         </td>
                                     </tr>
