@@ -1,6 +1,8 @@
 package com.example.website_ban_ao_the_thao_psg.repository;
 
+import com.example.website_ban_ao_the_thao_psg.entity.ChiTietSanPham;
 import com.example.website_ban_ao_the_thao_psg.entity.SanPham;
+import com.example.website_ban_ao_the_thao_psg.model.response.ChiTietSanPhamResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,4 +43,17 @@ public interface SanPhamRepository extends JpaRepository<SanPham,Integer> {
     @Modifying
     @Query(value = "update SanPham m set m.trangThai = 'ACTIVE', m.ngayCapNhat= :now where m.id = :id")
     void revert(@Param("id") Integer id, @Param("now") LocalDate now);
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "SELECT sp.* " +
+            "FROM san_pham sp " +
+            "JOIN cau_thu ct ON sp.cau_thu_id = ct.id " +
+            "WHERE ct.id = :idCauThu",
+            nativeQuery = true)
+    List<SanPham> danhSachSanPhamCauThu(@Param("idCauThu") Integer idCauThu);
+
+
 }
+

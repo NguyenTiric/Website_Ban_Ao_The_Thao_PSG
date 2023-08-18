@@ -507,82 +507,99 @@
                                 </div>
                             </div>
                             <div class="grid-small-1-medium-3 row small-up-1 medium-up-3">
+                                <!--                                stater thinh-->
+
                                 <div class="product-grid-container small-12 columns">
+
                                     <div class="column">
                                         <div class="product-card row">
-                                            <div class="columns small-7 medium-12">
-                                                <div class="card-image-container">
-                                                    <div class="product-image-container"><a href="#"
-                                                                                            data-trk-id="p-13354664"
-                                                                                            class="color-black"
-                                                                                            tabindex="-1"
-                                                                                            aria-hidden="true"><img
-                                                            loading="lazy"
-                                                            src="//images.footballfanatics.com/paris-saint-germain/paris-saint-germain-x-jordan-fourth-stadium-shirt-2022-23_ss4_p-13354664+u-11s88g1klos1oq4g6vyl+v-1a85c09a8b6742489bf5d7764c6b4b9b.jpg?_hv=2&amp;w=340"
-                                                            alt="PSG Jordan Fourth Stadium Jersey 22/23"
-                                                            class="product-image" width="340"
-                                                            height="340"></a></div>
+                                            <div th:each="listSP:${listSanPham}">
+
+                                                <div class="columns small-7 medium-12">
+                                                    <div class="card-image-container">
+                                                        <div class="product-image-container"><a th:href="@{/user/psg/trang-chu/chi-tiet-san-pham/{idSP}(idSP=${listSP.id})}"
+                                                                                                class="color-black"
+                                                                                                ><img
+                                                                loading="lazy"
+                                                                src="//images.footballfanatics.com/paris-saint-germain/paris-saint-germain-x-jordan-fourth-stadium-shirt-2022-23_ss4_p-13354664+u-11s88g1klos1oq4g6vyl+v-1a85c09a8b6742489bf5d7764c6b4b9b.jpg?_hv=2&amp;w=340"
+                                                                alt="PSG Jordan Fourth Stadium Jersey 22/23"
+                                                                class="product-image" width="340"
+                                                                height="340"></a></div>
+                                                    </div>
+                                                    <div class="product-card-colors hide-for-small-only">
+                                                        <div class="card-color-selector-container"></div>
+                                                    </div>
                                                 </div>
-                                                <div class="product-card-colors hide-for-small-only">
-                                                    <div class="card-color-selector-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="columns small-5 medium-12">
-                                                <div class="">
-                                                    <div class="price-card" tabindex="0" data-talos="srpProductPrice">
-                                                        <div class="superscript">
-                                                            <div class="price-row"><span class="lowest"><span
-                                                                    class="price primary"><font
-                                                                    style="vertical-align: inherit;"><font
-                                                                    style="vertical-align: inherit;">Promotion:</font></font><span
-                                                                    class="money-value"><span class="sr-only"><font
-                                                                    style="vertical-align: inherit;"><font
-                                                                    style="vertical-align: inherit;">€65.80</font></font></span><span
-                                                                    aria-hidden="true"><sup><font
-                                                                    style="vertical-align: inherit;"><font
-                                                                    style="vertical-align: inherit;">€ </font></font></sup><span><font
-                                                                    style="vertical-align: inherit;"><font
-                                                                    style="vertical-align: inherit;">65 </font></font></span><sup><font
-                                                                    style="vertical-align: inherit;"><font
-                                                                    style="vertical-align: inherit;">80</font></font></sup></span></span><span
-                                                                    class="suffix saleprice"></span></span></span></div>
-                                                            <div class="price-row"><span class="strike-through"><span
-                                                                    class="price"><font
-                                                                    style="vertical-align: inherit;"><font
-                                                                    style="vertical-align: inherit;">Instead of:</font></font><span
-                                                                    class="money-value"><span class="sr-only"><font
-                                                                    style="vertical-align: inherit;"><font
-                                                                    style="vertical-align: inherit;">€89.99</font></font></span><span
-                                                                    aria-hidden="true"><sup><font
-                                                                    style="vertical-align: inherit;"><font
-                                                                    style="vertical-align: inherit;">€ </font></font></sup><span><font
-                                                                    style="vertical-align: inherit;"><font
-                                                                    style="vertical-align: inherit;">89 </font></font></span><sup><font
-                                                                    style="vertical-align: inherit;"><font
-                                                                    style="vertical-align: inherit;">99</font></font></sup></span></span><span
-                                                                    class="suffix prediscountprice"></span></span></span>
+                                                <div class="columns small-5 medium-12">
+                                                    <div class="">
+                                                        <div class="price-card" tabindex="0"
+                                                             data-talos="srpProductPrice">
+                                                            <div class="superscript">
+                                                                <div class="price-row"><span class="lowest"><span
+                                                                        class="price primary"><font
+                                                                        style="vertical-align: inherit;"><font
+                                                                        style="vertical-align: inherit;">Giá:</font></font><span
+                                                                        class="money-value"><span class="sr-only"><font
+                                                                        style="vertical-align: inherit;"><font
+                                                                        style="vertical-align: inherit;"></font></font></span><span
+                                                                        aria-hidden="true"><sup><font
+                                                                        style="vertical-align: inherit;"><font
+                                                                        style="vertical-align: inherit;"> </font></font></sup><span><font
+                                                                        style="vertical-align: inherit;"><font
+                                                                        style="vertical-align: inherit;">  <span
+                                                                        th:text="${listSP.gia}"></span> </font></font></span><sup><font
+                                                                        style="vertical-align: inherit;"><font
+                                                                        style="vertical-align: inherit;">80</font></font></sup></span></span><span
+                                                                        class="suffix saleprice"></span></span></span>
+                                                                </div>
+                                                                <div class="price-row"><span
+                                                                        class="strike-through"><span class="price"><font
+                                                                        style="vertical-align: inherit;"><font
+                                                                        style="vertical-align: inherit;">Instead of:</font></font><span
+                                                                        class="money-value"><span class="sr-only"><font
+                                                                        style="vertical-align: inherit;"><font
+                                                                        style="vertical-align: inherit;">€89.99</font></font></span><span
+                                                                        aria-hidden="true"><sup><font
+                                                                        style="vertical-align: inherit;"><font
+                                                                        style="vertical-align: inherit;">€ </font></font></sup><span><font
+                                                                        style="vertical-align: inherit;"><font
+                                                                        style="vertical-align: inherit;">89 </font></font></span><sup><font
+                                                                        style="vertical-align: inherit;"><font
+                                                                        style="vertical-align: inherit;">99</font></font></sup></span></span><span
+                                                                        class="suffix prediscountprice"></span></span></span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="product-card-title"><a
+                                                            href="/fr/maillot-psg-jordan-fourth-stadium-22/23/p-2392926104847348+z-933-2752505731?_ref=p-BRLP:m-GRID:i-r0c0:po-0"
+                                                            data-trk-id="p-13354664" data-talos="linkSearchResult"
+                                                            class="color-black"
+                                                            style="vertical-align: inherit;"><font
+                                                            style="vertical-align: inherit;">
+
+                                                    </font></font>
+                                                        <span
+                                                                th:text="${listSP.ten}"></span>
+                                                    </a></div>
+                                                    <div class="product-card-colors show-for-small-only">
+                                                        <div class="card-color-selector-container"></div>
+                                                    </div>
                                                 </div>
-                                                <div class="product-card-title"><a
-                                                        href="/fr/maillot-psg-jordan-fourth-stadium-22/23/p-2392926104847348+z-933-2752505731?_ref=p-BRLP:m-GRID:i-r0c0:po-0"
-                                                        data-trk-id="p-13354664" data-talos="linkSearchResult"
-                                                        class="color-black"
-                                                        title="PSG Jordan Fourth Stadium Jersey 22/23"><font
-                                                        style="vertical-align: inherit;"><font
-                                                        style="vertical-align: inherit;">PSG Jordan Fourth Stadium
-                                                    Jersey
-                                                    22/23</font></font></a></div>
-                                                <div class="product-card-colors show-for-small-only">
-                                                    <div class="card-color-selector-container"></div>
-                                                </div>
+
+
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
+
+
+                                <!--                                end Thinh-->
                             </div>
                             <div class="layout-row product-grid">
+
                                 <div class="product-grid-container small-12 columns">
                                     <div class="product-grid-bottom-area">
                                         <div class="page-list">
@@ -661,6 +678,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

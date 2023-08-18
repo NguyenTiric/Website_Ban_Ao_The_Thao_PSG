@@ -22,7 +22,6 @@ public interface AnhSanPhamRepository extends JpaRepository<AnhSanPham,Integer> 
 
     List<AnhSanPham> getAnhSanPhamBySanPham(SanPham sanPham);
 
-
     @Transactional
     @Modifying
     @Query(value = "UPDATE AnhSanPham m SET m.trangThai = 'INACTIVE', m.ngayCapNhat = :now WHERE m.id = :id")
