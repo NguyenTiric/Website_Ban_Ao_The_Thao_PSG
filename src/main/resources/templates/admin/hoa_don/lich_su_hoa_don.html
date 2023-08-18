@@ -22,8 +22,9 @@
                                 <th scope="col">STT</th>
                                 <th scope="col"></th>
                                 <th scope="col">Ngày Tạo</th>
-                                <th scope="col">Người Xác Nhận</th>
                                 <th scope="col">Ghi Chú</th>
+                                <th scope="col">Người Xác Nhận</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -31,30 +32,24 @@
                                 <td th:text="${index.count}"></td>
                                 <td th:text="${ls.loaiLichSuHoaDon.moTa}"></td>
                                 <td th:text="${#temporals.format(ls.ngayTao, 'dd-MM-yyyy HH:mm')}"></td>
-                                <td th:text="${ls.nhanVien.ten}"></td>
+
                                 <td th:text="${ls.moTa}"></td>
+                                <!--                                <td th:text="${ls.nhanVien.ten}"></td>-->
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <form th:action="@{/admin/psg/hoa-don/update-trang-thai-hoa-don/{id}(id=${hoaDon.id})}" method="post">
-                    <button th:if="${hoaDon.trangThai.ten== 'PENDING'}" name="trangThai" value="CONFIRMED"
-                            class="btn btn-success">Xác nhận
-                    </button>
-                    <button th:if="${hoaDon.trangThai.ten == 'CONFIRMED'}" name="trangThai" value="SHIPPING"
-                            class="btn btn-secondary">Giao hàng
-                    </button>
-                    <button name="trangThai" value="CANCELLED"
-                            class="btn btn-danger">Hủy Đơn
-                    </button>
-                    <button th:if="${hoaDon.trangThai.ten == 'SHIPPING'}" name="trangThai" value="APPROVED"
-                            class="btn btn-primary">Hoàn Thành Đơn
-                    </button>
-                    <button th:if="${hoaDon.trangThai.ten == 'REVERSE'}" name="trangThai" value="REVERSE"
-                            class="btn btn-info">Đã trả hàng
-                    </button>
-                </form>
+                <a th:href="@{/admin/psg/hoa-don/update-trang-thai-hoa-don/{id}/{trangThaiHoaDon}(id=${hoaDon.id},trangThaiHoaDon='CONFIRMED')}"
+                   th:if="${showConfirmButton}" class="btn btn-success">Xác nhận</a>
+
+                <!-- Giao hàng button -->
+                <a th:href="@{/admin/psg/hoa-don/update-trang-thai-hoa-don/{id}/{trangThaiHoaDon}(id=${hoaDon.id},trangThaiHoaDon='SHIPPING')}"
+                   th:if="${showShippingButton}" class="btn btn-success">Giao hàng</a>
+
+                <!-- Hoàn thành đơn button -->
+                <a th:href="@{/admin/psg/hoa-don/update-trang-thai-hoa-don/{id}/{trangThaiHoaDon}(id=${hoaDon.id},trangThaiHoaDon='APPROVED')}"
+                   th:if="${showCompleteButton}" class="btn btn-success">Hoàn Thành Đơn</a>
             </div>
         </div>
     </div>
@@ -63,37 +58,58 @@
             <div class="card-body">
                 <h4 class="card-title mb-3">Thông Tin Đơn Hàng</h4>
                 <hr>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col-6">
-                                <p>Trạng Thái</p>
-                                <p>Loại</p>
-                                <p>Mã Đơn Hàng</p>
-                            </div>
-                            <div class="col-6">
-                                <p th:text="${hoaDon.trangThai.moTa}"></p>
-                                <p th:text="${hoaDon.hinhThucBanHang.moTa}"></p>
-                                <p th:text="${hoaDon.ma}"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col-6">
-                                <p>Họ Và Tên</p>
-                                <p>Số Điện Thoại</p>
-                                <p>Email</p>
-                                <p>Địa Chỉ</p>
-                            </div>
-                            <div class="col-6">
-                                <p th:text="${hoaDon.tenNguoiNhan}"></p>
-                                <p th:text="${hoaDon.sdtNguoiNhan}"></p>
-                                <p th:text="${hoaDon.khachHang.email}"></p>
-                                <p th:text="${hoaDon.diaChi}"></p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="tab-pane show active">
+                    <table class="table">
+
+                        <thead>
+                        <tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="d-flex align-items-center font-weight-bolder">
+                                Trạng Thái</td>
+                            <td   th:text="${hoaDon.trangThai.moTa}" class="text-right align-middle font-weight-bolder font-size-h5">
+
+                            </td>
+                            <td class="d-flex align-items-center font-weight-bolder">
+                                Người Đặt Hàng</td>
+                            <td th:text="${hoaDon.khachHang.ten}" class="text-right align-middle font-weight-bolder font-size-h5">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="d-flex align-items-center font-weight-bolder">
+                                Loại</td>
+                            <td th:text="${hoaDon.hinhThucBanHang.moTa}" class="text-right align-middle font-weight-bolder font-size-h5">
+
+                            </td>
+                            <td class="d-flex align-items-center font-weight-bolder">
+                                Người Nhận Hàng</td>
+                            <td th:text="${hoaDon.tenNguoiNhan}" class="text-right align-middle font-weight-bolder font-size-h5">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="d-flex align-items-center font-weight-bolder">
+                                Mã Đơn Hàng</td>
+                            <td th:text="${hoaDon.ma}" class="text-right align-middle font-weight-bolder font-size-h5">
+
+                            </td>
+                            <td class="d-flex align-items-center font-weight-bolder">
+                                Số điện thoại người nhận</td>
+                            <td th:text="${hoaDon.sdtNguoiNhan}" class="text-right align-middle font-weight-bolder font-size-h5">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="d-flex align-items-center font-weight-bolder"></td>
+                            <td class="text-right align-middle font-weight-bolder font-size-h5"></td>
+                            <td class="d-flex align-items-center font-weight-bolder">Địa Chỉ Nhận Hàng</td>
+                            <td th:text="${hoaDon.diaChi}" class="text-right align-middle font-weight-bolder font-size-h5"></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -107,8 +123,8 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Số Tiền</th>
+                            <th scope="col">Số Tiền Mặt</th>
+                            <th scope="col">Số Chuyển Khoản</th>
                             <th scope="col">Thời Gian</th>
                             <th scope="col">Loại Giao Dịch</th>
                             <th scope="col">Phương Thức Thanh Toán</th>
@@ -118,13 +134,13 @@
                         </thead>
                         <tbody>
                         <tr th:each="lsgd,index:${listGiaoDich}">
-                            <td th:text="${index.count}"></td>
-                            <td th:text="${lsgd.hoaDon.thanhTien}"></td>
+                            <td th:text="${lsgd.soTienMat}"></td>
+                            <td th:text="${lsgd.soTienChuyenKhoan}"></td>
                             <td th:text="${lsgd.ngayTao}"></td>
                             <td th:text="${lsgd.loaiGiaoDich.moTa}"></td>
                             <td th:text="${lsgd.phuongThucThanhToan.moTa}"></td>
                             <td th:text="${lsgd.trangThaiGiaoDich.moTa}"></td>
-                            <td th:text="${lsgd.nhanVien.ten}"></td>
+                            <!--                            <td th:text="${lsgd.nhanVien.ten}"></td>-->
                         </tr>
                         </tbody>
                     </table>

@@ -60,8 +60,11 @@ public class GiaoDich {
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;
 
-    @Column(name = "so_tien")
-    private BigDecimal soTien;
+    @Column(name = "so_tien_chuyen_khoan")
+    private BigDecimal soTienChuyenKhoan;
+
+    @Column(name = "so_tien_mat")
+    private BigDecimal soTienMat;
 
     @Column(name = "ngay_cap_nhat")
     private LocalDate ngayCapNhat;

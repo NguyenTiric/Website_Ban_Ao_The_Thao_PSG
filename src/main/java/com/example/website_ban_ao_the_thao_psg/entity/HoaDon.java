@@ -50,14 +50,8 @@ public class HoaDon {
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;
 
-    @Column(name = "ngay_thanh_toan")
-    private LocalDate ngayThanhToan;
-
-    @Column(name = "ngay_ship")
-    private LocalDate ngayShip;
-
-    @Column(name = "ngay_nhan")
-    private LocalDate ngayNhan;
+    @Column(name = "ngay_muon_nhan")
+    private LocalDate ngayMuonNhan;
 
     @Column(name = "tien_mat_khach_tra")
     private BigDecimal tienMatKhachTra;
@@ -83,17 +77,14 @@ public class HoaDon {
     @Column(name = "sdt_nguoi_ship")
     private String sdtNguoiShip;
 
-    @Column(name = "ma_voucher_thu_hang")
-    private String maVoucherThuHang;
+    @Column(name = "phieu_giam_gia")
+    private BigDecimal phieu_giam_gia;
 
     @Column(name = "phan_tram_giam_gia")
     private Integer phanTramGiamGia;
 
     @Column(name = "ma_giao_dich")
     private String maGiaoDich;
-
-    @Column(name = "ngay_cap_nhat")
-    private LocalDate ngayCapNhat;
 
     @Column(name = "hinh_thuc_ban_hang")
     @Enumerated(EnumType.STRING)

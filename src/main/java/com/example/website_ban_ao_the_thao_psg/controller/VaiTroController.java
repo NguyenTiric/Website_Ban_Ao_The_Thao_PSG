@@ -92,7 +92,7 @@ public class VaiTroController {
     public String add(@Valid @ModelAttribute("vaiTro") CreateVaiTroRequest createVaiTroRequest, BindingResult result, Model model, HttpSession session) {
         if(result.hasErrors()){
             model.addAttribute("vaiTro", createVaiTroRequest);
-            return "admin/vai_tro/view_add";
+            return "admin/vai_tro/view_add_vai_tro";
         }
         vaiTroService.add(createVaiTroRequest);
         session.setAttribute("successMessage", "Thêm thành công!");
