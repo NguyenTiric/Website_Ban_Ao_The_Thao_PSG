@@ -343,9 +343,9 @@
         $("#provinceInput").val(provinceName);
         $("#districtInput").val(districtName);
         $("#wardInput").val(wardName);
-        $("#provinceCodeInput").val(provinceCode);
-        $("#districtCodeInput").val(districtCode);
-        $("#wardCodeInput").val(wardCode);
+        // $("#provinceCodeInput").val(provinceCode);
+        // $("#districtCodeInput").val(districtCode);
+        // $("#wardCodeInput").val(wardCode);
     }
 
     $("#printRes").click(() => {
@@ -361,6 +361,11 @@
         $("#provinceCodeInput2").val(provinceCode);
         $("#districtCodeInput2").val(districtCode);
         $("#wardCodeInput2").val(wardCode);
+
+        var fullAddress = provinceName + ', ' + districtName + ', ' + wardName;
+
+        // Cập nhật giá trị vào ô input mới
+        $('#wardInput2').val(fullAddress);
     })
 
     document.getElementById("selecttTT").addEventListener("change", function() {
@@ -385,6 +390,19 @@
         }
     });
 
+    $(document).ready(function () {
+        // Lắng nghe sự kiện thay đổi trên các ô input thành phố, quận và huyện
+        $('#provinceInput2, #districtInput2, #wardInput2').on('change', function () {
+            // Lấy giá trị từ ba ô input và gộp lại thành địa chỉ đầy đủ
+            var province = $('#provinceInput2').val();
+            var district = $('#districtInput2').val();
+            var ward = $('#wardInput2').val();
+            var fullAddress = province + ', ' + district + ', ' + ward;
+
+            // Cập nhật giá trị vào ô input mới
+            $('#fullAddress').val(fullAddress);
+        });
+    });
 
 
 

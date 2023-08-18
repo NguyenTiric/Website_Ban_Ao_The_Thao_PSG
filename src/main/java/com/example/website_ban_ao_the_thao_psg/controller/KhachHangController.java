@@ -181,6 +181,7 @@ public class KhachHangController {
             result.rejectValue("ngaySinh", "loiNgaySinh", "Vui lòng nhập ngày sinh không lớn hơn ngày hôm nay");
             return "admin/khach_hang/view_update_khach_hang";
         }
+
         khachHangService.update(updateKhachHangRequest.getId(),anh,updateKhachHangRequest);
         return "redirect:/admin/psg/khach-hang/hien-thi";
     }

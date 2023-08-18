@@ -150,13 +150,53 @@
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            <label class="form-label" style="margin-left: 10px">Địa Chỉ</label>
-                            <input class="form-control custom-shadow custom-radius border-1 bg-white"
-                                   type="text" placeholder="Nhập địa chỉ" th:field="*{diaChi}"
-                                   style="height: 50px">
-                            <span th:if="${#fields.hasErrors('diaChi')}" style="color: red; font-size: 15px"
-                                  th:errors="*{diaChi}"></span>
+                            <input type="text" class="form-control custom-shadow custom-radius border-0 bg-white"
+                                   id="wardInput2" style="height: 50px" readonly th:field="*{diaChi}">
                         </div>
+
+                        <button  type="button" class="btn btn-rounded btn-primary" data-bs-toggle="modal" data-bs-target="#modalDiaChi">
+                            Cập Nhật Địa Chỉ
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalDiaChi" tabindex="-1" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Cập nhật địa chỉ</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <div class="select-containe r d-flex">
+                                            <select class="custom-select form-control bg-white custom-radius custom-shadow border-1"
+                                                    style="height: 45px"
+                                                    name="province" id="province">
+                                                <!-- Các options khác -->
+                                            </select>
+
+                                            <select class="custom-select form-control bg-white custom-radius custom-shadow border-1"
+                                                    style="height: 45px"
+                                                    name="district" id="district">
+                                                <option value="">Chọn quận</option>
+                                                <!-- Các options khác -->
+                                            </select>
+
+                                            <select class="custom-select form-control bg-white custom-radius custom-shadow border-1"
+                                                    style="height: 45px"
+                                                    name="ward" id="ward">
+                                                <option value="">Chọn xã</option>
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                            </button>
+                                            <button type="button" class="btn btn-primary" id="printRes" data-bs-dismiss="modal">
+                                                Lưu Địa Chỉ
+                                            </button>
+                                        </div>
+                                    </div>
                     </div>
 
                     <div class="col-1"></div>

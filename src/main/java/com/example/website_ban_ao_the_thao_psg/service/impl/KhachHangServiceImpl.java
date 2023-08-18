@@ -58,9 +58,7 @@ public class KhachHangServiceImpl implements KhachHangService {
         khachHang.setNgayTao(LocalDate.now());
         khachHang.setTrangThai(ApplicationConstant.TrangThaiTaiKhoan.ACTIVE);
         khachHang.setAnh(blob);
-
         khachHangRepository.save(khachHang);
-
     }
 
     @Override
