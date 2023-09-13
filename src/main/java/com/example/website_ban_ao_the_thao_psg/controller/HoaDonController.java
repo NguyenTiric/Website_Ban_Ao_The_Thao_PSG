@@ -62,18 +62,21 @@ public class HoaDonController {
         return pageHoaDonActive(0, model);
     }
 
+
+    //okokoko
+
     @GetMapping("/pageActive/{pageNo}")
     public String pageHoaDonActive(@PathVariable("pageNo") Integer pageNo, Model model) {
         Page<HoaDonResponse> hoaDonResponsePageActive = hoaDonService.pageHoaDon(pageNo, 10);
 
         // Định dạng tiền tệ Việt Nam
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-
-        for (HoaDonResponse hd : hoaDonResponsePageActive) {
-            BigDecimal thanhTien = hd.getThanhTien();
-            String formattedThanhTien = currencyFormat.format(thanhTien);
-            hd.setFormattedThanhTien((formattedThanhTien));
-        }
+//        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+//
+//        for (HoaDonResponse hd : hoaDonResponsePageActive) {
+//            BigDecimal thanhTien = hd.getThanhTien();
+//            String formattedThanhTien = currencyFormat.format(thanhTien);
+//            hd.setFormattedThanhTien((formattedThanhTien));
+//        }
         model.addAttribute("trangThaiHD", ApplicationConstant.TrangThaiHoaDon.values());
         model.addAttribute("trangThaiBH", ApplicationConstant.HinhThucBanHang.values());
         model.addAttribute("size", hoaDonResponsePageActive.getSize());

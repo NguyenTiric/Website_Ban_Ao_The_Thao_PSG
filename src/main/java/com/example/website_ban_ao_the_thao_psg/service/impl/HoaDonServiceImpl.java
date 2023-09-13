@@ -210,7 +210,6 @@ public class HoaDonServiceImpl implements HoaDonService {
         giaoDich.setSoTienMat(hoaDon.getTienMatKhachTra());
         giaoDich.setPhuongThucThanhToan(hinhThucThanhToan);
 
-
         LichSuHoaDon lichSuHoaDon = lichSuHoaDonMapper.createLichSuHoaDonRequestToLichSuHoaDonEntity(new CreateLichSuHoaDonRequest());
         lichSuHoaDon.setHoaDon(hoaDon);
         lichSuHoaDon.setNgayTao(LocalDateTime.now());

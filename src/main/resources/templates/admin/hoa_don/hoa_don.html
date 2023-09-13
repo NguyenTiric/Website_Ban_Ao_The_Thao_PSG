@@ -135,7 +135,7 @@
                             <th scope="col">STT</th>
                             <th scope="col" class="th-sm">Mã Đơn Hàng</th>
                             <th scope="col">Loại Đơn</th>
-                            <th scope="col">Khách Hàng</th>
+<!--                            <th scope="col">Khách Hàng</th>-->
                             <th scope="col">Số Điện Thoại</th>
                             <th scope="col">Ngày Tạo</th>
                             <th scope="col">Tổng Tiền</th>
@@ -150,7 +150,7 @@
                             <td th:text="${hd.ma}"></td>
                             <td th:text="${hd.getHinhThucBanHang().getMoTa()}"></td>
 
-                            <td th:text="${hd.getKhachHang().getTen()}"></td>
+<!--                            <td th:text="${hd.getKhachHang().getTen()}"></td>-->
                             <td th:text="${hd.getSdtNguoiNhan()}"></td>
                             <td th:text="${#temporals.format(hd.getNgayTao, 'dd/MM/yyyy')}"></td>
                             <td th:text="${hd.formattedThanhTien}"></td>
