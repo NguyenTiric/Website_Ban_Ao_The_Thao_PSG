@@ -61,7 +61,6 @@ public class HoaDonController {
         }
         return pageHoaDonActive(0, model);
     }
-// demo git
     @GetMapping("/pageActive/{pageNo}")
     public String pageHoaDonActive(@PathVariable("pageNo") Integer pageNo, Model model) {
         Page<HoaDonResponse> hoaDonResponsePageActive = hoaDonService.pageHoaDon(pageNo, 10);
